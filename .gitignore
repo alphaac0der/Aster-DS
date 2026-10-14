@@ -1,0 +1,44 @@
+# --- Secrets and credentials (never commit) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+credentials*.json
+*.secret
+.npmrc
+
+# --- Operating system files ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# --- Editor and IDE files ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Temporary files, logs, and caches ---
+*.tmp
+*.temp
+*.bak
+*.log
+tmp/
+temp/
+.cache/
+
+# --- Dependencies and build output (for future tooling) ---
+node_modules/
+dist/
+build/
+coverage/
