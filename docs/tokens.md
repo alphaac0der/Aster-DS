@@ -261,3 +261,36 @@ Components can override density or theme locally without affecting surrounding l
 ### Non-Color State Communication
 
 Interactive states (hover, focus, disabled) and status indicators (success, warning, error) must never rely on color alone. Status messages must always pair color tokens with an icon, semantic badge, or explicit text label.
+
+---
+
+## 9. Figma Variable Integration & Tooling
+
+Aster exports design tokens to native Figma Variables via automated tooling, establishing a reliable one-way export pipeline from Git into Figma while maintaining Git as the single authoritative source of truth.
+
+### Collection Architecture & Scope
+
+Aster variables are exported to isolated collections:
+
+1. **`Aster Colors` Collection (`dist/figma/aster-colors.json`):**
+   - **Modes:** `Light` (`1001:0`) and `Dark` (`1001:1`).
+   - **Primitives (22 variables):** Invariant color variables (`primitive/neutral/*`, `primitive/brand/*`, `primitive/status/*`) sharing identical RGBA definitions across modes.
+   - **Semantics (17 variables):** Role-based color variables (`semantic/surface/*`, `semantic/text/*`, `semantic/border/*`, `semantic/interactive/*`, `semantic/status/*`) resolving as native Figma variable aliases to internal primitive IDs per mode.
+2. **`Aster Density` Collection (`dist/figma/aster-density.json`):**
+   - **Modes:** `Comfortable` (`2001:0`) and `Compact` (`2001:1`).
+   - **Density Variables (6 variables):** Sizing dimensions (`density/table/*`, `density/control/*`, `density/card/*`, `density/layout/*`) exported as native `FLOAT` variables.
+3. **Explicitly Deferred Tokens (37 tokens):**
+   - 18 primitive dimensions (`space.*`, `radius.*`, `elevation.border.*`) deferred to Phase 6C (`Aster Dimensions`).
+   - 16 composite typography tokens deferred to Phase 6D (Figma Text Styles).
+   - 3 elevation shadows deferred to Phase 6E (Figma Effect Styles).
+
+### Tooling Commands
+
+```bash
+# Export canonical DTCG tokens to Figma JSON payloads
+npm run export:figma
+
+# Validate generated payloads against schema, ID constraints, and alias references
+npm run test:figma
+```
+

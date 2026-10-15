@@ -175,3 +175,18 @@ If an edge case genuinely cannot be addressed by existing tokens (e.g. custom ca
 - **DON'T** use primitive color tokens like `var(--as-color-primitive-neutral-900)` in component CSS.
 - **DON'T** invent custom margin/padding values; pick the closest step on the `--as-space-*` scale.
 - **DON'T** rely on color alone to communicate state; always pair color with text, icons, or visible indicators.
+
+---
+
+## 7. Figma Variable Export Rules for Agents
+
+When generating, maintaining, or troubleshooting Figma token assets:
+- **Canonical Source:** Git repository (`tokens/`) is authoritative. Never edit Figma payloads directly.
+- **Build & Export:**
+  - Run `npm run export:figma` to regenerate `dist/figma/aster-colors.json` and `dist/figma/aster-density.json`.
+  - Run `npm run test:figma` to validate payload structure, IDs, mode mappings, and alias references.
+- **Collections:**
+  - `Aster Colors`: 22 unified primitives and 17 semantic aliases with Light (`1001:0`) and Dark (`1001:1`) modes.
+  - `Aster Density`: 6 contextual dimension variables with Comfortable (`2001:0`) and Compact (`2001:1`) modes.
+- **Deferred:** Dimensions primitives, composite typography, and elevation shadows are deferred to later phases.
+

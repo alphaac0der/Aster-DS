@@ -7,7 +7,9 @@
   "scripts": {
     "build:tokens": "node build-tools/build-tokens.js",
     "test:contrast": "node build-tools/verify-contrast.js",
-    "test:docs": "node build-tools/verify-docs-consistency.js"
+    "test:docs": "node build-tools/verify-docs-consistency.js",
+    "export:figma": "node build-tools/export-figma-tokens.js",
+    "test:figma": "node build-tools/validate-figma-tokens.js"
   },
   "devDependencies": {
     "style-dictionary": "^5.6.1"
