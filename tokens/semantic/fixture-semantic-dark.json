@@ -1,0 +1,33 @@
+{
+  "$description": "TECHNICAL FIXTURE ONLY: Temporary test tokens to validate build pipeline. Not Aster final design tokens.",
+  "color": {
+    "semantic": {
+      "surface": {
+        "canvas": {
+          "$value": "{color.primitive.neutral.1000}",
+          "$type": "color",
+          "$description": "Fixture canvas background in dark mode"
+        },
+        "subtle": {
+          "$value": "{color.primitive.neutral.900}",
+          "$type": "color",
+          "$description": "Fixture subtle container background in dark mode"
+        }
+      },
+      "text": {
+        "default": {
+          "$value": "{color.primitive.neutral.100}",
+          "$type": "color",
+          "$description": "Fixture primary text color in dark mode"
+        }
+      },
+      "interactive": {
+        "primary": {
+          "$value": "{color.primitive.brand.500}",
+          "$type": "color",
+          "$description": "Fixture primary action color in dark mode"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$description": "TECHNICAL FIXTURE ONLY: Temporary test tokens to validate build pipeline. Not Aster final design tokens.",
+  "color": {
+    "primitive": {
+      "neutral": {
+        "0": {
+          "$value": "#ffffff",
+          "$type": "color",
+          "$description": "Fixture pure white"
+        },
+        "100": {
+          "$value": "#f1f5f9",
+          "$type": "color",
+          "$description": "Fixture light neutral"
+        },
+        "900": {
+          "$value": "#0f172a",
+          "$type": "color",
+          "$description": "Fixture dark neutral"
+        },
+        "1000": {
+          "$value": "#000000",
+          "$type": "color",
+          "$description": "Fixture pure black"
+        }
+      },
+      "brand": {
+        "500": {
+          "$value": "#2563eb",
+          "$type": "color",
+          "$description": "Fixture primary brand tint"
+        }
+      }
+    }
+  },
+  "dimension": {
+    "spacing": {
+      "base": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Fixture baseline spacing unit"
+      }
+    }
+  }
+}
