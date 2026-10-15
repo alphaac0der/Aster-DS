@@ -34,12 +34,16 @@ export function validateFigmaTokens() {
 
   const colorsFile = resolve(rootDir, 'dist/figma/aster-colors.json');
   const densityFile = resolve(rootDir, 'dist/figma/aster-density.json');
+  const dimensionsFile = resolve(rootDir, 'dist/figma/aster-dimensions.json');
 
   if (!existsSync(colorsFile)) {
     errors.push(`Missing generated file: ${colorsFile}. Run "npm run export:figma" first.`);
   }
   if (!existsSync(densityFile)) {
     errors.push(`Missing generated file: ${densityFile}. Run "npm run export:figma" first.`);
+  }
+  if (!existsSync(dimensionsFile)) {
+    errors.push(`Missing generated file: ${dimensionsFile}. Run "npm run export:figma" first.`);
   }
 
   if (errors.length > 0) {
@@ -49,6 +53,7 @@ export function validateFigmaTokens() {
 
   const colorsDoc = JSON.parse(readFileSync(colorsFile, 'utf8'));
   const densityDoc = JSON.parse(readFileSync(densityFile, 'utf8'));
+  const dimensionsDoc = JSON.parse(readFileSync(dimensionsFile, 'utf8'));
 
   // -------------------------------------------------------------
   // 1. Validate "Aster Colors"
@@ -222,6 +227,77 @@ export function validateFigmaTokens() {
   console.log(`  ✓ Checked ${densityDoc.variables.length} density variables.`);
   console.log('  ✓ All numeric dimensions are finite, non-negative numbers (>= 0).');
   console.log('  ✓ Mode mappings strictly valid ("2001:0": Comfortable, "2001:1": Compact).');
+
+  // -------------------------------------------------------------
+  // 3. Validate "Aster Dimensions"
+  // -------------------------------------------------------------
+  console.log('\nChecking: dist/figma/aster-dimensions.json ...');
+
+  if (dimensionsDoc.id !== 'VariableCollectionId:3001:1') {
+    errors.push(`Aster Dimensions has unexpected ID "${dimensionsDoc.id}". Expected "VariableCollectionId:3001:1".`);
+  }
+  if (dimensionsDoc.name !== 'Aster Dimensions') {
+    errors.push(`Aster Dimensions has unexpected name "${dimensionsDoc.name}". Expected "Aster Dimensions".`);
+  }
+
+  const expectedDimensionsModes = {
+    '3001:0': 'Value'
+  };
+  const actualDimensionsModes = dimensionsDoc.modes || {};
+  for (const [modeId, modeName] of Object.entries(expectedDimensionsModes)) {
+    if (actualDimensionsModes[modeId] !== modeName) {
+      errors.push(`Aster Dimensions mode mismatch: expected "${modeId}": "${modeName}", found "${actualDimensionsModes[modeId]}".`);
+    }
+  }
+
+  const dimVarIdSet = new Set();
+  let spaceCount = 0;
+  let radiusCount = 0;
+  let borderWidthCount = 0;
+
+  for (const v of dimensionsDoc.variables || []) {
+    if (!/^VariableID:3001:\d+$/.test(v.id)) {
+      errors.push(`Dimension variable "${v.name}" has invalid ID format: "${v.id}". Expected "VariableID:3001:<positive-int>".`);
+    }
+    if (dimVarIdSet.has(v.id)) {
+      errors.push(`Duplicate variable ID found in Aster Dimensions: "${v.id}" (name: ${v.name}).`);
+    }
+    dimVarIdSet.add(v.id);
+
+    if (v.type !== 'FLOAT') {
+      errors.push(`Dimension variable "${v.name}" has invalid type "${v.type}". Expected "FLOAT".`);
+    }
+
+    if (!Array.isArray(v.scopes) || !v.scopes.includes('ALL_SCOPES')) {
+      errors.push(`Dimension variable "${v.name}" should have scopes ["ALL_SCOPES"].`);
+    }
+
+    const numVal = v.valuesByMode['3001:0'];
+    if (typeof numVal !== 'number' || !Number.isFinite(numVal) || numVal < 0) {
+      errors.push(`Dimension variable "${v.name}" mode "3001:0" has invalid numeric value: ${numVal}. Must be finite and >= 0.`);
+    }
+    const resolved = v.resolvedValuesByMode['3001:0'];
+    if (!resolved || resolved.resolvedValue !== numVal || resolved.alias !== null) {
+      errors.push(`Dimension variable "${v.name}" mode "3001:0" resolved value mismatch (expected alias: null).`);
+    }
+
+    if (v.name.startsWith('primitive/space/')) spaceCount++;
+    else if (v.name.startsWith('primitive/radius/')) radiusCount++;
+    else if (v.name.startsWith('primitive/border-width/')) borderWidthCount++;
+    else errors.push(`Unexpected dimension variable name: "${v.name}".`);
+  }
+
+  if (dimensionsDoc.variables.length !== 18) {
+    errors.push(`Expected 18 dimension tokens, found ${dimensionsDoc.variables.length}.`);
+  }
+  if (spaceCount !== 11) errors.push(`Expected 11 space tokens, found ${spaceCount}.`);
+  if (radiusCount !== 5) errors.push(`Expected 5 radius tokens, found ${radiusCount}.`);
+  if (borderWidthCount !== 2) errors.push(`Expected 2 border width tokens, found ${borderWidthCount}.`);
+
+  console.log(`  ✓ Checked ${dimensionsDoc.variables.length} dimension variables (11 space, 5 radius, 2 border-width).`);
+  console.log('  ✓ All numeric dimensions are finite, non-negative numbers (>= 0).');
+  console.log('  ✓ Mode mapping strictly valid ("3001:0": Value).');
+  console.log('  ✓ Scopes strictly ["ALL_SCOPES"].');
 
   // -------------------------------------------------------------
   // Summary

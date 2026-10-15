@@ -346,7 +346,69 @@ export function exportFigmaTokens() {
   const totalDensityCount = densityCollection.variables.length;
 
   // -------------------------------------------------------------
-  // 3. Count Deferred Tokens for Full Inventory Reconciliation
+  // 3. Build "Aster Dimensions" Collection
+  // -------------------------------------------------------------
+  const dimCollectionChunk = '3001';
+  const dimIdGen = new IdGenerator(dimCollectionChunk);
+  const dimModeValue = `${dimCollectionChunk}:0`;
+
+  const dimCollection = {
+    id: `VariableCollectionId:${dimCollectionChunk}:1`,
+    name: 'Aster Dimensions',
+    modes: {
+      [dimModeValue]: 'Value'
+    },
+    variableIds: [],
+    variables: []
+  };
+
+  function registerDimension(canonicalName, description, rawValue) {
+    const varId = dimIdGen.getId(canonicalName);
+    const parsedVal = parseDimension(rawValue);
+
+    const variable = {
+      id: varId,
+      name: canonicalName,
+      description: description || '',
+      type: 'FLOAT',
+      valuesByMode: {
+        [dimModeValue]: parsedVal
+      },
+      resolvedValuesByMode: {
+        [dimModeValue]: {
+          resolvedValue: parsedVal,
+          alias: null
+        }
+      },
+      scopes: ['ALL_SCOPES'],
+      hiddenFromPublishing: false,
+      codeSyntax: {}
+    };
+
+    dimCollection.variableIds.push(varId);
+    dimCollection.variables.push(variable);
+    return varId;
+  }
+
+  // 1. Spacing (11 tokens)
+  for (const [step, token] of Object.entries(spaceDoc.space)) {
+    registerDimension(`primitive/space/${step}`, token.$description, token.$value);
+  }
+
+  // 2. Border Radius (5 tokens)
+  for (const [tier, token] of Object.entries(radiusDoc.radius)) {
+    registerDimension(`primitive/radius/${tier}`, token.$description, token.$value);
+  }
+
+  // 3. Border Widths (2 tokens)
+  for (const [variant, token] of Object.entries(elevationDoc.elevation.border)) {
+    registerDimension(`primitive/border-width/${variant}`, token.$description, token.$value);
+  }
+
+  const totalDimensionsCount = dimCollection.variables.length; // 18
+
+  // -------------------------------------------------------------
+  // 4. Count Deferred Tokens for Full Inventory Reconciliation
   // -------------------------------------------------------------
   function countLeaves(obj) {
     let count = 0;
@@ -363,14 +425,10 @@ export function exportFigmaTokens() {
   }
 
   const typographyCount = countLeaves(typographyDoc); // 16
-  const spaceCount = countLeaves(spaceDoc); // 11
-  const radiusCount = countLeaves(radiusDoc); // 5
-  const borderWidthCount = countLeaves(elevationDoc.elevation.border); // 2
   const shadowCount = countLeaves(elevationDoc.elevation.shadow); // 3
-  const dimensionPrimitivesCount = spaceCount + radiusCount + borderWidthCount; // 18
-  const totalDeferredCount = dimensionPrimitivesCount + typographyCount + shadowCount; // 37
+  const totalDeferredCount = typographyCount + shadowCount; // 19
 
-  const totalCanonicalTokens = totalColorCount + totalDensityCount + totalDeferredCount;
+  const totalCanonicalTokens = totalColorCount + totalDensityCount + totalDimensionsCount + totalDeferredCount;
 
   // Write outputs
   const distFigmaDir = resolve(rootDir, 'dist/figma');
@@ -378,30 +436,36 @@ export function exportFigmaTokens() {
 
   const colorsOutputPath = resolve(distFigmaDir, 'aster-colors.json');
   const densityOutputPath = resolve(distFigmaDir, 'aster-density.json');
+  const dimensionsOutputPath = resolve(distFigmaDir, 'aster-dimensions.json');
 
   writeFileSync(colorsOutputPath, JSON.stringify(colorCollection, null, 2), 'utf8');
   writeFileSync(densityOutputPath, JSON.stringify(densityCollection, null, 2), 'utf8');
+  writeFileSync(dimensionsOutputPath, JSON.stringify(dimCollection, null, 2), 'utf8');
 
   console.log(`✓ Generated ${colorsOutputPath} (${totalColorCount} variables)`);
   console.log(`✓ Generated ${densityOutputPath} (${totalDensityCount} variables)`);
+  console.log(`✓ Generated ${dimensionsOutputPath} (${totalDimensionsCount} variables)`);
 
   console.log('\n================ Aster Figma Exporter Inventory ================');
   console.log(`Total canonical source tokens:       ${totalCanonicalTokens}`);
   console.log(`  - Exported to 'Aster Colors':      ${totalColorCount} (${primitiveColorCount} primitive, ${semanticColorCount} semantic)`);
   console.log(`  - Exported to 'Aster Density':      ${totalDensityCount} (contextual density dimensions)`);
-  console.log(`  - Explicitly deferred:             ${totalDeferredCount} (${dimensionPrimitivesCount} dim primitives, ${typographyCount} typography, ${shadowCount} elevation shadows)`);
+  console.log(`  - Exported to 'Aster Dimensions':   ${totalDimensionsCount} (primitive spacing, radius, border widths)`);
+  console.log(`  - Explicitly deferred:             ${totalDeferredCount} (${typographyCount} typography, ${shadowCount} elevation shadows)`);
   console.log(`  - Unexpected / unmapped:            0`);
   console.log('================================================================\n');
 
   return {
     colorCollection,
     densityCollection,
+    dimCollection,
     counts: {
       totalCanonicalTokens,
       totalColorCount,
       primitiveColorCount,
       semanticColorCount,
       totalDensityCount,
+      totalDimensionsCount,
       totalDeferredCount
     }
   };

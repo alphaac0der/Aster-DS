@@ -188,5 +188,6 @@ When generating, maintaining, or troubleshooting Figma token assets:
 - **Collections:**
   - `Aster Colors`: 22 unified primitives and 17 semantic aliases with Light (`1001:0`) and Dark (`1001:1`) modes.
   - `Aster Density`: 6 contextual dimension variables with Comfortable (`2001:0`) and Compact (`2001:1`) modes.
-- **Deferred:** Dimensions primitives, composite typography, and elevation shadows are deferred to later phases.
+  - `Aster Dimensions`: 18 primitive dimension variables (11 space, 5 radius, 2 stroke widths) with single Value (`3001:0`) mode.
+- **Deferred:** Composite typography (16) and elevation shadows (3) are deferred to later style phases.
 

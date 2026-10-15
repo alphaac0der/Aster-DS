@@ -279,8 +279,10 @@ Aster variables are exported to isolated collections:
 2. **`Aster Density` Collection (`dist/figma/aster-density.json`):**
    - **Modes:** `Comfortable` (`2001:0`) and `Compact` (`2001:1`).
    - **Density Variables (6 variables):** Sizing dimensions (`density/table/*`, `density/control/*`, `density/card/*`, `density/layout/*`) exported as native `FLOAT` variables.
-3. **Explicitly Deferred Tokens (37 tokens):**
-   - 18 primitive dimensions (`space.*`, `radius.*`, `elevation.border.*`) deferred to Phase 6C (`Aster Dimensions`).
+3. **`Aster Dimensions` Collection (`dist/figma/aster-dimensions.json`):**
+   - **Modes:** `Value` (`3001:0`).
+   - **Dimension Primitives (18 variables):** Spacing scale (`primitive/space/*`, 11 variables), corner radii (`primitive/radius/*`, 5 variables), and border stroke widths (`primitive/border-width/*`, 2 variables) exported as native `FLOAT` variables.
+4. **Explicitly Deferred Tokens (19 tokens):**
    - 16 composite typography tokens deferred to Phase 6D (Figma Text Styles).
    - 3 elevation shadows deferred to Phase 6E (Figma Effect Styles).
 
