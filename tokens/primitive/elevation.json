@@ -1,0 +1,13 @@
+{
+  "elevation": {
+    "border": {
+      "hairline": { "$value": "1px", "$type": "dimension", "$description": "1px structural hairline rule" },
+      "focus": { "$value": "2px", "$type": "dimension", "$description": "2px accessible focus ring width" }
+    },
+    "shadow": {
+      "none": { "$value": "none", "$type": "shadow", "$description": "Flat surface with zero elevation shadow" },
+      "raised": { "$value": "0 2px 4px rgba(0, 0, 0, 0.04)", "$type": "shadow", "$description": "Subtle ambient lift for small dropdown menus" },
+      "overlay": { "$value": "0 8px 24px rgba(0, 0, 0, 0.12)", "$type": "shadow", "$description": "Floating overlay shadow for modals and dialogs" }
+    }
+  }
+}

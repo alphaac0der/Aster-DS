@@ -1,0 +1,36 @@
+{
+  "typography": {
+    "fontFamily": {
+      "sans": {
+        "$value": "'Geist Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "$type": "fontFamily",
+        "$description": "Primary interface typeface stack with Bangla and system fallbacks"
+      },
+      "mono": {
+        "$value": "'Geist Mono', 'Noto Sans Bengali', ui-monospace, SFMono-Regular, Consolas, monospace",
+        "$type": "fontFamily",
+        "$description": "Monospace data and code typeface stack"
+      }
+    },
+    "fontSize": {
+      "xs": { "$value": "0.75rem", "$type": "dimension", "$description": "12px — Aster informative text floor (captions, micro-badges)" },
+      "sm": { "$value": "0.8125rem", "$type": "dimension", "$description": "13px — Data table cells and compact controls" },
+      "base": { "$value": "0.875rem", "$type": "dimension", "$description": "14px — Standard application body text and form inputs" },
+      "md": { "$value": "1rem", "$type": "dimension", "$description": "16px — Prominent body text and large inputs" },
+      "lg": { "$value": "1.125rem", "$type": "dimension", "$description": "18px — Card and modal headers" },
+      "xl": { "$value": "1.25rem", "$type": "dimension", "$description": "20px — Section titles" },
+      "2xl": { "$value": "1.5rem", "$type": "dimension", "$description": "24px — Page titles" },
+      "3xl": { "$value": "2rem", "$type": "dimension", "$description": "32px — Key performance metric numbers and hero titles" }
+    },
+    "fontWeight": {
+      "regular": { "$value": 400, "$type": "fontWeight", "$description": "Standard body weight" },
+      "medium": { "$value": 500, "$type": "fontWeight", "$description": "Interactive labels and table headers" },
+      "semibold": { "$value": 600, "$type": "fontWeight", "$description": "Headings and prominent actions" }
+    },
+    "lineHeight": {
+      "tight": { "$value": 1.25, "$type": "number", "$description": "Dense headlines and single-line controls" },
+      "normal": { "$value": 1.5, "$type": "number", "$description": "Standard readable body line height" },
+      "relaxed": { "$value": 1.75, "$type": "number", "$description": "Long-form editorial reading" }
+    }
+  }
+}

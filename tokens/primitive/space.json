@@ -1,0 +1,15 @@
+{
+  "space": {
+    "0": { "$value": "0px", "$type": "dimension", "$description": "Zero spacing" },
+    "1": { "$value": "4px", "$type": "dimension", "$description": "4px micro-spacing (tight icon-text gaps, badges)" },
+    "2": { "$value": "8px", "$type": "dimension", "$description": "8px spacing (compact padding, form gaps)" },
+    "3": { "$value": "12px", "$type": "dimension", "$description": "12px spacing (standard input padding, table cell horizontal)" },
+    "4": { "$value": "16px", "$type": "dimension", "$description": "16px base layout increment (card padding, grid gaps)" },
+    "5": { "$value": "20px", "$type": "dimension", "$description": "20px intermediate container gap" },
+    "6": { "$value": "24px", "$type": "dimension", "$description": "24px generous card padding and section gaps" },
+    "8": { "$value": "32px", "$type": "dimension", "$description": "32px major section spacing" },
+    "10": { "$value": "40px", "$type": "dimension", "$description": "40px layout banding" },
+    "12": { "$value": "48px", "$type": "dimension", "$description": "48px macro layout divisions" },
+    "16": { "$value": "64px", "$type": "dimension", "$description": "64px page margins and hero divisions" }
+  }
+}

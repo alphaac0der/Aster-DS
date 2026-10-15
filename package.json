@@ -5,7 +5,8 @@
   "description": "Aster Design System — One source of truth for humans and AI agents",
   "type": "module",
   "scripts": {
-    "build:tokens": "node build-tools/build-tokens.js"
+    "build:tokens": "node build-tools/build-tokens.js",
+    "test:contrast": "node build-tools/verify-contrast.js"
   },
   "devDependencies": {
     "style-dictionary": "^5.6.1"

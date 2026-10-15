@@ -1,0 +1,33 @@
+{
+  "semantic": {
+    "color": {
+      "surface": {
+        "canvas": { "$value": "{color.primitive.neutral.1000}", "$type": "color", "$description": "Main application background canvas in dark mode" },
+        "card": { "$value": "{color.primitive.neutral.950}", "$type": "color", "$description": "Elevated card and panel background in dark mode" },
+        "subtle": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Subtle container fill and alternating table rows in dark mode" },
+        "muted": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Disabled or inactive container fill in dark mode" }
+      },
+      "text": {
+        "default": { "$value": "{color.primitive.neutral.100}", "$type": "color", "$description": "Primary high-contrast body text in dark mode (passes 7:1 AAA)" },
+        "muted": { "$value": "{color.primitive.neutral.300}", "$type": "color", "$description": "Secondary helper and metadata text in dark mode (passes 4.5:1 AA)" },
+        "inverse": { "$value": "{color.primitive.neutral.1000}", "$type": "color", "$description": "Inverted dark text on light surfaces" }
+      },
+      "border": {
+        "subtle": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Hairline card borders and table row dividers in dark mode" },
+        "strong": { "$value": "{color.primitive.neutral.600}", "$type": "color", "$description": "Interactive form control border (passes 3:1 on dark canvas)" },
+        "focus": { "$value": "{color.primitive.brand.400}", "$type": "color", "$description": "Accessible keyboard focus ring outline in dark mode" }
+      },
+      "interactive": {
+        "primary": { "$value": "{color.primitive.brand.500}", "$type": "color", "$description": "Primary button fill in dark mode" },
+        "primary-text": { "$value": "{color.primitive.neutral.1100}", "$type": "color", "$description": "High-contrast text on primary button (passes 4.5:1)" },
+        "primary-hover": { "$value": "{color.primitive.brand.400}", "$type": "color", "$description": "Primary button hover state in dark mode" },
+        "link": { "$value": "{color.primitive.brand.400}", "$type": "color", "$description": "Interactive link text in dark mode (passes 4.5:1)" }
+      },
+      "status": {
+        "success-text": { "$value": "{color.primitive.status.success.dark}", "$type": "color", "$description": "Positive status feedback text (passes 4.5:1 on dark)" },
+        "warning-text": { "$value": "{color.primitive.status.warning.dark}", "$type": "color", "$description": "Warning alert feedback text (passes 4.5:1 on dark)" },
+        "critical-text": { "$value": "{color.primitive.status.critical.dark}", "$type": "color", "$description": "Error and destructive feedback text (passes 4.5:1 on dark)" }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "density": {
+    "table": {
+      "row-height": { "$value": "44px", "$type": "dimension", "$description": "Generous table row height for comfortable reading" }
+    },
+    "control": {
+      "height": { "$value": "40px", "$type": "dimension", "$description": "Standard interactive control height (inputs, buttons)" },
+      "padding-y": { "$value": "8px", "$type": "dimension", "$description": "Vertical padding for standard controls" },
+      "padding-x": { "$value": "16px", "$type": "dimension", "$description": "Horizontal padding for standard controls" }
+    },
+    "card": {
+      "padding": { "$value": "24px", "$type": "dimension", "$description": "Spacious card and container padding" }
+    },
+    "layout": {
+      "gap": { "$value": "24px", "$type": "dimension", "$description": "Standard dashboard grid and panel spacing gap" }
+    }
+  }
+}

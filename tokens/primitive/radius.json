@@ -1,0 +1,9 @@
+{
+  "radius": {
+    "none": { "$value": "0px", "$type": "dimension", "$description": "Sharp corners (table cells, panel dividers)" },
+    "sm": { "$value": "2px", "$type": "dimension", "$description": "Subtle radius (checkboxes, tags, micro-badges)" },
+    "md": { "$value": "4px", "$type": "dimension", "$description": "Standard control radius (buttons, inputs, select menus)" },
+    "lg": { "$value": "6px", "$type": "dimension", "$description": "Container radius (cards, dialogs, popovers)" },
+    "full": { "$value": "9999px", "$type": "dimension", "$description": "Fully rounded pill (status indicators, avatar frames)" }
+  }
+}
