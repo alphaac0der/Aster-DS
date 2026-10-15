@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build:tokens": "node build-tools/build-tokens.js",
-    "test:contrast": "node build-tools/verify-contrast.js"
+    "test:contrast": "node build-tools/verify-contrast.js",
+    "test:docs": "node build-tools/verify-docs-consistency.js"
   },
   "devDependencies": {
     "style-dictionary": "^5.6.1"
