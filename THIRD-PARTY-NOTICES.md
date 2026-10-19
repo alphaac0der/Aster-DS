@@ -107,7 +107,8 @@ The runtime distribution of Aster DS has **zero external runtime dependencies**.
 ## 5. Aster DS Licensing Status & Terms
 
 - **Original Work License:** The MIT License (see root [LICENSE](LICENSE)).
-  - Covers original Aster Design System source code, architectures, token definitions, build tooling, and documentation authored in this repository.
-  - Choosing the MIT License for Aster DS applies strictly to original work and does not automatically relicense or alter the terms of third-party-derived components, icons, or fonts, which remain governed by their respective authorizations and licenses documented above.
+  - Covers and applies solely to original Aster Design System source code, architectures, token definitions, build tooling, and documentation authored in this repository.
+  - Third-party components, visual designs, icons, fonts, and dependencies incorporated into, derived by, or utilized in this project remain subject to their respective authors' permissions and applicable licenses, as documented in this file.
+  - Choosing the MIT License for original Aster DS work does not grant rights to third-party material, override third-party licenses, alter upstream terms, or convey rights that Aster DS does not possess.
 - **Repository Visibility:** Private (`"private": true` in `package.json`). Not yet published to npm or made public on GitHub.
 - **Pre-Release Gating:** Prior to executing public distribution (`npm publish` and GitHub public visibility), the owner will remove `"private": true` and push the verified clean history to remote.

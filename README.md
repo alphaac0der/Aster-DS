@@ -120,4 +120,4 @@ Aster's visual foundation, kinetics, and core component architecture faithfully 
 
 - **Version Control:** Private repository configured (`origin`).
 - **Package Status:** Private (`"private": true`). Not published to any registry.
-- **Licensing Gate:** Open. Formal licensing terms (e.g. Apache-2.0) and third-party notices (for Phosphor icons SIL OFL 1.1/MIT, Google fonts SIL OFL 1.1, and Shade-DS) are explicitly reserved for approval in a dedicated phase prior to any public release.
+- **License:** Original Aster DS work is licensed under the MIT License (see [`LICENSE`](LICENSE)). Third-party components, designs, icons, fonts, and dependencies remain subject to their respective authors' permissions and applicable licenses as documented in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).

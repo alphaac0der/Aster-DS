@@ -31,7 +31,7 @@ npm run build
 ```
 
 The composite `npm run build` script executes three sub-compilers in sequence:
-1. `npm run build:tokens`: Compiles `tokens/**/*.json` into `dist/css/tokens.css` (and split light/dark/compact variants) using Style Dictionary.
+1. `npm run build:tokens`: Compiles `tokens/**/*.json` into `dist/css/tokens.css` (and split light/dark theme variants) using Style Dictionary.
 2. `npm run build:components`: Concatenates modular `components/**/*.css` into `dist/css/components.css`, creates the all-in-one `dist/css/aster.css`, and compiles modular behavior scripts into `dist/js/aster.js`.
 3. `npm run build:playground`: Compiles the self-contained documentation portal at `playground/index.html` across all 29 routes and 21 component showcases.
 
@@ -194,8 +194,8 @@ To maintain engineering integrity, Aster maintains strict boundaries regarding w
    - Automated checks (`test:contrast`) mathematically verify that designated foreground/background token pairs exceed WCAG 2.2 AA ratios (4.5:1 standard text, 3:1 UI boundaries).
    - Automated contrast tests **do not prove full WCAG 2.2 AA conformance**. Contextual typography sizes, user-generated content, and layout positioning must be verified in the final application.
 2. **Target Size (WCAG 2.5.8):**
-   - Comfortable controls (40px button/input, 44px table rows) provide generous touch targets.
-   - Compact controls (32px button/input, 28px touch boundaries) exceed the normative 24×24px minimum of SC 2.5.8, but applications targeting mobile-heavy user bases should prefer Comfortable density for primary actions.
+   - Standard controls provide 40px for buttons and 44px for inputs, selects, and table rows, establishing generous baseline physical dimensions.
+   - Single standard density is enforced across all devices, eliminating compact mode in favor of consistent touch ergonomics. While standard control bounding boxes (40px/44px) are larger than the 24×24px minimum dimension specified in WCAG SC 2.5.8, control dimensions alone do not guarantee full criterion conformance, which also depends on spacing between adjacent targets and contextual application layout.
 3. **Screen Readers & Reflow:**
    - All components declare semantic HTML5 elements (`<button>`, `<input>`, `<table>`, `<dialog>`) and ARIA states (`aria-busy`, `aria-invalid`, `aria-sort`, `aria-expanded`).
    - Real-world screen reader announcements (JAWS, NVDA, VoiceOver) and 400% zoom reflow depend on host DOM composition and must be evaluated in contextual integration testing.
