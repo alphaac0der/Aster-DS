@@ -1,18 +1,14 @@
 {
   "density": {
-    "table": {
-      "row-height": { "$value": "44px", "$type": "dimension", "$description": "Generous table row height for comfortable reading" }
-    },
     "control": {
-      "height": { "$value": "40px", "$type": "dimension", "$description": "Standard interactive control height (inputs, buttons)" },
-      "padding-y": { "$value": "8px", "$type": "dimension", "$description": "Vertical padding for standard controls" },
-      "padding-x": { "$value": "16px", "$type": "dimension", "$description": "Horizontal padding for standard controls" }
+      "height": { "$value": "40px", "$type": "dimension", "$description": "Standard 40px interactive control height" },
+      "padding-x": { "$value": "16px", "$type": "dimension", "$description": "Standard horizontal control padding (inputs)" },
+      "padding-y": { "$value": "8px", "$type": "dimension", "$description": "Standard vertical control padding" }
     },
-    "card": {
-      "padding": { "$value": "24px", "$type": "dimension", "$description": "Spacious card and container padding" }
-    },
-    "layout": {
-      "gap": { "$value": "24px", "$type": "dimension", "$description": "Standard dashboard grid and panel spacing gap" }
+    "table": {
+      "row-height": { "$value": "48px", "$type": "dimension", "$description": "Standard data table row height" },
+      "cell-padding-x": { "$value": "16px", "$type": "dimension", "$description": "Standard data table horizontal cell padding" },
+      "cell-padding-y": { "$value": "12px", "$type": "dimension", "$description": "Standard data table vertical cell padding" }
     }
   }
 }

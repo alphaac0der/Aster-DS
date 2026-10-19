@@ -1,36 +1,52 @@
 {
   "typography": {
-    "fontFamily": {
-      "sans": {
-        "$value": "'Geist Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "font-family": {
+      "display": {
+        "$value": "'Bebas Neue', Impact, 'Arial Narrow', sans-serif",
         "$type": "fontFamily",
-        "$description": "Primary interface typeface stack with Bangla and system fallbacks"
+        "$description": "Expressive display and hero headline typeface (Shade-DS Display / Headline)"
+      },
+      "sans": {
+        "$value": "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Bengali', sans-serif",
+        "$type": "fontFamily",
+        "$description": "Primary interface, body, title, and label sans-serif stack"
       },
       "mono": {
-        "$value": "'Geist Mono', 'Noto Sans Bengali', ui-monospace, SFMono-Regular, Consolas, monospace",
+        "$value": "'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
         "$type": "fontFamily",
-        "$description": "Monospace data and code typeface stack"
+        "$description": "Technical data, token paths, measurements, and code snippets"
+      },
+      "serif": {
+        "$value": "'Merriweather', Georgia, Cambria, 'Times New Roman', serif",
+        "$type": "fontFamily",
+        "$description": "Expressive quote and editorial callout serif typeface"
       }
     },
-    "fontSize": {
-      "xs": { "$value": "0.75rem", "$type": "dimension", "$description": "12px — Aster informative text floor (captions, micro-badges)" },
-      "sm": { "$value": "0.8125rem", "$type": "dimension", "$description": "13px — Data table cells and compact controls" },
-      "base": { "$value": "0.875rem", "$type": "dimension", "$description": "14px — Standard application body text and form inputs" },
-      "md": { "$value": "1rem", "$type": "dimension", "$description": "16px — Prominent body text and large inputs" },
-      "lg": { "$value": "1.125rem", "$type": "dimension", "$description": "18px — Card and modal headers" },
-      "xl": { "$value": "1.25rem", "$type": "dimension", "$description": "20px — Section titles" },
-      "2xl": { "$value": "1.5rem", "$type": "dimension", "$description": "24px — Page titles" },
-      "3xl": { "$value": "2rem", "$type": "dimension", "$description": "32px — Key performance metric numbers and hero titles" }
+    "font-size": {
+      "2xs": { "$value": "0.6875rem", "$type": "dimension", "$description": "11px micro label (Shade-DS Readable.Label.S)" },
+      "xs": { "$value": "0.75rem", "$type": "dimension", "$description": "12px data, code, and compact metadata (Shade-DS Readable.Body.S / Expressive.Data)" },
+      "sm": { "$value": "0.875rem", "$type": "dimension", "$description": "14px standard interface label and body (Shade-DS Readable.Body.M / Label.L)" },
+      "base": { "$value": "0.875rem", "$type": "dimension", "$description": "14px default control and body text (Shade-DS Readable.Body.M)" },
+      "md": { "$value": "1rem", "$type": "dimension", "$description": "16px large body and card title (Shade-DS Readable.Body.L / Title.M)" },
+      "lg": { "$value": "1.375rem", "$type": "dimension", "$description": "22px section and modal title (Shade-DS Readable.Title.L)" },
+      "xl": { "$value": "1.5rem", "$type": "dimension", "$description": "24px expressive headline small and quote (Shade-DS Expressive.Headline.S / Quote)" },
+      "2xl": { "$value": "1.75rem", "$type": "dimension", "$description": "28px expressive headline medium (Shade-DS Expressive.Headline.M)" },
+      "3xl": { "$value": "2rem", "$type": "dimension", "$description": "32px expressive headline large (Shade-DS Expressive.Headline.L)" },
+      "display-s": { "$value": "2.25rem", "$type": "dimension", "$description": "36px expressive display small (Shade-DS Expressive.Display.S)" },
+      "display-m": { "$value": "2.5rem", "$type": "dimension", "$description": "40px expressive display medium (Shade-DS Expressive.Display.M)" },
+      "display-l": { "$value": "3.25rem", "$type": "dimension", "$description": "52px expressive display large (Shade-DS Expressive.Display.L)" }
     },
-    "fontWeight": {
-      "regular": { "$value": 400, "$type": "fontWeight", "$description": "Standard body weight" },
-      "medium": { "$value": 500, "$type": "fontWeight", "$description": "Interactive labels and table headers" },
-      "semibold": { "$value": 600, "$type": "fontWeight", "$description": "Headings and prominent actions" }
+    "line-height": {
+      "display": { "$value": "1", "$type": "number", "$description": "1.0 tight display and headline line height (Shade-DS Expressive)" },
+      "tight": { "$value": "1.25", "$type": "number", "$description": "Tight line height for titles and headings" },
+      "normal": { "$value": "1.45", "$type": "number", "$description": "Standard interface and body copy line height" },
+      "relaxed": { "$value": "1.6", "$type": "number", "$description": "Long-form documentation and editorial quote reading" }
     },
-    "lineHeight": {
-      "tight": { "$value": 1.25, "$type": "number", "$description": "Dense headlines and single-line controls" },
-      "normal": { "$value": 1.5, "$type": "number", "$description": "Standard readable body line height" },
-      "relaxed": { "$value": 1.75, "$type": "number", "$description": "Long-form editorial reading" }
+    "font-weight": {
+      "regular": { "$value": "400", "$type": "fontWeight", "$description": "Standard body, display, and quote weight" },
+      "medium": { "$value": "500", "$type": "fontWeight", "$description": "Interactive labels and UI controls" },
+      "semibold": { "$value": "600", "$type": "fontWeight", "$description": "Subheadings, titles, and strong emphasis" },
+      "bold": { "$value": "700", "$type": "fontWeight", "$description": "High-impact emphasis" }
     }
   }
 }

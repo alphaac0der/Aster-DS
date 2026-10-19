@@ -2,31 +2,134 @@
   "semantic": {
     "color": {
       "surface": {
-        "canvas": { "$value": "{color.primitive.neutral.1000}", "$type": "color", "$description": "Main application background canvas in dark mode" },
-        "card": { "$value": "{color.primitive.neutral.950}", "$type": "color", "$description": "Elevated card and panel background in dark mode" },
-        "subtle": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Subtle container fill and alternating table rows in dark mode" },
-        "muted": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Disabled or inactive container fill in dark mode" }
+        "canvas": {
+          "$value": "{color.primitive.neutral.900}",
+          "$type": "color",
+          "$description": "Primary dark application canvas (Shade-DS Dark Surface 1 #121212)"
+        },
+        "card": {
+          "$value": "{color.primitive.neutral.800}",
+          "$type": "color",
+          "$description": "Elevated dark card and modal surface (Shade-DS Dark Surface 2 #1E1E1E)"
+        },
+        "subtle": {
+          "$value": "{color.primitive.neutral.700}",
+          "$type": "color",
+          "$description": "Subtle dark grouping and table header fill (Shade-DS Dark Surface 3 #333333)"
+        },
+        "muted": {
+          "$value": "{color.primitive.neutral.700}",
+          "$type": "color",
+          "$description": "Recessed and disabled surface in dark mode (#333333)"
+        },
+        "success": {
+          "$value": "{color.primitive.status.success.surface-dark}",
+          "$type": "color",
+          "$description": "Shade-DS Success Surface 1 in dark mode (#032A1D)"
+        },
+        "warning": {
+          "$value": "{color.primitive.status.warning.surface-dark}",
+          "$type": "color",
+          "$description": "Shade-DS Warning Surface 1 in dark mode (#2C1F04)"
+        },
+        "critical": {
+          "$value": "{color.primitive.status.critical.surface-dark}",
+          "$type": "color",
+          "$description": "Shade-DS Error Surface 1 in dark mode (#281718)"
+        },
+        "focus": {
+          "$value": "{color.primitive.status.info.surface-dark}",
+          "$type": "color",
+          "$description": "Shade-DS Focus Surface 1 in dark mode (#0D1B2A)"
+        },
+        "active": {
+          "$value": "{color.primitive.status.active.surface-dark}",
+          "$type": "color",
+          "$description": "Shade-DS Active Surface 1 in dark mode (#1C062E)"
+        }
       },
       "text": {
-        "default": { "$value": "{color.primitive.neutral.100}", "$type": "color", "$description": "Primary high-contrast body text in dark mode (passes 7:1 AAA)" },
-        "muted": { "$value": "{color.primitive.neutral.300}", "$type": "color", "$description": "Secondary helper and metadata text in dark mode (passes 4.5:1 AA)" },
-        "inverse": { "$value": "{color.primitive.neutral.1000}", "$type": "color", "$description": "Inverted dark text on light surfaces" }
+        "default": {
+          "$value": "{color.primitive.neutral.300}",
+          "$type": "color",
+          "$description": "Primary light ink for dark mode readability (Shade-DS Dark Content 1 #E0E0E0, 13.28:1 AAA)"
+        },
+        "muted": {
+          "$value": "{color.primitive.neutral.400}",
+          "$type": "color",
+          "$description": "Secondary captions and metadata in dark mode (Shade-DS Dark Content 2 #AAAAAA, 7.42:1 AAA)"
+        },
+        "on-Fill": {
+          "$value": "{color.primitive.brand.600}",
+          "$type": "color",
+          "$description": "Dark contrasting text atop white monochrome primary fills in dark mode (#0F0F0F)"
+        }
       },
       "border": {
-        "subtle": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Hairline card borders and table row dividers in dark mode" },
-        "strong": { "$value": "{color.primitive.neutral.600}", "$type": "color", "$description": "Interactive form control border (passes 3:1 on dark canvas)" },
-        "focus": { "$value": "{color.primitive.brand.400}", "$type": "color", "$description": "Accessible keyboard focus ring outline in dark mode" }
+        "subtle": {
+          "$value": "{color.primitive.neutral.700}",
+          "$type": "color",
+          "$description": "Decorative dark structural dividers and hairlines (#333333)"
+        },
+        "strong": {
+          "$value": "{color.primitive.neutral.500}",
+          "$type": "color",
+          "$description": "Mandatory 3:1+ non-text contrast boundary for dark inputs and controls (#777777)"
+        },
+        "focus": {
+          "$value": "{color.primitive.status.info.subtle}",
+          "$type": "color",
+          "$description": "Luminous keyboard focus ring in dark mode (#64B5F6)"
+        }
       },
       "interactive": {
-        "primary": { "$value": "{color.primitive.brand.500}", "$type": "color", "$description": "Primary button fill in dark mode" },
-        "primary-text": { "$value": "{color.primitive.neutral.1100}", "$type": "color", "$description": "High-contrast text on primary button (passes 4.5:1)" },
-        "primary-hover": { "$value": "{color.primitive.brand.400}", "$type": "color", "$description": "Primary button hover state in dark mode" },
-        "link": { "$value": "{color.primitive.brand.400}", "$type": "color", "$description": "Interactive link text in dark mode (passes 4.5:1)" }
+        "primary": {
+          "$value": "{color.primitive.brand.400}",
+          "$type": "color",
+          "$description": "Monochrome white primary interactive control fill in dark mode (#FFFFFF)"
+        },
+        "primary-hover": {
+          "$value": "{color.primitive.brand.500}",
+          "$type": "color",
+          "$description": "Hover state for primary interactive controls in dark mode (#E0E0E0)"
+        },
+        "primary-text": {
+          "$value": "{color.primitive.brand.600}",
+          "$type": "color",
+          "$description": "Dark contrasting text (#0F0F0F) on white primary fill (#FFFFFF) in dark mode (19.25:1 AAA)"
+        },
+        "link": {
+          "$value": "{color.primitive.brand.400}",
+          "$type": "color",
+          "$description": "High-contrast inline link color in dark mode (#FFFFFF)"
+        }
       },
       "status": {
-        "success-text": { "$value": "{color.primitive.status.success.dark}", "$type": "color", "$description": "Positive status feedback text (passes 4.5:1 on dark)" },
-        "warning-text": { "$value": "{color.primitive.status.warning.dark}", "$type": "color", "$description": "Warning alert feedback text (passes 4.5:1 on dark)" },
-        "critical-text": { "$value": "{color.primitive.status.critical.dark}", "$type": "color", "$description": "Error and destructive feedback text (passes 4.5:1 on dark)" }
+        "success-text": {
+          "$value": "{color.primitive.status.success.subtle}",
+          "$type": "color",
+          "$description": "Accessible positive status text in dark mode (#6DD78C)"
+        },
+        "warning-text": {
+          "$value": "{color.primitive.status.warning.subtle}",
+          "$type": "color",
+          "$description": "Accessible warning status text in dark mode (#FF9800)"
+        },
+        "critical-text": {
+          "$value": "{color.primitive.status.critical.subtle}",
+          "$type": "color",
+          "$description": "Accessible critical/error status text in dark mode (#FF453A)"
+        },
+        "focus-text": {
+          "$value": "{color.primitive.status.info.subtle}",
+          "$type": "color",
+          "$description": "Accessible info/focus status text in dark mode (#64B5F6)"
+        },
+        "active-text": {
+          "$value": "{color.primitive.status.active.subtle}",
+          "$type": "color",
+          "$description": "Shade-DS purple active layout and blueprint callout ink in dark mode (#D9A7F7)"
+        }
       }
     }
   }

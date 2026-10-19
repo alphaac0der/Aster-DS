@@ -2,37 +2,53 @@
   "color": {
     "primitive": {
       "neutral": {
-        "0": { "$value": "#ffffff", "$type": "color", "$description": "Pure white" },
-        "50": { "$value": "#faf9f6", "$type": "color", "$description": "Natural warm stone canvas base" },
-        "100": { "$value": "#f3f1ec", "$type": "color", "$description": "Subtle surface and card background" },
-        "200": { "$value": "#e5e2da", "$type": "color", "$description": "Muted surface and hover fill" },
-        "300": { "$value": "#d3cec4", "$type": "color", "$description": "Hairline structural border and divider" },
-        "400": { "$value": "#857e72", "$type": "color", "$description": "High-contrast control border (passes 3:1 on light)" },
-        "600": { "$value": "#706b60", "$type": "color", "$description": "Secondary text and non-text border (passes 3:1 on dark canvas and cards)" },
-        "700": { "$value": "#524d44", "$type": "color", "$description": "Muted reading text (passes 4.5:1 on light)" },
-        "900": { "$value": "#211f1b", "$type": "color", "$description": "Primary high-contrast text in light mode" },
-        "950": { "$value": "#171513", "$type": "color", "$description": "Dark card and container surface" },
-        "1000": { "$value": "#0e0d0c", "$type": "color", "$description": "Dark canvas base" },
-        "1100": { "$value": "#050505", "$type": "color", "$description": "Maximum depth pitch black" }
+        "0": { "$value": "#ffffff", "$type": "color", "$description": "Pure white surface (Shade-DS Light Surface 1 & Dark primary action fill)" },
+        "50": { "$value": "#fafafa", "$type": "color", "$description": "Crisp elevated alabaster surface" },
+        "100": { "$value": "#f5f5f5", "$type": "color", "$description": "Shade-DS Light Base Surface 2 (elevated card surface)" },
+        "200": { "$value": "#eeeeee", "$type": "color", "$description": "Shade-DS Light Base Surface 3 (subtle/muted surface and hairline border)" },
+        "300": { "$value": "#e0e0e0", "$type": "color", "$description": "Shade-DS Dark Base Content 1 (primary dark mode text)" },
+        "400": { "$value": "#aaaaaa", "$type": "color", "$description": "Shade-DS Dark Base Content 2 (secondary muted dark mode text)" },
+        "500": { "$value": "#777777", "$type": "color", "$description": "Shade-DS Dark Base Content 3 (3:1+ WCAG non-text control border in light and dark modes)" },
+        "600": { "$value": "#555555", "$type": "color", "$description": "Shade-DS Light Base Content 2 (secondary muted light mode text, 7.46:1 AAA)" },
+        "700": { "$value": "#333333", "$type": "color", "$description": "Shade-DS Dark Base Surface 3 (dark subtle/muted surface and structural border)" },
+        "800": { "$value": "#1e1e1e", "$type": "color", "$description": "Shade-DS Dark Base Surface 2 (dark elevated card surface)" },
+        "900": { "$value": "#121212", "$type": "color", "$description": "Shade-DS Dark Base Surface 1 (dark canvas and high-contrast light mode ink)" }
       },
       "brand": {
-        "400": { "$value": "#60a5fa", "$type": "color", "$description": "Brand tint for dark mode interactive text" },
-        "500": { "$value": "#3b82f6", "$type": "color", "$description": "Brand tint for dark mode buttons / active states" },
-        "600": { "$value": "#2054d4", "$type": "color", "$description": "Brand tint for light mode primary buttons" },
-        "700": { "$value": "#1a44ab", "$type": "color", "$description": "Brand tint for light mode interactive text" }
+        "400": { "$value": "#ffffff", "$type": "color", "$description": "Shade-DS monochrome white primary action fill for dark theme" },
+        "500": { "$value": "#e0e0e0", "$type": "color", "$description": "Shade-DS monochrome hover/active fill for dark theme" },
+        "600": { "$value": "#0f0f0f", "$type": "color", "$description": "Shade-DS monochrome primary action fill for light theme and contrasting ink on white primary fill" }
       },
       "status": {
         "success": {
-          "light": { "$value": "#147244", "$type": "color", "$description": "Success text in light mode (passes 4.5:1)" },
-          "dark": { "$value": "#34d399", "$type": "color", "$description": "Success text in dark mode (passes 4.5:1)" }
+          "subtle": { "$value": "#6dd78c", "$type": "color", "$description": "Shade-DS Dark Success Content 1" },
+          "default": { "$value": "#188038", "$type": "color", "$description": "Shade-DS Light Success Content 1 (WCAG AA 4.5:1+ calibrated)" },
+          "surface-dark": { "$value": "#032a1d", "$type": "color", "$description": "Shade-DS Dark Success Surface 1" },
+          "surface-light": { "$value": "#e6f4ea", "$type": "color", "$description": "Shade-DS Light Success Surface 1" }
         },
         "warning": {
-          "light": { "$value": "#92400e", "$type": "color", "$description": "Warning text in light mode (passes 4.5:1)" },
-          "dark": { "$value": "#fbbf24", "$type": "color", "$description": "Warning text in dark mode (passes 4.5:1)" }
+          "subtle": { "$value": "#ff9800", "$type": "color", "$description": "Shade-DS Dark Warning Content 1" },
+          "default": { "$value": "#b05a00", "$type": "color", "$description": "Shade-DS Light Warning Content 1 (WCAG AA 4.5:1+ calibrated)" },
+          "surface-dark": { "$value": "#2c1f04", "$type": "color", "$description": "Shade-DS Dark Warning Surface 1" },
+          "surface-light": { "$value": "#fff8e1", "$type": "color", "$description": "Shade-DS Light Warning Surface 1" }
         },
         "critical": {
-          "light": { "$value": "#b91c1c", "$type": "color", "$description": "Critical text in light mode (passes 4.5:1)" },
-          "dark": { "$value": "#f87171", "$type": "color", "$description": "Critical text in dark mode (passes 4.5:1)" }
+          "subtle": { "$value": "#ff453a", "$type": "color", "$description": "Shade-DS Dark Error Content 1 & red dot button" },
+          "default": { "$value": "#c5221f", "$type": "color", "$description": "Shade-DS Light Error Content 1" },
+          "surface-dark": { "$value": "#281718", "$type": "color", "$description": "Shade-DS Dark Error Surface 1" },
+          "surface-light": { "$value": "#fbeaeb", "$type": "color", "$description": "Shade-DS Light Error Surface 1" }
+        },
+        "info": {
+          "subtle": { "$value": "#64b5f6", "$type": "color", "$description": "Shade-DS Dark Focus Content 1" },
+          "default": { "$value": "#1565c0", "$type": "color", "$description": "Shade-DS Light Focus Content 1" },
+          "surface-dark": { "$value": "#0d1b2a", "$type": "color", "$description": "Shade-DS Dark Focus Surface 1" },
+          "surface-light": { "$value": "#e3f2fd", "$type": "color", "$description": "Shade-DS Light Focus Surface 1" }
+        },
+        "active": {
+          "subtle": { "$value": "#d9a7f7", "$type": "color", "$description": "Shade-DS Dark Active Content 1 (Pastel purple)" },
+          "default": { "$value": "#6a1b9a", "$type": "color", "$description": "Shade-DS Light Active Content 1 (Deep purple)" },
+          "surface-dark": { "$value": "#1c062e", "$type": "color", "$description": "Shade-DS Dark Active Surface 1" },
+          "surface-light": { "$value": "#f3e5f5", "$type": "color", "$description": "Shade-DS Light Active Surface 1" }
         }
       }
     }

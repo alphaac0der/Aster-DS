@@ -30,7 +30,6 @@ function rgbaRoughEqual(a, b, epsilon = 0.0001) {
 export function validateFigmaTokens() {
   console.log('================ Aster Figma Payload Validator ================');
   let errors = [];
-  let warnings = [];
 
   const colorsFile = resolve(rootDir, 'dist/figma/aster-colors.json');
   const densityFile = resolve(rootDir, 'dist/figma/aster-density.json');
@@ -67,7 +66,6 @@ export function validateFigmaTokens() {
     errors.push(`Aster Colors has unexpected name "${colorsDoc.name}". Expected "Aster Colors".`);
   }
 
-  // Check modes
   const expectedColorModes = {
     '1001:0': 'Light',
     '1001:1': 'Dark'
@@ -79,12 +77,10 @@ export function validateFigmaTokens() {
     }
   }
 
-  // Check variables list & ID uniqueness
   const colorVarIdSet = new Set();
   const colorVarMap = new Map();
 
   for (const v of colorsDoc.variables || []) {
-    // ID format check
     if (!/^VariableID:1001:\d+$/.test(v.id)) {
       errors.push(`Variable "${v.name}" has invalid ID format: "${v.id}". Expected "VariableID:1001:<positive-int>".`);
     }
@@ -94,13 +90,11 @@ export function validateFigmaTokens() {
     colorVarIdSet.add(v.id);
     colorVarMap.set(v.id, v);
 
-    // Type check
     if (v.type !== 'COLOR') {
       errors.push(`Variable "${v.name}" has invalid type "${v.type}". Expected "COLOR".`);
     }
   }
 
-  // Verify variableIds array matches variables
   if (colorsDoc.variableIds.length !== colorsDoc.variables.length) {
     errors.push(`Aster Colors variableIds length (${colorsDoc.variableIds.length}) does not match variables count (${colorsDoc.variables.length}).`);
   }
@@ -111,14 +105,12 @@ export function validateFigmaTokens() {
     }
   }
 
-  // Verify aliases & resolved values
   let primitiveCount = 0;
   let semanticCount = 0;
 
   for (const v of colorsDoc.variables || []) {
     if (v.name.startsWith('primitive/')) {
       primitiveCount++;
-      // Primitive must have direct RGBA values across both modes
       for (const modeId of ['1001:0', '1001:1']) {
         const val = v.valuesByMode[modeId];
         if (!val || typeof val.r !== 'number' || typeof val.g !== 'number' || typeof val.b !== 'number' || val.a !== 1) {
@@ -131,7 +123,6 @@ export function validateFigmaTokens() {
       }
     } else if (v.name.startsWith('semantic/')) {
       semanticCount++;
-      // Semantic must have aliases pointing to existing variables in collection
       for (const modeId of ['1001:0', '1001:1']) {
         const aliasEntry = v.valuesByMode[modeId];
         if (!aliasEntry || aliasEntry.type !== 'VARIABLE_ALIAS' || !aliasEntry.id) {
@@ -160,14 +151,14 @@ export function validateFigmaTokens() {
     }
   }
 
-  if (primitiveCount !== 22) {
-    errors.push(`Expected 22 primitive colors, found ${primitiveCount}.`);
+  if (primitiveCount !== 34) {
+    errors.push(`Expected 34 primitive colors, found ${primitiveCount}.`);
   }
-  if (semanticCount !== 17) {
-    errors.push(`Expected 17 semantic colors, found ${semanticCount}.`);
+  if (semanticCount !== 24) {
+    errors.push(`Expected 24 semantic colors, found ${semanticCount}.`);
   }
 
-  console.log(`  ✓ Checked ${colorsDoc.variables.length} color variables (22 primitive, 17 semantic).`);
+  console.log(`  ✓ Checked ${colorsDoc.variables.length} color variables (${primitiveCount} primitive, ${semanticCount} semantic).`);
   console.log('  ✓ All color aliases resolve to internal targets with matching RGBA values.');
   console.log('  ✓ Mode mappings strictly valid ("1001:0": Light, "1001:1": Dark).');
 
@@ -184,14 +175,16 @@ export function validateFigmaTokens() {
   }
 
   const expectedDensityModes = {
-    '2001:0': 'Comfortable',
-    '2001:1': 'Compact'
+    '2001:0': 'Standard'
   };
   const actualDensityModes = densityDoc.modes || {};
   for (const [modeId, modeName] of Object.entries(expectedDensityModes)) {
     if (actualDensityModes[modeId] !== modeName) {
       errors.push(`Aster Density mode mismatch: expected "${modeId}": "${modeName}", found "${actualDensityModes[modeId]}".`);
     }
+  }
+  if (actualDensityModes['2001:1'] !== undefined) {
+    errors.push('Aster Density should not include a Compact mode ("2001:1").');
   }
 
   const densityVarIdSet = new Set();
@@ -208,15 +201,13 @@ export function validateFigmaTokens() {
       errors.push(`Density variable "${v.name}" has invalid type "${v.type}". Expected "FLOAT".`);
     }
 
-    for (const modeId of ['2001:0', '2001:1']) {
-      const numVal = v.valuesByMode[modeId];
-      if (typeof numVal !== 'number' || !Number.isFinite(numVal) || numVal < 0) {
-        errors.push(`Density variable "${v.name}" mode "${modeId}" has invalid numeric value: ${numVal}. Must be finite and >= 0.`);
-      }
-      const resolved = v.resolvedValuesByMode[modeId];
-      if (!resolved || resolved.resolvedValue !== numVal || resolved.alias !== null) {
-        errors.push(`Density variable "${v.name}" mode "${modeId}" resolved value mismatch.`);
-      }
+    const numVal = v.valuesByMode['2001:0'];
+    if (typeof numVal !== 'number' || !Number.isFinite(numVal) || numVal < 0) {
+      errors.push(`Density variable "${v.name}" mode "2001:0" has invalid numeric value: ${numVal}. Must be finite and >= 0.`);
+    }
+    const resolved = v.resolvedValuesByMode['2001:0'];
+    if (!resolved || resolved.resolvedValue !== numVal || resolved.alias !== null) {
+      errors.push(`Density variable "${v.name}" mode "2001:0" resolved value mismatch.`);
     }
   }
 
@@ -226,7 +217,7 @@ export function validateFigmaTokens() {
 
   console.log(`  ✓ Checked ${densityDoc.variables.length} density variables.`);
   console.log('  ✓ All numeric dimensions are finite, non-negative numbers (>= 0).');
-  console.log('  ✓ Mode mappings strictly valid ("2001:0": Comfortable, "2001:1": Compact).');
+  console.log('  ✓ Mode mapping strictly valid ("2001:0": Standard).');
 
   // -------------------------------------------------------------
   // 3. Validate "Aster Dimensions"
@@ -299,9 +290,6 @@ export function validateFigmaTokens() {
   console.log('  ✓ Mode mapping strictly valid ("3001:0": Value).');
   console.log('  ✓ Scopes strictly ["ALL_SCOPES"].');
 
-  // -------------------------------------------------------------
-  // Summary
-  // -------------------------------------------------------------
   console.log('\n================================================================');
   if (errors.length > 0) {
     console.error(`FAILED: ${errors.length} validation error(s) found:`);

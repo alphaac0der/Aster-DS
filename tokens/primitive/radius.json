@@ -1,9 +1,9 @@
 {
   "radius": {
-    "none": { "$value": "0px", "$type": "dimension", "$description": "Sharp corners (table cells, panel dividers)" },
-    "sm": { "$value": "2px", "$type": "dimension", "$description": "Subtle radius (checkboxes, tags, micro-badges)" },
-    "md": { "$value": "4px", "$type": "dimension", "$description": "Standard control radius (buttons, inputs, select menus)" },
-    "lg": { "$value": "6px", "$type": "dimension", "$description": "Container radius (cards, dialogs, popovers)" },
-    "full": { "$value": "9999px", "$type": "dimension", "$description": "Fully rounded pill (status indicators, avatar frames)" }
+    "none": { "$value": "0px", "$type": "dimension", "$description": "Sharp 0px corners for full-bleed grids and flush structural dividers" },
+    "sm": { "$value": "4px", "$type": "dimension", "$description": "Minimum 4px component corner radius (Shade-DS Radius.S) for checkboxes, menu items, and tooltips" },
+    "md": { "$value": "8px", "$type": "dimension", "$description": "Default 8px component corner radius (Shade-DS Radius.M) for cards, alerts, toasts, and textareas" },
+    "lg": { "$value": "12px", "$type": "dimension", "$description": "12px container corner radius (Shade-DS Radius.L) for inputs, dialogs, popovers, and panels" },
+    "full": { "$value": "9999px", "$type": "dimension", "$description": "Full pill radius (Shade-DS Radius.Full) for buttons, badges, selects, and switches" }
   }
 }

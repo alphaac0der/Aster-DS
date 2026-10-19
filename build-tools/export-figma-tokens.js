@@ -99,13 +99,11 @@ export function exportFigmaTokens() {
   const semanticLightPath = resolve(rootDir, 'tokens/semantic/light.json');
   const semanticDarkPath = resolve(rootDir, 'tokens/semantic/dark.json');
   const densityComfortablePath = resolve(rootDir, 'tokens/density/comfortable.json');
-  const densityCompactPath = resolve(rootDir, 'tokens/density/compact.json');
 
   const primitiveColorDoc = JSON.parse(readFileSync(primitiveColorPath, 'utf8'));
   const semanticLightDoc = JSON.parse(readFileSync(semanticLightPath, 'utf8'));
   const semanticDarkDoc = JSON.parse(readFileSync(semanticDarkPath, 'utf8'));
   const densityComfortableDoc = JSON.parse(readFileSync(densityComfortablePath, 'utf8'));
-  const densityCompactDoc = JSON.parse(readFileSync(densityCompactPath, 'utf8'));
 
   // Deferred canonical token files for full reconciliation
   const typographyDoc = JSON.parse(readFileSync(resolve(rootDir, 'tokens/primitive/typography.json'), 'utf8'));
@@ -132,8 +130,6 @@ export function exportFigmaTokens() {
     variables: []
   };
 
-  // Map to store primitive hex, rgba, and variable ID for alias resolution
-  // Key: canonical reference string (e.g. "color.primitive.neutral.50" or "primitive/neutral/50")
   const primitiveMap = new Map();
 
   function registerPrimitive(name, description, hex) {
@@ -167,7 +163,6 @@ export function exportFigmaTokens() {
     colorCollection.variableIds.push(varId);
     colorCollection.variables.push(variable);
 
-    // Save under dot path and slash path for flexible reference lookup
     primitiveMap.set(name, { id: varId, name, rgba, hex });
     return varId;
   }
@@ -203,8 +198,6 @@ export function exportFigmaTokens() {
 
   const primitiveColorCount = colorCollection.variables.length; // 22
 
-  // Process Semantic Colors (Light & Dark)
-  // Both semantic docs have identical key hierarchy
   function resolveDtcgRef(refStr) {
     const cleaned = refStr.replace(/^\{/, '').replace(/\}$/, '').trim();
     if (!primitiveMap.has(cleaned)) {
@@ -275,61 +268,42 @@ export function exportFigmaTokens() {
   const semanticColorCount = totalColorCount - primitiveColorCount;
 
   // -------------------------------------------------------------
-  // 2. Build "Aster Density" Collection
+  // 2. Build "Aster Density" Collection (Single Standard Density)
   // -------------------------------------------------------------
   const densityCollectionChunk = '2001';
   const densityIdGen = new IdGenerator(densityCollectionChunk);
-  const densityModeComfortable = `${densityCollectionChunk}:0`;
-  const densityModeCompact = `${densityCollectionChunk}:1`;
+  const densityModeStandard = `${densityCollectionChunk}:0`;
 
   const densityCollection = {
     id: `VariableCollectionId:${densityCollectionChunk}:1`,
     name: 'Aster Density',
     modes: {
-      [densityModeComfortable]: 'Comfortable',
-      [densityModeCompact]: 'Compact'
+      [densityModeStandard]: 'Standard'
     },
     variableIds: [],
     variables: []
   };
 
   const comfDensityObj = densityComfortableDoc.density;
-  const compDensityObj = densityCompactDoc.density;
 
   for (const [catName, catTokens] of Object.entries(comfDensityObj)) {
-    const compTokens = compDensityObj[catName];
-    if (!compTokens) {
-      throw new Error(`Missing density category "${catName}" in compact tokens.`);
-    }
-
     for (const [tokenName, comfToken] of Object.entries(catTokens)) {
-      const compToken = compTokens[tokenName];
-      if (!compToken) {
-        throw new Error(`Missing density token "${catName}.${tokenName}" in compact tokens.`);
-      }
-
       const canonicalName = `density/${catName}/${tokenName}`;
       const varId = densityIdGen.getId(canonicalName);
 
       const valComf = parseDimension(comfToken.$value);
-      const valComp = parseDimension(compToken.$value);
 
       const variable = {
         id: varId,
         name: canonicalName,
-        description: comfToken.$description || compToken.$description || '',
+        description: comfToken.$description || '',
         type: 'FLOAT',
         valuesByMode: {
-          [densityModeComfortable]: valComf,
-          [densityModeCompact]: valComp
+          [densityModeStandard]: valComf
         },
         resolvedValuesByMode: {
-          [densityModeComfortable]: {
+          [densityModeStandard]: {
             resolvedValue: valComf,
-            alias: null
-          },
-          [densityModeCompact]: {
-            resolvedValue: valComp,
             alias: null
           }
         },
@@ -424,9 +398,9 @@ export function exportFigmaTokens() {
     return count;
   }
 
-  const typographyCount = countLeaves(typographyDoc); // 16
-  const shadowCount = countLeaves(elevationDoc.elevation.shadow); // 3
-  const totalDeferredCount = typographyCount + shadowCount; // 19
+  const typographyCount = countLeaves(typographyDoc);
+  const shadowCount = countLeaves(elevationDoc.elevation.shadow);
+  const totalDeferredCount = typographyCount + shadowCount;
 
   const totalCanonicalTokens = totalColorCount + totalDensityCount + totalDimensionsCount + totalDeferredCount;
 
@@ -449,7 +423,7 @@ export function exportFigmaTokens() {
   console.log('\n================ Aster Figma Exporter Inventory ================');
   console.log(`Total canonical source tokens:       ${totalCanonicalTokens}`);
   console.log(`  - Exported to 'Aster Colors':      ${totalColorCount} (${primitiveColorCount} primitive, ${semanticColorCount} semantic)`);
-  console.log(`  - Exported to 'Aster Density':      ${totalDensityCount} (contextual density dimensions)`);
+  console.log(`  - Exported to 'Aster Density':      ${totalDensityCount} (standard density dimensions)`);
   console.log(`  - Exported to 'Aster Dimensions':   ${totalDimensionsCount} (primitive spacing, radius, border widths)`);
   console.log(`  - Explicitly deferred:             ${totalDeferredCount} (${typographyCount} typography, ${shadowCount} elevation shadows)`);
   console.log(`  - Unexpected / unmapped:            0`);

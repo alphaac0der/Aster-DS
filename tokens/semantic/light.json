@@ -2,31 +2,134 @@
   "semantic": {
     "color": {
       "surface": {
-        "canvas": { "$value": "{color.primitive.neutral.50}", "$type": "color", "$description": "Main application background canvas in light mode" },
-        "card": { "$value": "{color.primitive.neutral.0}", "$type": "color", "$description": "Elevated card and panel background in light mode" },
-        "subtle": { "$value": "{color.primitive.neutral.100}", "$type": "color", "$description": "Subtle container fill and alternating table rows in light mode" },
-        "muted": { "$value": "{color.primitive.neutral.200}", "$type": "color", "$description": "Disabled or inactive container fill in light mode" }
+        "canvas": {
+          "$value": "{color.primitive.neutral.0}",
+          "$type": "color",
+          "$description": "Primary application background canvas (Shade-DS Light Surface 1 #FFFFFF)"
+        },
+        "card": {
+          "$value": "{color.primitive.neutral.100}",
+          "$type": "color",
+          "$description": "Elevated card and container surface (Shade-DS Light Surface 2 #F5F5F5)"
+        },
+        "subtle": {
+          "$value": "{color.primitive.neutral.200}",
+          "$type": "color",
+          "$description": "Secondary grouping and table header fill (Shade-DS Light Surface 3 #EEEEEE)"
+        },
+        "muted": {
+          "$value": "{color.primitive.neutral.200}",
+          "$type": "color",
+          "$description": "Disabled and recessed background surface (#EEEEEE)"
+        },
+        "success": {
+          "$value": "{color.primitive.status.success.surface-light}",
+          "$type": "color",
+          "$description": "Shade-DS Success Surface 1 in light mode (#E6F4EA)"
+        },
+        "warning": {
+          "$value": "{color.primitive.status.warning.surface-light}",
+          "$type": "color",
+          "$description": "Shade-DS Warning Surface 1 in light mode (#FFF8E1)"
+        },
+        "critical": {
+          "$value": "{color.primitive.status.critical.surface-light}",
+          "$type": "color",
+          "$description": "Shade-DS Error Surface 1 in light mode (#FBEAEB)"
+        },
+        "focus": {
+          "$value": "{color.primitive.status.info.surface-light}",
+          "$type": "color",
+          "$description": "Shade-DS Focus Surface 1 in light mode (#E3F2FD)"
+        },
+        "active": {
+          "$value": "{color.primitive.status.active.surface-light}",
+          "$type": "color",
+          "$description": "Shade-DS Active Surface 1 in light mode (#F3E5F5)"
+        }
       },
       "text": {
-        "default": { "$value": "{color.primitive.neutral.900}", "$type": "color", "$description": "Primary high-contrast body text in light mode (passes 7:1 AAA)" },
-        "muted": { "$value": "{color.primitive.neutral.700}", "$type": "color", "$description": "Secondary helper and metadata text in light mode (passes 4.5:1 AA)" },
-        "inverse": { "$value": "{color.primitive.neutral.0}", "$type": "color", "$description": "Inverted white text on dark surfaces" }
+        "default": {
+          "$value": "{color.primitive.neutral.900}",
+          "$type": "color",
+          "$description": "Primary body and heading ink (#121212, 18.73:1 AAA contrast)"
+        },
+        "muted": {
+          "$value": "{color.primitive.neutral.600}",
+          "$type": "color",
+          "$description": "Secondary captions, labels, and metadata (#555555, 7.46:1 AAA contrast)"
+        },
+        "on-Fill": {
+          "$value": "{color.primitive.neutral.0}",
+          "$type": "color",
+          "$description": "High-contrast text atop dark monochrome fills (#FFFFFF)"
+        }
       },
       "border": {
-        "subtle": { "$value": "{color.primitive.neutral.300}", "$type": "color", "$description": "Hairline card borders and table row dividers" },
-        "strong": { "$value": "{color.primitive.neutral.400}", "$type": "color", "$description": "Interactive form control border (passes 3:1 on light canvas)" },
-        "focus": { "$value": "{color.primitive.brand.600}", "$type": "color", "$description": "Accessible keyboard focus ring outline" }
+        "subtle": {
+          "$value": "{color.primitive.neutral.200}",
+          "$type": "color",
+          "$description": "Decorative structural dividers and table cell hairlines (#EEEEEE)"
+        },
+        "strong": {
+          "$value": "{color.primitive.neutral.500}",
+          "$type": "color",
+          "$description": "Mandatory 3:1+ non-text contrast boundary for form inputs and controls (#777777)"
+        },
+        "focus": {
+          "$value": "{color.primitive.status.info.default}",
+          "$type": "color",
+          "$description": "High-visibility keyboard focus indicator ring (#1565C0)"
+        }
       },
       "interactive": {
-        "primary": { "$value": "{color.primitive.brand.600}", "$type": "color", "$description": "Primary button fill in light mode" },
-        "primary-text": { "$value": "{color.primitive.neutral.0}", "$type": "color", "$description": "High-contrast text on primary button (passes 4.5:1)" },
-        "primary-hover": { "$value": "{color.primitive.brand.700}", "$type": "color", "$description": "Primary button hover state in light mode" },
-        "link": { "$value": "{color.primitive.brand.700}", "$type": "color", "$description": "Interactive link text in light mode (passes 4.5:1)" }
+        "primary": {
+          "$value": "{color.primitive.brand.600}",
+          "$type": "color",
+          "$description": "Primary interactive control fill in light mode (Shade-DS Accent Surface 1 #0F0F0F)"
+        },
+        "primary-hover": {
+          "$value": "{color.primitive.neutral.700}",
+          "$type": "color",
+          "$description": "Hover state for primary interactive controls in light mode (#333333)"
+        },
+        "primary-text": {
+          "$value": "{color.primitive.neutral.0}",
+          "$type": "color",
+          "$description": "Contrasting white label text inside light-mode primary buttons (#FFFFFF, 19.25:1)"
+        },
+        "link": {
+          "$value": "{color.primitive.brand.600}",
+          "$type": "color",
+          "$description": "Inline interactive hyperlink text (#0F0F0F)"
+        }
       },
       "status": {
-        "success-text": { "$value": "{color.primitive.status.success.light}", "$type": "color", "$description": "Positive status feedback text (passes 4.5:1 on light)" },
-        "warning-text": { "$value": "{color.primitive.status.warning.light}", "$type": "color", "$description": "Warning alert feedback text (passes 4.5:1 on light)" },
-        "critical-text": { "$value": "{color.primitive.status.critical.light}", "$type": "color", "$description": "Error and destructive feedback text (passes 4.5:1 on light)" }
+        "success-text": {
+          "$value": "{color.primitive.status.success.default}",
+          "$type": "color",
+          "$description": "Accessible positive status text and icon color (#188038)"
+        },
+        "warning-text": {
+          "$value": "{color.primitive.status.warning.default}",
+          "$type": "color",
+          "$description": "Accessible caution status text and icon color (#B05A00)"
+        },
+        "critical-text": {
+          "$value": "{color.primitive.status.critical.default}",
+          "$type": "color",
+          "$description": "Accessible error and destructive status text (#C5221F)"
+        },
+        "focus-text": {
+          "$value": "{color.primitive.status.info.default}",
+          "$type": "color",
+          "$description": "Accessible info/focus status text and icon color (#1565C0)"
+        },
+        "active-text": {
+          "$value": "{color.primitive.status.active.default}",
+          "$type": "color",
+          "$description": "Shade-DS purple active layout and blueprint callout ink (#6A1B9A)"
+        }
       }
     }
   }
