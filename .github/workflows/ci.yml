@@ -44,3 +44,6 @@ jobs:
 
       - name: Verify package tarball contents
         run: npm run test:pack
+
+      - name: Verify isolated build without scratch
+        run: npm run test:isolated-build

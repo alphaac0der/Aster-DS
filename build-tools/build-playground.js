@@ -517,7 +517,7 @@ npm run test:browser
 }
 
 
-const phosphorIconsData = JSON.parse(readFileSync(join(rootDir, 'scratch/phosphor-icons.json'), 'utf8'));
+const phosphorIconsData = JSON.parse(readFileSync(join(rootDir, 'assets/icons/phosphor-icons.json'), 'utf8'));
 const PHOSPHOR_SYMBOL_MAP = {
   'i-star': phosphorIconsData['sparkle'],
   'i-search': phosphorIconsData['magnifying-glass'],

@@ -38,6 +38,7 @@ npm run build
 | `npm run test:components` | Validates concrete token references and structural contracts across all 21 components (646/646) |
 | `npm run test:exports` | Validates package entry points and exports resolution (18/18) |
 | `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification |
+| `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox without `scratch/` |
 | `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (113/113) |
 
 ---
