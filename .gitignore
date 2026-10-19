@@ -42,3 +42,9 @@ node_modules/
 dist/
 build/
 coverage/
+
+# --- Aster scratch, local artifacts & governance privacy ---
+scratch/
+.artifacts/
+governance/USER.md
+*.zip

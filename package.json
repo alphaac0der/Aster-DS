@@ -42,6 +42,7 @@
     "test:exports": "node build-tools/verify-package-exports.js",
     "test:browser": "node build-tools/audit-browser.js",
     "test:pack": "npm pack --dry-run",
+    "test": "npm run test:figma && npm run test:contrast && npm run test:components && npm run test:docs && npm run test:exports && npm run test:pack",
     "playground": "node build-tools/serve-playground.js"
   },
   "devDependencies": {

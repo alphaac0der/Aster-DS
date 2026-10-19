@@ -1,0 +1,46 @@
+name: CI Verification
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: Build & Verify Quality Gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build design tokens, components, and documentation
+        run: npm run build
+
+      - name: Validate Figma token payloads
+        run: npm run test:figma
+
+      - name: Verify role-aware contrast (WCAG 2.2 AA)
+        run: npm run test:contrast
+
+      - name: Verify component contracts & agent skills
+        run: npm run test:components
+
+      - name: Verify documentation token consistency
+        run: npm run test:docs
+
+      - name: Verify package exports & self-imports
+        run: npm run test:exports
+
+      - name: Verify package tarball contents
+        run: npm run test:pack
