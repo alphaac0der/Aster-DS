@@ -4,12 +4,45 @@
   "private": true,
   "description": "Aster Design System — One source of truth for humans and AI agents",
   "type": "module",
+  "main": "./dist/js/aster.js",
+  "module": "./dist/js/aster.js",
+  "style": "./dist/css/aster.css",
+  "exports": {
+    ".": {
+      "import": "./dist/js/aster.js",
+      "default": "./dist/js/aster.js"
+    },
+    "./tokens.css": "./dist/css/tokens.css",
+    "./components.css": "./dist/css/components.css",
+    "./aster.css": "./dist/css/aster.css",
+    "./css/tokens": "./dist/css/tokens.css",
+    "./css/components": "./dist/css/components.css",
+    "./css/aster": "./dist/css/aster.css",
+    "./css/tokens.css": "./dist/css/tokens.css",
+    "./css/components.css": "./dist/css/components.css",
+    "./css/aster.css": "./dist/css/aster.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "docs/",
+    "skills/",
+    "README.md"
+  ],
   "scripts": {
     "build:tokens": "node build-tools/build-tokens.js",
+    "build:components": "node build-tools/build-components.js",
+    "build:playground": "node build-tools/build-playground.js",
+    "build": "npm run build:tokens && npm run build:components && npm run build:playground",
     "test:contrast": "node build-tools/verify-contrast.js",
     "test:docs": "node build-tools/verify-docs-consistency.js",
     "export:figma": "node build-tools/export-figma-tokens.js",
-    "test:figma": "node build-tools/validate-figma-tokens.js"
+    "test:figma": "node build-tools/validate-figma-tokens.js",
+    "test:components": "node build-tools/verify-component-contracts.js",
+    "test:exports": "node build-tools/verify-package-exports.js",
+    "test:browser": "node build-tools/audit-browser.js",
+    "test:pack": "npm pack --dry-run",
+    "playground": "node build-tools/serve-playground.js"
   },
   "devDependencies": {
     "style-dictionary": "^5.6.1"

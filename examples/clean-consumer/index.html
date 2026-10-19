@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aster Design System — Clean Consumer Integration Example</title>
+
+  <!-- Canonical Distribution Stylesheets (Zero Playground Styles) -->
+  <link rel="stylesheet" href="/dist/css/tokens.css">
+  <link rel="stylesheet" href="/dist/css/components.css">
+
+  <style>
+    /* Minimal layout and reset for the consumer host page */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: var(--as-space-6) var(--as-space-4);
+      background-color: var(--as-semantic-color-surface-canvas);
+      color: var(--as-semantic-color-text-default);
+      font-family: var(--as-typography-font-family-sans);
+      font-size: var(--as-typography-font-size-base);
+      line-height: var(--as-typography-line-height-normal);
+      transition: background-color var(--as-motion-duration-base) var(--as-motion-ease-out);
+    }
+    .consumer-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--as-space-8);
+    }
+    .consumer-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--as-space-4);
+      padding-bottom: var(--as-space-4);
+      border-bottom: var(--as-elevation-border-hairline) solid color-mix(in srgb, var(--as-semantic-color-text-default) 12%, transparent);
+    }
+    .consumer-header h1 {
+      margin: 0;
+      font-size: var(--as-typography-font-size-xl);
+      font-weight: var(--as-typography-font-weight-semibold);
+      letter-spacing: -0.02em;
+    }
+    .consumer-header p {
+      margin: var(--as-space-1) 0 0;
+      color: var(--as-semantic-color-text-muted);
+      font-size: var(--as-typography-font-size-sm);
+    }
+    .consumer-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--as-space-2);
+    }
+    .consumer-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--as-space-4);
+      padding: var(--as-space-6);
+      background-color: var(--as-semantic-color-surface-card);
+      border-radius: var(--as-radius-lg);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), inset 0 0 0 var(--as-elevation-border-hairline) color-mix(in srgb, var(--as-semantic-color-text-default) 10%, transparent);
+    }
+    .consumer-section h2 {
+      margin: 0;
+      font-size: var(--as-typography-font-size-lg);
+      font-weight: var(--as-typography-font-weight-semibold);
+    }
+    .consumer-section p.section-desc {
+      margin: 0;
+      color: var(--as-semantic-color-text-muted);
+      font-size: var(--as-typography-font-size-sm);
+    }
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--as-space-3);
+    }
+    .grid-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--as-space-4);
+    }
+    .event-log {
+      padding: var(--as-space-3) var(--as-space-4);
+      background: color-mix(in srgb, var(--as-semantic-color-text-default) 4%, transparent);
+      border-radius: var(--as-radius-md);
+      font-family: var(--as-typography-font-family-mono);
+      font-size: var(--as-typography-font-size-xs);
+      color: var(--as-semantic-color-text-muted);
+      min-height: 28px;
+    }
+    .overflow-narrow-box {
+      max-width: 480px;
+    }
+  </style>
+</head>
+<body>
+  <div class="consumer-shell">
+    <!-- Header with Live System Mode Controls -->
+    <header class="consumer-header">
+      <div>
+        <h1>Project Cluster: Production Europe-West</h1>
+        <p>Clean consumer verification fixture loading only <code>dist/css/tokens.css</code>, <code>dist/css/components.css</code>, and <code>dist/js/aster.js</code>.</p>
+      </div>
+      <div class="consumer-controls">
+        <button type="button" class="as-button as-button--secondary" id="btn-toggle-theme">
+          <span class="as-button__label" id="theme-btn-label">Theme: Light</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="event-log" id="event-log" aria-live="polite">Status: Aster components initialized. Ready for interaction.</div>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 1: BUTTONS                                                  -->
+    <!-- =================================================================== -->
+    <section class="consumer-section" id="section-buttons">
+      <h2>1. Action Buttons</h2>
+      <p class="section-desc">Testing all 4 variants, 24px horizontal padding, Shade-DS pointer-origin circular hover, keyboard press, disabled, aria-disabled, and loading states.</p>
+
+      <!-- All 4 Variants -->
+      <div class="component-row" id="row-btn-variants">
+        <button type="button" class="as-button as-button--primary" id="btn-primary" data-action-name="Primary Submit">
+          <span class="as-button__label">Deploy Cluster</span>
+        </button>
+        <button type="button" class="as-button as-button--secondary" id="btn-secondary" data-action-name="Secondary Cancel">
+          <span class="as-button__label">Cancel</span>
+        </button>
+        <button type="button" class="as-button as-button--destructive" id="btn-destructive" data-action-name="Destructive Delete">
+          <span class="as-button__label">Terminate Node</span>
+        </button>
+        <button type="button" class="as-button as-button--ghost" id="btn-ghost" data-action-name="Ghost Settings">
+          <span class="as-button__label">View Logs</span>
+        </button>
+      </div>
+
+      <!-- State Variants & Safeguards -->
+      <div class="component-row" id="row-btn-states">
+        <!-- Native Disabled (Cannot be clicked or focused) -->
+        <button type="button" class="as-button as-button--secondary" id="btn-native-disabled" disabled data-action-name="Native Disabled">
+          <span class="as-button__label">Native Disabled</span>
+        </button>
+        <!-- Focus-Retaining Disabled (aria-disabled="true") -->
+        <button type="button" class="as-button as-button--secondary" id="btn-aria-disabled" aria-disabled="true" data-action-name="ARIA Disabled">
+          <span class="as-button__label">Focus-Retaining Disabled</span>
+        </button>
+        <!-- Asynchronous Loading State (aria-busy="true") -->
+        <button type="button" class="as-button as-button--primary" id="btn-aria-busy" aria-busy="true" data-action-name="ARIA Busy">
+          <span class="as-button__label">Processing...</span>
+        </button>
+        <!-- Interactive Trigger to test programmatic setButtonLoading() -->
+        <button type="button" class="as-button as-button--secondary" id="btn-test-loader">
+          <span class="as-button__label">Test Async Loading Flow</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 2: INPUT / FORM FIELDS                                      -->
+    <!-- =================================================================== -->
+    <section class="consumer-section" id="section-inputs">
+      <h2>2. Input / Form Fields</h2>
+      <p class="section-desc">Testing label associations, helper text, error feedback, required/invalid states, clear buttons, password visibility toggling, disabled, and readonly behavior.</p>
+
+      <form class="grid-fields" id="consumer-form" onsubmit="return false;">
+        <!-- Standard Text Input with Helper Text -->
+        <div class="as-form-field" id="field-cluster-name">
+          <label class="as-form-field__label" for="inp-cluster-name">
+            Cluster Identifier <span class="as-form-field__required" aria-hidden="true">*</span>
+          </label>
+          <div class="as-input-box">
+            <input
+              type="text"
+              class="as-input"
+              id="inp-cluster-name"
+              name="clusterName"
+              value="prod-eu-west-01"
+              required
+              data-validate="slug"
+              aria-describedby="inp-cluster-name-helper"
+            >
+            <button
+              type="button"
+              class="as-input__action as-input__action--clear"
+              data-clear-for="inp-cluster-name"
+              aria-label="Clear cluster identifier"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="as-form-field__error" id="inp-cluster-name-err" hidden>
+            <svg class="as-form-field__error-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="8" cy="8" r="7"></circle>
+              <line x1="8" y1="4" x2="8" y2="9"></line>
+              <circle cx="8" cy="12" r="0.75" fill="currentColor"></circle>
+            </svg>
+            <span class="as-form-field__error-text"></span>
+          </div>
+          <div class="as-form-field__helper" id="inp-cluster-name-helper">
+            Lowercase letters, numbers, and hyphens only.
+          </div>
+        </div>
+
+        <!-- Password Field with Show/Hide Toggle -->
+        <div class="as-form-field" id="field-api-key">
+          <label class="as-form-field__label" for="inp-api-key">API Secret Token</label>
+          <div class="as-input-box">
+            <input
+              type="password"
+              class="as-input as-input--mono"
+              id="inp-api-key"
+              name="apiKey"
+              value="sk_live_9948274102938472"
+              aria-describedby="inp-api-key-helper"
+            >
+            <button
+              type="button"
+              class="as-input__action as-input__action--pw"
+              data-toggle-pw="inp-api-key"
+              aria-label="Toggle password visibility"
+              aria-pressed="false"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <div class="as-form-field__helper" id="inp-api-key-helper">
+            Required for worker node authentication.
+          </div>
+        </div>
+
+        <!-- Disabled Field -->
+        <div class="as-form-field" id="field-region">
+          <label class="as-form-field__label" for="inp-region">Assigned Cloud Region</label>
+          <div class="as-input-box as-input-box--disabled">
+            <input
+              type="text"
+              class="as-input"
+              id="inp-region"
+              value="eu-west-1 (Frankfurt)"
+              disabled
+              aria-describedby="inp-region-helper"
+            >
+          </div>
+          <div class="as-form-field__helper" id="inp-region-helper">
+            Fixed by infrastructure provisioning policy.
+          </div>
+        </div>
+
+        <!-- Readonly Field -->
+        <div class="as-form-field" id="field-endpoint">
+          <label class="as-form-field__label" for="inp-endpoint">Gateway DNS Endpoint</label>
+          <div class="as-input-box">
+            <input
+              type="text"
+              class="as-input as-input--mono"
+              id="inp-endpoint"
+              value="https://gw.eu-west.aster.internal:8443"
+              readonly
+              aria-describedby="inp-endpoint-helper"
+            >
+          </div>
+          <div class="as-form-field__helper" id="inp-endpoint-helper">
+            Read-only assigned gateway endpoint.
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 3: DATA TABLE                                               -->
+    <!-- =================================================================== -->
+    <section class="consumer-section" id="section-tables">
+      <h2>3. Data Table & Dynamic Overflow Accessibility</h2>
+      <p class="section-desc">Testing native table semantics, sort state cycling, multi-row selection, checkbox indeterminate behavior, and horizontal overflow responsiveness.</p>
+
+      <!-- Table 3A: Wide Table in Constrained Container (Forces Horizontal Overflow) -->
+      <div>
+        <h3 style="margin: 0 0 var(--as-space-2); font-size: 14px; font-weight: 600;">Table A: Overflowing Table (scrollWidth &gt; clientWidth)</h3>
+        <p class="section-desc" style="margin-bottom: var(--as-space-3);">Expects <code>tabindex="0"</code>, <code>role="region"</code>, and <code>aria-label</code> when overflowing.</p>
+
+        <div class="overflow-narrow-box">
+          <div class="as-table-container as-table-scroll" id="table-scroll-overflow">
+            <table class="as-table as-table--striped" id="tbl-nodes">
+              <caption class="as-table__caption">Worker Node Infrastructure Allocation</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="as-table__th as-table__th--check">
+                    <label class="as-checkbox">
+                      <input type="checkbox" id="chk-select-all" aria-label="Select all worker nodes">
+                    </label>
+                  </th>
+                  <th scope="col" class="as-table__th" aria-sort="ascending">
+                    <button type="button" class="as-table__sort as-table__sort-btn" data-sort-key="nodeId">
+                      <span>Node ID</span>
+                      <svg class="as-table__sort-icon" viewBox="0 0 10 14" aria-hidden="true">
+                        <path class="sort-up" d="M5 2L1 7h8L5 2z"/>
+                        <path class="sort-down" d="M5 12L1 7h8l-4 5z"/>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="as-table__th" aria-sort="none">
+                    <button type="button" class="as-table__sort as-table__sort-btn" data-sort-key="status">
+                      <span>Operational Status</span>
+                      <svg class="as-table__sort-icon" viewBox="0 0 10 14" aria-hidden="true">
+                        <path class="sort-up" d="M5 2L1 7h8L5 2z"/>
+                        <path class="sort-down" d="M5 12L1 7h8l-4 5z"/>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="as-table__th" aria-sort="none">
+                    <button type="button" class="as-table__sort as-table__sort-btn" data-sort-key="role">
+                      <span>Cluster Role</span>
+                      <svg class="as-table__sort-icon" viewBox="0 0 10 14" aria-hidden="true">
+                        <path class="sort-up" d="M5 2L1 7h8L5 2z"/>
+                        <path class="sort-down" d="M5 12L1 7h8l-4 5z"/>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="as-table__th as-table__th--num" aria-sort="none">
+                    <button type="button" class="as-table__sort as-table__sort-btn" data-sort-key="memory">
+                      <span>Memory (GB)</span>
+                      <svg class="as-table__sort-icon" viewBox="0 0 10 14" aria-hidden="true">
+                        <path class="sort-up" d="M5 2L1 7h8L5 2z"/>
+                        <path class="sort-down" d="M5 12L1 7h8l-4 5z"/>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="as-table__th as-table__th--num" aria-sort="none">
+                    <button type="button" class="as-table__sort as-table__sort-btn" data-sort-key="cpu">
+                      <span>vCPU Cores</span>
+                      <svg class="as-table__sort-icon" viewBox="0 0 10 14" aria-hidden="true">
+                        <path class="sort-up" d="M5 2L1 7h8L5 2z"/>
+                        <path class="sort-down" d="M5 12L1 7h8l-4 5z"/>
+                      </svg>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="as-table__row" id="row-node-1">
+                  <td class="as-table__cell as-table__cell--check">
+                    <label class="as-checkbox">
+                      <input type="checkbox" data-row-id="node-1" aria-label="Select node-worker-01">
+                    </label>
+                  </td>
+                  <th scope="row" class="as-table__cell" style="font-weight: 500;">node-worker-01</th>
+                  <td class="as-table__cell">
+                    <span class="as-badge" style="--_c: var(--as-semantic-color-status-success-text);">Running</span>
+                  </td>
+                  <td class="as-table__cell">Ingress Router</td>
+                  <td class="as-table__cell as-table__cell--num">64.0</td>
+                  <td class="as-table__cell as-table__cell--num">16</td>
+                </tr>
+                <tr class="as-table__row" id="row-node-2">
+                  <td class="as-table__cell as-table__cell--check">
+                    <label class="as-checkbox">
+                      <input type="checkbox" data-row-id="node-2" aria-label="Select node-worker-02">
+                    </label>
+                  </td>
+                  <th scope="row" class="as-table__cell" style="font-weight: 500;">node-worker-02</th>
+                  <td class="as-table__cell">
+                    <span class="as-badge" style="--_c: var(--as-semantic-color-status-success-text);">Running</span>
+                  </td>
+                  <td class="as-table__cell">Database Primary</td>
+                  <td class="as-table__cell as-table__cell--num">128.0</td>
+                  <td class="as-table__cell as-table__cell--num">32</td>
+                </tr>
+                <tr class="as-table__row" id="row-node-3">
+                  <td class="as-table__cell as-table__cell--check">
+                    <label class="as-checkbox">
+                      <input type="checkbox" data-row-id="node-3" aria-label="Select node-worker-03">
+                    </label>
+                  </td>
+                  <th scope="row" class="as-table__cell" style="font-weight: 500;">node-worker-03</th>
+                  <td class="as-table__cell">
+                    <span class="as-badge" style="--_c: var(--as-semantic-color-status-warning-text);">Draining</span>
+                  </td>
+                  <td class="as-table__cell">Batch Processing</td>
+                  <td class="as-table__cell as-table__cell--num">32.0</td>
+                  <td class="as-table__cell as-table__cell--num">8</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table 3B: Non-Overflowing Table (All columns fit comfortably) -->
+      <div style="margin-top: var(--as-space-4);">
+        <h3 style="margin: 0 0 var(--as-space-2); font-size: 14px; font-weight: 600;">Table B: Non-Overflowing Table (Fits container)</h3>
+        <p class="section-desc" style="margin-bottom: var(--as-space-3);">Expects NO <code>tabindex="0"</code> or <code>role="region"</code> to avoid redundant tab stops.</p>
+
+        <div class="as-table-container as-table-scroll" id="table-scroll-fit">
+          <table class="as-table" id="tbl-summary">
+            <caption class="as-table__caption">Cluster Overview Summary</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="as-table__th">Metric</th>
+                <th scope="col" class="as-table__th">Status</th>
+                <th scope="col" class="as-table__th as-table__th--num">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="as-table__row">
+                <th scope="row" class="as-table__cell" style="font-weight: 500;">Global Uptime</th>
+                <td class="as-table__cell"><span class="as-badge" style="--_c: var(--as-semantic-color-status-success-text);">99.98%</span></td>
+                <td class="as-table__cell as-table__cell--num">42 days</td>
+              </tr>
+              <tr class="as-table__row">
+                <th scope="row" class="as-table__cell" style="font-weight: 500;">Active Connections</th>
+                <td class="as-table__cell">Normal</td>
+                <td class="as-table__cell as-table__cell--num">14,290</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 3C: State Rows Preview (Empty, Loading, Error) -->
+      <div style="margin-top: var(--as-space-4);">
+        <h3 style="margin: 0 0 var(--as-space-2); font-size: 14px; font-weight: 600;">Table C: State Variations (Empty, Loading, Error)</h3>
+        <div class="as-table-container as-table-scroll">
+          <table class="as-table" id="tbl-states" aria-busy="true">
+            <caption class="as-table__caption">Audit Log Feedback States</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="as-table__th">Timestamp</th>
+                <th scope="col" class="as-table__th">Event</th>
+                <th scope="col" class="as-table__th">User</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="as-table-row--loading">
+                <td colspan="3" style="text-align: center; padding: var(--as-space-6);">
+                  <div class="as-table-state-box" style="display: flex; flex-direction: column; align-items: center; gap: var(--as-space-2);">
+                    <span class="as-spinner" aria-hidden="true"></span>
+                    <p class="as-table-state-box__title" style="margin: 0; font-weight: 500;">Loading audit telemetry...</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: FORM ESSENTIALS (BATCH A) -->
+    <section class="consumer-section" id="sec-forms">
+      <div>
+        <h2>4. Form Essentials (Batch A Components)</h2>
+        <p class="section-desc">Standalone Checkbox, Radio Group, Switch, Textarea, Select, and Slider controls.</p>
+      </div>
+
+      <div class="grid-fields">
+        <!-- Checkbox Options -->
+        <div style="display: flex; flex-direction: column; gap: var(--as-space-3);">
+          <label class="as-form-field__label">Automated Policies</label>
+          <label class="as-checkbox-field">
+            <span class="as-checkbox">
+              <input type="checkbox" class="as-checkbox-input" id="chk-telemetry" checked>
+            </span>
+            <span class="as-checkbox-field__content">
+              <span class="as-checkbox-field__label">Telemetry streaming</span>
+              <span class="as-checkbox-field__description">Transmit encrypted runtime node metrics every 15s.</span>
+            </span>
+          </label>
+          <label class="as-checkbox-field">
+            <span class="as-checkbox">
+              <input type="checkbox" class="as-checkbox-input" id="chk-auto-drain" data-indeterminate="true">
+            </span>
+            <span class="as-checkbox-field__content">
+              <span class="as-checkbox-field__label">Auto-drain degraded nodes</span>
+              <span class="as-checkbox-field__description">Partially configured across 2 of 4 availability zones.</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Radio Group -->
+        <fieldset class="as-radio-group">
+          <legend class="as-radio-group__legend">Deployment Rollout Strategy</legend>
+          <label class="as-radio-field">
+            <span class="as-radio">
+              <input type="radio" name="deploy-strategy" class="as-radio-input" id="rad-rolling" value="rolling" checked>
+            </span>
+            <span class="as-radio-field__content">
+              <span class="as-radio-field__label">Rolling update</span>
+              <span class="as-radio-field__description">Gradually replace old instances with zero downtime.</span>
+            </span>
+          </label>
+          <label class="as-radio-field">
+            <span class="as-radio">
+              <input type="radio" name="deploy-strategy" class="as-radio-input" id="rad-canary" value="canary">
+            </span>
+            <span class="as-radio-field__content">
+              <span class="as-radio-field__label">Canary release</span>
+              <span class="as-radio-field__description">Route 5% of ingress traffic to new build first.</span>
+            </span>
+          </label>
+        </fieldset>
+
+        <!-- Switch Toggles -->
+        <div style="display: flex; flex-direction: column; gap: var(--as-space-3);">
+          <label class="as-form-field__label">System Toggles</label>
+          <label class="as-switch-field">
+            <span class="as-switch">
+              <input type="checkbox" role="switch" class="as-switch-input" id="sw-maintenance">
+              <span class="as-switch-track"><span class="as-switch-thumb"></span></span>
+            </span>
+            <span class="as-switch-field__content">
+              <span class="as-switch-field__label">Maintenance mode</span>
+              <span class="as-switch-field__description">Block incoming external customer requests.</span>
+            </span>
+          </label>
+          <label class="as-switch-field">
+            <span class="as-switch">
+              <input type="checkbox" role="switch" class="as-switch-input" id="sw-auto-heal" checked>
+              <span class="as-switch-track"><span class="as-switch-thumb"></span></span>
+            </span>
+            <span class="as-switch-field__content">
+              <span class="as-switch-field__label">Self-healing watchers</span>
+              <span class="as-switch-field__description">Automatically restart unresponsive worker pods.</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Select Dropdown -->
+        <div class="as-form-field">
+          <label class="as-form-field__label" for="sel-region">Primary Cluster Region</label>
+          <div class="as-select-box">
+            <select class="as-select" id="sel-region" name="region">
+              <option value="eu-west-1" selected>Europe (Ireland) — eu-west-1</option>
+              <option value="eu-central-1">Europe (Frankfurt) — eu-central-1</option>
+              <option value="us-east-1">US East (N. Virginia) — us-east-1</option>
+              <option value="ap-southeast-1">Asia Pacific (Singapore) — ap-southeast-1</option>
+            </select>
+            <svg class="as-select-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="4 6 8 10 12 6"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Slider Range -->
+        <div class="as-slider-field" id="field-slider-mem">
+          <div class="as-slider-field__header">
+            <label class="as-slider-field__label" for="sld-memory">Memory Allocation Threshold</label>
+            <span class="as-slider-field__value" id="sld-memory-val">75%</span>
+          </div>
+          <div class="as-slider-box">
+            <input type="range" class="as-slider" id="sld-memory" min="10" max="100" value="75">
+          </div>
+        </div>
+
+        <!-- Textarea with Character Counter -->
+        <div class="as-form-field" style="grid-column: 1 / -1;">
+          <label class="as-form-field__label" for="txt-deploy-notes">Deployment Release Notes</label>
+          <div class="as-textarea-box">
+            <textarea class="as-textarea" id="txt-deploy-notes" maxlength="300" placeholder="Summarize changes included in this cluster rollout...">Upgraded core node kernel to 6.8.0-45-generic with eBPF runtime profiling enabled.</textarea>
+            <div class="as-textarea__footer">
+              <span class="as-textarea__counter">83 / 300</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FEEDBACK AND UTILITIES (BATCH B) -->
+    <section class="consumer-section" id="sec-feedback">
+      <div>
+        <h2>5. Feedback &amp; Utilities (Batch B Components)</h2>
+        <p class="section-desc">Badge, Alert, Progress, Skeleton, Tooltip, and Toast components.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--as-space-4);">
+        <!-- Badges -->
+        <div class="component-row" id="row-badges">
+          <span class="as-badge as-badge--success" id="badge-prod"><span class="as-badge__dot"></span>Healthy</span>
+          <span class="as-badge as-badge--warning"><span class="as-badge__dot"></span>Rebalancing</span>
+          <span class="as-badge as-badge--critical"><span class="as-badge__dot"></span>Degraded</span>
+          <span class="as-badge as-badge--info">v2.4.1</span>
+          <span class="as-badge as-badge--muted">Internal</span>
+        </div>
+
+        <!-- Alert Banner -->
+        <div class="as-alert as-alert--warning" id="alert-maintenance" role="region" aria-labelledby="alert-maint-title">
+          <svg class="as-alert__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 2 L14 13 L2 13 Z"></path>
+            <line x1="8" y1="6" x2="8" y2="9"></line>
+            <circle cx="8" cy="11" r="0.75" fill="currentColor"></circle>
+          </svg>
+          <div class="as-alert__content">
+            <div class="as-alert__title" id="alert-maint-title">Scheduled Rolling Kernel Upgrade</div>
+            <div class="as-alert__description">Node pool eu-west-1a will drain active pods in 45 minutes. Services will migrate automatically.</div>
+          </div>
+          <button type="button" class="as-alert__close" id="btn-dismiss-alert" aria-label="Dismiss alert">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="4" x2="4" y2="12"></line>
+              <line x1="4" y1="4" x2="12" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Progress Bars -->
+        <div class="grid-fields">
+          <div class="as-progress-field">
+            <div class="as-progress-field__header">
+              <span class="as-progress-field__label">Cluster Memory Rebalance</span>
+              <span class="as-progress-field__value">68%</span>
+            </div>
+            <div class="as-progress" id="prog-sync" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+              <span class="as-progress__bar" style="width: 68%;"></span>
+            </div>
+          </div>
+          <div class="as-progress-field">
+            <div class="as-progress-field__header">
+              <span class="as-progress-field__label">Storage Snapshot Compression</span>
+              <span class="as-progress-field__value">Indeterminate</span>
+            </div>
+            <div class="as-progress as-progress--indeterminate" id="prog-indet" role="progressbar" aria-label="Compressing snapshot volume">
+              <span class="as-progress__bar"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tooltip & Toast Trigger Controls -->
+        <div class="component-row">
+          <div class="as-tooltip-trigger" id="wrap-tip-backup">
+            <button type="button" class="as-button as-button--secondary" id="btn-trigger-backup">
+              <span class="as-button__label">Snapshot Volume</span>
+            </button>
+            <div class="as-tooltip" id="tip-backup" role="tooltip">Instant cryptographic volume snapshot</div>
+          </div>
+
+          <button type="button" class="as-button as-button--secondary" id="btn-spawn-toast">
+            <span class="as-button__label">Spawn Toast Notice</span>
+          </button>
+        </div>
+
+        <!-- Skeleton Loading Block -->
+        <div style="display: flex; flex-direction: column; gap: var(--as-space-2);" aria-busy="true">
+          <div class="as-skeleton as-skeleton--text" style="width: 40%;"></div>
+          <div class="as-skeleton as-skeleton--text" style="width: 75%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: OVERLAYS AND NAVIGATION (BATCH C) -->
+    <section class="consumer-section" id="sec-overlays">
+      <div>
+        <h2>6. Overlays &amp; Navigation (Batch C Components)</h2>
+        <p class="section-desc">Dialog, Dropdown Menu, Popover, Tabs, Accordion, and Drawer components.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--as-space-5);">
+        <!-- Overlays Row: Dialog & Drawer Triggers, Dropdown, and Popover -->
+        <div class="component-row" id="row-overlay-triggers">
+          <!-- Dialog Trigger Button -->
+          <button type="button" class="as-button as-button--primary" id="btn-open-dialog" data-dialog-open="dlg-cluster-rebalance">
+            <span class="as-button__label">Open Modal Dialog</span>
+          </button>
+
+          <!-- Drawer Trigger Button -->
+          <button type="button" class="as-button as-button--secondary" id="btn-open-drawer" data-drawer-open="drawer-cluster-metrics">
+            <span class="as-button__label">Open Side Drawer</span>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div class="as-dropdown" id="dropdown-cluster-ops">
+            <button type="button" class="as-button as-button--secondary as-dropdown__trigger" id="dd-trigger-ops" aria-haspopup="menu" aria-expanded="false">
+              <span class="as-button__label">Node Actions</span>
+              <svg class="as-dropdown__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>
+            </button>
+            <div class="as-dropdown__menu" id="dd-menu-ops" role="menu" aria-labelledby="dd-trigger-ops" hidden>
+              <button type="button" class="as-dropdown__item" role="menuitem" id="dd-item-drain">Drain Worker Pods</button>
+              <button type="button" class="as-dropdown__item" role="menuitem" id="dd-item-recycle">Recycle VM Instance</button>
+              <div class="as-dropdown__divider" role="separator"></div>
+              <button type="button" class="as-dropdown__item as-dropdown__item--destructive" role="menuitem" id="dd-item-terminate">Terminate Node Pool</button>
+            </div>
+          </div>
+
+          <!-- Popover -->
+          <div class="as-popover-anchor" id="popover-metrics-anchor">
+            <button type="button" class="as-button as-button--secondary as-popover-trigger" id="pop-trigger-filter" aria-haspopup="dialog" aria-expanded="false">
+              <span class="as-button__label">Quick Filter</span>
+            </button>
+            <div class="as-popover" id="pop-card-filter" role="dialog" aria-labelledby="pop-trigger-filter" hidden>
+              <div class="as-popover__header">
+                <h4 class="as-popover__title">Cluster Stream Filters</h4>
+                <button type="button" class="as-popover__close" id="btn-close-popover" aria-label="Close popover" data-popover-close>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="4" x2="4" y2="12"></line><line x1="4" y1="4" x2="12" y2="12"></line></svg>
+                </button>
+              </div>
+              <div class="as-popover__body">
+                <p style="margin: 0; font-size: var(--as-typography-font-size-sm); color: var(--as-semantic-color-text-muted);">
+                  Filtering active pods by region eu-west-1a with health status healthy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs Component Demo -->
+        <div>
+          <h3 style="margin: 0 0 var(--as-space-2); font-size: 14px; font-weight: 600;">Tabs Navigation</h3>
+          <div class="as-tabs" id="tabs-demo">
+            <div class="as-tabs__list" role="tablist" aria-label="Infrastructure Monitoring Tabs" aria-orientation="horizontal">
+              <button type="button" class="as-tabs__tab is-active" role="tab" id="tab-nodes" aria-selected="true" aria-controls="panel-nodes" tabindex="0">
+                Nodes Overview
+              </button>
+              <button type="button" class="as-tabs__tab" role="tab" id="tab-storage" aria-selected="false" aria-controls="panel-storage" tabindex="-1">
+                Persistent Volumes
+              </button>
+              <button type="button" class="as-tabs__tab" role="tab" id="tab-network" aria-selected="false" aria-controls="panel-network" tabindex="-1">
+                Ingress Routing
+              </button>
+            </div>
+            <div class="as-tabs__panel is-active" role="tabpanel" id="panel-nodes" aria-labelledby="tab-nodes" tabindex="0">
+              <p style="margin: 0; color: var(--as-semantic-color-text-muted);">Active nodes: 3 worker instances running kernel 6.8 with zero evictions in the past 24 hours.</p>
+            </div>
+            <div class="as-tabs__panel" role="tabpanel" id="panel-storage" aria-labelledby="tab-storage" tabindex="0" hidden>
+              <p style="margin: 0; color: var(--as-semantic-color-text-muted);">Storage: 4 NVMe-backed SSD volumes attached across availability zones.</p>
+            </div>
+            <div class="as-tabs__panel" role="tabpanel" id="panel-network" aria-labelledby="tab-network" tabindex="0" hidden>
+              <p style="margin: 0; color: var(--as-semantic-color-text-muted);">Network: Ingress mesh router handling 14,290 requests/sec with TLS termination.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion Component Demo -->
+        <div>
+          <h3 style="margin: 0 0 var(--as-space-2); font-size: 14px; font-weight: 600;">Disclosure Accordion</h3>
+          <div class="as-accordion" id="accordion-demo" data-single="true">
+            <div class="as-accordion__item">
+              <h4 class="as-accordion__heading">
+                <button type="button" class="as-accordion__trigger" id="acc-trig-kernel" aria-expanded="false" aria-controls="acc-panel-kernel">
+                  <span class="as-accordion__title">Rolling Kernel Patching Strategy</span>
+                  <svg class="as-accordion__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>
+                </button>
+              </h4>
+              <div class="as-accordion__panel" id="acc-panel-kernel" role="region" aria-labelledby="acc-trig-kernel" hidden>
+                <div class="as-accordion__content">
+                  Updates are applied sequentially one worker node at a time after verifying zero unhandled exceptions on candidate pods.
+                </div>
+              </div>
+            </div>
+            <div class="as-accordion__item">
+              <h4 class="as-accordion__heading">
+                <button type="button" class="as-accordion__trigger" id="acc-trig-failover" aria-expanded="false" aria-controls="acc-panel-failover">
+                  <span class="as-accordion__title">Automated Cross-Zone Failover</span>
+                  <svg class="as-accordion__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>
+                </button>
+              </h4>
+              <div class="as-accordion__panel" id="acc-panel-failover" role="region" aria-labelledby="acc-trig-failover" hidden>
+                <div class="as-accordion__content">
+                  In the event of an availability zone disruption, stateless pods are re-routed to healthy zones within 3 seconds.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal Dialog Fixture -->
+    <dialog class="as-dialog" id="dlg-cluster-rebalance" aria-labelledby="dlg-rebalance-title" aria-describedby="dlg-rebalance-desc">
+      <div class="as-dialog__surface">
+        <div class="as-dialog__header">
+          <div>
+            <h3 class="as-dialog__title" id="dlg-rebalance-title">Confirm Cluster Rebalance</h3>
+            <p class="as-dialog__description" id="dlg-rebalance-desc">Workloads will migrate across active worker nodes.</p>
+          </div>
+          <button type="button" class="as-dialog__close" id="btn-close-dialog" aria-label="Close dialog" data-dialog-close>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="4" x2="4" y2="12"></line><line x1="4" y1="4" x2="12" y2="12"></line></svg>
+          </button>
+        </div>
+        <div class="as-dialog__body">
+          <p style="margin: 0;">This operation initiates non-disruptive pod cordoning and memory page syncing.</p>
+        </div>
+        <div class="as-dialog__footer">
+          <button type="button" class="as-button as-button--secondary" data-dialog-close id="btn-cancel-dialog">Cancel</button>
+          <button type="button" class="as-button as-button--primary" id="btn-confirm-rebalance">Start Rebalance</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Slide-Over Drawer Fixture -->
+    <div class="as-drawer" id="drawer-cluster-metrics" role="dialog" aria-modal="true" aria-labelledby="drawer-metrics-title" hidden>
+      <div class="as-drawer__backdrop" data-drawer-close id="drawer-backdrop-scrim"></div>
+      <div class="as-drawer__panel as-drawer__panel--right">
+        <div class="as-drawer__header">
+          <div>
+            <h3 class="as-drawer__title" id="drawer-metrics-title">Live Node Telemetry</h3>
+            <p class="as-drawer__description">Real-time CPU and memory saturation metrics.</p>
+          </div>
+          <button type="button" class="as-drawer__close" id="btn-close-drawer" aria-label="Close drawer" data-drawer-close>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="4" x2="4" y2="12"></line><line x1="4" y1="4" x2="12" y2="12"></line></svg>
+          </button>
+        </div>
+        <div class="as-drawer__body">
+          <p style="margin: 0; color: var(--as-semantic-color-text-muted);">Sampling rate: 100ms. Heap usage steady at 412 MB of 2048 MB allocated.</p>
+        </div>
+        <div class="as-drawer__footer">
+          <button type="button" class="as-button as-button--secondary" data-drawer-close id="btn-dismiss-drawer">Dismiss</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Component Initialization via Canonical ES Module -->
+  <script type="module">
+    import {
+      initAsterComponents,
+      setButtonLoading,
+      validateInput,
+      computeSelectionState,
+      syncTableOverflow,
+      showToast
+    } from '/dist/js/aster.js';
+
+    const logEl = document.getElementById('event-log');
+    function log(msg) {
+      if (logEl) logEl.textContent = msg;
+    }
+
+    // Initialize all components with full delegating listeners
+    initAsterComponents(document, {
+      onAnnounce: (msg) => log(`[Live Announcement] ${msg}`),
+      onSort: ({ key, dir, label }) => log(`[Table Sorted] Column "${label}" (${key}) sorted ${dir}.`),
+      onSelectionChange: ({ selectedCount, totalCount }) => log(`[Table Selection] ${selectedCount} of ${totalCount} nodes selected.`),
+      onBlockedActivate: (btn) => log(`[Blocked Activation] Action blocked on ${btn.getAttribute('aria-disabled') ? 'aria-disabled' : 'loading'} button.`)
+    });
+
+    // Theme Toggle Handler
+    let isDark = false;
+    document.getElementById('btn-toggle-theme')?.addEventListener('click', () => {
+      isDark = !isDark;
+      document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+      document.getElementById('theme-btn-label').textContent = `Theme: ${isDark ? 'Dark' : 'Light'}`;
+      log(`Switched theme to ${isDark ? 'Dark' : 'Light'}.`);
+    });
+
+    // Interactive Async Loader Test
+    let loadingTimer = null;
+    document.getElementById('btn-test-loader')?.addEventListener('click', (e) => {
+      const btn = e.currentTarget;
+      if (loadingTimer) return;
+      setButtonLoading(btn, true, 'Executing Rollout...');
+      log('Async action triggered: setButtonLoading(btn, true). Repeated clicks blocked.');
+      loadingTimer = setTimeout(() => {
+        setButtonLoading(btn, false);
+        log('Async action resolved: setButtonLoading(btn, false). State restored.');
+        loadingTimer = null;
+      }, 2000);
+    });
+
+    // Toast Notice Trigger Test
+    document.getElementById('btn-spawn-toast')?.addEventListener('click', () => {
+      showToast({
+        title: 'Volume Snapshot Initiated',
+        message: 'Cryptographic block digest created for cluster volume.',
+        variant: 'success',
+        duration: 3500
+      });
+      log('Triggered showToast() notification banner.');
+    });
+
+    // Button Click Tracking (Records activations of non-disabled buttons)
+    window.__buttonActivations = {};
+    document.querySelectorAll('.as-button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const name = btn.dataset.actionName || btn.id || 'unnamed';
+        window.__buttonActivations[name] = (window.__buttonActivations[name] || 0) + 1;
+        log(`Activated button: ${name} (count: ${window.__buttonActivations[name]})`);
+      });
+    });
+  </script>
+</body>
+</html>
