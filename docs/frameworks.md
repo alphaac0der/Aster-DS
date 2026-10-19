@@ -349,9 +349,9 @@ Svelte provides an idiomatic **action directive** pattern (`use:action`) that pa
 
 ---
 
-## 6. Theme & Density Switching Across Frameworks
+## 6. Theme Switching Across Frameworks
 
-Aster uses HTML attributes (`data-theme="dark"` and `data-density="compact"`) on the root `<html>` or container element. Any framework state store (Redux, Zustand, Pinia, Svelte writable store) can manage this via standard DOM attribute manipulation:
+Aster uses the `data-theme="dark"` HTML attribute on the root `<html>` or container element to switch between light and dark modes. Density is unified to a single standard scale across all devices to guarantee consistent touch ergonomics. Any framework state store (Redux, Zustand, Pinia, Svelte writable store) can manage the active theme via standard DOM attribute manipulation:
 
 ```javascript
 // Toggle Dark Theme
@@ -360,15 +360,6 @@ function setTheme(isDark) {
     document.documentElement.setAttribute('data-theme', 'dark');
   } else {
     document.documentElement.removeAttribute('data-theme');
-  }
-}
-
-// Toggle Compact Density
-function setDensity(isCompact) {
-  if (isCompact) {
-    document.documentElement.setAttribute('data-density', 'compact');
-  } else {
-    document.documentElement.removeAttribute('data-density');
   }
 }
 ```

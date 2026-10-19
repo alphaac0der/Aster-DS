@@ -5,13 +5,20 @@ Aster is a zero-dependency, token-first design system engineered with dual inter
 - **Human-Facing Documentation & Components:** Production-grade CSS custom properties and browser-native ES modules for developers and designers.
 - **Agent-Facing Instructions:** Comprehensive coding standards and boundaries in [`AGENTS.md`](AGENTS.md) and specialized workflow skills (`skills/`).
 
-Aster features 82 canonical design tokens (W3C DTCG format) and 21 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
+Aster features 109 canonical design tokens (W3C DTCG format) and 21 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
 
 ---
 
 ## Quickstart
 
-### 1. Build from Source
+### 1. Install via npm
+
+```bash
+npm install aster-ds
+```
+
+### 2. Build from Source
+
 Aster's build system uses pure native Node.js scripts with zero runtime dependencies.
 
 ```bash
@@ -22,24 +29,25 @@ npm install
 npm run build
 ```
 
-### 2. Available NPM Scripts
+### 3. Available NPM Scripts
 
 | Command | Action |
 |---|---|
 | `npm run build` | Full compilation (`build:tokens`, `build:components`, `build:playground`, `export:figma`) |
 | `npm run build:tokens` | Compiles `tokens/**/*.json` into `dist/css/tokens.css` |
 | `npm run build:components` | Compiles modular `components/` into `dist/css/components.css`, `dist/css/aster.css`, and `dist/js/aster.js` |
-| `npm run build:playground` | Compiles the self-contained portal at `playground/index.html` across all 29 routes |
-| `npm run playground` | Launches the local documentation portal on `http://127.0.0.1:3000/playground/` |
+| `npm run build:playground` | Compiles the self-contained portal at `index.html` and `playground/index.html` across all 30 routes |
+| `npm run playground` | Launches the local documentation portal on `http://127.0.0.1:3000/` |
 | `npm run test:contrast` | Mathematical verification of all required WCAG 2.2 AA contrast pairs (26/26) |
-| `npm run test:docs` | Verifies consistency between documentation and compiled CSS custom properties (162/162) |
+| `npm run test:docs` | Verifies consistency between documentation and compiled CSS custom properties (196/196) |
 | `npm run export:figma` | Generates W3C DTCG variable token payloads for Figma in `dist/figma/` |
-| `npm run test:figma` | Validates Figma token payload schemas and alias bindings (63/63) |
+| `npm run test:figma` | Validates Figma token payload schemas and alias bindings across 3 collections (82 variables) |
 | `npm run test:components` | Validates concrete token references and structural contracts across all 21 components (646/646) |
-| `npm run test:exports` | Validates package entry points and exports resolution (18/18) |
-| `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification |
+| `npm run test:exports` | Validates package entry points, export map targets, and live consumer imports (18/18) |
+| `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification (43 files) |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox without `scratch/` |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (113/113) |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (139/139) |
+| `npm test` | Runs the aggregate quality suite (`figma`, `contrast`, `components`, `docs`, `exports`, `pack`, `isolated-build`) |
 
 ---
 
@@ -47,10 +55,37 @@ npm run build
 
 Aster provides standard browser-ready CSS and ES modules with zero third-party framework wrappers.
 
-### Vanilla HTML / Modern Bundler
+### Modern Bundler / npm Package
+
+```bash
+npm install aster-ds
+```
+
+```javascript
+// Import all-in-one stylesheet (Tokens + Base + Components)
+import 'aster-ds/aster.css';
+
+// Or import modular stylesheets individually
+// import 'aster-ds/tokens.css';
+// import 'aster-ds/components.css';
+
+// Import and initialize interactive behaviors
+import { initAsterComponents } from 'aster-ds';
+
+initAsterComponents(document);
+```
 
 ```html
-<!-- Load all-in-one stylesheet (Tokens + Components) -->
+<!-- Use semantic components -->
+<button type="button" class="as-button as-button--primary">
+  <span class="as-button__label">Primary Action</span>
+</button>
+```
+
+### Vanilla HTML / Direct Distribution
+
+```html
+<!-- Load all-in-one stylesheet -->
 <link rel="stylesheet" href="dist/css/aster.css">
 
 <!-- Use semantic components -->
@@ -77,8 +112,8 @@ Aster-DS/
 ├── components/          # Authoritative modular component sources (CSS + JS)
 ├── tokens/              # Authoritative DTCG design tokens (JSON)
 ├── dist/                # Generated distribution outputs (CSS, JS, Figma JSON)
-│   ├── css/             # tokens.css, components.css, aster.css
-│   ├── js/              # aster.js (ES module)
+│   ├── css/             # tokens.css, components.css, aster.css, theme-dark.css
+│   ├── js/              # aster.js (ES module), aster.d.ts (TypeScript declarations)
 │   └── figma/           # aster-colors.json, aster-dimensions.json, aster-density.json
 ├── docs/                # Human-facing documentation
 │   ├── components/      # 21 individual component specifications
@@ -98,10 +133,17 @@ Aster-DS/
 
 ---
 
+## Figma Token Exports & Library Status
+
+- **Token Exports (Available):** W3C DTCG token variables are exported directly to `dist/figma/` (`aster-colors.json`, `aster-density.json`, `aster-dimensions.json`) for seamless import into Figma using community plugins (e.g. *Export/Import Variables*).
+- **Component Library Status:** A pre-built, native Figma component library (`.fig`) featuring Auto Layout, variants, and direct variable bindings is currently in active development.
+
+---
+
 ## Quality Boundaries & Accessibility Scope
 
 - **WCAG 2.2 AA Compliance:** Token pairings are mathematically verified (4.5:1 text, 3:1 UI boundaries). Holistic application accessibility (screen reader announcements, live regions, reflow) requires context-dependent evaluation.
-- **Target Size (SC 2.5.8):** Standard controls provide 40px/44px minimum touch targets, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum across all devices. Compact mode is eliminated in favor of a single standard touch-accessible density.
+- **Target Size (SC 2.5.8):** Standard controls provide 40px/44px minimum touch targets, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum across all devices. Aster operates on a single standard density scale; compact mode is eliminated in favor of consistent touch ergonomics.
 - **Reduced Motion:** All interactive components collapse transforms and durations under `prefers-reduced-motion: reduce`.
 
 ---
@@ -116,8 +158,8 @@ Aster's visual foundation, kinetics, and core component architecture faithfully 
 
 ---
 
-## Version Control & Licensing
+## Distribution & Licensing
 
-- **Version Control:** Private repository configured (`origin`).
-- **Package Status:** Private (`"private": true`). Not published to any registry.
+- **Package Registry:** Published on npm as [`aster-ds`](https://www.npmjs.com/package/aster-ds) (`v0.0.1`).
+- **Repository:** Hosted on GitHub at [`alphaac0der/Aster-DS`](https://github.com/alphaac0der/Aster-DS).
 - **License:** Original Aster DS work is licensed under the MIT License (see [`LICENSE`](LICENSE)). Third-party components, designs, icons, fonts, and dependencies remain subject to their respective authors' permissions and applicable licenses as documented in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).

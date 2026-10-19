@@ -38,11 +38,9 @@ The Dropdown Menu component displays a list of contextual actions or options tri
 | `.as-dropdown__item--destructive` | Modifier | Optional | High-contrast critical red treatment for dangerous actions |
 | `.as-dropdown__divider` | Divider | Optional | Visual separator rule with `role="separator"` |
 | `.as-dropdown__menu--right` | Modifier | Optional | Right-aligns floating menu to the trigger's right edge |
-| `.as-dropdown--compact` | Modifier | Optional | Compact density mode with tighter padding and smaller font |
 
-### Density Modes
-- **Comfortable (Default):** Menu items receive `var(--as-space-2) var(--as-space-3)` padding and `var(--as-typography-font-size-base)`.
-- **Compact (`.as-dropdown--compact` / `[data-density="compact"]`):** Menu items receive `var(--as-space-1) var(--as-space-2)` padding and `var(--as-typography-font-size-sm)`.
+### Layout & Density
+- **Standard Density:** Menu items receive standard `var(--as-space-2) var(--as-space-3)` padding and `var(--as-typography-font-size-base)`.
 
 ---
 

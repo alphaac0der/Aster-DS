@@ -122,8 +122,8 @@ Before proposing or finalizing changes to tokens, components, or documentation, 
 2. **Third-Party Assets:**
    - Icons: [Phosphor Icons](https://phosphoricons.com/) (SIL OFL 1.1 / MIT).
    - Typography: Google Fonts (Bebas Neue, Manrope, Space Mono, Merriweather under SIL OFL 1.1).
-3. **Repository Licensing Gate:**
-   - Aster DS is currently private (`"private": true` in `package.json`). Formal repository licensing terms (e.g. Apache-2.0) and third-party notices are managed through an explicit open gate prior to any public release. Do not publish to npm or remove `"private": true`.
+3. **Repository Licensing & Package Distribution:**
+   - Aster DS is published publicly to the npm registry as `aster-ds` under the MIT License (`LICENSE`), with third-party asset attributions and permissions detailed in `THIRD-PARTY-NOTICES.md`. Do not publish unvetted release mutations without explicit user approval.
 
 ---
 

@@ -22,7 +22,7 @@ The Aster Select component provides an accessible dropdown selection field built
 ### Anatomical Sub-Elements
 
 1. **Field Container (`.as-form-field`):** Layout wrapper for label, select box, and feedback.
-2. **Select Box (`.as-select-box`):** Full pill-shaped control container (40px comfortable, 32px compact).
+2. **Select Box (`.as-select-box`):** Full pill-shaped control container (44px standard height).
 3. **Native Select (`.as-select`):** Native HTML `<select>` with `<option>` children.
 4. **Chevron Icon (`.as-select-chevron`):** Decorative SVG arrow cue.
 5. **Helper / Error Feedback:** Programmatically associated via `aria-describedby`.
@@ -46,7 +46,7 @@ The Aster Select component provides an accessible dropdown selection field built
 - Native `<select>` guarantees 100% platform accessibility on mobile, screen readers, and desktop.
 - Keyboard navigation: `Space` or `Alt + Down` opens menu, arrow keys navigate options.
 - Focus visibility: 2px ring with 2px offset (`var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus)`).
-- Control height meets Aster standards (40px comfortable, 32px compact).
+- Control height meets Aster standards (44px standard height).
 
 ---
 
@@ -74,7 +74,7 @@ The Aster Select component provides an accessible dropdown selection field built
 1. **Non-text Contrast (SC 1.4.11 - Level AA):** Control border and chevron icon meet ≥3.0:1 contrast.
 2. **Keyboard Operability (SC 2.1.1 - Level A):** Standard native `<select>` keyboard operation.
 3. **Focus Visible (SC 2.4.7 - Level A):** Visible focus ring renders when select is focused.
-4. **Target Size (SC 2.5.8 - Level AA):** 40px comfortable, 32px compact exceed 24×24px requirement.
+4. **Target Size (SC 2.5.8 - Level AA):** 44px control height comfortably exceeds the 24×24px requirement.
 
 ### 5.2 Aster Conventions
 - Full pill border radius (`var(--as-radius-full)`) coordinates with `.as-button` and `.as-input` aesthetic.

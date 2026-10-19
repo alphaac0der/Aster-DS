@@ -203,7 +203,7 @@ These requirements are legally binding and non-negotiable:
    - Sticky headers, floating panels, or dialog footers must never entirely obscure a focused button.
 5. **Target Size (Minimum) (SC 2.5.8 - Level AA):**
    - Interactive click targets must be at least **24×24 CSS px**, except where inline, user-agent determined, or separated by sufficient spacing.
-   - *Verification:* Aster buttons measure 40×40px minimum in Comfortable and 32×32px minimum in Compact, satisfying SC 2.5.8.
+   - *Verification:* Aster buttons measure 40×40px minimum in Standard density, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum.
 6. **Name, Role, Value (SC 4.1.2 - Level A):**
    - Buttons must have a programmatically determinable accessible name. Icon-only buttons must provide an `aria-label`.
 
@@ -212,7 +212,7 @@ These requirements are legally binding and non-negotiable:
 - **Double-Activation Prevention:** When a button triggers an asynchronous workflow, it must prevent repeated activations while in the `loading` state.
 
 ### 5.3 Aster Conventions (Internal System Rules)
-- **Standard Heights:** 40px (Comfortable) and 32px (Compact) are internal design system choices, not WCAG mandates.
+- **Standard Height:** 40px standard control height (`--as-density-control-height`) is an internal design system baseline, not a WCAG mandate.
 - **2px Focus Ring:** `outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus); outline-offset: 2px;` is an Aster-wide focus ring convention.
 - **Non-Color-Alone State Communication:** Destructive buttons should pair red critical color with unambiguous text copy (e.g. "Delete Project", not just "Confirm").
 

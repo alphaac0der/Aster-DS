@@ -67,7 +67,7 @@ The Aster Alert component provides prominent, high-contrast banners for critical
 4. **Name, Role, Value (SC 4.1.2 - Level A):** `role="alert"` or explicit accessible name.
 
 ### 5.2 Aster Conventions
-- Border radius `var(--as-radius-md)` (8px) comfortable, `var(--as-radius-sm)` (6px) compact.
+- Border radius `var(--as-radius-md)` (8px).
 
 ---
 

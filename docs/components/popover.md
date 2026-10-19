@@ -12,7 +12,7 @@ The Popover component displays transient rich content or secondary interactive f
 
 ```html
 <div class="as-popover-anchor" id="pop-filter-wrapper">
-  <button type="button" class="as-button as-button--secondary as-button--compact as-popover-trigger" id="pop-filter-btn" aria-haspopup="dialog" aria-expanded="false">
+  <button type="button" class="as-button as-button--secondary as-popover-trigger" id="pop-filter-btn" aria-haspopup="dialog" aria-expanded="false">
     <span class="as-button__label">Filter Pods</span>
   </button>
   <div class="as-popover" id="pop-filter-panel" role="dialog" aria-labelledby="pop-filter-btn" hidden>
@@ -36,11 +36,9 @@ The Popover component displays transient rich content or secondary interactive f
 | `.as-popover-trigger` | Interactive | Yes | Trigger button declaring `aria-haspopup="dialog"` and `aria-expanded` |
 | `.as-popover` | Overlay | Yes | Floating overlay container with `role="dialog"` and `aria-labelledby` |
 | `.as-popover--right` | Modifier | Optional | Positions popover aligned to trigger's right edge |
-| `.as-popover--compact` | Modifier | Optional | Compact density mode with tighter padding |
 
-### Density Modes
-- **Comfortable (Default):** Spacious layout with `var(--as-space-4)` body padding and `var(--as-typography-font-size-base)`.
-- **Compact (`.as-popover--compact` / `[data-density="compact"]`):** Dense layout with `var(--as-space-3)` body padding and `var(--as-typography-font-size-sm)`.
+### Layout & Density
+- **Standard Density:** Follows standard popover geometry with `var(--as-space-4)` body padding, 8px radius, and standard action buttons.
 
 ---
 

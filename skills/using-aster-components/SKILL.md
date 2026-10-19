@@ -37,12 +37,12 @@ To consume Aster in any web application, load the browser-ready CSS and ES modul
 
 ### 1.3 What Must NOT Be Invented or Assumed
 AI agents must strictly respect these system boundaries:
-1. **No NPM Package / No React Wrappers (Yet):** Do not generate imports from `"@aster/react"` or `"@aster/components"`. Aster is currently distributed as native HTML/CSS and browser ES modules.
+1. **Official NPM Package:** Aster is distributed on npm as `aster-ds`. Use native HTML classes (`.as-button`, `.as-input`) and browser ES module imports (`import { ... } from 'aster-ds'`). Do not invent imports from non-existent packages like `"@aster/react"` or `"@aster/components"`.
 2. **No Primitive Color Tokens in Components:** Components must strictly bind to semantic tokens (`--as-semantic-color-*`). Never use `--as-color-primitive-*`.
 3. **No Floating Labels:** Labels must remain persistently visible above inputs (`.as-form-field__label`). Never hide labels or convert them into animated floating placeholders.
 4. **No Synthetic ARIA Grids:** Never apply `role="grid"` to standard data tables (`.as-table`). Always use native HTML `<table>`, `<thead>`, `<tbody>`, `<th>`, `<td>`.
 5. **No Undocumented Button Variants:** The only supported button variants are `primary`, `secondary`, `destructive`, and `ghost`.
-6. **No Undocumented Density Modes:** The only supported density modes are `comfortable` (`40px` height) and `compact` (`32px` height).
+6. **Single Standard Density Mode (Normative Requirement):** Aster operates with a single unified Standard density scale (`--as-density-*`). Do NOT introduce or use compact mode or `[data-density="compact"]` selectors.
 
 ### 1.4 Foundational Assembly Principles
 1. **Native HTML Semantics Over Synthetic ARIA:**
@@ -50,8 +50,8 @@ AI agents must strictly respect these system boundaries:
    - Do **not** use `<div>` or `<span>` with `role="button"` or `role="grid"` when a native element can serve the purpose. ARIA attributes must supplement, never replace, native browser functionality.
 2. **Strict Semantic Token Precedence:**
    - Component styles must bind **only** to semantic tokens (`--as-semantic-color-*`), density tokens (`--as-density-*`), and structural foundation tokens (`--as-space-*`, `--as-radius-*`, `--as-elevation-*`).
-3. **Dual-Density Agnosticism:**
-   - Components must not hardcode static pixel heights. Rely on `--as-density-control-height` so layouts adapt between Comfortable (`40px`) and Compact (`32px`) automatically.
+3. **Standard Density Ergonomics:**
+   - Components adhere to standard density tokens (`--as-density-control-height` at 40px for buttons, 44px for form inputs and selects, and `--as-density-table-row-height` at 44px), ensuring consistent touch targets across mobile and desktop.
 
 ---
 
@@ -211,14 +211,6 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
     color var(--as-motion-duration-base) var(--as-motion-ease-out),
     outline-color var(--as-motion-duration-base) var(--as-motion-ease-out),
     outline-offset var(--as-motion-duration-base) var(--as-motion-ease-out);
-}
-
-[data-density="compact"] .as-button,
-.as-button--compact {
-  --as-density-control-height: 32px;
-  --as-density-control-padding-x: 12px;
-  font-size: var(--as-typography-font-size-sm);
-  gap: 6px;
 }
 
 /* Circular hover fill: solid circle of --_hover-bg that starts at the mouse point (--_x, --_y) and expands to fill the pill */
@@ -578,18 +570,6 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
   letter-spacing: 0;
 }
 
-/* Compact Density Override */
-[data-density="compact"] .as-input-box,
-.as-input-box--compact {
-  --as-density-control-height: 32px;
-  --as-density-control-padding-x: 10px;
-}
-
-[data-density="compact"] .as-input-box .as-input,
-.as-input-box--compact .as-input {
-  font-size: var(--as-typography-font-size-sm);
-}
-
 /* Affix Action Buttons */
 .as-input__action {
   display: inline-grid;
@@ -707,7 +687,6 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
 | Property | Type | Default | Description |
 |---|---|---|---|
 | `caption` | `string` | — | **Mandatory.** Accessible table title or summary. Visible or `.as-sr-only`. |
-| `density` | `'comfortable' \| 'compact'` | `'comfortable'` | Row height and cell padding profile. |
 | `striped` | `boolean` | `false` | Enables alternating row backgrounds (`--as-semantic-color-surface-subtle`). |
 | `bordered` | `boolean` | `true` | Renders container and cell hairline borders. |
 | `hoverable` | `boolean` | `true` | Highlights table rows on hover. |
@@ -736,7 +715,7 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
 - **Dynamic Sort Announcements:** Asynchronous sort updates should be announced through an auxiliary polite live region (`role="status"` / `aria-live="polite"`).
 
 #### Target Size Compliance (WCAG 2.5.8 Level AA)
-- A 32px Compact row height or 44px Comfortable row height is an **Aster Convention** and does **not** by itself establish target-size compliance for interactive controls housed within cells (such as selection checkboxes, action buttons, icon triggers, or links).
+- Standard 44px table row height (`--as-density-table-row-height`) is an **Aster Convention** and does **not** by itself establish target-size compliance for interactive controls housed within cells (such as selection checkboxes, action buttons, icon triggers, or links).
 - Implementations must evaluate the actual bounding box of each interactive target (minimum 24×24px, or meeting spacing exceptions where a 24px diameter circle centered on the target does not overlap adjacent targets, or qualifying for inline text exceptions).
 
 #### Non-text Contrast & Decorative Dividers (SC 1.4.11 Level AA)
@@ -952,23 +931,6 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
   color: var(--as-semantic-color-interactive-primary);
 }
 
-/* Compact Density Override */
-[data-density="compact"] .as-table td,
-.as-table--compact td,
-[data-density="compact"] .as-table__cell {
-  height: var(--as-density-table-row-height); /* 32px Compact */
-  padding: 0 var(--as-density-control-padding-x); /* 12px */
-  font-size: var(--as-typography-font-size-sm);
-}
-
-[data-density="compact"] .as-table th,
-.as-table--compact th,
-[data-density="compact"] .as-table__th {
-  padding: var(--as-space-1) var(--as-density-control-padding-x);
-  font-size: var(--as-typography-font-size-xs); /* 12px */
-  height: 32px;
-}
-
 /* State Box for Empty, Loading, and Error */
 .as-table-state-box {
   padding: var(--as-space-6) var(--as-space-4);
@@ -1023,7 +985,7 @@ When generating or reviewing button code, verify each item:
 - [ ] **Accessible Name:** Has non-empty visible text or an explicit `aria-label`.
 - [ ] **Semantic Tokens Only:** Binds strictly to `--as-semantic-color-*` and `--as-density-*`. No primitive colors.
 - [ ] **Focus Visible:** Does not remove focus outlines (`outline: none`) without providing Aster's focus ring (`--as-elevation-border-focus` and `--as-semantic-color-border-focus`).
-- [ ] **Target Size:** Target size satisfies WCAG 2.5.8 Level AA (minimum 24×24px; Aster buttons measure 40px comfortable / 32px compact).
+- [ ] **Target Size:** Target size satisfies WCAG 2.5.8 Level AA (minimum 24×24px; Aster buttons measure 40px height in standard density).
 - [ ] **Disabled-State Discipline:**
   - Uses native `<button disabled>` by default for ordinary disabled controls.
   - If `aria-disabled="true"` is used to retain keyboard focus, authoritative action handlers synchronously check disabled state before executing business logic, and form submission independently validates eligibility.
@@ -1046,7 +1008,7 @@ When generating or reviewing form field code, verify each item:
 - [ ] **Error Lifecycle & Scenario-Dependent Announcements:** Errors validate on `blur`/submit and clear on `input`. Form submission errors use deliberate focus management; field-level validation errors never steal focus. Dynamic announcements use scenario-dependent strategies (`aria-live="polite"` or managed focus), distinguishing structural `aria-describedby` association from runtime announcements.
 - [ ] **Non-Color-Alone Error:** Error states combine red border with an error icon, error text prefix, and descriptive text message.
 - [ ] **Semantic Tokens Only:** Styles bind strictly to `--as-semantic-color-*`, `--as-density-*`, `--as-space-*`, and `--as-radius-*`.
-- [ ] **Dual-Density Support:** Uses `--as-density-control-height` (40px Comfortable, 32px Compact) without hardcoding fixed pixel heights.
+- [ ] **Standard Density:** Uses canonical control height (44px for form inputs, 40px for buttons) without arbitrary one-off pixel heights.
 - [ ] **Focus Visible & Child Control Focus:** Provides high-contrast 2px focus ring (`--as-elevation-border-focus` solid `--as-semantic-color-border-focus`). Every internal interactive child control retains its own distinct visible focus indicator, unobscured by wrapper treatment.
 - [ ] **Target Size Verification (WCAG 2.5.8):** Verifies the full interactive target bounding box (including width, clickable padding, and any nested interactive buttons) and spacing exceptions, rather than assuming height alone satisfies compliance.
 - [ ] **Informative Floor:** Helper and error font sizes adhere to `--as-typography-font-size-xs` (`12px`).
@@ -1063,7 +1025,7 @@ When generating or reviewing table code, verify each item:
 - [ ] **Target Size Verification (WCAG 2.5.8):** Verifies the full interactive target bounding box (minimum 24×24px or applicable spacing/inline exceptions) for all interactive controls housed within cells, rather than assuming row height alone establishes compliance.
 - [ ] **Non-text Contrast (SC 1.4.11):** Interactive controls, checkboxes, sort icons, and focus rings meet ≥3.0:1 contrast against adjacent surfaces; interior hairline dividing borders are decorative.
 - [ ] **Numeric Alignment:** Numeric and monetary data columns use right alignment (`text-align: right`) and tabular figures.
-- [ ] **Dual-Density Table Tokens:** Rows bind strictly to `--as-density-table-row-height` (44px Comfortable, 32px Compact).
+- [ ] **Standard Density Table Tokens:** Rows bind strictly to `--as-density-table-row-height` (44px standard).
 - [ ] **Semantic Tokens Only:** Styles bind strictly to `--as-semantic-color-*`, `--as-density-*`, `--as-elevation-*`, and `--as-space-*`.
 - [ ] **Focus Visible on Nested Controls:** Sort buttons, scroll containers (when focusable), and row actions display visible focus rings.
 
@@ -1074,7 +1036,7 @@ When generating or reviewing checkbox code, verify each item:
 - [ ] **Native HTML:** Uses native `<input type="checkbox">` wrapped in `.as-checkbox-field`.
 - [ ] **Indeterminate Support:** Sets `indeterminate = true` property and `aria-checked="mixed"` via `setCheckboxIndeterminate()`.
 - [ ] **Focus Visible:** Provides high-contrast 2px focus ring (`--as-elevation-border-focus` solid `--as-semantic-color-border-focus`).
-- [ ] **Target Size:** Outer hit boundary `.as-checkbox` satisfies minimum 24×24px (32px comfortable, 28px compact).
+- [ ] **Target Size:** Outer hit boundary `.as-checkbox` satisfies minimum 24×24px (32×32px standard hit area).
 - [ ] **Semantic Tokens Only:** Binds strictly to `--as-semantic-color-interactive-primary`, `--as-semantic-color-border-strong`, `--as-semantic-color-surface-card`.
 
 ### 5.5 Radio Group Component Checklist
@@ -1085,7 +1047,7 @@ When generating or reviewing radio group code, verify each item:
 - [ ] **Native HTML:** Uses native `<input type="radio">` with shared `name` attribute.
 - [ ] **Arrow Navigation:** Relies on native browser keyboard focus and selection management.
 - [ ] **Focus Visible:** Visible 2px focus ring renders on `:focus-visible`.
-- [ ] **Target Size:** Touch boundary `.as-radio` satisfies minimum 24×24px (32px comfortable, 28px compact).
+- [ ] **Target Size:** Touch boundary `.as-radio` satisfies minimum 24×24px (32×32px standard touch area).
 
 ### 5.6 Switch Component Checklist
 
@@ -1112,7 +1074,7 @@ When generating or reviewing textarea code, verify each item:
 When generating or reviewing select dropdown code, verify each item:
 
 - [ ] **Native Select Element:** Uses native `<select class="as-select">` with `<option>` children.
-- [ ] **Pill Geometry:** Container `.as-select-box` matches control heights (40px comfortable, 32px compact).
+- [ ] **Pill Geometry:** Container `.as-select-box` matches control heights (44px standard).
 - [ ] **Focus Visible:** High-contrast 2px focus ring renders on `:focus-visible`.
 - [ ] **Chevron Decoration:** Chevron icon is marked `aria-hidden="true"`.
 - [ ] **Semantic Tokens Only:** Binds strictly to `--as-semantic-color-surface-card` and `--as-semantic-color-border-strong`.
@@ -1134,7 +1096,7 @@ When generating or reviewing badge code, verify each item:
 - [ ] **Pill Geometry:** Uses `.as-badge` with full-pill radius.
 - [ ] **Non-Color-Alone:** Never relies on background color alone; pairs with text or accessible description.
 - [ ] **Contrast Compliance:** Badge text meets ≥4.5:1 contrast against badge background fill.
-- [ ] **Dual Density:** Satisfies comfortable (24px) or compact (20px) height.
+- [ ] **Standard Density:** Standard 24px height with full-pill radius.
 
 ### 5.11 Alert Component Checklist
 
@@ -1205,7 +1167,7 @@ When generating or reviewing popover code, verify each item:
 - [ ] **Anchored Context:** Trigger declares `aria-haspopup="dialog"` and `aria-expanded`.
 - [ ] **Light Dismissal:** Dismisses on outside clicks and `Escape` key.
 - [ ] **Focus Restoration:** Restores focus to the trigger button upon dismissal.
-- [ ] **Compact Density:** Respects `[data-density="compact"]` with reduced padding.
+- [ ] **Standard Geometry:** Follows standard popover container padding and elevation.
 
 ### 5.19 Tabs Component Checklist
 

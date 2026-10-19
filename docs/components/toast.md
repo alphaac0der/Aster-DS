@@ -42,7 +42,7 @@ The Aster Toast component renders floating, ephemeral status notifications in re
 - Auto-dismiss timer pauses when hovered or focused.
 - Screen readers announce toasts via `role="status"` (`aria-live="polite"`) or `role="alert"` (`aria-live="assertive"`).
 - Dismiss button is reachable via Tab and activated via Enter/Space.
-- Density modes: Toast paddings and button sizes adjust cleanly between comfortable and compact densities.
+- Geometry: Toast padding and dismiss button sizes adhere to Aster's unified standard density scale.
 
 ---
 
@@ -55,7 +55,6 @@ The Aster Toast component renders floating, ephemeral status notifications in re
 | Title Color | `var(--as-semantic-color-text-default)` |
 | Message Color | `var(--as-semantic-color-text-muted)` |
 | Focus Ring | `var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus)` |
-| Density Modes | `comfortable` / `compact` |
 | Transition Duration | `var(--as-motion-duration-slow)` |
 
 ---

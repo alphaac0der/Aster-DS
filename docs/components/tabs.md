@@ -46,11 +46,9 @@ The Tabs component organizes related content into multiple switchable views with
 | `.as-tabs__tab` | Tab Button | Yes | Interactive tab declaring `role="tab"`, `aria-selected`, `aria-controls`, and roving `tabindex` |
 | `.as-tabs__panel` | Panel | Yes | Content panel declaring `role="tabpanel"`, `tabindex="0"`, and `aria-labelledby` |
 | `.is-active` | State Class | Optional | Visual active state styling corresponding to `aria-selected="true"` |
-| `.as-tabs--compact` | Modifier Class | Optional | Compact density mode with tighter padding and smaller font |
 
-### Density Modes
-- **Comfortable (Default):** Tabs receive `var(--as-space-2) var(--as-space-3)` padding and `var(--as-typography-font-size-base)` font size.
-- **Compact (`.as-tabs--compact` / `[data-density="compact"]`):** Tabs receive `var(--as-space-1) var(--as-space-2)` padding and `var(--as-typography-font-size-sm)`.
+### Standard Geometry & Spacing
+Tabs adhere to Aster's unified Standard density scale, receiving `var(--as-space-2) var(--as-space-3)` padding and `var(--as-typography-font-size-base)` font size.
 
 ---
 

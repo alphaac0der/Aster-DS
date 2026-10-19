@@ -40,11 +40,9 @@ The Accordion component displays stacked collapsible disclosure panels that expa
 | `.as-accordion__heading` | Heading | Yes | Native heading element (`<h3>`, `<h4>`) wrapping the trigger |
 | `.as-accordion__trigger` | Button | Yes | Interactive button declaring `aria-expanded` and `aria-controls` |
 | `.as-accordion__panel` | Region | Yes | Collapsible panel container declaring `role="region"`, `aria-labelledby`, and `hidden` |
-| `.as-accordion--compact` | Modifier Class | Optional | Compact density mode with reduced padding |
 
-### Density Modes
-- **Comfortable (Default):** Triggers receive `var(--as-space-4) 0` vertical padding and `var(--as-typography-font-size-base)`.
-- **Compact (`.as-accordion--compact` / `[data-density="compact"]`):** Triggers receive `var(--as-space-3) 0` vertical padding and `var(--as-typography-font-size-sm)`.
+### Standard Geometry & Spacing
+Accordion items adhere to Aster's unified Standard density scale. Triggers receive `var(--as-space-4) 0` vertical padding and `var(--as-typography-font-size-base)`.
 
 ---
 

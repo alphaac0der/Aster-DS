@@ -42,7 +42,7 @@ The Aster Progress component communicates the status of an ongoing, time-consumi
 
 - `role="progressbar"` with `aria-valuenow`, `aria-valuemin="0"`, `aria-valuemax="100"`.
 - Indeterminate state omits `aria-valuenow` (as per W3C APG).
-- Height: 8px comfortable, 4px compact.
+- Height: 8px standard height with full-pill radius.
 - Reduced motion: Indeterminate animation freezes to a high-contrast 100% static bar under `prefers-reduced-motion: reduce`.
 
 ---

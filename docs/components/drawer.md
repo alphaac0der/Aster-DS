@@ -27,8 +27,8 @@ The Drawer component is a full-height side panel overlay that slides in from the
       <p>Configure metrics ingestion pipelines and alerting thresholds.</p>
     </div>
     <div class="as-drawer__footer">
-      <button type="button" class="as-button as-button--secondary as-button--compact" data-drawer-close>Dismiss</button>
-      <button type="button" class="as-button as-button--primary as-button--compact">Save Configuration</button>
+      <button type="button" class="as-button as-button--secondary" data-drawer-close>Dismiss</button>
+      <button type="button" class="as-button as-button--primary">Save Configuration</button>
     </div>
   </div>
 </div>
@@ -45,13 +45,11 @@ The Drawer component is a full-height side panel overlay that slides in from the
 | `.as-drawer__panel` | Surface | Yes | Slide-over content sheet surface |
 | `.as-drawer__panel--right` | Position Modifier | Optional | Slides panel in from the right edge (default) |
 | `.as-drawer__panel--left` | Position Modifier | Optional | Slides panel in from the left edge |
-| `.as-drawer--compact` | Modifier Class | Optional | Compact density mode with tighter padding and smaller headings |
 | `data-drawer-open="id"` | Attribute | Optional | Declarative trigger hook for opening the specified drawer |
 | `data-drawer-close` | Attribute | Optional | Declarative trigger hook for closing the drawer |
 
-### Density Modes
-- **Comfortable (Default):** Drawer header and body receive `var(--as-space-5)` padding and `var(--as-typography-font-size-lg)` title.
-- **Compact (`.as-drawer--compact` / `[data-density="compact"]`):** Drawer header and body receive `var(--as-space-4)` padding and `var(--as-typography-font-size-md)` title.
+### Layout & Density
+- **Standard Density:** Follows canonical slide-over sheet geometry with `var(--as-space-5)` padding, standard action controls, and responsive edge anchoring.
 
 ---
 

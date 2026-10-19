@@ -42,7 +42,7 @@ The Aster Tooltip component displays a contextual micro-overlay containing suppl
   - **Hoverable:** Pointer can move over the tooltip content without it disappearing.
   - **Persistent:** Remains visible until hover or focus is removed.
 - Connected via `aria-describedby` referencing the tooltip `id`.
-- Density modes: Offsets and target bounds adjust seamlessly across comfortable and compact density modes.
+- Geometry: Tooltip padding, text floor (12px), and offsets adhere to Aster's unified standard density scale.
 
 ---
 
@@ -54,7 +54,6 @@ The Aster Tooltip component displays a contextual micro-overlay containing suppl
 | Text Color | `var(--as-semantic-color-surface-card)` |
 | Border Radius | `var(--as-radius-sm)` (6px) |
 | Font Size | `var(--as-typography-font-size-xs)` (12px) |
-| Density Modes | `comfortable` / `compact` |
 | Transition Duration | `var(--as-motion-duration-base)` |
 
 ---

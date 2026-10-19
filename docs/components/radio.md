@@ -22,7 +22,7 @@ The Aster Radio Group component allows users to select exactly one option from a
 1. **Group Container (`.as-radio-group`):** Fieldset wrapping all related radio options.
 2. **Legend (`.as-radio-group__legend`):** Group label describing the selection context.
 3. **Radio Field (`.as-radio-field`):** Inline flex container for an individual option.
-4. **Radio Touch Container (`.as-radio`):** Outer hit boundary (32px comfortable, 28px compact).
+4. **Radio Touch Container (`.as-radio`):** Outer hit boundary (32×32px standard hit area).
 5. **Native Radio Input (`.as-radio-input`):** Native `<input type="radio">` receiving arrow key focus.
 6. **Radio Dot (`::after`):** Centered circular dot indicating active selection.
 
@@ -46,7 +46,7 @@ The Aster Radio Group component allows users to select exactly one option from a
 - Enclosed in native `<fieldset class="as-radio-group">` with `<legend>`.
 - Arrow keys (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`) move selection natively between group options.
 - Visible focus rings rendered on `:focus-visible` with 2px offset (`var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus)`).
-- Minimum target hit bounds satisfy WCAG 2.5.8 Level AA (32×32px comfortable, 28×28px compact).
+- Minimum target hit bounds satisfy WCAG 2.5.8 Level AA (32×32px standard hit area).
 
 ---
 

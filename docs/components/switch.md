@@ -43,7 +43,7 @@ The Aster Switch component provides an instantaneous binary on/off control for s
 - Uses native `<input type="checkbox" role="switch">` so screen readers announce "switch, on/off".
 - Activated with `Space` key.
 - Animation smoothly slides thumb, collapsing duration under `prefers-reduced-motion: reduce`.
-- Target size satisfies WCAG 2.5.8 (44×24px track comfortable, 36×20px compact).
+- Target size satisfies WCAG 2.5.8 (44×24px standard track dimensions).
 
 ---
 

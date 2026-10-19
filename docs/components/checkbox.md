@@ -19,7 +19,7 @@ The Aster Checkbox component provides an accessible, high-contrast selection con
 ### Anatomical Sub-Elements
 
 1. **Field Container (`.as-checkbox-field`):** Inline flex container establishing alignment between the checkbox box and label text.
-2. **Checkbox Hit Container (`.as-checkbox`):** The touch and click hit boundary (32px comfortable, 28px compact) surrounding the visual box.
+2. **Checkbox Hit Container (`.as-checkbox`):** The touch and click hit boundary (32×32px standard hit area) surrounding the visual box.
 3. **Native Checkbox Input (`.as-checkbox-input`):** Native HTML `<input type="checkbox">` receiving focus, change events, and screen reader announcements.
 4. **Label Text (`.as-checkbox-field__label`):** Visual label associated with the checkbox.
 5. **Description (`.as-checkbox-field__description`):** Optional supplementary description text.
@@ -45,7 +45,7 @@ The Aster Checkbox component provides an accessible, high-contrast selection con
 - Uses native `<input type="checkbox">` preserving keyboard operability (`Space` toggles state).
 - Programmatic indeterminate state synced via `input.indeterminate = true` and `aria-checked="mixed"`.
 - Focus visibility enforced via `:focus-visible` with 2px offset (`var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus)`).
-- Touch target bounds satisfy WCAG 2.5.8 Level AA (minimum 24×24px; Aster checkbox hit container measures 32×32px in Comfortable and 28×28px in Compact).
+- Touch target bounds satisfy WCAG 2.5.8 Level AA (minimum 24×24px; Aster checkbox hit container measures 32×32px).
 
 ---
 
@@ -71,7 +71,7 @@ The Aster Checkbox component provides an accessible, high-contrast selection con
 1. **Non-text Contrast (SC 1.4.11 - Level AA):** The unselected checkbox border meets ≥3.0:1 contrast against adjacent canvas/card surfaces.
 2. **Keyboard Operability (SC 2.1.1 - Level A):** Navigable via `Tab` key and toggled via `Space`.
 3. **Focus Visible (SC 2.4.7 - Level A):** High-contrast focus ring appears upon keyboard navigation.
-4. **Target Size (SC 2.5.8 - Level AA):** Minimum 24×24px hit bounds (32px comfortable, 28px compact).
+4. **Target Size (SC 2.5.8 - Level AA):** Minimum 24×24px hit bounds (32×32px standard hit area).
 5. **Name, Role, Value (SC 4.1.2 - Level A):** Native checkbox semantics communicate checked and indeterminate (`mixed`) values.
 
 ### 5.2 Aster Conventions

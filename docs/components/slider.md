@@ -45,7 +45,7 @@ The Aster Slider component enables users to choose a numerical value from a cont
 - Native `<input type="range">` provides native keyboard navigation (`ArrowLeft`, `ArrowRight`, `Home`, `End`, `PageUp`, `PageDown`).
 - `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` updated in real time.
 - Visible focus indicator renders with 4px offset around slider track.
-- Touch bounds: 32px hit container in Comfortable, 24px in Compact.
+- Touch bounds: 32px hit container satisfying WCAG SC 2.5.8.
 
 ---
 

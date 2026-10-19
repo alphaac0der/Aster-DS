@@ -39,7 +39,7 @@ The Aster Skeleton component renders placeholder shapes to reduce perceived late
 - Hidden from assistive technology: Declares `aria-hidden="true"`.
 - Parent region declares `aria-busy="true"` until loaded.
 - Reduced motion: Shimmer wave is disabled under `prefers-reduced-motion: reduce`.
-- Density modes: Adheres to comfortable (40px button/control placeholders) and compact (32px button/control placeholders) density scaling.
+- Standard density: Skeletons mirror standard control geometry (40px button/control placeholders, 44px input placeholders).
 
 ---
 
@@ -50,7 +50,6 @@ The Aster Skeleton component renders placeholder shapes to reduce perceived late
 | Base Tint | `color-mix(in srgb, var(--as-semantic-color-text-default) 8%, transparent)` |
 | Shimmer Color | `color-mix(in srgb, var(--as-semantic-color-surface-card) 25%, transparent)` |
 | Border Radius (Default) | `var(--as-radius-sm)` |
-| Density Modes | `comfortable` (40px) / `compact` (32px) |
 
 ---
 

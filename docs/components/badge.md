@@ -40,7 +40,7 @@ The Aster Badge component provides a compact visual pill for status cues, count 
 
 - Non-interactive presentation: Badges do not receive keyboard tab focus.
 - Non-color-alone rule: Badges always pair color tints with text copy or accessible labels.
-- Dual-density: 24px comfortable, 20px compact.
+- Standard density: 24px height with full-pill radius.
 
 ---
 

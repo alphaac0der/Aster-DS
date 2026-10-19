@@ -81,7 +81,7 @@ The Aster Textarea component provides a multi-line plain text editing control fo
 
 ### 5.2 Aster Conventions
 - Persistent static label above the textarea (no floating labels).
-- Minimum height 84px comfortable, 64px compact.
+- Minimum height 88px standard.
 
 ---
 

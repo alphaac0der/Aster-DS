@@ -69,7 +69,6 @@ Aster form fields follow an **HTML-first, composite field anatomy** that guarant
 | `readOnly` | `boolean` | `false` | Optional | Native HTML readonly state. Suppresses editing while retaining focus and selection. |
 | `invalid` | `boolean` | `false` | Optional | Communicates validation failure. Sets `aria-invalid="true"` on the input. |
 | `aria-describedby` | `string` | — | Conditional | Space-separated list referencing helper and/or error element IDs rendered in the DOM. |
-| `density` | `'comfortable' \| 'compact'` | `'comfortable'` | Optional | Dimensional density profile. |
 
 ### Supported Visual States
 
@@ -95,24 +94,24 @@ Form inputs must define explicit, distinct visual expressions across all support
 
 ---
 
-## 3. Density & Responsive Dimensions
+## 3. Standard Density & Dimensions
 
-Form fields adapt automatically to Aster's dual-density architecture using canonical tokens:
+Form fields adhere to Aster's unified Standard density architecture:
 
-| Dimensional Attribute | Comfortable Density (`:root`) | Compact Density (`[data-density="compact"]`) | Canonical Token Binding |
-|---|---|---|---|
-| **Control Height** | `40px` | `32px` | `var(--as-density-control-height)` |
-| **Vertical Padding** | `8px` | `4px` | `var(--as-density-control-padding-y)` |
-| **Horizontal Padding** | `16px` | `12px` | `var(--as-density-control-padding-x)` |
-| **Input Typography Size** | `14px` (`0.875rem`) | `13px` (`0.8125rem`) | Comfortable: `var(--as-typography-font-size-base)`<br>Compact: `var(--as-typography-font-size-sm)` |
-| **Label Typography Size** | `13px` (`0.8125rem`) | `12px` (`0.75rem`) | Comfortable: `var(--as-typography-font-size-sm)`<br>Compact: `var(--as-typography-font-size-xs)` |
-| **Helper / Error Size** | `12px` (`0.75rem`) | `12px` (`0.75rem`) | `var(--as-typography-font-size-xs)` (Informative text floor) |
-| **Border Radius** | `4px` | `4px` | `var(--as-radius-md)` |
-| **Field Element Gap** | `8px` | `4px` | Comfortable: `var(--as-space-2)`<br>Compact: `var(--as-space-1)` |
-| **Affix Icon Gap** | `8px` | `4px` | Comfortable: `var(--as-space-2)`<br>Compact: `var(--as-space-1)` |
+| Dimensional Attribute | Standard Value | Canonical Token Binding |
+|---|---|---|
+| **Control Height** | `44px` | Canonical Form Input Geometry |
+| **Vertical Padding** | `10px` | Internal Control Centering |
+| **Horizontal Padding** | `12px` (left) / `36px` (right with action) | `var(--as-space-3)` |
+| **Input Typography Size** | `14px` (`0.875rem`) | `var(--as-typography-font-size-sm)` |
+| **Label Typography Size** | `13px` (`0.8125rem`) | `var(--as-typography-font-size-sm)` |
+| **Helper / Error Size** | `12px` (`0.75rem`) | `var(--as-typography-font-size-xs)` (Informative text floor) |
+| **Border Radius** | `4px` | `var(--as-radius-sm)` |
+| **Field Element Gap** | `6px` | `var(--as-space-1)` / `var(--as-space-2)` |
+| **Action Button Target** | `28px × 28px` | `var(--as-radius-sm)` (Exceeds 24px WCAG minimum) |
 
 > [!NOTE]
-> Control heights (40px Comfortable, 32px Compact) are **Aster Conventions** designed for dense workstation applications. While their vertical dimension exceeds 24px, a 32px or 40px height alone does not establish complete WCAG 2.5.8 target-size compliance; the actual interactive target area and applicable spacing exceptions must be evaluated.
+> The standard 44px control height is an **Aster Convention** designed for touch ergonomics and dense workstation applications, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum.
 
 ---
 
@@ -202,8 +201,8 @@ These requirements are non-negotiable accessibility standards:
      - **Field-Level Validation Scenario (No Focus Stealing):** Errors appearing during field-level interaction (such as upon `blur`) must **not** automatically steal or redirect keyboard focus away from the user's intended target, as unexpected focus shifts disorient users and disrupt keyboard navigation. Instead, relying on `aria-describedby` ensures the error is read when the user returns to the field, or an auxiliary polite live region (`aria-live="polite"`) may be used if non-disruptive immediate feedback is required.
 
 ### 5.3 Aster Conventions (Internal System Rules)
-1. **Standard Control Heights:**
-   - 40px (Comfortable) and 32px (Compact) are internal design system dimensional baselines optimized for dense workstation applications, not WCAG mandates.
+1. **Standard Control Height:**
+   - 44px standard input control height is an internal design system dimensional baseline ensuring touch ergonomics, not a WCAG mandate.
 2. **2px Focus Ring:**
    - `outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus); outline-offset: 2px;` is the system-wide keyboard focus ring convention, not a universal WCAG mandate.
 3. **12px Informative Text Floor:**

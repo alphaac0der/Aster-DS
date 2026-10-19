@@ -26,8 +26,8 @@ The Dialog component presents critical information or asks for confirmation in a
       <p>Node drain timeout is set to 300 seconds. Ensure high-priority services have at least 2 replica pods active.</p>
     </div>
     <div class="as-dialog__footer">
-      <button type="button" class="as-button as-button--secondary as-button--compact" data-dialog-close>Cancel</button>
-      <button type="button" class="as-button as-button--primary as-button--compact">Rebalance Fleet</button>
+      <button type="button" class="as-button as-button--secondary" data-dialog-close>Cancel</button>
+      <button type="button" class="as-button as-button--primary">Rebalance Fleet</button>
     </div>
   </div>
 </dialog>
@@ -42,13 +42,11 @@ The Dialog component presents critical information or asks for confirmation in a
 | `<dialog class="as-dialog">` | Element | Yes | Native HTML5 dialog container with modal attributes |
 | `aria-labelledby` | String ID | Yes | Points to dialog title heading ID |
 | `aria-describedby` | String ID | Recommended | Points to dialog body or subtitle description ID |
-| `.as-dialog--compact` | Modifier Class | Optional | Activates compact density with tighter padding and smaller headings |
 | `data-dialog-open="id"` | Attribute | Optional | Declarative trigger hook for opening the specified dialog modal |
 | `data-dialog-close` | Attribute | Optional | Declarative trigger hook for closing the ancestor dialog |
 
-### Density Modes
-- **Comfortable (Default):** Spacious layout with `var(--as-space-5)` header/body padding and `var(--as-typography-font-size-lg)` title.
-- **Compact (`.as-dialog--compact` / `[data-density="compact"]`):** Dense administrative layout with `var(--as-space-4)` padding and `var(--as-typography-font-size-md)` title.
+### Layout & Density
+- **Standard Density:** Follows canonical dialog geometry with `var(--as-space-5)` body padding, 12px radius (`var(--as-radius-lg)`), and standard 40px action buttons.
 
 ---
 
