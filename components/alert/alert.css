@@ -1,0 +1,93 @@
+/**
+ * Aster Design System — Alert Component Styles
+ * Canonical Source: components/alert/alert.css
+ *
+ * Implements accessible callouts and banner messages with Shade-DS status surfaces
+ * (Focus, Success, Warning, Error), zero outline strokes, Phosphor icons, and red dot close.
+ */
+
+.as-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--as-space-3, 12px);
+  padding: 14px 16px;
+  border-radius: var(--as-radius-md, 8px);
+  box-sizing: border-box;
+  width: 100%;
+  font-family: var(--as-typography-font-family-sans);
+  background-color: var(--as-semantic-color-surface-focus);
+  color: var(--as-semantic-color-status-focus-text);
+  border: none;
+  outline: none;
+  position: relative;
+  transition:
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 260ms cubic-bezier(0.22, 1.15, 0.36, 1);
+}
+
+/* Status variants matching Shade-DS exact surfaces and content ink */
+.as-alert--info {
+  background-color: var(--as-semantic-color-surface-focus);
+  color: var(--as-semantic-color-status-focus-text);
+  --_alert-color: var(--as-semantic-color-status-focus-text);
+}
+
+.as-alert--success {
+  background-color: var(--as-semantic-color-surface-success);
+  color: var(--as-semantic-color-status-success-text);
+  --_alert-color: var(--as-semantic-color-status-success-text);
+}
+
+.as-alert--warning {
+  background-color: var(--as-semantic-color-surface-warning);
+  color: var(--as-semantic-color-status-warning-text);
+  --_alert-color: var(--as-semantic-color-status-warning-text);
+}
+
+.as-alert--critical {
+  background-color: var(--as-semantic-color-surface-critical);
+  color: var(--as-semantic-color-status-critical-text);
+  --_alert-color: var(--as-semantic-color-status-critical-text);
+}
+
+/* Sub-elements */
+.as-alert__icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-top: 1px;
+  color: var(--_alert-color, currentColor);
+}
+
+.as-alert__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.as-alert__title {
+  font-size: var(--as-typography-font-size-base, 14px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: currentColor;
+}
+
+.as-alert__description {
+  font-size: var(--as-typography-font-size-sm, 13px);
+  color: currentColor;
+  opacity: 0.85;
+  line-height: 1.45;
+}
+
+/* Red dot close button (inherits 12px red dot from base.css) */
+.as-alert__close {
+  margin: 2px 0 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-alert {
+    transition: none !important;
+  }
+}

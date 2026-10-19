@@ -1,0 +1,205 @@
+/**
+ * Aster Design System — Input / Form Field Component Styles
+ * Canonical Source: components/input/input.css
+ *
+ * Implements 100% faithful Shade-DS Input.tsx specification:
+ * - Surface.1 background (#121212 in dark, #FFFFFF in light)
+ * - Radius.S (4px)
+ * - Height: 44px (Height.M) / 40px (Height.S)
+ * - Double 1px glass glow box-shadow (Base.Surface.3 #333333 at rest; Base.Content.1 #E0E0E0 on focus)
+ * - Zero wireframe outline or border stroke
+ * - Uppercase 11px Label.S with 0.05em tracking
+ */
+
+.as-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin-bottom: var(--as-space-4);
+  font-family: var(--as-typography-font-family-sans);
+}
+
+.as-form-field__label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--as-semantic-color-text-muted);
+  opacity: 0.8;
+  line-height: 16px;
+  margin-bottom: 2px;
+}
+
+.as-form-field__required {
+  color: var(--as-semantic-color-status-critical-text);
+}
+
+.as-form-field__optional {
+  font-weight: 400;
+  font-size: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--as-semantic-color-text-muted);
+  opacity: 0.65;
+}
+
+.as-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  background-color: var(--as-semantic-color-surface-canvas);
+  border: none;
+  outline: none;
+  border-radius: var(--as-radius-sm, 4px);
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle), inset 0 0 1px 0px var(--as-semantic-color-border-subtle);
+  transition: box-shadow 200ms ease;
+}
+
+.as-input-box:is(:hover, .is-hover):not(.as-input-box--disabled, :focus-within) {
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-text-muted), inset 0 0 1px 0px var(--as-semantic-color-text-muted);
+}
+
+.as-input-box:is(:focus-within, .is-focus):not(.as-input-box--disabled) {
+  border: none;
+  outline: none;
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default);
+}
+
+.as-input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-input::placeholder {
+  color: var(--as-semantic-color-text-muted);
+  opacity: 0.6;
+}
+
+.as-input[type="password"] {
+  letter-spacing: 0.08em;
+}
+
+.as-input--mono {
+  font-family: var(--as-typography-font-family-mono);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.as-input__action {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  margin-right: -4px;
+  padding: 0;
+  border: none;
+  border-radius: var(--as-radius-sm, 4px);
+  background: transparent;
+  color: var(--as-semantic-color-text-muted);
+  cursor: pointer;
+  outline: none;
+  transition:
+    color 150ms ease,
+    transform 80ms ease;
+}
+
+.as-input__action:hover {
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-input__action:active {
+  transform: scale(0.95);
+}
+
+.as-input__action:focus-visible {
+  outline: 2px solid var(--as-semantic-color-border-focus);
+}
+
+.as-input__action[hidden] {
+  display: none;
+}
+
+.as-form-field__message,
+.as-form-field__helper {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--as-semantic-color-text-muted);
+}
+
+.as-form-field__message .as-icon,
+.as-form-field__helper .as-icon {
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+}
+
+.as-form-field__error {
+  color: var(--as-semantic-color-status-critical-text);
+  font-weight: 500;
+}
+
+.as-form-field__error[hidden] {
+  display: none;
+}
+
+.as-form-field--error .as-input-box,
+.as-form-field--invalid .as-input-box,
+.as-input-box--invalid {
+  border: none;
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), inset 0 0 1px 0px var(--as-semantic-color-status-critical-text);
+}
+
+.as-form-field--error .as-input-box:is(:focus-within, .is-focus),
+.as-form-field--invalid .as-input-box:is(:focus-within, .is-focus),
+.as-input-box--invalid:is(:focus-within, .is-focus) {
+  border: none;
+  outline: none;
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), inset 0 0 1px 0px var(--as-semantic-color-status-critical-text);
+}
+
+.as-input-box--disabled,
+.as-input-box:has(.as-input:disabled) {
+  background-color: var(--as-semantic-color-surface-subtle);
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.as-input-box--disabled .as-input,
+.as-input:disabled {
+  color: var(--as-semantic-color-text-muted);
+  cursor: not-allowed;
+}
+
+.as-form-field--disabled .as-form-field__label {
+  color: var(--as-semantic-color-text-muted);
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-input__action {
+    transform: none !important;
+  }
+}

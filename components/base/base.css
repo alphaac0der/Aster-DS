@@ -1,0 +1,353 @@
+/**
+ * Aster Design System — Shared Component Base, Motion Defaults & Primitives
+ * Canonical Source: components/base/base.css
+ *
+ * Provides default motion custom properties (with reduced-motion collapse),
+ * macOS-inspired red circular close button (.as-close-btn), and shared component
+ * primitives (.as-sr-only, .as-icon, .as-spinner, .as-badge, .as-checkbox).
+ */
+
+:root {
+  --as-motion-duration-press: 80ms;
+  --as-motion-duration-base: 200ms;
+  --as-motion-duration-slow: 300ms;
+  --as-motion-duration-reveal: 500ms;
+  --as-motion-time-1x: 100ms;
+  --as-motion-time-2x: 200ms;
+  --as-motion-time-3x: 300ms;
+  --as-motion-time-4x: 400ms;
+  --as-motion-time-subtle-1: 150ms;
+  --as-motion-time-subtle-2: 250ms;
+  --as-motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --as-motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --as-motion-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --as-motion-ease-pop: cubic-bezier(0.23, 1, 0.32, 1);
+  --as-motion-spring-snappy: cubic-bezier(0.22, 1.15, 0.36, 1);
+  --as-motion-spring-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --as-motion-lift: -1.5px;
+  --as-motion-lift-scale: 1.02;
+  --as-motion-press-y: 1px;
+  --as-motion-press-scale: 0.95;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --as-motion-duration-press: 0.01ms;
+    --as-motion-duration-base: 0.01ms;
+    --as-motion-duration-slow: 0.01ms;
+    --as-motion-duration-reveal: 0.01ms;
+    --as-motion-time-1x: 0.01ms;
+    --as-motion-time-2x: 0.01ms;
+    --as-motion-time-3x: 0.01ms;
+    --as-motion-time-4x: 0.01ms;
+    --as-motion-time-subtle-1: 0.01ms;
+    --as-motion-time-subtle-2: 0.01ms;
+    --as-motion-lift: 0px;
+    --as-motion-lift-scale: 1;
+    --as-motion-press-y: 0px;
+    --as-motion-press-scale: 1;
+  }
+}
+
+/* Shade-DS RippleLayer expanding circular burst ring on click */
+.as-ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: currentColor;
+  width: 0px;
+  height: 0px;
+  border-width: 0px;
+  opacity: 0.14;
+  z-index: 0;
+  animation: as-shade-ripple 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes as-shade-ripple {
+  0% {
+    width: 0px;
+    height: 0px;
+    border-width: 0px;
+    opacity: 0.08;
+  }
+  35% {
+    opacity: 0.16;
+  }
+  100% {
+    width: var(--_ripple-d, 320px);
+    height: var(--_ripple-d, 320px);
+    border-width: 72px;
+    opacity: 0;
+  }
+}
+
+.as-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Shade-DS Red Dot close control (FloatingWindow.tsx specification) */
+.as-close-btn,
+.as-dialog__close,
+.as-drawer__close,
+.as-alert__close,
+.as-toast__close,
+.as-popover__close {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  max-width: 12px;
+  max-height: 12px;
+  padding: 0;
+  border: none;
+  outline: none;
+  border-radius: var(--as-radius-full, 9999px);
+  background-color: var(--as-semantic-color-status-critical-text, #ff453a);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  flex: none;
+  position: relative;
+  transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Touch and click target expansion (28px minimum hit target without affecting 12px visual dot) */
+.as-close-btn::after,
+.as-dialog__close::after,
+.as-drawer__close::after,
+.as-alert__close::after,
+.as-toast__close::after,
+.as-popover__close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  pointer-events: auto;
+}
+
+/* Shade-DS red dot has NO internal icon glyph */
+.as-close-btn :is(svg, .as-icon, span),
+.as-dialog__close :is(svg, .as-icon, span),
+.as-drawer__close :is(svg, .as-icon, span),
+.as-alert__close :is(svg, .as-icon, span),
+.as-toast__close :is(svg, .as-icon, span),
+.as-popover__close :is(svg, .as-icon, span) {
+  display: none !important;
+}
+
+.as-close-btn:is(:hover, .is-hover),
+.as-dialog__close:is(:hover, .is-hover),
+.as-drawer__close:is(:hover, .is-hover),
+.as-alert__close:is(:hover, .is-hover),
+.as-toast__close:is(:hover, .is-hover),
+.as-popover__close:is(:hover, .is-hover) {
+  transform: scale(1.2);
+}
+
+.as-close-btn:is(:active, .is-pressed),
+.as-dialog__close:is(:active, .is-pressed),
+.as-drawer__close:is(:active, .is-pressed),
+.as-alert__close:is(:active, .is-pressed),
+.as-toast__close:is(:active, .is-pressed),
+.as-popover__close:is(:active, .is-pressed) {
+  transform: scale(0.9);
+}
+
+.as-close-btn:focus-visible,
+.as-dialog__close:focus-visible,
+.as-drawer__close:focus-visible,
+.as-alert__close:focus-visible,
+.as-toast__close:focus-visible,
+.as-popover__close:focus-visible {
+  outline: 2px solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+.as-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  min-height: 22px;
+  border: 0;
+  border-radius: var(--as-radius-full);
+  font-size: var(--as-typography-font-size-xs);
+  font-weight: var(--as-typography-font-weight-medium);
+  line-height: 1.4;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: color-mix(in srgb, var(--_c, var(--as-semantic-color-text-muted)) 13%, var(--as-semantic-color-surface-card));
+  color: var(--_c, var(--as-semantic-color-text-muted));
+  box-shadow: none;
+}
+
+[data-theme="dark"] .as-badge {
+  background-color: color-mix(in srgb, var(--_c, var(--as-semantic-color-text-muted)) 16%, var(--as-semantic-color-surface-card));
+}
+
+.as-badge--active { --_c: var(--as-semantic-color-status-success-text); }
+.as-badge--pending { --_c: var(--as-semantic-color-status-warning-text); }
+.as-badge--error { --_c: var(--as-semantic-color-status-critical-text); }
+
+.as-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: as-spin 650ms linear infinite;
+  flex: none;
+}
+
+@keyframes as-spin {
+  to { transform: rotate(360deg); }
+}
+
+.as-icon,
+svg.as-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: currentColor;
+}
+
+/* Native checkbox with a 32px hit area (target size) */
+.as-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: -6px;
+  cursor: pointer;
+  border-radius: var(--as-radius-full);
+}
+
+.as-checkbox input {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--as-radius-sm, 4px);
+  cursor: pointer;
+  border: 1.5px solid var(--as-semantic-color-border-strong);
+  background: var(--as-semantic-color-surface-card) center / 12px 12px no-repeat;
+  transition:
+    background-color var(--as-motion-duration-base) var(--as-motion-ease-out),
+    border-color var(--as-motion-duration-base),
+    transform var(--as-motion-duration-base) var(--as-motion-ease-out);
+}
+
+.as-checkbox:hover input:not(:checked, :indeterminate) {
+  border-color: var(--as-semantic-color-text-default);
+}
+
+.as-checkbox input:active {
+  transform: scale(0.9);
+  transition-duration: var(--as-motion-duration-press);
+}
+
+.as-checkbox input:checked,
+.as-checkbox input:indeterminate {
+  background-color: var(--as-semantic-color-interactive-primary);
+  border-color: var(--as-semantic-color-interactive-primary);
+}
+
+.as-checkbox input:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.2 2.2L9.5 3.6'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .as-checkbox input:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%230f0f0f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.2 2.2L9.5 3.6'/%3E%3C/svg%3E");
+}
+
+.as-checkbox input:indeterminate {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 6h6'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .as-checkbox input:indeterminate {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%230f0f0f' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 6h6'/%3E%3C/svg%3E");
+}
+
+.as-checkbox input:focus-visible {
+  outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-spinner { animation-duration: 1.6s; }
+  .as-checkbox input,
+  .as-close-btn,
+  .as-dialog__close,
+  .as-drawer__close,
+  .as-alert__close,
+  .as-toast__close,
+  .as-popover__close,
+  .as-close-btn :is(svg, .as-icon, span),
+  .as-dialog__close :is(svg, .as-icon, span),
+  .as-drawer__close :is(svg, .as-icon, span),
+  .as-alert__close :is(svg, .as-icon, span),
+  .as-toast__close :is(svg, .as-icon, span),
+  .as-popover__close :is(svg, .as-icon, span) {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Shade-DS Card Surface & Border Glow Architecture */
+.as-border-glow-1px {
+  box-shadow: 0 0 1px 0px var(--_glow-color, var(--as-semantic-color-border-subtle)), inset 0 0 1px 0px var(--_glow-color, var(--as-semantic-color-border-subtle));
+}
+
+.as-outline-2px {
+  outline: 2px solid var(--_glow-color, var(--as-semantic-color-border-strong));
+  outline-offset: -2px;
+}
+
+.as-card {
+  box-sizing: border-box;
+  background-color: var(--as-semantic-color-surface-card);
+  color: var(--as-semantic-color-text-default);
+  border-radius: var(--as-radius-lg, 12px);
+  padding: var(--as-space-6, 24px);
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle), inset 0 0 1px 0px var(--as-semantic-color-border-subtle);
+  transition: transform var(--as-motion-time-2x, 200ms) var(--as-motion-spring-snappy, cubic-bezier(0.22, 1.15, 0.36, 1)),
+              box-shadow var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.as-card:hover {
+  transform: translateY(var(--as-motion-lift, -1.5px)) scale(var(--as-motion-lift-scale, 1.01));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 1px 0px var(--as-semantic-color-border-strong), inset 0 0 1px 0px var(--as-semantic-color-border-strong);
+}
+
+.as-token-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--as-space-1, 4px);
+  padding: var(--as-space-1, 4px) var(--as-space-2, 8px);
+  border-radius: var(--as-radius-full, 9999px);
+  font-family: var(--as-typography-font-family-mono);
+  font-size: var(--as-typography-font-size-xs, 12px);
+  line-height: 1;
+  background-color: var(--as-semantic-color-surface-subtle);
+  color: var(--as-semantic-color-text-default);
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle);
+}
+

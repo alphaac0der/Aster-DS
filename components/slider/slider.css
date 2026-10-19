@@ -1,0 +1,147 @@
+/**
+ * Aster Design System — Slider (Range) Component Styles
+ * Canonical Source: components/slider/slider.css
+ *
+ * Implements accessible, fluid range sliders with synchronized active track fill
+ * (via CSS custom property --_progress), tactile thumb, and visible focus rings.
+ */
+
+.as-slider-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-2, 8px);
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--as-typography-font-family-sans);
+}
+
+.as-slider-field__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.as-slider-field__label {
+  font-size: var(--as-typography-font-size-sm);
+  font-weight: var(--as-typography-font-weight-medium);
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-slider-field__value {
+  font-family: var(--as-typography-font-family-mono);
+  font-size: var(--as-typography-font-size-xs);
+  font-weight: var(--as-typography-font-weight-medium);
+  color: var(--as-semantic-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.as-slider-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 32px;
+}
+
+.as-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--as-radius-full);
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+  --_progress: 0%;
+  background: linear-gradient(
+    to right,
+    var(--as-semantic-color-interactive-primary) var(--_progress),
+    color-mix(in srgb, var(--as-semantic-color-text-default) 14%, transparent) var(--_progress)
+  );
+  transition:
+    background-color var(--as-motion-duration-base) var(--as-motion-ease-out),
+    opacity var(--as-motion-duration-base) var(--as-motion-ease-out);
+}
+
+/* Thumb (Webkit) — Shade-DS RangeSlider spring thumb expansion */
+.as-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--as-radius-full);
+  background-color: var(--as-semantic-color-surface-card);
+  border: 2px solid var(--as-semantic-color-interactive-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition:
+    transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.as-slider:hover:not(:disabled)::-webkit-slider-thumb {
+  transform: scale(1.12);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+}
+
+.as-slider:active:not(:disabled)::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+}
+
+/* Thumb (Firefox) */
+.as-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--as-radius-full);
+  background-color: var(--as-semantic-color-surface-card);
+  border: 2px solid var(--as-semantic-color-interactive-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition:
+    transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.as-slider:hover:not(:disabled)::-moz-range-thumb {
+  transform: scale(1.12);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+}
+
+.as-slider:active:not(:disabled)::-moz-range-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+}
+
+/* Focus Visible */
+.as-slider:focus-visible {
+  outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus);
+  outline-offset: 4px;
+}
+
+/* Disabled */
+.as-slider:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.as-slider:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  border-color: var(--as-semantic-color-text-muted);
+}
+
+.as-slider:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  border-color: var(--as-semantic-color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-slider,
+  .as-slider::-webkit-slider-thumb,
+  .as-slider::-moz-range-thumb {
+    transition: none !important;
+  }
+}

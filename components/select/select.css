@@ -1,0 +1,103 @@
+/**
+ * Aster Design System — Select Component Styles
+ * Canonical Source: components/select/select.css
+ *
+ * Implements 100% faithful Shade-DS Select.tsx specification:
+ * - Base.Surface.1 background (#121212 in dark, #FFFFFF in light)
+ * - Radius.S (4px)
+ * - Height: 44px (Height.M) / 40px (Height.S)
+ * - Double 1px glass glow box-shadow (Base.Surface.3 at rest, Base.Content.1 on open/focus)
+ * - Zero wireframe outline or border stroke
+ * - Rotating chevron indicator
+ */
+
+.as-select-box {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  background-color: var(--as-semantic-color-surface-canvas);
+  border: none;
+  outline: none;
+  border-radius: var(--as-radius-sm, 4px);
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle), inset 0 0 1px 0px var(--as-semantic-color-border-subtle);
+  transition:
+    box-shadow 200ms ease,
+    transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.as-select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0 36px 0 12px;
+  border: none;
+  outline: none;
+  border-radius: inherit;
+  background-color: transparent;
+  color: var(--as-semantic-color-text-default);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Chevron icon placed at right — Shade-DS spring rotation */
+.as-select-chevron {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+  color: var(--as-semantic-color-text-muted);
+  transition:
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 200ms ease;
+}
+
+/* Hover */
+.as-select-box:hover:not(:has(.as-select:disabled)) {
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-text-muted), inset 0 0 1px 0px var(--as-semantic-color-text-muted);
+}
+
+.as-select-box:hover .as-select-chevron {
+  color: var(--as-semantic-color-text-default);
+}
+
+/* Active / Open */
+.as-select-box:active:not(:has(.as-select:disabled)) {
+  transform: scale(0.995);
+}
+
+.as-select-box:has(.as-select:focus-visible),
+.as-select-box.is-open {
+  border: none;
+  outline: none;
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default);
+}
+
+.as-select-box.is-open .as-select-chevron {
+  transform: rotate(180deg);
+  color: var(--as-semantic-color-text-default);
+}
+
+/* Disabled */
+.as-select-box:has(.as-select:disabled) {
+  background-color: var(--as-semantic-color-surface-subtle);
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.as-select:disabled {
+  cursor: not-allowed;
+}
+
+/* Invalid / Error */
+.as-select-box--invalid,
+.as-form-field--error .as-select-box {
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), inset 0 0 1px 0px var(--as-semantic-color-status-critical-text);
+}

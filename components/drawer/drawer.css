@@ -1,0 +1,140 @@
+/**
+ * Aster Design System — Drawer Component Styles
+ * Canonical Source: components/drawer/drawer.css
+ *
+ * Implements sliding side-sheet overlays with backdrop scrim, focus management,
+ * and macOS-inspired red circular close control.
+ */
+
+.as-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+}
+
+.as-drawer[hidden] {
+  display: none !important;
+}
+
+.as-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(18, 18, 18, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: as-drawer-fade-in var(--as-motion-duration-slow) var(--as-motion-ease-out);
+}
+
+[data-theme="dark"] .as-drawer__backdrop {
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.as-drawer__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background-color: color-mix(in srgb, var(--as-semantic-color-surface-card) 95%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--as-semantic-color-text-default);
+  box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.15);
+  border: none;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .as-drawer__panel {
+  box-shadow: 0 0 1px 0px rgba(255, 255, 255, 0.14), inset 0 0 1px 0px rgba(255, 255, 255, 0.14), 0 12px 32px rgba(0, 0, 0, 0.65);
+}
+
+.as-drawer__panel--right {
+  margin-left: auto;
+  border-left: 1px solid var(--as-semantic-color-border-subtle);
+  animation: as-drawer-slide-right 350ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.as-drawer__panel--left {
+  margin-right: auto;
+  border-right: 1px solid var(--as-semantic-color-border-subtle);
+  animation: as-drawer-slide-left 350ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes as-drawer-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes as-drawer-slide-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes as-drawer-slide-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.as-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--as-space-3);
+  padding: var(--as-space-5);
+  border-bottom: var(--as-elevation-border-hairline) solid var(--as-semantic-color-border-subtle);
+}
+
+.as-drawer__title {
+  margin: 0;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-lg);
+  font-weight: var(--as-typography-font-weight-semibold);
+  line-height: var(--as-typography-line-height-tight);
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-drawer__description {
+  margin: var(--as-space-1) 0 0;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-regular);
+  line-height: var(--as-typography-line-height-normal);
+  color: var(--as-semantic-color-text-muted);
+}
+
+/* macOS-inspired red circular close control (inherits base behavior from base.css) */
+.as-drawer__close {
+  margin-top: 2px;
+}
+
+.as-drawer__body {
+  flex: 1;
+  padding: var(--as-space-5);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  line-height: var(--as-typography-line-height-normal);
+  color: var(--as-semantic-color-text-default);
+  overflow-y: auto;
+}
+
+.as-drawer__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--as-space-2);
+  padding: var(--as-space-4) var(--as-space-5);
+  border-top: var(--as-elevation-border-hairline) solid var(--as-semantic-color-border-subtle);
+  background-color: var(--as-semantic-color-surface-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-drawer__backdrop,
+  .as-drawer__panel {
+    animation: none !important;
+  }
+}

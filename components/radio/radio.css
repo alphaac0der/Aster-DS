@@ -1,0 +1,157 @@
+/**
+ * Aster Design System — Radio Group Component Styles
+ * Canonical Source: components/radio/radio.css
+ *
+ * Implements accessible, grouped radio options with standard circular indicators,
+ * smooth selection transitions, and visible focus rings.
+ */
+
+.as-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-3, 12px);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.as-radio-group--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--as-space-4, 16px);
+}
+
+.as-radio-group__legend {
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-sm);
+  font-weight: var(--as-typography-font-weight-medium);
+  color: var(--as-semantic-color-text-default);
+  margin-bottom: var(--as-space-2, 8px);
+  padding: 0;
+}
+
+.as-radio-field {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--as-space-3, 12px);
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--as-typography-font-family-sans);
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-radio-field--disabled,
+.as-radio-field:has(.as-radio-input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.as-radio-field__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.as-radio-field__label {
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-regular);
+  line-height: 1.4;
+  cursor: inherit;
+}
+
+.as-radio-field__description {
+  font-size: var(--as-typography-font-size-xs);
+  color: var(--as-semantic-color-text-muted);
+  line-height: 1.35;
+}
+
+/* Standalone radio touch container */
+.as-radio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--as-radius-full);
+  margin: -6px 0 0 -6px;
+  cursor: inherit;
+}
+
+.as-radio-input {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border-radius: var(--as-radius-full);
+  cursor: inherit;
+  border: 1.5px solid var(--as-semantic-color-border-strong);
+  outline: none;
+  background-color: transparent;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--as-motion-duration-base, 200ms) var(--as-motion-ease-out, cubic-bezier(0.4, 0, 0.2, 1)),
+    border-color var(--as-motion-duration-base, 200ms) var(--as-motion-ease-out, cubic-bezier(0.4, 0, 0.2, 1)),
+    transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.as-radio-input:active:not(:disabled) {
+  transform: scale(0.91);
+  transition-duration: 80ms;
+}
+
+/* Inverted center dot via pseudo element: dark hole inside solid white disc (media_1792337095608_ed4f8aef.png) */
+.as-radio-input::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--as-radius-full);
+  background-color: var(--as-semantic-color-surface-canvas);
+  transform: scale(0);
+  transition:
+    transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color var(--as-motion-duration-base, 200ms) var(--as-motion-ease-out, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+/* Checked state: solid interactive primary disc with centered dark dot */
+.as-radio-input:checked {
+  background-color: var(--as-semantic-color-interactive-primary);
+  border-color: var(--as-semantic-color-interactive-primary);
+}
+
+.as-radio-input:checked::after {
+  transform: scale(1);
+}
+
+/* Hover state */
+.as-radio-input:hover:not(:disabled) {
+  border-color: var(--as-semantic-color-text-default);
+}
+
+/* Focus Visible state */
+.as-radio-input:focus-visible {
+  outline: 2px solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Invalid / Error state */
+.as-radio-input[aria-invalid="true"],
+.as-radio-field--error .as-radio-input {
+  border-color: var(--as-semantic-color-status-critical-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-radio-input,
+  .as-radio-input::after {
+    transition: none !important;
+  }
+}

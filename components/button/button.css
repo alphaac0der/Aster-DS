@@ -1,0 +1,271 @@
+/**
+ * Aster Design System — Button Component Styles
+ * Canonical Source: components/button/button.css
+ *
+ * Implements the Shade-DS-inspired pill button with 24px horizontal padding,
+ * cursor-origin circular hover fill (::before expanding from --_x, --_y to --_max-d),
+ * subtle hover lift, crisp 80ms press compression, keyboard focus ring, and reduced-motion support.
+ */
+
+.as-button {
+  --_ink: var(--as-semantic-color-text-default);
+  --_line: color-mix(in srgb, var(--as-semantic-color-text-default) 16%, transparent);
+  --_line-hover: color-mix(in srgb, var(--as-semantic-color-text-default) 28%, transparent);
+  --_hover-bg: color-mix(in srgb, currentColor 11%, transparent);
+  --_max-d: 260px;
+  --_x: 50%;
+  --_y: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--as-space-2);
+  box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: var(--as-density-control-height);
+  padding: var(--as-density-control-padding-y, 8px) var(--as-space-6, 24px);
+  border: 0;
+  border-radius: var(--as-radius-full);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-medium);
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  vertical-align: middle;
+  background-color: var(--_bg);
+  color: var(--_fg, var(--_ink));
+  box-shadow: var(--_shadow);
+  outline: var(--as-elevation-border-focus) solid transparent;
+  outline-offset: 0;
+  transition:
+    transform var(--as-motion-time-2x, 200ms) var(--as-motion-spring-snappy, cubic-bezier(0.22, 1.15, 0.36, 1)),
+    background-color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)),
+    box-shadow var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)),
+    color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)),
+    outline-color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-out),
+    outline-offset var(--as-motion-time-2x, 200ms) var(--as-motion-ease-out);
+}
+
+.as-button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--as-space-2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Shade-DS StateLayer: circular hover fill starting at pointer (--_x, --_y) and expanding to --_max-d */
+.as-button::before {
+  content: "";
+  position: absolute;
+  left: var(--_x, 50%);
+  top: var(--_y, 50%);
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  background-color: var(--_hover-bg);
+  transition:
+    width 650ms cubic-bezier(0.4, 0, 0.2, 1),
+    height 650ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-out);
+}
+
+/* Shade-DS Hover: translateY(-4px) scale(1.05) + Drop.3 shadow (0 8px 16px rgba(0,0,0,0.15)) */
+.as-button:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.as-button:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"])::before {
+  width: var(--_max-d, 260px);
+  height: var(--_max-d, 260px);
+  transition:
+    width 850ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 850ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-out);
+}
+
+/* Shade-DS Press / Tap: translateY(2px) scale(0.95) tactile compression + Drop.1 shadow (0 2px 4px rgba(0,0,0,0.1)) */
+.as-button:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition-duration: var(--as-motion-duration-press, 80ms);
+}
+
+.as-button:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"])::before {
+  width: var(--_max-d, 260px);
+  height: var(--_max-d, 260px);
+  background-color: var(--_active-bg, var(--_hover-bg));
+  transition-duration: var(--as-motion-duration-press, 80ms);
+}
+
+/* Keyboard focus: ring grows outward from the control */
+.as-button:is(:focus-visible, .is-focus) {
+  outline: 2px solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Primary: Shade-DS monochrome primary action with Drop.2 idle shadow (0 4px 8px rgba(0,0,0,0.12)) */
+.as-button--primary {
+  --_bg: var(--as-semantic-color-interactive-primary);
+  --_fg: var(--as-semantic-color-interactive-primary-text);
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-interactive-primary-text) 16%, var(--as-semantic-color-interactive-primary));
+  --_active-bg: var(--as-semantic-color-interactive-primary-hover);
+  --_shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .as-button--primary {
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-interactive-primary-text) 14%, var(--as-semantic-color-interactive-primary));
+  --_active-bg: var(--as-semantic-color-interactive-primary-hover);
+}
+
+.as-button--primary:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.as-button--primary:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Secondary: Base.Surface.2 background with Base.Content.1 text */
+.as-button--secondary {
+  --_bg: var(--as-semantic-color-surface-card);
+  --_fg: var(--as-semantic-color-text-default);
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 9%, var(--as-semantic-color-surface-card));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 14%, var(--as-semantic-color-surface-card));
+  --_shadow: none;
+}
+
+[data-theme="dark"] .as-button--secondary {
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 12%, var(--as-semantic-color-surface-card));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 17%, var(--as-semantic-color-surface-card));
+}
+
+.as-button--secondary:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.as-button--secondary:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Destructive: Error.Surface.1 background with Error.Content.1 text & glow */
+.as-button--destructive {
+  --_fg: var(--as-semantic-color-status-critical-text);
+  --_bg: var(--as-semantic-color-surface-critical);
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 16%, var(--as-semantic-color-surface-critical));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 24%, var(--as-semantic-color-surface-critical));
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .as-button--destructive {
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 20%, var(--as-semantic-color-surface-critical));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 28%, var(--as-semantic-color-surface-critical));
+}
+
+.as-button--destructive:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.as-button--destructive:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ghost & Tertiary: transparent at rest; hover color fills as a circle from the mouse pointer into the full pill */
+.as-button--ghost,
+.as-button--tertiary {
+  --_bg: transparent;
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 10%, transparent);
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 15%, transparent);
+  --_shadow: none;
+}
+
+[data-theme="dark"] .as-button--ghost,
+[data-theme="dark"] .as-button--tertiary {
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 13%, transparent);
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 18%, transparent);
+}
+
+/* Outline: transparent background with Base.Content.3 double 1px glass glow */
+.as-button--outline {
+  --_bg: transparent;
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 8%, transparent);
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-text-default) 14%, transparent);
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-border-strong), inset 0 0 1px 0px var(--as-semantic-color-border-strong);
+}
+
+.as-button--outline:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.as-button--outline:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Shade-DS Size Modifiers: S (32px), M (40px default), L (56px full pill) */
+.as-button--sm {
+  height: 32px;
+  padding: 0 var(--as-space-3, 12px);
+  font-size: var(--as-typography-font-size-xs, 12px);
+}
+
+.as-button--lg {
+  height: 56px;
+  padding: 0 var(--as-space-6, 24px);
+  font-size: 16px;
+  border-radius: var(--as-radius-full);
+}
+
+/* Shade-DS Success State: emerald glow & kinetic halo */
+.as-button[data-success="true"],
+.as-button.is-success {
+  box-shadow: 0 0 24px var(--as-semantic-color-status-success-surface, rgba(30, 142, 62, 0.2)), 0 0 6px var(--as-semantic-color-status-success-text) !important;
+}
+
+/* Disabled (native + focus-retaining): strictly lock transform and suppress hover/active effects */
+.as-button:disabled,
+.as-button[aria-disabled="true"] {
+  cursor: not-allowed;
+  transform: none !important;
+  --_shadow: none !important;
+  box-shadow: none !important;
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+
+.as-button:is(:disabled, [aria-disabled="true"], [aria-busy="true"])::before {
+  opacity: 0 !important;
+}
+
+.as-button--ghost:disabled,
+.as-button--ghost[aria-disabled="true"] {
+  --_bg: transparent;
+}
+
+/* Loading: keeps focus (aria-busy), blocks activation in script, locks transform, keeps full contrast */
+.as-button[aria-busy="true"] {
+  cursor: progress;
+  transform: none !important;
+}
+
+.as-button[aria-busy="true"]:not(.as-button--ghost):not(.as-button--destructive):not(.as-button--secondary) {
+  --_bg: var(--as-semantic-color-interactive-primary-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-button {
+    transform: none !important;
+  }
+  .as-button::before,
+  .as-button:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"])::before {
+    transition-duration: 0.01ms !important;
+  }
+}

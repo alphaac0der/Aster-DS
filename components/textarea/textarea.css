@@ -1,0 +1,96 @@
+/**
+ * Aster Design System — Textarea Component Styles
+ * Canonical Source: components/textarea/textarea.css
+ *
+ * Implements 100% faithful Shade-DS TextArea.tsx specification:
+ * - Base.Surface.3 background (#333333 in dark, #EEEEEE in light)
+ * - Radius.M (8px)
+ * - Double 1px glass glow box-shadow (Base.Surface.3 at rest, Base.Content.1 on focus)
+ * - Zero wireframe outline or border stroke
+ * - Custom thin scrollbar
+ */
+
+.as-textarea-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--as-semantic-color-surface-subtle);
+  border: none;
+  outline: none;
+  border-radius: var(--as-radius-md, 8px);
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle), inset 0 0 1px 0px var(--as-semantic-color-border-subtle);
+  transition: box-shadow 200ms ease;
+}
+
+.as-textarea {
+  display: block;
+  width: 100%;
+  min-height: 88px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 12px 14px;
+  border: none;
+  outline: none;
+  border-radius: inherit;
+  background-color: transparent;
+  color: var(--as-semantic-color-text-default);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.as-textarea::placeholder {
+  color: var(--as-semantic-color-text-muted);
+  opacity: 0.6;
+}
+
+/* Hover */
+.as-textarea-box:hover:not(:has(.as-textarea:disabled)) {
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-text-muted), inset 0 0 1px 0px var(--as-semantic-color-text-muted);
+}
+
+/* Focus */
+.as-textarea-box:has(.as-textarea:focus) {
+  border: none;
+  outline: none;
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default);
+}
+
+/* Character Counter */
+.as-textarea__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 4px 12px 8px;
+  font-family: var(--as-typography-font-family-mono);
+  font-size: 11px;
+  color: var(--as-semantic-color-text-muted);
+  user-select: none;
+}
+
+.as-textarea__counter {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+/* Disabled */
+.as-textarea-box:has(.as-textarea:disabled) {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.as-textarea:disabled {
+  cursor: not-allowed;
+}
+
+/* Error / Invalid */
+.as-textarea-box--invalid,
+.as-form-field--error .as-textarea-box {
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), inset 0 0 1px 0px var(--as-semantic-color-status-critical-text);
+}

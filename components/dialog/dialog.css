@@ -1,0 +1,239 @@
+/**
+ * Aster Design System — Dialog Component Styles
+ * Canonical Source: components/dialog/dialog.css
+ *
+ * Implements accessible modal dialogs using native HTML <dialog> elements
+ * with backdrop scrim, focus trap, and macOS-inspired red close control.
+ */
+
+.as-dialog {
+  border: none;
+  border-radius: var(--as-radius-lg);
+  padding: 0;
+  background-color: color-mix(in srgb, var(--as-semantic-color-surface-card) 94%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--as-semantic-color-text-default);
+  box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.15);
+  max-width: min(92vw, 400px);
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .as-dialog {
+  box-shadow: 0 0 1px 0px rgba(255, 255, 255, 0.14), inset 0 0 1px 0px rgba(255, 255, 255, 0.14), 0 12px 32px rgba(0, 0, 0, 0.65);
+}
+
+.as-dialog::backdrop {
+  background-color: rgba(18, 18, 18, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .as-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.as-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  animation: as-dialog-in 280ms cubic-bezier(0.22, 1.15, 0.36, 1) both;
+}
+
+@keyframes as-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.as-dialog__surface {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-height: min(85vh, 600px);
+}
+
+.as-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--as-space-3);
+  min-height: 48px;
+  padding: 0 var(--as-space-4);
+  border-bottom: 1px solid var(--as-semantic-color-border-subtle);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.as-dialog .as-dialog__title,
+.as-dialog__title {
+  margin: 0;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-dialog__description {
+  margin: var(--as-space-1) 0 0;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-regular);
+  line-height: var(--as-typography-line-height-normal);
+  color: var(--as-semantic-color-text-muted);
+}
+
+/* macOS-inspired red circular close control (inherits base behavior from base.css) */
+.as-dialog__close {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Shade-DS Inspired Hero Header */
+.as-dialog__hero {
+  padding: 28px var(--as-space-5) 24px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--as-semantic-color-surface-subtle) 0%, var(--as-semantic-color-surface-card) 100%);
+  border-bottom: 1px solid var(--as-semantic-color-border-subtle);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.as-dialog__hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.as-dialog .as-dialog__hero-title,
+.as-dialog__hero-title {
+  margin: 0 0 8px !important;
+  font-family: 'Bebas Neue', var(--as-typography-font-family-display, sans-serif) !important;
+  font-size: 44px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--as-semantic-color-text-default) !important;
+}
+
+.as-dialog .as-dialog__hero-subtitle,
+.as-dialog__hero-subtitle {
+  margin: 0 auto;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: 13.5px;
+  font-weight: var(--as-typography-font-weight-regular);
+  line-height: 1.45;
+  color: var(--as-semantic-color-text-muted);
+  max-width: 300px;
+}
+
+.as-dialog__body {
+  padding: 20px;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  line-height: var(--as-typography-line-height-normal);
+  color: var(--as-semantic-color-text-default);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: 280px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+[data-theme="light"] .as-dialog__body {
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.as-dialog__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.as-dialog__body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: var(--as-radius-full);
+}
+
+[data-theme="light"] .as-dialog__body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.as-dialog__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-3);
+}
+
+.as-dialog .as-dialog__section-title,
+.as-dialog__section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  font-family: 'Bebas Neue', var(--as-typography-font-family-display, sans-serif) !important;
+  font-size: 20px !important;
+  letter-spacing: 0.05em !important;
+  color: var(--as-semantic-color-text-default) !important;
+}
+
+.as-dialog__rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.as-dialog__rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--as-semantic-color-text-muted);
+}
+
+.as-dialog__rule-num {
+  color: var(--as-semantic-color-text-default);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.as-dialog__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--as-space-2);
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--as-semantic-color-border-subtle);
+  background-color: var(--as-semantic-color-surface-card);
+  flex-shrink: 0;
+}
+
+.as-dialog__footer .as-button--pill-cta {
+  width: 100%;
+  max-width: 320px;
+  border-radius: var(--as-radius-full);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-dialog[open] {
+    animation: none !important;
+  }
+}

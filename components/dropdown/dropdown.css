@@ -1,0 +1,136 @@
+/**
+ * Aster Design System — Dropdown Menu Component Styles
+ * Canonical Source: components/dropdown/dropdown.css
+ *
+ * Implements accessible action dropdown menus following W3C APG Menu Button pattern.
+ */
+
+.as-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.as-dropdown__chevron {
+  width: 12px;
+  height: 12px;
+  margin-left: var(--as-space-2);
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex: none;
+}
+
+.as-dropdown__trigger[aria-expanded="true"] .as-dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+.as-dropdown__menu {
+  position: absolute;
+  top: calc(100% + var(--as-space-1));
+  left: 0;
+  min-width: 190px;
+  z-index: 500;
+  padding: 4px;
+  background-color: color-mix(in srgb, var(--as-semantic-color-surface-card) 95%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
+  border-radius: var(--as-radius-md);
+  box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transform-origin: top left;
+  animation: as-dropdown-in 200ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+[data-theme="dark"] .as-dropdown__menu {
+  box-shadow: 0 0 1px 0px rgba(255, 255, 255, 0.14), inset 0 0 1px 0px rgba(255, 255, 255, 0.14), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.as-dropdown__menu--right {
+  left: auto;
+  right: 0;
+  transform-origin: top right;
+}
+
+.as-dropdown__menu[hidden] {
+  display: none !important;
+}
+
+@keyframes as-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.as-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: var(--as-space-2);
+  width: 100%;
+  padding: var(--as-space-2) var(--as-space-3);
+  border: 0;
+  border-radius: var(--as-radius-sm);
+  background: transparent;
+  color: var(--as-semantic-color-text-default);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-regular);
+  line-height: var(--as-typography-line-height-normal);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 120ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.as-dropdown__item:hover,
+.as-dropdown__item:focus,
+.as-dropdown__item.is-focused {
+  background-color: var(--as-semantic-color-surface-muted);
+  color: var(--as-semantic-color-text-default);
+  outline: none;
+}
+
+.as-dropdown__item:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.as-dropdown__item--destructive {
+  color: var(--as-semantic-color-status-critical-text);
+}
+
+.as-dropdown__item--destructive:hover,
+.as-dropdown__item--destructive:focus,
+.as-dropdown__item--destructive.is-focused {
+  background-color: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 12%, var(--as-semantic-color-surface-card));
+  color: var(--as-semantic-color-status-critical-text);
+}
+
+.as-dropdown__item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.as-dropdown__divider {
+  height: var(--as-elevation-border-hairline);
+  background-color: var(--as-semantic-color-border-subtle);
+  margin: var(--as-space-1) 0;
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-dropdown__chevron,
+  .as-dropdown__menu,
+  .as-dropdown__item {
+    transition: none !important;
+    animation: none !important;
+  }
+}

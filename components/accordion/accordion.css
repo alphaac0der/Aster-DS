@@ -1,0 +1,148 @@
+/**
+ * Aster Design System — Accordion Component Styles
+ * Canonical Source: components/accordion/accordion.css
+ *
+ * Implements accessible disclosure accordions conforming to W3C APG Accordion Pattern.
+ */
+
+.as-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: var(--as-elevation-border-hairline) solid var(--as-semantic-color-border-subtle);
+}
+
+.as-accordion__item {
+  border-bottom: var(--as-elevation-border-hairline) solid var(--as-semantic-color-border-subtle);
+}
+
+.as-accordion__heading {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.as-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--as-space-4) 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-medium);
+  line-height: var(--as-typography-line-height-tight);
+  color: var(--as-semantic-color-text-default);
+  transition:
+    color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)),
+    background-color var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.as-accordion__trigger:hover {
+  color: var(--as-semantic-color-interactive-primary);
+}
+
+.as-accordion__trigger:focus-visible {
+  outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+.as-accordion__chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--as-semantic-color-text-muted);
+  transition:
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  flex: none;
+}
+
+.as-accordion__trigger:hover .as-accordion__chevron {
+  transform: scale(1.1);
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-accordion__trigger[aria-expanded="true"] .as-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.as-accordion__trigger[aria-expanded="true"]:hover .as-accordion__chevron {
+  transform: rotate(180deg) scale(1.1);
+}
+
+/* Shade-DS Plus-to-X Icon Rotation */
+.as-accordion__plus,
+.as-accordion__icon--plus {
+  width: 16px;
+  height: 16px;
+  color: var(--as-semantic-color-text-muted);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  flex: none;
+}
+
+.as-accordion__trigger:hover :is(.as-accordion__plus, .as-accordion__icon--plus) {
+  transform: scale(1.1);
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-accordion__trigger[aria-expanded="true"] :is(.as-accordion__plus, .as-accordion__icon--plus) {
+  transform: rotate(45deg);
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-accordion__trigger[aria-expanded="true"]:hover :is(.as-accordion__plus, .as-accordion__icon--plus) {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.as-accordion__panel {
+  overflow: hidden;
+  animation: as-accordion-panel-fade 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.as-accordion__panel[hidden] {
+  display: none !important;
+}
+
+.as-accordion__content {
+  padding-bottom: var(--as-space-4);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  line-height: var(--as-typography-line-height-normal);
+  color: var(--as-semantic-color-text-muted);
+  animation: as-accordion-slide-down 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes as-accordion-panel-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes as-accordion-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-accordion__trigger,
+  .as-accordion__chevron,
+  .as-accordion__panel,
+  .as-accordion__content {
+    transition: none !important;
+    animation: none !important;
+  }
+}
