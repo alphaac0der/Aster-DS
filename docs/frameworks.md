@@ -3,7 +3,7 @@
 Aster is a browser-native design system built on standard HTML5 semantics, CSS custom properties, and vanilla ES modules. It does not ship proprietary React, Vue, or Svelte component wrappers; instead, it is designed for direct integration into any framework by leveraging standard DOM markup and event delegation.
 
 > [!NOTE]
-> Aster is currently a local, self-contained repository (`aster-design-system`). It is not published to npm. Examples below demonstrate how to integrate Aster using local workspace references (e.g. `file:../Aster-DS`), monorepo path aliases, or bundled static asset copies.
+> Aster is available as the `aster-ds` package on npm. Examples below demonstrate how to integrate Aster using `aster-ds`, local workspace references (e.g. `file:../Aster-DS`), monorepo path aliases, or bundled static asset copies.
 
 ---
 
@@ -81,7 +81,7 @@ In your top-level layout or application root (`App.jsx`, `main.jsx`, or Next.js 
 
 ```jsx
 // Import the all-in-one stylesheet or individual token/component bundles
-import 'aster-design-system/aster.css';
+import 'aster-ds/aster.css';
 ```
 
 ### Step 2: Top-Level Provider or Layout Initialization
@@ -89,7 +89,7 @@ Initialize Aster once in your root component:
 
 ```jsx
 import React, { useEffect } from 'react';
-import { initAsterComponents } from 'aster-design-system';
+import { initAsterComponents } from 'aster-ds';
 
 export function AsterProvider({ children }) {
   useEffect(() => {
@@ -106,7 +106,7 @@ Use native HTML elements styled with Aster classes. Standard React event handler
 
 ```jsx
 import React, { useState, useRef } from 'react';
-import { setButtonLoading } from 'aster-design-system';
+import { setButtonLoading } from 'aster-ds';
 
 export function DeploymentCard() {
   const [clusterName, setClusterName] = useState('');
@@ -182,7 +182,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 // Import Aster styles
-import 'aster-design-system/aster.css';
+import 'aster-ds/aster.css';
 
 const app = createApp(App);
 app.mount('#app');
@@ -193,7 +193,7 @@ app.mount('#app');
 ```vue
 <script setup>
 import { ref, onMounted } from 'vue';
-import { initAsterComponents, setButtonLoading } from 'aster-design-system';
+import { initAsterComponents, setButtonLoading } from 'aster-ds';
 
 const cluster = ref('eu-central-1');
 const deployBtn = ref(null);
@@ -278,8 +278,8 @@ Svelte provides an idiomatic **action directive** pattern (`use:action`) that pa
 
 ```svelte
 <script>
-  import 'aster-design-system/aster.css';
-  import { initAsterComponents, setButtonLoading } from 'aster-design-system';
+  import 'aster-ds/aster.css';
+  import { initAsterComponents, setButtonLoading } from 'aster-ds';
 
   let selectedTab = 'metrics';
   let buttonEl;

@@ -60,11 +60,11 @@ Aster distinguishes between **source-tree paths** (for contributors working on A
 
 ## 4. Package Entry Points & Exports (`package.json`)
 
-Aster is configured as a private local package (`"private": true`) ready for local integration via file paths or npm link. It defines an explicit `exports` map:
+Aster defines an explicit `exports` map:
 
 ```json
 {
-  "name": "aster-design-system",
+  "name": "aster-ds",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/js/aster.js",
@@ -124,12 +124,12 @@ You can copy `dist/` directly into your static assets directory or serve it via 
 
 ### Option B: Modern Bundler / Monorepo Integration (Vite, Next.js, Webpack)
 
-In a local workspace or monorepo, reference the local Aster directory in `package.json`:
+In your application, install or reference `aster-ds`:
 
 ```json
 {
   "dependencies": {
-    "aster-design-system": "file:../path/to/Aster-DS"
+    "aster-ds": "^0.0.1"
   }
 }
 ```
@@ -138,14 +138,14 @@ In your application entry point (`index.js`, `main.ts`, `App.jsx`, etc.):
 
 ```javascript
 // Import styles
-import 'aster-design-system/aster.css';
+import 'aster-ds/aster.css';
 
 // Or import modular stylesheets:
-// import 'aster-design-system/tokens.css';
-// import 'aster-design-system/components.css';
+// import 'aster-ds/tokens.css';
+// import 'aster-ds/components.css';
 
 // Import and initialize behavior
-import { initAsterComponents } from 'aster-design-system';
+import { initAsterComponents } from 'aster-ds';
 
 // Initialize delegated listeners on the document root
 initAsterComponents(document);

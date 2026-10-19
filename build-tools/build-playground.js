@@ -1292,10 +1292,10 @@ export function buildPlayground() {
             <table class="spec-table">
               <thead><tr><th>Import Subpath</th><th>Target Bundle</th><th>Contents</th></tr></thead>
               <tbody>
-                <tr><td><code>aster-design-system</code></td><td><code>dist/js/aster.js</code></td><td>ES module exporting <code>initAsterComponents</code>, <code>setButtonLoading</code>, <code>validateInput</code>, <code>showToast</code>, etc.</td></tr>
-                <tr><td><code>aster-design-system/aster.css</code></td><td><code>dist/css/aster.css</code></td><td>All-in-one stylesheet (90 CSS tokens + 22 component modules)</td></tr>
-                <tr><td><code>aster-design-system/tokens.css</code></td><td><code>dist/css/tokens.css</code></td><td>Design token custom properties only</td></tr>
-                <tr><td><code>aster-design-system/components.css</code></td><td><code>dist/css/components.css</code></td><td>Component CSS rules only</td></tr>
+                <tr><td><code>aster-ds</code></td><td><code>dist/js/aster.js</code></td><td>ES module exporting <code>initAsterComponents</code>, <code>setButtonLoading</code>, <code>validateInput</code>, <code>showToast</code>, etc.</td></tr>
+                <tr><td><code>aster-ds/aster.css</code></td><td><code>dist/css/aster.css</code></td><td>All-in-one stylesheet (90 CSS tokens + 22 component modules)</td></tr>
+                <tr><td><code>aster-ds/tokens.css</code></td><td><code>dist/css/tokens.css</code></td><td>Design token custom properties only</td></tr>
+                <tr><td><code>aster-ds/components.css</code></td><td><code>dist/css/components.css</code></td><td>Component CSS rules only</td></tr>
               </tbody>
             </table>
           </div>

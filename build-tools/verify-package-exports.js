@@ -23,7 +23,7 @@ function assert(name, condition, detail = '') {
 }
 
 // 1. Verify basic package metadata
-assert('Package name is aster-design-system', pkg.name === 'aster-design-system', pkg.name);
+assert('Package name is aster-ds', pkg.name === 'aster-ds', pkg.name);
 assert('Package is configured for public release', !pkg.private);
 assert('Package is configured as ES module (type: module)', pkg.type === 'module');
 assert('Package main entry point declared', pkg.main === './dist/js/aster.js');
@@ -54,8 +54,8 @@ assert('Files array defines THIRD-PARTY-NOTICES.md', pkg.files.includes('THIRD-P
 // 4. Test self-referencing ESM import
 console.log('\n--- Testing Package Import Execution ---');
 try {
-  const aster = await import('aster-design-system');
-  assert('Can import package root via aster-design-system', Boolean(aster));
+  const aster = await import('aster-ds');
+  assert('Can import package root via aster-ds', Boolean(aster));
   assert('Exports initAsterComponents()', typeof aster.initAsterComponents === 'function');
   assert('Exports setButtonLoading()', typeof aster.setButtonLoading === 'function');
   assert('Exports setFieldValidation()', typeof aster.setFieldValidation === 'function');
