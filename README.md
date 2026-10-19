@@ -3,7 +3,7 @@
 Aster is a zero-dependency, token-first design system engineered with dual interfaces derived from an authoritative source of truth:
 
 - **Human-Facing Documentation & Components:** Production-grade CSS custom properties and browser-native ES modules for developers and designers.
-- **Agent-Facing Specifications:** Structured instruction skills (`skills/`) and contracts for AI coding agents.
+- **Agent-Facing Instructions:** Comprehensive coding standards and boundaries in [`AGENTS.md`](AGENTS.md) and specialized workflow skills (`skills/`).
 
 Aster features 82 canonical design tokens (W3C DTCG format) and 21 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
 
@@ -81,16 +81,17 @@ Aster-DS/
 │   └── figma/           # aster-colors.json, aster-dimensions.json, aster-density.json
 ├── docs/                # Human-facing documentation
 │   ├── components/      # 21 individual component specifications
+│   ├── principles.md    # Core design principles and philosophy
 │   ├── tokens.md        # Foundation tokens guide
 │   ├── installation.md  # Setup, packaging, and prerequisites
 │   └── frameworks.md    # React, Vue, Svelte, and Vanilla integration
+├── AGENTS.md            # Authoritative instructions and rules for AI coding agents
 ├── skills/              # Agent-facing instruction skills (AI coding standards)
 │   ├── using-aster-tokens/
 │   └── using-aster-components/
 ├── playground/          # Production documentation portal and component showcase
 ├── examples/            # Minimal consumer integration examples
 ├── build-tools/         # Compilers, validators, and browser CDP audit tools
-├── governance/          # Lydia agent identity, mission, principles, and workflow rules
 └── records/             # Architectural decision log (DECISION-LOG.md) and status (STATUS.md)
 ```
 
@@ -116,6 +117,6 @@ Aster's visual foundation, kinetics, and core component architecture faithfully 
 
 ## Version Control & Licensing
 
-- **Version Control:** Local Git only. Strictly zero remotes configured.
+- **Version Control:** Private repository configured (`origin`).
 - **Package Status:** Private (`"private": true`). Not published to any registry.
 - **Licensing Gate:** Open. Formal licensing terms (e.g. Apache-2.0) and third-party notices (for Phosphor icons SIL OFL 1.1/MIT, Google fonts SIL OFL 1.1, and Shade-DS) are explicitly reserved for approval in a dedicated phase prior to any public release.

@@ -1,7 +1,7 @@
 # Aster Input / Form Field Component Contract
 
 **Status:** APPROVED PROPOSAL (Phase 7B)  
-**Governance:** Aligns with [`governance/SOUL.md`](../../governance/SOUL.md), [`governance/WORKFLOW.md`](../../governance/WORKFLOW.md), and DEC-007 / DEC-010.
+**Design System Alignment:** Aligns with [Design Principles](../principles.md) and [DEC-007 / DEC-010](../../records/DECISION-LOG.md).
 
 ---
 

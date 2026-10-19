@@ -1,7 +1,7 @@
 # Aster Textarea Component Contract
 
 **Status:** APPROVED PROPOSAL (Phase 10 — Batch A)  
-**Governance:** Aligns with [`governance/SOUL.md`](../../governance/SOUL.md), [`governance/WORKFLOW.md`](../../governance/WORKFLOW.md), and DEC-013.
+**Design System Alignment:** Aligns with [Design Principles](../principles.md) and [DEC-013](../../records/DECISION-LOG.md).
 
 ---
 
