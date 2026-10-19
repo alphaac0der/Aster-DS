@@ -33,7 +33,7 @@
     "build:tokens": "node build-tools/build-tokens.js",
     "build:components": "node build-tools/build-components.js",
     "build:playground": "node build-tools/build-playground.js",
-    "build": "npm run build:tokens && npm run build:components && npm run build:playground",
+    "build": "npm run build:tokens && npm run build:components && npm run build:playground && npm run export:figma",
     "test:contrast": "node build-tools/verify-contrast.js",
     "test:docs": "node build-tools/verify-docs-consistency.js",
     "export:figma": "node build-tools/export-figma-tokens.js",

@@ -63,12 +63,18 @@ try {
   execSync('node build-tools/build-playground.js', { cwd: tempDir, stdio: 'inherit' });
   console.log('✔ PASS: build:playground succeeded in sandbox.');
 
+  execSync('node build-tools/export-figma-tokens.js', { cwd: tempDir, stdio: 'inherit' });
+  console.log('✔ PASS: export:figma succeeded in sandbox.');
+
   // Verify critical output files were generated in sandbox
   const requiredOutputs = [
     'dist/css/tokens.css',
     'dist/css/components.css',
     'dist/css/aster.css',
     'dist/js/aster.js',
+    'dist/figma/aster-colors.json',
+    'dist/figma/aster-density.json',
+    'dist/figma/aster-dimensions.json',
     'index.html',
     'playground/index.html'
   ];

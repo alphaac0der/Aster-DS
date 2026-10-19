@@ -26,7 +26,7 @@ npm run build
 
 | Command | Action |
 |---|---|
-| `npm run build` | Full compilation (`build:tokens`, `build:components`, `build:playground`) |
+| `npm run build` | Full compilation (`build:tokens`, `build:components`, `build:playground`, `export:figma`) |
 | `npm run build:tokens` | Compiles `tokens/**/*.json` into `dist/css/tokens.css` |
 | `npm run build:components` | Compiles modular `components/` into `dist/css/components.css`, `dist/css/aster.css`, and `dist/js/aster.js` |
 | `npm run build:playground` | Compiles the self-contained portal at `playground/index.html` across all 29 routes |

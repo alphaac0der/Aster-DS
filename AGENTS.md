@@ -95,10 +95,11 @@ Before proposing or finalizing changes to tokens, components, or documentation, 
 
 | Command | Purpose |
 |---|---|
-| `npm run build` | Full pipeline build (`build:tokens`, `build:components`, `build:playground`). |
+| `npm run build` | Full pipeline build (`build:tokens`, `build:components`, `build:playground`, `export:figma`). |
 | `npm run build:tokens` | Compiles tokens from `tokens/**/*.json` into `dist/css/tokens.css`. |
 | `npm run build:components` | Compiles component stylesheets into `dist/css/components.css`, `dist/css/aster.css`, and `dist/js/aster.js`. |
 | `npm run build:playground` | Compiles documentation portal at `index.html` and `playground/index.html`. |
+| `npm run export:figma` | Generates W3C DTCG variable token payloads for Figma in `dist/figma/`. |
 | `npm run test:figma` | Validates DTCG variable payloads in `dist/figma/` against official schema. |
 | `npm run test:contrast` | Verifies mathematical WCAG 2.2 AA contrast ratios for semantic color pairings. |
 | `npm run test:components` | Verifies concrete token bindings, section schemas, and single-density rules across all 21 components. |
