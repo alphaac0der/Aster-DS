@@ -69,9 +69,11 @@ Aster is configured as a private local package (`"private": true`) ready for loc
   "type": "module",
   "main": "./dist/js/aster.js",
   "module": "./dist/js/aster.js",
+  "types": "./dist/js/aster.d.ts",
   "style": "./dist/css/aster.css",
   "exports": {
     ".": {
+      "types": "./dist/js/aster.d.ts",
       "import": "./dist/js/aster.js",
       "default": "./dist/js/aster.js"
     },

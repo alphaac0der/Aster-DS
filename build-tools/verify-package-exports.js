@@ -28,7 +28,10 @@ assert('Package is marked private (not for publishing)', pkg.private === true);
 assert('Package is configured as ES module (type: module)', pkg.type === 'module');
 assert('Package main entry point declared', pkg.main === './dist/js/aster.js');
 assert('Package module entry point declared', pkg.module === './dist/js/aster.js');
+assert('Package types entry point declared', pkg.types === './dist/js/aster.d.ts');
+assert('Package types file exists on disk', existsSync(join(rootDir, './dist/js/aster.d.ts')));
 assert('Package style entry point declared', pkg.style === './dist/css/aster.css');
+assert('Package license is MIT', pkg.license === 'MIT');
 
 // 2. Verify all files declared in exports map exist on disk
 console.log('\n--- Verifying Exports Map Targets ---');
@@ -45,6 +48,8 @@ assert('Files array defines dist/', pkg.files.includes('dist/'));
 assert('Files array defines docs/', pkg.files.includes('docs/'));
 assert('Files array defines skills/', pkg.files.includes('skills/'));
 assert('Files array defines README.md', pkg.files.includes('README.md'));
+assert('Files array defines LICENSE', pkg.files.includes('LICENSE'));
+assert('Files array defines THIRD-PARTY-NOTICES.md', pkg.files.includes('THIRD-PARTY-NOTICES.md'));
 
 // 4. Test self-referencing ESM import
 console.log('\n--- Testing Package Import Execution ---');

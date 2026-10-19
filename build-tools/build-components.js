@@ -152,6 +152,16 @@ ${cssOut}
   writeFileSync(jsDest, jsOut, 'utf8');
   console.log(`✓ Compiled ${COMPONENT_JS_SOURCES.length} JS modules to dist/js/aster.js`);
 
+  const dtsSource = join(rootDir, 'components/index.d.ts');
+  const dtsDest = join(rootDir, 'dist/js/aster.d.ts');
+  try {
+    const dtsContent = readFileSync(dtsSource, 'utf8');
+    writeFileSync(dtsDest, dtsContent, 'utf8');
+    console.log('✓ Generated TypeScript declarations to dist/js/aster.d.ts');
+  } catch (err) {
+    console.warn('⚠️ Warning: components/index.d.ts not found, skipping d.ts generation.');
+  }
+
   console.log('--- Component Build Complete ---');
 }
 

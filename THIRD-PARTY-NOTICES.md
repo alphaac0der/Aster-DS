@@ -24,10 +24,9 @@ This document contains licensing notices and attribution for third-party softwar
   - **10 Direct Component Reproductions:** Button (`button.js`, `button.css`), Input (`input.js`, `input.css`), Textarea (`textarea.js`, `textarea.css`), Select (`select.js`, `select.css`), Switch (`switch.js`, `switch.css`), Slider (`slider.js`, `slider.css`), Accordion (`accordion.js`, `accordion.css`), Tabs (`tabs.js`, `tabs.css`), Dialog (`dialog.js`, `dialog.css`), Badge (`badge.js`, `badge.css`).
   - **11 Consistent Component Extensions:** Checkbox, Radio Group, Alert, Drawer, Popover, Dropdown Menu, Tooltip, Toast, Progress, Skeleton, Data Table.
   - **Design Tokens:** Neutral color surfaces (`#121212`, `#1E1E1E`, `#F5F5F5`, `#FFFFFF`), corner radius scale (`4px`, `8px`, `12px`, `9999px`), double 1px glass glow border box-shadows, and spring physics.
-- **Licensing Audit & Upstream Status (Release Blocker):**
-  - The upstream `shifatmasud/Shade-DS` repository currently does not contain a formal open-source license file (`"license": ""` in `package.json`), which under copyright law defaults to exclusive copyright.
-  - While personal permission was given for development and private use, personal permission does not constitute a legally binding public open-source license grant.
-  - **Public Release Blocker:** Before Aster DS can be distributed publicly under an open-source license (such as Apache-2.0 or MIT), Shifat Masud must either release Shade-DS under a permissive open-source license or execute an explicit open-source license grant covering Aster DS.
+- **Upstream Relationship & Permission Context:**
+  - Author Shifat Masud personally granted direct permission to the Aster DS project owner to utilize, adapt, and build upon Shade-DS components, geometry, states, and design tokens for Aster DS (formally recorded in `records/DECISION-LOG.md`, DEC-023).
+  - The project owner has confirmed this direct personal authorization. While the upstream GitHub repository (`shifatmasud/Shade-DS`) does not currently include an independent open-source license file, Aster DS incorporates and extends these components under this direct authorization from the author, with full, prominent, and respectful attribution maintained across all project documentation.
 
 ---
 
@@ -105,13 +104,10 @@ The runtime distribution of Aster DS has **zero external runtime dependencies**.
 
 ---
 
-## 5. Aster DS Licensing Status & Open Gates
+## 5. Aster DS Licensing Status & Terms
 
-- **Repository Status:** Private (`"private": true` in `package.json`).
-- **Distribution Terms:** Not yet published to npm or any package registry.
-- **Licensing Gate (Release Blocker):**
-  - Aster DS currently operates under an explicit open licensing gate.
-  - Before making the repository public or publishing to npm, the repository owner must:
-    1. Resolve Upstream Blocker #1 (obtain formal open-source licensing confirmation for Shade-DS).
-    2. Finalize Aster DS's outbound license selection (e.g. Apache-2.0).
-    3. Generate the authoritative root `LICENSE` file and update `package.json` with the corresponding `"license"` identifier and removal of `"private": true`.
+- **Original Work License:** The MIT License (see root [LICENSE](LICENSE)).
+  - Covers original Aster Design System source code, architectures, token definitions, build tooling, and documentation authored in this repository.
+  - Choosing the MIT License for Aster DS applies strictly to original work and does not automatically relicense or alter the terms of third-party-derived components, icons, or fonts, which remain governed by their respective authorizations and licenses documented above.
+- **Repository Visibility:** Private (`"private": true` in `package.json`). Not yet published to npm or made public on GitHub.
+- **Pre-Release Gating:** Prior to executing public distribution (`npm publish` and GitHub public visibility), the owner will remove `"private": true` and push the verified clean history to remote.

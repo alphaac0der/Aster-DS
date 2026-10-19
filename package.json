@@ -1,14 +1,35 @@
 {
   "name": "aster-design-system",
   "version": "0.0.1",
+  "license": "MIT",
   "private": true,
   "description": "Aster Design System — One source of truth for humans and AI agents",
   "type": "module",
   "main": "./dist/js/aster.js",
   "module": "./dist/js/aster.js",
+  "types": "./dist/js/aster.d.ts",
   "style": "./dist/css/aster.css",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alphaac0der/Aster-DS.git"
+  },
+  "homepage": "https://github.com/alphaac0der/Aster-DS#readme",
+  "bugs": {
+    "url": "https://github.com/alphaac0der/Aster-DS/issues"
+  },
+  "keywords": [
+    "design-system",
+    "tokens",
+    "css-custom-properties",
+    "components",
+    "vanilla-js",
+    "ai-agents",
+    "zero-dependency",
+    "wcag-aa"
+  ],
   "exports": {
     ".": {
+      "types": "./dist/js/aster.d.ts",
       "import": "./dist/js/aster.js",
       "default": "./dist/js/aster.js"
     },
@@ -27,7 +48,9 @@
     "dist/",
     "docs/",
     "skills/",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md"
   ],
   "scripts": {
     "build:tokens": "node build-tools/build-tokens.js",
