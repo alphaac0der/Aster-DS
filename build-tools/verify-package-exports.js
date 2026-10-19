@@ -24,7 +24,7 @@ function assert(name, condition, detail = '') {
 
 // 1. Verify basic package metadata
 assert('Package name is aster-design-system', pkg.name === 'aster-design-system', pkg.name);
-assert('Package is marked private (not for publishing)', pkg.private === true);
+assert('Package is configured for public release', !pkg.private);
 assert('Package is configured as ES module (type: module)', pkg.type === 'module');
 assert('Package main entry point declared', pkg.main === './dist/js/aster.js');
 assert('Package module entry point declared', pkg.module === './dist/js/aster.js');

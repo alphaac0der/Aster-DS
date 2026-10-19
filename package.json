@@ -2,7 +2,6 @@
   "name": "aster-design-system",
   "version": "0.0.1",
   "license": "MIT",
-  "private": true,
   "description": "Aster Design System — One source of truth for humans and AI agents",
   "type": "module",
   "main": "./dist/js/aster.js",
