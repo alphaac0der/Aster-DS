@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { validateFigmaPlugin } from './validate-figma-plugin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -298,6 +299,9 @@ export function validateFigmaTokens() {
   } else {
     console.log('SUCCESS: All Figma variable payloads conform strictly to specification.');
     console.log('================================================================\n');
+
+    // Also validate the native Figma plugin manifest and script
+    validateFigmaPlugin();
   }
 }
 

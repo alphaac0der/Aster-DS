@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { buildFigmaPlugin } from './build-figma-plugin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -428,6 +429,9 @@ export function exportFigmaTokens() {
   console.log(`  - Explicitly deferred:             ${totalDeferredCount} (${typographyCount} typography, ${shadowCount} elevation shadows)`);
   console.log(`  - Unexpected / unmapped:            0`);
   console.log('================================================================\n');
+
+  // Compile standalone Figma plugin directly from exported payloads
+  buildFigmaPlugin();
 
   return {
     colorCollection,

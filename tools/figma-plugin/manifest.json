@@ -1,0 +1,11 @@
+{
+  "name": "Aster DS Library Setup",
+  "id": "aster-ds-library-setup",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": [
+    "figma"
+  ]
+}
