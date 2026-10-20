@@ -82,18 +82,20 @@ export function createPlaygroundServer() {
         return;
       }
 
-      // Security: Restrict serving to intended public directories (/playground/, /dist/, and /examples/)
+      // Security: Restrict serving to intended public directories (/playground/, /dist/, /examples/, and /assets/)
       const allowedPlaygroundDir = path.resolve(rootDir, 'playground');
       const allowedDistDir = path.resolve(rootDir, 'dist');
       const allowedExamplesDir = path.resolve(rootDir, 'examples');
+      const allowedAssetsDir = path.resolve(rootDir, 'assets');
       const isAllowedArea =
         filePath.startsWith(allowedPlaygroundDir) ||
         filePath.startsWith(allowedDistDir) ||
-        filePath.startsWith(allowedExamplesDir);
+        filePath.startsWith(allowedExamplesDir) ||
+        filePath.startsWith(allowedAssetsDir);
 
       if (!isAllowedArea) {
         res.writeHead(403, { 'Content-Type': 'text/plain' });
-        res.end('Forbidden: Access is restricted to /, /playground/, /dist/, and /examples/');
+        res.end('Forbidden: Access is restricted to /, /playground/, /dist/, /examples/, and /assets/');
         return;
       }
 

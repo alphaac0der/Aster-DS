@@ -70,19 +70,35 @@ import {
 
   function setTheme(theme, silent) {
     const isDark = theme === 'dark';
-    if (isDark) root.setAttribute('data-theme', 'dark');
-    else root.removeAttribute('data-theme');
+    root.setAttribute('data-theme', isDark ? 'dark' : 'light');
     root.removeAttribute('data-density');
     setSeg($('#seg-theme'), isDark ? 1 : 0);
+    const themeBtn = $('#theme-toggle-btn');
+    if (themeBtn) {
+      themeBtn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+      themeBtn.setAttribute('title', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+    }
     const pgThemeBtn = $('#pg-toggle-theme');
     if (pgThemeBtn) {
       pgThemeBtn.setAttribute('aria-pressed', String(isDark));
       pgThemeBtn.textContent = isDark ? 'Theme: Dark' : 'Theme: Light';
     }
+    const favLink = $('#favicon-link');
+    if (favLink) {
+      favLink.setAttribute('href', isDark
+        ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 376 382' fill='none'%3E%3Cpath d='M210.5 239C210.517 241.153 209.862 243.258 208.627 245.023C207.392 246.787 205.638 248.122 203.609 248.844L161.977 263.983L146.844 305.609C146.098 307.619 144.755 309.352 142.995 310.576C141.235 311.8 139.143 312.455 137 312.455C134.857 312.455 132.764 311.8 131.005 310.576C129.245 309.352 127.902 307.619 127.156 305.609L112.023 263.977L70.3906 248.844C68.3811 248.098 66.6481 246.755 65.4242 244.995C64.2004 243.235 63.5444 241.143 63.5444 239C63.5444 236.857 64.2004 234.764 65.4242 233.005C66.6481 231.245 68.3811 229.902 70.3906 229.156L112.023 214.023L127.156 172.391C127.902 170.381 129.245 168.648 131.005 167.424C132.764 166.2 134.857 165.544 137 165.544C139.143 165.544 141.235 166.2 142.995 167.424C144.755 168.648 146.098 170.381 146.844 172.391L161.983 214.023L203.609 229.156C205.638 229.878 207.392 231.213 208.627 232.977C209.862 234.742 210.517 236.847 210.5 239Z' fill='%23FFFFFF'/%3E%3Cpath d='M21 20H142C198 20.1667 354.5 53 354.5 198V361.5' stroke-width='40' stroke-linecap='round' stroke='%23FFFFFF'/%3E%3Cpath d='M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315' stroke-width='40' stroke-linecap='round' stroke='%23FFFFFF'/%3E%3C/svg%3E"
+        : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 376 382' fill='none'%3E%3Cpath d='M210.5 239C210.517 241.153 209.862 243.258 208.627 245.023C207.392 246.787 205.638 248.122 203.609 248.844L161.977 263.983L146.844 305.609C146.098 307.619 144.755 309.352 142.995 310.576C141.235 311.8 139.143 312.455 137 312.455C134.857 312.455 132.764 311.8 131.005 310.576C129.245 309.352 127.902 307.619 127.156 305.609L112.023 263.977L70.3906 248.844C68.3811 248.098 66.6481 246.755 65.4242 244.995C64.2004 243.235 63.5444 241.143 63.5444 239C63.5444 236.857 64.2004 234.764 65.4242 233.005C66.6481 231.245 68.3811 229.902 70.3906 229.156L112.023 214.023L127.156 172.391C127.902 170.381 129.245 168.648 131.005 167.424C132.764 166.2 134.857 165.544 137 165.544C139.143 165.544 141.235 166.2 142.995 167.424C144.755 168.648 146.098 170.381 146.844 172.391L161.983 214.023L203.609 229.156C205.638 229.878 207.392 231.213 208.627 232.977C209.862 234.742 210.517 236.847 210.5 239Z' fill='%23121212'/%3E%3Cpath d='M21 20H142C198 20.1667 354.5 53 354.5 198V361.5' stroke-width='40' stroke-linecap='round' stroke='%23121212'/%3E%3Cpath d='M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315' stroke-width='40' stroke-linecap='round' stroke='%23121212'/%3E%3C/svg%3E"
+      );
+    }
     store.set('aster-theme', isDark ? 'dark' : 'light');
     refreshResolved();
     if (!silent) announce(`Theme: ${isDark ? 'Dark' : 'Light'}.`);
   }
+
+  $('#theme-toggle-btn')?.addEventListener('click', () => {
+    const currentTheme = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
 
   $('#btn-theme-light')?.addEventListener('click', () => setTheme('light'));
   $('#btn-theme-dark')?.addEventListener('click', () => setTheme('dark'));
@@ -105,7 +121,7 @@ import {
      2. Router (Home at `/`, Separate `#/playground`, Docs, 21 Components)
      ------------------------------------------------------------------------ */
   const ROUTES = [
-    'overview', 'playground', 'installation', 'designers', 'developers', 'agents',
+    'overview', 'playground', 'introduction', 'installation', 'designers', 'developers', 'agents',
     'colors', 'typography', 'spacing', 'elevation', 'themes-density', 'motion',
     'button', 'input', 'textarea', 'select', 'checkbox', 'radio', 'switch', 'slider',
     'table', 'badge', 'progress', 'skeleton',
@@ -123,8 +139,8 @@ import {
   function parseHash() {
     let h = location.hash.replace(/^#\/?/, '').split('?')[0].trim().toLowerCase();
     if (!h || h === 'home' || h === 'landing') return 'overview';
-    if (h === 'docs' || h === 'getting-started') return 'installation';
-    if (h === 'components') return 'button';
+    if (h === 'docs' || h === 'getting-started' || h === 'intro' || h === 'about') return 'introduction';
+    if (h === 'components') return 'accordion';
     if (h === 'foundations') return 'colors';
     if (h === 'for-designers') return 'designers';
     if (h === 'for-developers') return 'developers';

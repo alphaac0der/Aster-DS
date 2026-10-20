@@ -7,6 +7,16 @@ Aster is a zero-dependency, token-first design system engineered with dual inter
 
 Aster features 109 canonical design tokens (W3C DTCG format) and 21 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
 
+[![npm version](https://img.shields.io/npm/v/aster-ds.svg)](https://www.npmjs.com/package/aster-ds)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Website](https://img.shields.io/badge/docs-aster--ds.vercel.app-black)](https://aster-ds.vercel.app/)
+
+- **Documentation Portal:** [https://aster-ds.vercel.app/](https://aster-ds.vercel.app/)
+- **Introduction Guide:** [https://aster-ds.vercel.app/#/introduction](https://aster-ds.vercel.app/#/introduction)
+- **Installation Guide:** [https://aster-ds.vercel.app/#/installation](https://aster-ds.vercel.app/#/installation)
+- **GitHub Repository:** [https://github.com/alphaac0der/Aster-DS](https://github.com/alphaac0der/Aster-DS)
+- **npm Registry:** [`aster-ds@0.0.1`](https://www.npmjs.com/package/aster-ds)
+
 ---
 
 ## Quickstart
@@ -36,7 +46,7 @@ npm run build
 | `npm run build` | Full compilation (`build:tokens`, `build:components`, `build:playground`, `export:figma`) |
 | `npm run build:tokens` | Compiles `tokens/**/*.json` into `dist/css/tokens.css` |
 | `npm run build:components` | Compiles modular `components/` into `dist/css/components.css`, `dist/css/aster.css`, and `dist/js/aster.js` |
-| `npm run build:playground` | Compiles the self-contained portal at `index.html` and `playground/index.html` across all 30 routes |
+| `npm run build:playground` | Compiles the self-contained portal at `index.html` and `playground/index.html` across all 32 documentation routes |
 | `npm run playground` | Launches the local documentation portal on `http://127.0.0.1:3000/` |
 | `npm run test:contrast` | Mathematical verification of all required WCAG 2.2 AA contrast pairs (26/26) |
 | `npm run test:docs` | Verifies consistency between documentation and compiled CSS custom properties (196/196) |

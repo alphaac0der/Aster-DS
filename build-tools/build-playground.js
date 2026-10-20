@@ -528,6 +528,8 @@ const PHOSPHOR_SYMBOL_MAP = {
   'i-eye-off': phosphorIconsData['eye-slash'],
   'i-alert': phosphorIconsData['warning-circle'],
   'i-arrow': phosphorIconsData['arrow-right'],
+  'i-arrow-left': '<svg viewBox="0 0 256 256"><path d="M216,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H208A8,8,0,0,1,216,128Z"/></svg>',
+  'i-github': '<svg viewBox="0 0 24 24"><path d="M12 .5C5.37.5 0 5.78 0 12.292c0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56C20.565 21.917 24 17.495 24 12.292 24 5.78 18.627.5 12 .5"/></svg>',
   'i-inbox': phosphorIconsData['tray'],
   'i-plug': phosphorIconsData['plugs'],
   'i-sun': phosphorIconsData['sun'],
@@ -547,9 +549,74 @@ const PHOSPHOR_SYMBOL_MAP = {
 export const PHOSPHOR_SPRITE_HTML = `<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">\n  <defs>\n` +
   Object.entries(PHOSPHOR_SYMBOL_MAP).map(([id, svg]) => {
     const inner = (svg || '').replace(/<svg[^>]*>|<\/svg>/g, '').trim();
-    return `    <symbol id="${id}" viewBox="0 0 256 256" fill="currentColor">${inner}</symbol>`;
+    const vbMatch = (svg || '').match(/viewBox="([^"]+)"/);
+    const vb = vbMatch ? vbMatch[1] : '0 0 256 256';
+    return `    <symbol id="${id}" viewBox="${vb}" fill="currentColor">${inner}</symbol>`;
   }).join('\n') +
   `\n  </defs>\n</svg>`;
+
+/**
+ * Canonical ordered sequence of documentation pages for sidebar navigation
+ * and automated Previous / Next bottom pagination.
+ */
+export const DOC_PAGES = [
+  { route: 'introduction', title: 'Introduction', section: 'Getting Started' },
+  { route: 'installation', title: 'Installation', section: 'Getting Started' },
+  { route: 'designers', title: 'For Designers', section: 'Audience Hubs' },
+  { route: 'developers', title: 'For Developers', section: 'Audience Hubs' },
+  { route: 'agents', title: 'For AI Agents', section: 'Audience Hubs' },
+  { route: 'colors', title: 'Color System', section: 'Foundations' },
+  { route: 'typography', title: 'Typography', section: 'Foundations' },
+  { route: 'spacing', title: 'Spacing & Layout', section: 'Foundations' },
+  { route: 'elevation', title: 'Radius & Elevation', section: 'Foundations' },
+  { route: 'themes-density', title: 'Themes & Density', section: 'Foundations' },
+  { route: 'motion', title: 'Motion', section: 'Foundations' },
+  { route: 'accordion', title: 'Accordion', section: 'Components' },
+  { route: 'alert', title: 'Alert', section: 'Components' },
+  { route: 'badge', title: 'Badge', section: 'Components' },
+  { route: 'button', title: 'Button', section: 'Components' },
+  { route: 'checkbox', title: 'Checkbox', section: 'Components' },
+  { route: 'table', title: 'Data Table', section: 'Components' },
+  { route: 'dialog', title: 'Dialog', section: 'Components' },
+  { route: 'drawer', title: 'Drawer', section: 'Components' },
+  { route: 'dropdown', title: 'Dropdown Menu', section: 'Components' },
+  { route: 'input', title: 'Input & Field', section: 'Components' },
+  { route: 'popover', title: 'Popover', section: 'Components' },
+  { route: 'progress', title: 'Progress', section: 'Components' },
+  { route: 'radio', title: 'Radio Group', section: 'Components' },
+  { route: 'select', title: 'Select', section: 'Components' },
+  { route: 'skeleton', title: 'Skeleton', section: 'Components' },
+  { route: 'slider', title: 'Slider', section: 'Components' },
+  { route: 'switch', title: 'Switch', section: 'Components' },
+  { route: 'tabs', title: 'Tabs', section: 'Components' },
+  { route: 'textarea', title: 'Textarea', section: 'Components' },
+  { route: 'toast', title: 'Toast', section: 'Components' },
+  { route: 'tooltip', title: 'Tooltip', section: 'Components' }
+];
+
+export function buildPaginationHtml(currentRoute) {
+  const idx = DOC_PAGES.findIndex((p) => p.route === currentRoute);
+  if (idx === -1) return '';
+  const prev = idx > 0 ? DOC_PAGES[idx - 1] : null;
+  const next = idx < DOC_PAGES.length - 1 ? DOC_PAGES[idx + 1] : null;
+
+  return `
+    <nav class="doc-pagination" aria-label="Documentation Pagination">
+      ${prev ? `
+        <a href="#/${prev.route}" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">${esc(prev.title)}</span>
+        </a>
+      ` : '<span class="doc-pagination__placeholder" aria-hidden="true"></span>'}
+      ${next ? `
+        <a href="#/${next.route}" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">${esc(next.title)}</span>
+        </a>
+      ` : '<span class="doc-pagination__placeholder" aria-hidden="true"></span>'}
+    </nav>
+  `;
+}
 
 const BLUEPRINT_CONFIGS = {
   button: {
@@ -884,7 +951,7 @@ export function buildPlayground() {
           <h1 id="t-overview" class="hero__title--minimal" tabindex="-1">ASTER DS</h1>
           <p class="hero__lead--minimal">Browser-native interface system engineered for Designers, Developers, and AI Coding Agents.</p>
           <div class="hero__cta--minimal">
-            <a class="as-button as-button--primary as-button--lg" href="#/installation"><span class="as-button__label">Documentation</span></a>
+            <a class="as-button as-button--primary as-button--lg" href="#/introduction"><span class="as-button__label">Documentation</span></a>
             <a class="as-button as-button--secondary as-button--lg" href="#/playground"><span class="as-button__label">Playground</span></a>
             <a class="as-button as-button--outline as-button--lg" href="#/accordion"><span class="as-button__label">Components</span></a>
           </div>
@@ -1249,6 +1316,8 @@ export function buildPlayground() {
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml('designers')}
       </div>
     </article>
   `;
@@ -1300,6 +1369,8 @@ export function buildPlayground() {
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml('developers')}
       </div>
     </article>
   `;
@@ -1351,47 +1422,386 @@ npm run test:exports
 npm run test:browser</code></pre>
           </div>
         </section>
+
+        ${buildPaginationHtml('agents')}
       </div>
     </article>
   `;
 
   // --------------------------------------------------------------------------------
-  // 4. Foundations Views (Installation, Colors, Typography, Spacing, Elevation, Themes, Motion)
+  // 4. Foundations Views (Introduction, Installation, Colors, Typography, Spacing, Elevation, Themes, Motion)
   // --------------------------------------------------------------------------------
+  const introductionHtml = `
+    <!-- =====================================================================
+         INTRODUCTION PAGE
+         ===================================================================== -->
+    <article class="doc-view" id="view-introduction" data-title="Introduction" data-section="getting-started" aria-labelledby="t-introduction">
+      <header class="page-head">
+        <div class="eyebrow">Getting Started &middot; Overview</div>
+        <h1 id="t-introduction" tabindex="-1">Introduction</h1>
+        <p class="lead">Aster is a zero-dependency, token-first design system engineered with dual interfaces derived from an authoritative source of truth: human-facing documentation and components for developers and designers, and machine-readable contracts for AI coding agents.</p>
+        <div class="component-meta">
+          <span class="meta-tag meta-tag--success">Zero Runtime Dependencies</span>
+          <span class="meta-tag meta-tag--accent">109 Canonical Tokens</span>
+          <span class="meta-tag">21 Components</span>
+          <span class="meta-tag">WCAG 2.2 AA</span>
+        </div>
+      </header>
+
+      <div class="doc-body">
+        <section class="doc-section">
+          <h2>What is Aster DS?</h2>
+          <p>Aster is an interface system designed to solve the growing coordination problem between human product teams and autonomous AI coding agents. Unlike traditional UI component libraries that tie developers to proprietary framework runtimes or heavy build steps, Aster delivers pure, browser-native web standards: W3C Design Tokens Community Group (DTCG) custom properties, native HTML5 classes, and idempotent browser ES modules.</p>
+          <p>Aster acts as a single authoritative source of truth. Design decisions flow downstream into CSS variables, browser behaviors, Figma variables, and structured agent instructions without manual translation.</p>
+        </section>
+
+        <section class="doc-section">
+          <h2>The Problems We Solve</h2>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>1. Token &amp; State Drift</h4>
+              <p>Design tokens often desynchronize between Figma files, CSS stylesheets, and documentation. In Aster, tokens are defined once in <code>tokens/</code> and automatically compiled to CSS custom properties and Figma variable payloads.</p>
+            </div>
+            <div class="spec-card">
+              <h4>2. Framework Lock-In &amp; Runtime Bloat</h4>
+              <p>Many design systems require React, Vue, or Angular wrappers. Aster components are built with standard HTML5 elements, CSS custom properties, and zero-dependency ES modules that drop into any stack or framework.</p>
+            </div>
+            <div class="spec-card">
+              <h4>3. AI Agent Hallucinations</h4>
+              <p>AI coding assistants frequently invent invalid CSS classes, guess non-existent component properties, or pick arbitrary colors. Aster gives agents strict machine-readable contracts in <code>AGENTS.md</code> and verified workflow skills.</p>
+            </div>
+            <div class="spec-card">
+              <h4>4. Inconsistent Accessibility</h4>
+              <p>Aster enforces automated mathematical contrast verification (WCAG 2.2 AA), standard 40px/44px touch targets, full keyboard traps and focus rings, and vestibular-safe reduced motion across all components.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Design Philosophy &amp; Core Principles</h2>
+          <p>Aster's visual foundation and component kinetics are built on five non-negotiable architectural principles:</p>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>Strict Semantic Token Precedence</h4>
+              <p>Components and application views bind exclusively to semantic tokens (<code>--as-semantic-color-*</code>), density tokens (<code>--as-density-*</code>), and structural tokens (<code>--as-space-*</code>, <code>--as-radius-*</code>). Primitive tokens exist solely as internal definitions.</p>
+              <a href="#/colors">Explore Color System &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>Single Standard Density</h4>
+              <p>Aster enforces a single standard density scale. Control heights are 40px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
+              <a href="#/themes-density">Explore Density &amp; Themes &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>Four-Role Expressive Typography</h4>
+              <p>Headlines use <strong>Bebas Neue</strong> for heroic impact, interface copy uses <strong>Manrope</strong> for legibility, tabular metrics and code use <strong>Space Mono</strong>, and editorial callouts use <strong>Merriweather</strong>.</p>
+              <a href="#/typography">Explore Typography &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>Minimum 4px Corner Radius</h4>
+              <p>Aster enforces a strict minimum 4px radius policy (<code>--as-radius-sm</code>). Buttons and badges use full <code>9999px</code> pills; cards and dialogs use <code>8px</code> to <code>16px</code>. Zero 2px radii exist in the system.</p>
+              <a href="#/elevation">Explore Radius &amp; Elevation &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Major Capabilities &amp; Component Suite</h2>
+          <p>Aster delivers 109 canonical design tokens and 21 production-grade components structured across 5 core functional categories:</p>
+          <div class="spec-wrap">
+            <table class="spec-table">
+              <thead><tr><th>Category</th><th>Count</th><th>Included Components</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Form Essentials</strong></td><td>8</td><td>Button, Input &amp; Field, Textarea, Select, Checkbox, Radio Group, Switch, Slider</td></tr>
+                <tr><td><strong>Data Display</strong></td><td>4</td><td>Data Table, Badge, Progress, Skeleton</td></tr>
+                <tr><td><strong>Feedback &amp; Status</strong></td><td>3</td><td>Alert, Tooltip, Toast</td></tr>
+                <tr><td><strong>Overlays &amp; Surfaces</strong></td><td>4</td><td>Dialog, Drawer, Popover, Dropdown Menu</td></tr>
+                <tr><td><strong>Navigation</strong></td><td>2</td><td>Tabs, Accordion</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Dual Interfaces: How Teams Use Aster</h2>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>For Designers</h4>
+              <p>Access W3C DTCG variable tokens for Figma, automated token synchronization scripts, and comprehensive component anatomy blueprints with explicit fixed vs. content-dependent dimensions.</p>
+              <a href="#/designers">Open Designer Hub &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>For Developers</h4>
+              <p>Install the zero-dependency npm package <code>aster-ds</code> or link pre-built distribution files directly. Use native HTML classes (<code>.as-button</code>, <code>.as-input</code>) with standard CSS custom properties.</p>
+              <a href="#/developers">Open Developer Hub &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>For AI Coding Agents</h4>
+              <p>Agents reference canonical rules in <code>AGENTS.md</code> and executable skills in <code>skills/</code>, allowing autonomous coding assistants to produce verified Aster markup with zero hallucinations.</p>
+              <a href="#/agents">Open Agent Hub &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section">
+          <h2>Zero-Dependency Browser Approach</h2>
+          <p>Aster components require no React, Vue, Svelte, or runtime compiler. Styles are delivered via standard CSS Custom Properties, and interactive behaviors (such as pointer-origin hover spotlights, dialog focus traps, and accordion expansion) use lightweight, idempotent event delegation initialized with a single function:</p>
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Browser Initialization</span></div>
+              <button type="button" class="copy-btn">Copy Code</button>
+            </div>
+            <pre><code>import { initAsterComponents } from 'aster-ds';
+
+// Initialize delegated behaviors across the document tree
+initAsterComponents(document);</code></pre>
+          </div>
+          <p>Because Aster relies purely on standard HTML and CSS, it integrates seamlessly into static sites, SSR frameworks (Next.js, Remix, Astro), and legacy applications alike.</p>
+        </section>
+
+        <section class="doc-section">
+          <h2>Where to Go Next</h2>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>1. Installation &amp; Setup</h4>
+              <p>Step-by-step guidance for installing via npm, pnpm, yarn, or direct static script tags.</p>
+              <a href="#/installation">Read Installation Guide &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>2. Design Foundations</h4>
+              <p>Explore the semantic color system, 4-role typography, spatial scale, and elevation tokens.</p>
+              <a href="#/colors">Explore Foundations &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>3. Component Catalog</h4>
+              <p>Inspect interactive live previews, copyable markup, AI prompts, and anatomy blueprints for all 21 components.</p>
+              <a href="#/button">Browse Components &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>4. Interactive Playground</h4>
+              <p>Experiment with real-time property controls, theme switching, and live code generation on the Aster Stage.</p>
+              <a href="#/playground">Launch Playground &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        ${buildPaginationHtml('introduction')}
+      </div>
+    </article>
+  `;
+
   const installationHtml = `
+    <!-- =====================================================================
+         INSTALLATION & QUICKSTART PAGE
+         ===================================================================== -->
     <article class="doc-view" id="view-installation" data-title="Installation" data-section="getting-started" aria-labelledby="t-installation">
       <header class="page-head">
         <div class="eyebrow">Getting Started &middot; Setup</div>
-        <h1 id="t-installation">Installation &amp; Quickstart</h1>
-        <p class="lead">Integrate Aster into any web application using zero-dependency browser CSS and ES modules.</p>
+        <h1 id="t-installation" tabindex="-1">Installation &amp; Quickstart</h1>
+        <p class="lead">How to install, import, and configure Aster DS in modern web applications using npm or direct browser distributions.</p>
+        <div class="component-meta">
+          <span class="meta-tag meta-tag--success">Package: aster-ds</span>
+          <span class="meta-tag meta-tag--accent">Version 0.0.1</span>
+          <span class="meta-tag">Zero Dependencies</span>
+          <span class="meta-tag">ESM + CSS</span>
+        </div>
       </header>
+
       <div class="doc-body">
+        <!-- 1. Prerequisites -->
         <section class="doc-section">
-          <h2>1. Include Fonts &amp; Master Stylesheet</h2>
-          <p>Load the four Google Fonts families (or rely on clean local system fallbacks) and link <code>/dist/css/aster.css</code>:</p>
-          <div class="code-block">
-            <div class="code-block__bar">
-              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>HTML Head Setup</span></div>
-              <button type="button" class="copy-btn">Copy Code</button>
+          <h2>1. Prerequisites</h2>
+          <p>Before installing Aster DS, ensure your environment meets the following requirements:</p>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>Node.js &amp; Package Manager</h4>
+              <p>Node.js <strong>18.0.0 or later</strong> (Node 20+ recommended). Compatible with npm (v9+), pnpm (v8+), or yarn (v1.22+ / v3+).</p>
             </div>
-            <pre><code>&lt;link rel="stylesheet" href="/dist/css/aster.css" /&gt;
-&lt;script type="module"&gt;
-  import { initAsterComponents } from '/dist/js/aster.js';
-  initAsterComponents(document);
-&lt;/script&gt;</code></pre>
+            <div class="spec-card">
+              <h4>Browser Compatibility</h4>
+              <p>Modern evergreen browsers supporting CSS Custom Properties, <code>:focus-visible</code>, <code>:has()</code>, HTML5 <code>&lt;dialog&gt;</code>, and native ES Modules (Chromium 105+, Firefox 110+, Safari 16.4+, Edge 105+).</p>
+            </div>
+          </div>
+          <div class="note">
+            <strong>Package vs. Direct Browser Usage:</strong> If you use a modern bundler (Vite, Next.js, Astro, Webpack, esbuild), install via npm. If you are building a static website or prefer zero build steps, jump to <a href="#installation--browser-static-installation">Direct Browser / Static Installation</a> below.
           </div>
         </section>
+
+        <!-- 2. Install using npm -->
         <section class="doc-section">
-          <h2>2. Theme Switching</h2>
-          <p>Toggle between Light and Dark modes by setting <code>data-theme="dark"</code> on <code>&lt;html&gt;</code>. All 90 CSS custom properties recalculate automatically.</p>
+          <h2>2. Install using npm</h2>
+          <p>Install the official Aster DS package from the npm registry:</p>
           <div class="code-block">
             <div class="code-block__bar">
-              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Theme Attribute</span></div>
+              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Terminal &middot; npm</span></div>
               <button type="button" class="copy-btn">Copy Code</button>
             </div>
-            <pre><code>&lt;html lang="en" data-theme="dark"&gt;</code></pre>
+            <pre><code>npm install aster-ds</code></pre>
+          </div>
+          <p>Or using your preferred package manager:</p>
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Terminal &middot; pnpm / yarn</span></div>
+              <button type="button" class="copy-btn">Copy Code</button>
+            </div>
+            <pre><code># pnpm
+pnpm add aster-ds
+
+# yarn
+yarn add aster-ds</code></pre>
           </div>
         </section>
+
+        <!-- 3. Import styles and JavaScript -->
+        <section class="doc-section">
+          <h2>3. Import Styles and JavaScript</h2>
+          <p>Aster DS exports both pre-bundled and modular stylesheets, as well as an idempotent JavaScript behavior initializer:</p>
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>JavaScript / TypeScript Entry Point (e.g. main.js / app.tsx)</span></div>
+              <button type="button" class="copy-btn">Copy Code</button>
+            </div>
+            <pre><code>// 1. Import all-in-one stylesheet (tokens + base reset + 21 components)
+import 'aster-ds/aster.css';
+
+// Alternatively, import individual stylesheets fine-grained:
+// import 'aster-ds/tokens.css';
+// import 'aster-ds/components.css';
+
+// 2. Import and initialize component behaviors
+import { initAsterComponents } from 'aster-ds';
+
+// Initialize delegated event listeners on the document root
+initAsterComponents(document);</code></pre>
+          </div>
+          <div class="note">
+            <strong>Idempotent Event Delegation:</strong> <code>initAsterComponents(root, options)</code> uses delegated event listeners attached to the root node. It is safe to call multiple times or invoke on dynamically updated subtrees without duplicating event listeners.
+          </div>
+        </section>
+
+        <!-- 4. First component -->
+        <section class="doc-section">
+          <h2>4. First Component Example</h2>
+          <p>Aster uses semantic HTML5 classes. Here is a working example combining an Aster form field and a primary action button:</p>
+          <div class="stage" style="padding: 24px; background: var(--as-semantic-color-surface-card); border-radius: var(--as-radius-lg); border: 1px solid var(--as-semantic-color-border-subtle); display: flex; flex-direction: column; gap: 16px; max-width: 420px;">
+            <div class="as-form-field">
+              <label class="as-form-field__label" for="demo-cluster-id">Cluster Identifier</label>
+              <div class="as-input-box">
+                <input type="text" id="demo-cluster-id" class="as-input" placeholder="us-east-prod-01" value="production-cluster" />
+              </div>
+              <span class="as-form-field__helper">Unique alphanumeric identifier for your cluster.</span>
+            </div>
+            <button type="button" class="as-button as-button--primary">
+              <span class="as-button__label">Deploy Service</span>
+            </button>
+          </div>
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>HTML Markup</span></div>
+              <button type="button" class="copy-btn">Copy Code</button>
+            </div>
+            <pre><code>&lt;!-- Form Field --&gt;
+&lt;div class="as-form-field"&gt;
+  &lt;label class="as-form-field__label" for="cluster-id"&gt;Cluster Identifier&lt;/label&gt;
+  &lt;div class="as-input-box"&gt;
+    &lt;input type="text" id="cluster-id" class="as-input" placeholder="us-east-prod-01" /&gt;
+  &lt;/div&gt;
+  &lt;span class="as-form-field__helper"&gt;Unique alphanumeric identifier for your cluster.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Button Action --&gt;
+&lt;button type="button" class="as-button as-button--primary"&gt;
+  &lt;span class="as-button__label"&gt;Deploy Service&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+          </div>
+        </section>
+
+        <!-- 5. Browser/static installation -->
+        <section class="doc-section" id="installation--browser-static-installation">
+          <h2>5. Direct Browser / Static Installation</h2>
+          <p>For applications without a Node.js build step or package manager, include the Google Fonts and link the pre-compiled distribution files directly:</p>
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__meta"><span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Static HTML Setup</span></div>
+              <button type="button" class="copy-btn">Copy Code</button>
+            </div>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;My Application&lt;/title&gt;
+
+  &lt;!-- 1. Four Google Fonts (or local system fallbacks) --&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;
+  &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /&gt;
+  &lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" /&gt;
+
+  &lt;!-- 2. Master Aster Stylesheet --&gt;
+  &lt;link rel="stylesheet" href="./dist/css/aster.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button type="button" class="as-button as-button--primary"&gt;
+    &lt;span class="as-button__label"&gt;Click Me&lt;/span&gt;
+  &lt;/button&gt;
+
+  &lt;!-- 3. Aster ES Module Behaviors --&gt;
+  &lt;script type="module"&gt;
+    import { initAsterComponents } from './dist/js/aster.js';
+    initAsterComponents(document);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </section>
+
+        <!-- 6. Verification and troubleshooting -->
+        <section class="doc-section">
+          <h2>6. Verification &amp; Troubleshooting</h2>
+          <p>Verify that your Aster installation is active and functioning with these quick checks:</p>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>1. Inspect Token Resolution</h4>
+              <p>Open browser DevTools (F12) on your page. Inspect <code>&lt;body&gt;</code> and check Computed Styles for <code>--as-semantic-color-interactive-primary</code>. It should evaluate to <code>#0f0f0f</code> in light mode or <code>#ffffff</code> in dark mode.</p>
+            </div>
+            <div class="spec-card">
+              <h4>2. Inspect Interactive Hydration</h4>
+              <p>Move your cursor over an <code>.as-button</code>. The button should track pointer position via <code>--x</code> and <code>--y</code> inline variables to render the kinetic radial spotlight fill.</p>
+            </div>
+            <div class="spec-card">
+              <h4>3. Verify Dark Mode Theming</h4>
+              <p>Set <code>data-theme="dark"</code> on your <code>&lt;html&gt;</code> tag. All 109 tokens should dynamically recalculate surfaces, text inks, and borders without page reload.</p>
+            </div>
+            <div class="spec-card">
+              <h4>4. Common Pitfalls</h4>
+              <p><strong>Unresponsive buttons:</strong> Ensure <code>initAsterComponents(document)</code> is invoked inside a <code>&lt;script type="module"&gt;</code>.<br /><strong>Broken styles:</strong> Ensure <code>aster.css</code> is loaded before application overrides.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. Next steps -->
+        <section class="doc-section">
+          <h2>7. Next Steps</h2>
+          <p>Now that Aster DS is installed in your project, explore the design system:</p>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <h4>Design Foundations</h4>
+              <p>Explore the semantic color system, 4-role typography scale, and spatial tokens.</p>
+              <a href="#/colors">Explore Foundations &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>Component Documentation</h4>
+              <p>Browse specs, copyable markup, and accessibility contracts for all 21 components.</p>
+              <a href="#/button">Browse Components &rarr;</a>
+            </div>
+            <div class="spec-card">
+              <h4>AI Agent Skills</h4>
+              <p>Equip your coding assistants with <code>skills/using-aster-components/</code> for zero-hallucination development.</p>
+              <a href="#/agents">Explore Agent Skills &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        ${buildPaginationHtml('installation')}
       </div>
     </article>
   `;
@@ -1428,6 +1838,8 @@ npm run test:browser</code></pre>
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml('colors')}
       </div>
     </article>
   `;
@@ -1482,6 +1894,8 @@ npm run test:browser</code></pre>
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml('typography')}
       </div>
     </article>
   `;
@@ -1511,6 +1925,8 @@ npm run test:browser</code></pre>
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml('spacing')}
       </div>
     </article>
   `;
@@ -1553,6 +1969,8 @@ npm run test:browser</code></pre>
             </div>
           </div>
         </section>
+
+        ${buildPaginationHtml('elevation')}
       </div>
     </article>
   `;
@@ -1580,6 +1998,8 @@ npm run test:browser</code></pre>
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml('themes-density')}
       </div>
     </article>
   `;
@@ -1607,6 +2027,8 @@ npm run test:browser</code></pre>
             </div>
           </div>
         </section>
+
+        ${buildPaginationHtml('motion')}
       </div>
     </article>
   `;
@@ -1838,6 +2260,8 @@ npm run test:browser</code></pre>
             </table>
           </div>
         </section>
+
+        ${buildPaginationHtml(config.slug)}
       </div>
     </article>
     `;
@@ -3156,6 +3580,21 @@ showToast({
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aster Design System</title>
   <meta name="description" content="Aster: a token-first design system with human documentation, interactive playground, and agent-readable component contracts." />
+  <link rel="icon" id="favicon-link" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 376 382' fill='none'%3E%3Cpath d='M210.5 239C210.517 241.153 209.862 243.258 208.627 245.023C207.392 246.787 205.638 248.122 203.609 248.844L161.977 263.983L146.844 305.609C146.098 307.619 144.755 309.352 142.995 310.576C141.235 311.8 139.143 312.455 137 312.455C134.857 312.455 132.764 311.8 131.005 310.576C129.245 309.352 127.902 307.619 127.156 305.609L112.023 263.977L70.3906 248.844C68.3811 248.098 66.6481 246.755 65.4242 244.995C64.2004 243.235 63.5444 241.143 63.5444 239C63.5444 236.857 64.2004 234.764 65.4242 233.005C66.6481 231.245 68.3811 229.902 70.3906 229.156L112.023 214.023L127.156 172.391C127.902 170.381 129.245 168.648 131.005 167.424C132.764 166.2 134.857 165.544 137 165.544C139.143 165.544 141.235 166.2 142.995 167.424C144.755 168.648 146.098 170.381 146.844 172.391L161.983 214.023L203.609 229.156C205.638 229.878 207.392 231.213 208.627 232.977C209.862 234.742 210.517 236.847 210.5 239Z' fill='%23121212'/%3E%3Cpath d='M21 20H142C198 20.1667 354.5 53 354.5 198V361.5' stroke-width='40' stroke-linecap='round' stroke='%23121212'/%3E%3Cpath d='M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315' stroke-width='40' stroke-linecap='round' stroke='%23121212'/%3E%3C/svg%3E" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 376 382' fill='none'%3E%3Cpath d='M210.5 239C210.517 241.153 209.862 243.258 208.627 245.023C207.392 246.787 205.638 248.122 203.609 248.844L161.977 263.983L146.844 305.609C146.098 307.619 144.755 309.352 142.995 310.576C141.235 311.8 139.143 312.455 137 312.455C134.857 312.455 132.764 311.8 131.005 310.576C129.245 309.352 127.902 307.619 127.156 305.609L112.023 263.977L70.3906 248.844C68.3811 248.098 66.6481 246.755 65.4242 244.995C64.2004 243.235 63.5444 241.143 63.5444 239C63.5444 236.857 64.2004 234.764 65.4242 233.005C66.6481 231.245 68.3811 229.902 70.3906 229.156L112.023 214.023L127.156 172.391C127.902 170.381 129.245 168.648 131.005 167.424C132.764 166.2 134.857 165.544 137 165.544C139.143 165.544 141.235 166.2 142.995 167.424C144.755 168.648 146.098 170.381 146.844 172.391L161.983 214.023L203.609 229.156C205.638 229.878 207.392 231.213 208.627 232.977C209.862 234.742 210.517 236.847 210.5 239Z' fill='%23FFFFFF'/%3E%3Cpath d='M21 20H142C198 20.1667 354.5 53 354.5 198V361.5' stroke-width='40' stroke-linecap='round' stroke='%23FFFFFF'/%3E%3Cpath d='M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315' stroke-width='40' stroke-linecap='round' stroke='%23FFFFFF'/%3E%3C/svg%3E" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/aster-logo-black.svg" />
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('aster-theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" />
@@ -3176,15 +3615,19 @@ ${spriteHtml}
 
 <header class="site-header" role="banner">
   <div class="site-header__inner">
-    <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false"><svg class="as-icon" width="20" height="20"><use href="#i-menu"/></svg></button>
+    <button type="button" class="as-button as-button--ghost as-button--icon menu-btn" id="menu-btn" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false"><svg class="as-icon" width="20" height="20" aria-hidden="true"><use href="#i-menu"/></svg></button>
     <a href="#/overview" class="brand" aria-label="Aster, home">
-      <svg class="brand__mark" aria-hidden="true"><use href="#i-star"/></svg>
+      <svg class="brand__logo" width="24" height="24" viewBox="0 0 376 382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="brand__logo-sparkle" d="M210.5 239C210.517 241.153 209.862 243.258 208.627 245.023C207.392 246.787 205.638 248.122 203.609 248.844L161.977 263.983L146.844 305.609C146.098 307.619 144.755 309.352 142.995 310.576C141.235 311.8 139.143 312.455 137 312.455C134.857 312.455 132.764 311.8 131.005 310.576C129.245 309.352 127.902 307.619 127.156 305.609L112.023 263.977L70.3906 248.844C68.3811 248.098 66.6481 246.755 65.4242 244.995C64.2004 243.235 63.5444 241.143 63.5444 239C63.5444 236.857 64.2004 234.764 65.4242 233.005C66.6481 231.245 68.3811 229.902 70.3906 229.156L112.023 214.023L127.156 172.391C127.902 170.381 129.245 168.648 131.005 167.424C132.764 166.2 134.857 165.544 137 165.544C139.143 165.544 141.235 166.2 142.995 167.424C144.755 168.648 146.098 170.381 146.844 172.391L161.983 214.023L203.609 229.156C205.638 229.878 207.392 231.213 208.627 232.977C209.862 234.742 210.517 236.847 210.5 239Z"/>
+        <path class="brand__logo-arc" d="M21 20H142C198 20.1667 354.5 53 354.5 198V361.5" stroke-width="40" stroke-linecap="round"/>
+        <path class="brand__logo-arc" d="M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315" stroke-width="40" stroke-linecap="round"/>
+      </svg>
       <span>Aster</span>
-      <span class="brand__ver">v0.2</span>
+      <span class="brand__ver">v0.0.1</span>
     </a>
     <nav class="top-nav" aria-label="Primary">
       <a href="#/overview" data-nav-section="overview">Home</a>
-      <a href="#/installation" data-nav-section="docs">Docs</a>
+      <a href="#/introduction" data-nav-section="docs">Docs</a>
       <a href="#/accordion" data-nav-section="components">Components</a>
       <a href="#/playground" data-nav-section="playground" class="top-nav__playground">Playground</a>
     </nav>
@@ -3194,17 +3637,13 @@ ${spriteHtml}
       <span>Search docs...</span>
       <kbd>Ctrl K</kbd>
     </button>
-    <div class="display-menu">
-      <button type="button" class="icon-btn" id="display-btn" aria-label="Theme settings" aria-expanded="false" aria-controls="display-panel"><svg class="as-icon" width="20" height="20"><use href="#i-sliders"/></svg></button>
-      <div class="display-panel" id="display-panel" role="group" aria-label="Theme settings" hidden>
-        <h2>Theme Mode</h2>
-        <div class="seg" data-index="0" style="--n: 2; --i: 0;" id="seg-theme">
-          <span class="seg__thumb" aria-hidden="true"></span>
-          <button type="button" id="btn-theme-light" aria-pressed="true">Light</button>
-          <button type="button" id="btn-theme-dark" aria-pressed="false">Dark</button>
-        </div>
-      </div>
-    </div>
+    <button type="button" class="as-button as-button--ghost as-button--icon theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle color theme" title="Toggle color theme (Light / Dark)">
+      <svg class="as-icon as-icon--sun" width="20" height="20" aria-hidden="true"><use href="#i-sun"/></svg>
+      <svg class="as-icon as-icon--moon" width="20" height="20" aria-hidden="true"><use href="#i-moon"/></svg>
+    </button>
+    <a href="https://github.com/alphaac0der/Aster-DS" target="_blank" rel="noopener noreferrer" class="as-button as-button--ghost as-button--icon header-github-btn" id="header-github-btn" aria-label="Aster DS on GitHub" title="GitHub Repository">
+      <svg class="as-icon" width="20" height="20" aria-hidden="true"><use href="#i-github"/></svg>
+    </a>
   </div>
 </header>
 
@@ -3214,9 +3653,8 @@ ${spriteHtml}
 <div class="docs-shell">
   <nav class="sidebar" id="sidebar" aria-label="Documentation">
     <div class="nav-group">
-      <h2>Workspace</h2>
-      <a class="nav-link" href="#/overview" data-route="overview">Home</a>
-      <a class="nav-link" href="#/playground" data-route="playground">Interactive Playground</a>
+      <h2>Getting Started</h2>
+      <a class="nav-link" href="#/introduction" data-route="introduction">Introduction</a>
       <a class="nav-link" href="#/installation" data-route="installation">Installation</a>
     </div>
     <div class="nav-group">
@@ -3263,10 +3701,11 @@ ${spriteHtml}
   <main class="docs-main" id="main-content">
     ${overviewHtml}
     ${playgroundViewHtml}
+    ${introductionHtml}
+    ${installationHtml}
     ${designersHtml}
     ${developersHtml}
     ${agentsHtml}
-    ${installationHtml}
     ${colorsHtml}
     ${typographyHtml}
     ${spacingHtml}
@@ -3323,7 +3762,8 @@ ${spriteHtml}
     .replace('href="/dist/css/components.css"', 'href="./dist/css/components.css"')
     .replace('href="/playground/styles/playground.css"', 'href="./playground/styles/playground.css"')
     .replace('src="/playground/scripts/playground.js"', 'src="./playground/scripts/playground.js"')
-    .replace('<title>Aster Design System</title>', '<title>Aster Design System</title>\n  <link rel="icon" type="image/svg+xml" href="./assets/brand/aster-logo-black.svg" />')
+    .replace(/href="\/assets\/brand\//g, 'href="./assets/brand/')
+    .replace(/src="\/assets\/brand\//g, 'src="./assets/brand/')
     .trim() + '\n';
 
   // Generate playground/index.html with relative links tailored for subpath
@@ -3332,12 +3772,16 @@ ${spriteHtml}
     .replace('href="/dist/css/components.css"', 'href="../dist/css/components.css"')
     .replace('href="/playground/styles/playground.css"', 'href="./styles/playground.css"')
     .replace('src="/playground/scripts/playground.js"', 'src="./scripts/playground.js"')
-    .replace('<title>Aster Design System</title>', '<title>Aster Design System</title>\n  <link rel="icon" type="image/svg+xml" href="../assets/brand/aster-logo-black.svg" />')
+    .replace(/href="\/assets\/brand\//g, 'href="../assets/brand/')
+    .replace(/src="\/assets\/brand\//g, 'src="../assets/brand/')
     .trim() + '\n';
 
-  writeFileSync(join(rootDir, 'index.html'), rootHtml, 'utf8');
-  writeFileSync(join(rootDir, 'playground/index.html'), playgroundHtml, 'utf8');
-  console.log('✓ Successfully compiled index.html (root `/`) and playground/index.html with 30 routes, portable relative asset links, and brand favicon!');
+  const cleanRootHtml = rootHtml.split('\n').map((l) => l.trimEnd()).join('\n').trim() + '\n';
+  const cleanPlaygroundHtml = playgroundHtml.split('\n').map((l) => l.trimEnd()).join('\n').trim() + '\n';
+
+  writeFileSync(join(rootDir, 'index.html'), cleanRootHtml, 'utf8');
+  writeFileSync(join(rootDir, 'playground/index.html'), cleanPlaygroundHtml, 'utf8');
+  console.log(`✓ Successfully compiled index.html (root \`/\`) and playground/index.html with ${DOC_PAGES.length} documentation routes (${DOC_PAGES.length + 2} total routes), portable relative asset links, and brand favicon!`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
