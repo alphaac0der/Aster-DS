@@ -7,6 +7,8 @@ Aster is a zero-dependency, token-first design system engineered with dual inter
 
 Aster features 109 canonical design tokens (W3C DTCG format) and 21 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
 
+Built and maintained by Labib, with support from [Dreabuild](https://dreabuild.com).
+
 [![npm version](https://img.shields.io/npm/v/aster-ds.svg)](https://www.npmjs.com/package/aster-ds)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Website](https://img.shields.io/badge/docs-aster--ds.vercel.app-black)](https://aster-ds.vercel.app/)
@@ -16,6 +18,7 @@ Aster features 109 canonical design tokens (W3C DTCG format) and 21 production c
 - **Installation Guide:** [https://aster-ds.vercel.app/#/installation](https://aster-ds.vercel.app/#/installation)
 - **GitHub Repository:** [https://github.com/alphaac0der/Aster-DS](https://github.com/alphaac0der/Aster-DS)
 - **npm Registry:** [`aster-ds@0.0.1`](https://www.npmjs.com/package/aster-ds)
+- **Creator Support:** [https://www.bhokto.com.bd/pay/alphac0der](https://www.bhokto.com.bd/pay/alphac0der)
 
 ---
 
@@ -155,6 +158,14 @@ Aster-DS/
 - **WCAG 2.2 AA Compliance:** Token pairings are mathematically verified (4.5:1 text, 3:1 UI boundaries). Holistic application accessibility (screen reader announcements, live regions, reflow) requires context-dependent evaluation.
 - **Target Size (SC 2.5.8):** Standard controls provide 40px/44px minimum touch targets, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum across all devices. Aster operates on a single standard density scale; compact mode is eliminated in favor of consistent touch ergonomics.
 - **Reduced Motion:** All interactive components collapse transforms and durations under `prefers-reduced-motion: reduce`.
+
+---
+
+## Maintainer & Attribution
+
+Built and maintained by Labib, with support from [Dreabuild](https://dreabuild.com).
+
+To support ongoing open-source development and maintenance, creator sponsorship is available via [Bhokto](https://www.bhokto.com.bd/pay/alphac0der).
 
 ---
 
