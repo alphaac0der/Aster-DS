@@ -52,13 +52,6 @@ function isCurrent(path: string) {
   </div>
 
   <div class="nav-group">
-    <h2>Audience Hubs</h2>
-    <a class="nav-link" href="/docs/principles#designers">For Designers</a>
-    <a class="nav-link" href="/docs/frameworks#developers">For Developers</a>
-    <a class="nav-link" href="/docs/tokens#agents">For AI Agents</a>
-  </div>
-
-  <div class="nav-group">
     <h2>Components</h2>
     {components.map((c) => (
       <a class={`nav-link ${isCurrent(c.path) ? 'nav-link--active' : ''}`} href={c.path} aria-current={isCurrent(c.path) ? 'page' : undefined}>{c.name}</a>

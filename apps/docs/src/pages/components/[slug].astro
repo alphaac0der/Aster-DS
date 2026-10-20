@@ -63,13 +63,6 @@ const { component, prevComponent, nextComponent } = Astro.props;
         <span class="meta-tag">Radius: {component.spec?.radius?.split(' (')[0] || '4px'}</span>
         <span class="meta-tag">Element: {component.element}</span>
       </div>
-
-      <nav class="component-audience-nav" aria-label="Component audience perspective">
-        <span class="audience-nav-label">Audience Hubs:</span>
-        <a href="/docs/principles#designers" class="audience-chip">For Designers</a>
-        <a href="/docs/frameworks#developers" class="audience-chip">For Developers</a>
-        <a href="/docs/tokens#agents" class="audience-chip">For AI Agents</a>
-      </nav>
     </header>
 
     <div class="doc-body">
