@@ -1,77 +1,363 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
-const semanticTokens = [
-  { name: '--as-semantic-color-surface-canvas', light: '#FFFFFF', dark: '#121212', role: 'Primary background surface' },
-  { name: '--as-semantic-color-surface-card', light: '#F5F5F5', dark: '#1E1E1E', role: 'Elevated container card surface' },
-  { name: '--as-semantic-color-surface-subtle', light: '#EEEEEE', dark: '#282828', role: 'Subtle hover / secondary container' },
-  { name: '--as-semantic-color-text-default', light: '#121212', dark: '#E0E0E0', role: 'High-contrast primary body text' },
-  { name: '--as-semantic-color-text-muted', light: '#555555', dark: '#AAAAAA', role: 'Secondary / supporting description text' },
-  { name: '--as-semantic-color-border-subtle', light: '#E0E0E0', dark: '#333333', role: 'Dividers and soft boundaries' },
-  { name: '--as-semantic-color-border-strong', light: '#777777', dark: '#777777', role: 'Form control outlines (3:1 contrast)' },
-  { name: '--as-semantic-color-border-focus', light: '#1565C0', dark: '#64B5F6', role: 'Focus ring indicator (3:1 contrast)' }
+// 1. Semantic Color Token Inventory
+const surfaceTokens = [
+  { name: '--as-semantic-color-surface-canvas', light: '#FFFFFF', dark: '#121212', role: 'Primary background canvas baseline (Shade-DS Surface 1)' },
+  { name: '--as-semantic-color-surface-card', light: '#F5F5F5', dark: '#1E1E1E', role: 'Elevated container card surface (Shade-DS Surface 2)' },
+  { name: '--as-semantic-color-surface-subtle', light: '#EEEEEE', dark: '#333333', role: 'Secondary grouping and table header fill (Shade-DS Surface 3)' },
+  { name: '--as-semantic-color-surface-muted', light: '#EEEEEE', dark: '#333333', role: 'Disabled and recessed background surface' },
+  { name: '--as-semantic-color-surface-success', light: '#E6F4EA', dark: '#032A1D', role: 'Positive alert, toast, and badge surface' },
+  { name: '--as-semantic-color-surface-warning', light: '#FFF8E1', dark: '#2C1F04', role: 'Caution alert and notice surface' },
+  { name: '--as-semantic-color-surface-critical', light: '#FBEAEB', dark: '#281718', role: 'Destructive error surface and callout fill' },
+  { name: '--as-semantic-color-surface-focus', light: '#E3F2FD', dark: '#0D1B2A', role: 'Informational banner and focus highlight surface' },
+  { name: '--as-semantic-color-surface-active', light: '#F3E5F5', dark: '#1C062E', role: 'Blueprint callouts and active layout container fill' }
 ];
 
-const densityTokens = [
-  { name: '--as-density-control-height', value: '40px', role: 'Button standard height' },
-  { name: '--as-density-control-height-comfortable', value: '44px', role: 'Form field / Input / Select height' },
-  { name: '--as-density-control-padding-x', value: '24px', role: 'Button horizontal padding (--as-space-6)' },
-  { name: '--as-density-control-padding-y', value: '8px', role: 'Button vertical padding' }
+const textTokens = [
+  { name: '--as-semantic-color-text-default', light: '#121212', dark: '#E0E0E0', role: 'High-contrast primary body and title text (>= 14:1 AAA)' },
+  { name: '--as-semantic-color-text-muted', light: '#555555', dark: '#AAAAAA', role: 'Secondary descriptions, helper text, and metadata (>= 7:1 AAA)' },
+  { name: '--as-semantic-color-text-on-fill', light: '#FFFFFF', dark: '#0F0F0F', role: 'High-contrast text atop primary monochrome fills (19.25:1 AAA)' }
 ];
 
+const borderTokens = [
+  { name: '--as-semantic-color-border-subtle', light: '#EEEEEE', dark: '#333333', role: 'Structural hairlines, table cell dividers, and soft borders' },
+  { name: '--as-semantic-color-border-strong', light: '#777777', dark: '#777777', role: 'Form control non-text contrast boundary (>= 3:1 non-text AA)' },
+  { name: '--as-semantic-color-border-focus', light: '#1565C0', dark: '#64B5F6', role: 'High-visibility accessible focus ring indicator (>= 5:1 AA)' }
+];
+
+const interactiveTokens = [
+  { name: '--as-semantic-color-interactive-primary', light: '#0F0F0F', dark: '#FFFFFF', role: 'Primary interactive action fill (monochrome inverted)' },
+  { name: '--as-semantic-color-interactive-primary-hover', light: '#333333', dark: '#E0E0E0', role: 'Hover state for primary interactive buttons' },
+  { name: '--as-semantic-color-interactive-primary-text', light: '#FFFFFF', dark: '#0F0F0F', role: 'Label text inside primary buttons (19.25:1 AAA)' },
+  { name: '--as-semantic-color-interactive-link', light: '#0F0F0F', dark: '#FFFFFF', role: 'Inline interactive hyperlink text' }
+];
+
+const statusTokens = [
+  { name: '--as-semantic-color-status-success-text', light: '#188038', dark: '#6DD78C', role: 'Accessible positive status message text and icon fill' },
+  { name: '--as-semantic-color-status-warning-text', light: '#B05A00', dark: '#FF9800', role: 'Accessible caution status message text and icon fill' },
+  { name: '--as-semantic-color-status-critical-text', light: '#C5221F', dark: '#FF453A', role: 'Accessible error text and 12px circular red dot dismiss' },
+  { name: '--as-semantic-color-status-focus-text', light: '#1565C0', dark: '#64B5F6', role: 'Accessible info/focus message text and icon fill' },
+  { name: '--as-semantic-color-status-active-text', light: '#6A1B9A', dark: '#D9A7F7', role: 'Active accent layout text and blueprint badge ink' }
+];
+
+// 2. Typography Scale & Hierarchy
+const fontFamilies = [
+  { name: '--as-typography-font-family-display', stack: "'Bebas Neue', Impact, 'Arial Narrow', sans-serif", role: 'Display and hero headlines (Shade-DS Expressive)' },
+  { name: '--as-typography-font-family-sans', stack: "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", role: 'Primary interface, body, and UI control stack' },
+  { name: '--as-typography-font-family-mono', stack: "'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace", role: 'Technical measurements, tokens, and code snippets' },
+  { name: '--as-typography-font-family-serif', stack: "'Merriweather', Georgia, Cambria, 'Times New Roman', serif", role: 'Editorial quotes and long-form callouts' }
+];
+
+const typeSizes = [
+  { name: '--as-typography-font-size-2xs', size: '11px', rem: '0.6875rem', role: 'Micro metadata label (exception-only)' },
+  { name: '--as-typography-font-size-xs', size: '12px', rem: '0.75rem', role: 'Captions, badges, code, compact data' },
+  { name: '--as-typography-font-size-sm', size: '14px', rem: '0.875rem', role: 'Standard interface label and secondary body' },
+  { name: '--as-typography-font-size-base', size: '14px', rem: '0.875rem', role: 'Default control and body copy text' },
+  { name: '--as-typography-font-size-md', size: '16px', rem: '1.0rem', role: 'Large body copy and prominent card titles' },
+  { name: '--as-typography-font-size-lg', size: '22px', rem: '1.375rem', role: 'Section headers and modal titles' },
+  { name: '--as-typography-font-size-xl', size: '24px', rem: '1.5rem', role: 'Small expressive headlines and quote copy' },
+  { name: '--as-typography-font-size-2xl', size: '28px', rem: '1.75rem', role: 'Medium expressive headlines' },
+  { name: '--as-typography-font-size-3xl', size: '32px', rem: '2.0rem', role: 'Large expressive section titles' },
+  { name: '--as-typography-font-size-display-s', size: '36px', rem: '2.25rem', role: 'Small hero display headers' },
+  { name: '--as-typography-font-size-display-m', size: '40px', rem: '2.5rem', role: 'Medium hero display headers' },
+  { name: '--as-typography-font-size-display-l', size: '52px', rem: '3.25rem', role: 'Primary hero display headlines' }
+];
+
+// 3. Spacing Scale (4px Base Unit)
+const spaceTokens = [
+  { name: '--as-space-0', value: '0px', width: 0, role: 'Reset / zero spacing' },
+  { name: '--as-space-1', value: '4px', width: 4, role: 'Micro spacing, icon-to-label gaps, badge padding' },
+  { name: '--as-space-2', value: '8px', width: 8, role: 'Compact form gaps, button internal icon spacing' },
+  { name: '--as-space-3', value: '12px', width: 12, role: 'Compact padding, alert inner spacing' },
+  { name: '--as-space-4', value: '16px', width: 16, role: 'Standard input horizontal padding, card inner gutter' },
+  { name: '--as-space-5', value: '20px', width: 20, role: 'Intermediate container padding and modal margins' },
+  { name: '--as-space-6', value: '24px', width: 24, role: 'Button horizontal padding (24px left/right), card padding' },
+  { name: '--as-space-8', value: '32px', width: 32, role: 'Major section spacing and component groupings' },
+  { name: '--as-space-10', value: '40px', width: 40, role: 'Layout banding and content block divisions' },
+  { name: '--as-space-12', value: '48px', width: 48, role: 'Macro layout divisions and page header margins' },
+  { name: '--as-space-16', value: '64px', width: 64, role: 'Hero sections and full-bleed layout margins' }
+];
+
+// 4. Corner Geometry & Radii
 const radiusTokens = [
-  { name: '--as-radius-sm', value: '4px', role: 'Inputs, selects, textareas, tags' },
-  { name: '--as-radius-md', value: '8px', role: 'Alerts, popovers, small cards' },
-  { name: '--as-radius-lg', value: '12px', role: 'Accordions, dialogs, drawers' },
-  { name: '--as-radius-xl', value: '16px', role: 'Prominent floating modal containers' },
-  { name: '--as-radius-full', value: '9999px', role: 'Pill buttons, badges, avatars' }
+  { name: '--as-radius-none', value: '0px', role: 'Sharp corners for flush table row dividers and full-bleed grids' },
+  { name: '--as-radius-sm', value: '4px', role: 'Minimum component radius: inputs, selects, textareas, checkboxes' },
+  { name: '--as-radius-md', value: '8px', role: 'Default component radius: alerts, toasts, cards, dropdowns' },
+  { name: '--as-radius-lg', value: '12px', role: 'Elevated containers: dialogs, drawers, popovers, panels' },
+  { name: '--as-radius-full', value: '9999px', role: 'Full pill radius: buttons, badges, avatars, switches, sliders' }
+];
+
+// 5. Elevation & Structural Rules
+const elevationTokens = [
+  { name: '--as-elevation-border-hairline', value: '1px', role: 'Double 1px glass glow structural boundary rule' },
+  { name: '--as-elevation-border-focus', value: '2px', role: 'High-visibility keyboard focus indicator ring' },
+  { name: '--as-elevation-shadow-none', value: 'none', role: 'Zero elevation shadow for flat surfaces' },
+  { name: '--as-elevation-shadow-raised', value: '0 2px 4px rgba(0, 0, 0, 0.04)', role: 'Subtle ambient lift for small dropdown menus' },
+  { name: '--as-elevation-shadow-overlay', value: '0 8px 24px rgba(0, 0, 0, 0.12)', role: 'Floating overlay shadow for modals and dialogs' }
+];
+
+// 6. Motion & Kinetic Curves
+const motionTokens = [
+  { name: '--as-motion-duration-press', value: '80ms', role: 'Tactile button and interactive control press timing' },
+  { name: '--as-motion-duration-base', value: '200ms', role: 'Standard interaction transition duration' },
+  { name: '--as-motion-duration-slow', value: '300ms', role: 'Slide-over drawers, dialog transitions, accordion expand' },
+  { name: '--as-motion-duration-reveal', value: '500ms', role: 'Hero entry and macro layout reveals' },
+  { name: '--as-motion-ease-out', value: 'cubic-bezier(0.22, 1, 0.36, 1)', role: 'Decelerating exit and entry curve' },
+  { name: '--as-motion-ease-standard', value: 'cubic-bezier(0.4, 0, 0.2, 1)', role: 'Standard smooth symmetric acceleration/deceleration' },
+  { name: '--as-motion-spring-snappy', value: 'cubic-bezier(0.22, 1.15, 0.36, 1)', role: 'Snappy micro-interaction hover response' },
+  { name: '--as-motion-spring-bouncy', value: 'cubic-bezier(0.34, 1.56, 0.64, 1)', role: 'Bouncy kinetic spring for buttons and toggles' }
+];
+
+// 7. Density Metrics (Single Standard Scale)
+const densityTokens = [
+  { name: '--as-density-control-height', value: '40px', role: 'Standard interactive control height (Button, Input, Select)' },
+  { name: '--as-density-control-padding-x', value: '16px', role: 'Standard form input horizontal padding' },
+  { name: '--as-density-control-padding-y', value: '8px', role: 'Standard control vertical padding' },
+  { name: '--as-density-table-row-height', value: '48px', role: 'Standard data table row height' },
+  { name: '--as-density-table-cell-padding-x', value: '16px', role: 'Standard data table horizontal cell padding' },
+  { name: '--as-density-table-cell-padding-y', value: '12px', role: 'Standard data table vertical cell padding' }
 ];
 ---
 
 <DocsLayout 
   title="Design Tokens — Aster Design System"
-  description="W3C DTCG-compliant design token catalog with strict semantic precedence and WCAG 2.2 AA contrast compliance."
+  description="W3C DTCG-compliant design token catalog with strict semantic precedence, mathematical WCAG 2.2 AA contrast compliance, and single standard density."
   currentPath="/docs/tokens"
 >
   <article class="doc-view" id="view-tokens" data-title="Design Tokens" data-section="docs" aria-labelledby="t-tokens">
+    <!-- Page Header -->
     <header class="page-head">
       <div class="eyebrow">Foundations &middot; Tokens</div>
       <h1 id="t-tokens" tabindex="-1">Design Tokens</h1>
-      <p class="lead">W3C DTCG-compliant design token catalog with mathematical WCAG 2.2 AA contrast compliance and single standard density.</p>
+      <p class="lead">W3C DTCG-compliant design token catalog with strict semantic precedence, mathematical WCAG 2.2 AA contrast compliance, and a single standard density scale.</p>
     </header>
 
     <div class="doc-body">
-      <!-- Semantic Color Tokens Table -->
+      <!-- 1. Architecture Overview -->
+      <section class="doc-section">
+        <h2>Token Architecture & Precedence</h2>
+        <p>Aster organizes design tokens into a disciplined 3-tier hierarchy: <strong>Primitives</strong> (raw atomic values), <strong>Semantic Tokens</strong> (purpose-driven roles that adapt across light and dark themes), and <strong>Density Metrics</strong> (standard control and table dimensions).</p>
+        
+        <div style="background: var(--doc-sub); padding: 16px 20px; border-radius: var(--doc-radius-card); margin: 16px 0 24px; box-shadow: 0 0 1px 0px var(--doc-line), inset 0 0 1px 0px var(--doc-line);">
+          <div style="font-weight: 600; font-size: 13.5px; margin-bottom: 6px; color: var(--doc-ink);">Strict Semantic Token Precedence Rule</div>
+          <p style="margin: 0; font-size: 13px; line-height: 1.5; color: var(--doc-muted);">Components and layouts must bind strictly to semantic tokens (<code>--as-semantic-color-*</code>), density tokens (<code>--as-density-*</code>), and structural foundation tokens. Never reference primitive colors (<code>--as-color-primitive-*</code>) in component markup.</p>
+        </div>
+
+        <div class="code-block" style="margin-bottom: 32px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>CSS Custom Property Usage</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>/* Correct: Theme-agnostic semantic binding */
+.my-card &#123;
+  background-color: var(--as-semantic-color-surface-card);
+  color: var(--as-semantic-color-text-default);
+  border-radius: var(--as-radius-md);
+  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle), inset 0 0 1px 0px var(--as-semantic-color-border-subtle);
+&#125;</code></pre>
+        </div>
+      </section>
+
+      <!-- 2. Semantic Color Tokens -->
       <section class="doc-section">
         <h2>Semantic Color Tokens</h2>
-        <p>Components bind strictly to semantic color tokens. Primitive colors exist solely as internal definitions.</p>
-        <div style="overflow-x: auto; margin-top: 16px;">
+        <p>Semantic colors define the exact role of an element. Click any token badge to instantly copy its CSS custom property.</p>
+
+        <!-- Subgroup: Surfaces -->
+        <h3 style="margin-top: 24px; font-size: 16px;">1. Surface Roles</h3>
+        <p style="font-size: 13px; color: var(--doc-muted); margin-bottom: 12px;">Background layers, elevated cards, and status surfaces.</p>
+        <div style="overflow-x: auto;">
           <table class="as-table" style="width: 100%;">
             <thead>
               <tr>
-                <th scope="col">CSS Custom Property</th>
-                <th scope="col">Light</th>
-                <th scope="col">Dark</th>
-                <th scope="col">Semantic Purpose</th>
+                <th scope="col" style="width: 320px;">CSS Custom Property</th>
+                <th scope="col" style="width: 140px;">Light</th>
+                <th scope="col" style="width: 140px;">Dark</th>
+                <th scope="col">Purpose & Role</th>
               </tr>
             </thead>
             <tbody>
-              {semanticTokens.map((t) => (
+              {surfaceTokens.map((t) => (
                 <tr>
-                  <td><code>{t.name}</code></td>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={t.name} title="Click to copy CSS variable">
+                      <code>{t.name}</code>
+                    </button>
+                  </td>
                   <td>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                      <span style={`display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: ${t.light}; border: 1px solid rgba(0,0,0,0.1);`}></span>
-                      <code>{t.light}</code>
+                      <span class="token-swatch" style={`background: ${t.light};`}></span>
+                      <code style="font-size: 12px;">{t.light}</code>
                     </div>
                   </td>
                   <td>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                      <span style={`display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: ${t.dark}; border: 1px solid rgba(255,255,255,0.2);`}></span>
-                      <code>{t.dark}</code>
+                      <span class="token-swatch" style={`background: ${t.dark};`}></span>
+                      <code style="font-size: 12px;">{t.dark}</code>
                     </div>
                   </td>
-                  <td>{t.role}</td>
+                  <td style="font-size: 13px;">{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Subgroup: Text & Content -->
+        <h3 style="margin-top: 32px; font-size: 16px;">2. Text & Content Roles</h3>
+        <p style="font-size: 13px; color: var(--doc-muted); margin-bottom: 12px;">Typography ink with guaranteed WCAG 2.2 AA / AAA contrast.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 320px;">CSS Custom Property</th>
+                <th scope="col" style="width: 140px;">Light</th>
+                <th scope="col" style="width: 140px;">Dark</th>
+                <th scope="col">Contrast & Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {textTokens.map((t) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={t.name} title="Click to copy CSS variable">
+                      <code>{t.name}</code>
+                    </button>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.light};`}></span>
+                      <code style="font-size: 12px;">{t.light}</code>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.dark};`}></span>
+                      <code style="font-size: 12px;">{t.dark}</code>
+                    </div>
+                  </td>
+                  <td style="font-size: 13px;">{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Subgroup: Borders & Focus -->
+        <h3 style="margin-top: 32px; font-size: 16px;">3. Border & Focus Roles</h3>
+        <p style="font-size: 13px; color: var(--doc-muted); margin-bottom: 12px;">Hairlines, 3:1 non-text control boundaries, and keyboard rings.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 320px;">CSS Custom Property</th>
+                <th scope="col" style="width: 140px;">Light</th>
+                <th scope="col" style="width: 140px;">Dark</th>
+                <th scope="col">Boundary Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              {borderTokens.map((t) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={t.name} title="Click to copy CSS variable">
+                      <code>{t.name}</code>
+                    </button>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.light};`}></span>
+                      <code style="font-size: 12px;">{t.light}</code>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.dark};`}></span>
+                      <code style="font-size: 12px;">{t.dark}</code>
+                    </div>
+                  </td>
+                  <td style="font-size: 13px;">{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Subgroup: Interactive & Actions -->
+        <h3 style="margin-top: 32px; font-size: 16px;">4. Interactive & Primary Action Roles</h3>
+        <p style="font-size: 13px; color: var(--doc-muted); margin-bottom: 12px;">Monochrome primary action buttons and hyperlinks.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 320px;">CSS Custom Property</th>
+                <th scope="col" style="width: 140px;">Light</th>
+                <th scope="col" style="width: 140px;">Dark</th>
+                <th scope="col">Interaction Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {interactiveTokens.map((t) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={t.name} title="Click to copy CSS variable">
+                      <code>{t.name}</code>
+                    </button>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.light};`}></span>
+                      <code style="font-size: 12px;">{t.light}</code>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.dark};`}></span>
+                      <code style="font-size: 12px;">{t.dark}</code>
+                    </div>
+                  </td>
+                  <td style="font-size: 13px;">{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Subgroup: Status & Feedback -->
+        <h3 style="margin-top: 32px; font-size: 16px;">5. Status & Feedback Roles</h3>
+        <p style="font-size: 13px; color: var(--doc-muted); margin-bottom: 12px;">Positive, warning, error, info, and active feedback message text and icons.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 320px;">CSS Custom Property</th>
+                <th scope="col" style="width: 140px;">Light</th>
+                <th scope="col" style="width: 140px;">Dark</th>
+                <th scope="col">Status Message Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              {statusTokens.map((t) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={t.name} title="Click to copy CSS variable">
+                      <code>{t.name}</code>
+                    </button>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.light};`}></span>
+                      <code style="font-size: 12px;">{t.light}</code>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="token-swatch" style={`background: ${t.dark};`}></span>
+                      <code style="font-size: 12px;">{t.dark}</code>
+                    </div>
+                  </td>
+                  <td style="font-size: 13px;">{t.role}</td>
                 </tr>
               ))}
             </tbody>
@@ -79,25 +365,59 @@ const radiusTokens = [
         </div>
       </section>
 
-      <!-- Density & Sizing Tokens -->
+      <!-- 3. Typography Tokens -->
       <section class="doc-section">
-        <h2>Density Tokens (Single Standard Scale)</h2>
-        <p>Aster DS adheres to a single standard density scale. Compact mode is not used.</p>
-        <div style="overflow-x: auto; margin-top: 16px;">
+        <h2>Typography Tokens</h2>
+        <p>Aster defines four distinct typeface roles and a typographic scale calibrated for legibility.</p>
+
+        <h3 style="margin-top: 24px; font-size: 16px;">Font Families</h3>
+        <div style="overflow-x: auto;">
           <table class="as-table" style="width: 100%;">
             <thead>
               <tr>
-                <th scope="col">CSS Custom Property</th>
-                <th scope="col">Value</th>
-                <th scope="col">Control Ergonomics</th>
+                <th scope="col" style="width: 300px;">CSS Custom Property</th>
+                <th scope="col">Font Family Stack</th>
+                <th scope="col">Role & Context</th>
               </tr>
             </thead>
             <tbody>
-              {densityTokens.map((t) => (
+              {fontFamilies.map((f) => (
                 <tr>
-                  <td><code>{t.name}</code></td>
-                  <td><code>{t.value}</code></td>
-                  <td>{t.role}</td>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={f.name} title="Click to copy CSS variable">
+                      <code>{f.name}</code>
+                    </button>
+                  </td>
+                  <td><code style="font-size: 12px;">{f.stack}</code></td>
+                  <td style="font-size: 13px;">{f.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top: 32px; font-size: 16px;">Type Scale Hierarchy</h3>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 300px;">CSS Custom Property</th>
+                <th scope="col" style="width: 90px;">Pixels</th>
+                <th scope="col" style="width: 110px;">Rem</th>
+                <th scope="col">Target Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              {typeSizes.map((s) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={s.name} title="Click to copy CSS variable">
+                      <code>{s.name}</code>
+                    </button>
+                  </td>
+                  <td><code>{s.size}</code></td>
+                  <td><code>{s.rem}</code></td>
+                  <td style="font-size: 13px;">{s.role}</td>
                 </tr>
               ))}
             </tbody>
@@ -105,25 +425,156 @@ const radiusTokens = [
         </div>
       </section>
 
-      <!-- Corner Radius Tokens -->
+      <!-- 4. Spacing Scale -->
       <section class="doc-section">
-        <h2>Corner Radius Tokens</h2>
-        <p>Minimum corner radius is 4px. 2px radii are strictly prohibited.</p>
-        <div style="overflow-x: auto; margin-top: 16px;">
+        <h2>Spacing Scale (4px Base Unit)</h2>
+        <p>A rigorous 4px spacing scale provides rhythm and consistent layout banding across all components.</p>
+        <div style="overflow-x: auto;">
           <table class="as-table" style="width: 100%;">
             <thead>
               <tr>
-                <th scope="col">CSS Custom Property</th>
-                <th scope="col">Radius</th>
-                <th scope="col">Component Role</th>
+                <th scope="col" style="width: 220px;">CSS Custom Property</th>
+                <th scope="col" style="width: 80px;">Value</th>
+                <th scope="col" style="width: 160px;">Visual Scale</th>
+                <th scope="col">Recommended Usage</th>
               </tr>
             </thead>
             <tbody>
-              {radiusTokens.map((t) => (
+              {spaceTokens.map((sp) => (
                 <tr>
-                  <td><code>{t.name}</code></td>
-                  <td><code>{t.value}</code></td>
-                  <td>{t.role}</td>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={sp.name} title="Click to copy CSS variable">
+                      <code>{sp.name}</code>
+                    </button>
+                  </td>
+                  <td><code>{sp.value}</code></td>
+                  <td>
+                    <div style={`height: 8px; width: ${Math.max(sp.width, 2)}px; max-width: 120px; background: var(--as-semantic-color-interactive-primary); border-radius: 2px;`}></div>
+                  </td>
+                  <td style="font-size: 13px;">{sp.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. Corner Geometry & Radii -->
+      <section class="doc-section">
+        <h2>Corner Geometry & Radii</h2>
+        <p>Aster enforces a minimum component corner radius of <strong>4px</strong> and a default radius of <strong>8px</strong>. 2px radii are strictly prohibited.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 220px;">CSS Custom Property</th>
+                <th scope="col" style="width: 90px;">Radius</th>
+                <th scope="col" style="width: 120px;">Visual Preview</th>
+                <th scope="col">Component Implementation Policy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {radiusTokens.map((r) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={r.name} title="Click to copy CSS variable">
+                      <code>{r.name}</code>
+                    </button>
+                  </td>
+                  <td><code>{r.value}</code></td>
+                  <td>
+                    <div style={`width: 36px; height: 36px; border-radius: ${r.value}; background: var(--doc-sub); box-shadow: 0 0 1px 0px var(--doc-line-strong), inset 0 0 1px 0px var(--doc-line-strong);`}></div>
+                  </td>
+                  <td style="font-size: 13px;">{r.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6. Elevation & Motion -->
+      <section class="doc-section">
+        <h2>Elevation, Hairlines & Motion</h2>
+        <p>Signature Shade-DS double 1px glass glow boundaries and calibrated spring physics.</p>
+
+        <h3 style="margin-top: 24px; font-size: 16px;">Elevation & Shadows</h3>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 280px;">CSS Custom Property</th>
+                <th scope="col" style="width: 200px;">Value</th>
+                <th scope="col">Structural Elevation Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {elevationTokens.map((el) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={el.name} title="Click to copy CSS variable">
+                      <code>{el.name}</code>
+                    </button>
+                  </td>
+                  <td><code>{el.value}</code></td>
+                  <td style="font-size: 13px;">{el.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top: 32px; font-size: 16px;">Motion Timing & Physics Curves</h3>
+        <p style="font-size: 13px; color: var(--doc-muted); margin-bottom: 12px;">All motion collapses under <code>@media (prefers-reduced-motion: reduce)</code> for vestibular accessibility.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 280px;">CSS Custom Property</th>
+                <th scope="col" style="width: 260px;">Timing / Curve</th>
+                <th scope="col">Interaction Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              {motionTokens.map((m) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={m.name} title="Click to copy CSS variable">
+                      <code>{m.name}</code>
+                    </button>
+                  </td>
+                  <td><code style="font-size: 12px;">{m.value}</code></td>
+                  <td style="font-size: 13px;">{m.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 7. Density Metrics -->
+      <section class="doc-section">
+        <h2>Density Scale (Single Standard Scale)</h2>
+        <p>Aster adheres strictly to a single standard density scale. Standard control heights are 40px for buttons and 44px for inputs/selects to ensure touch ergonomics.</p>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 280px;">CSS Custom Property</th>
+                <th scope="col" style="width: 100px;">Value</th>
+                <th scope="col">Ergonomic Metric & Hit Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              {densityTokens.map((d) => (
+                <tr>
+                  <td>
+                    <button type="button" class="token-badge" data-copy-token={d.name} title="Click to copy CSS variable">
+                      <code>{d.name}</code>
+                    </button>
+                  </td>
+                  <td><code>{d.value}</code></td>
+                  <td style="font-size: 13px;">{d.role}</td>
                 </tr>
               ))}
             </tbody>

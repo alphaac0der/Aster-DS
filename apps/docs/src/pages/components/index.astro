@@ -51,9 +51,8 @@ const componentsList = [
               </div>
               <p style="margin: 0; font-size: 13px; line-height: 1.45; color: var(--doc-muted, #777777);">{c.desc}</p>
             </div>
-            <div class="home-comp-card__footer">
-              <a href={`/components/${c.slug}`} class="home-comp-card__name">Specs &rarr;</a>
-              <a href={`/components/${c.slug}`} class="home-comp-card__arrow-btn" aria-label={`Go to ${c.name} component documentation`}>
+            <div class="home-comp-card__footer" style="justify-content: flex-end; padding: 0 16px 16px 16px;">
+              <a href={`/components/${c.slug}`} class="home-comp-card__arrow-btn" aria-label={`View ${c.name} component specification and live preview`}>
                 <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
               </a>
             </div>

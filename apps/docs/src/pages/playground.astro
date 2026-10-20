@@ -92,7 +92,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               </div>
               <div class="code-editor-body">
                 <div class="code-gutter" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span></div>
-                <pre><code id="pg-live-code-el" data-highlighted="true"></code></pre>
+                <pre><code id="pg-live-code-el"></code></pre>
               </div>
             </div>
           </div>
@@ -259,7 +259,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         bpBox.innerHTML = recipe.blueprint.map(b => `<span class="anatomy-badge"><code>${b}</code></span>`).join('');
       }
 
-      codeEl.textContent = html;
+      codeEl.dataset.raw = html;
+      const highlightFn = (window as any).asterHighlightCode;
+      if (typeof highlightFn === 'function') {
+        codeEl.innerHTML = highlightFn(html);
+      } else {
+        codeEl.textContent = html;
+      }
+      const linesCount = html.split('\n').length;
+      const gutter = codeEl.closest('.code-block')?.querySelector('.code-gutter');
+      if (gutter) {
+        gutter.innerHTML = Array.from({ length: linesCount }, (_, i) => `<span>${i + 1}</span>`).join('');
+      }
     }
 
     function initPlayground() {

@@ -192,7 +192,7 @@ import Sidebar from '../components/Sidebar.astro';
       initAsterComponents(document);
 
       // 2. Deterministic Multi-Category Syntax Highlighter & Line Numbers
-      const MASTER_TOKEN_RE = /(&lt;!--[\s\S]*?--&gt;|\/\*[\s\S]*?\*\/|\/\/[^\n]*|^\s*#[^\n]*)|(&lt;\/?[a-zA-Z][\w:-]*|\/?&gt;)|(\b[a-zA-Z_:][\w:.-]*(?=\s*=))|("[^"]*"|'[^']*'|`[^`]*`)|(\b(?:import|from|export|const|let|var|function|return|async|await|if|else|new|true|false|null|undefined|document|window)\b)|(--as-[\w-]+|\b(?:initAsterComponents|setButtonLoading|setFieldValidation|validateInput|computeSelectionState|syncTableOverflow|showToast|addEventListener|getElementById|querySelector)\b)|(\b\d+(?:\.\d+)?(?:px|rem|ms|s|%)?\b)/gm;
+      const MASTER_TOKEN_RE = /(&lt;!--[\s\S]*?--&gt;|\/\*[\s\S]*?\*\/|\/\/[^\n]*|^\s*#[^\n]*)|(&lt;\/?[a-zA-Z][\w:-]*|\/?&gt;)|(\b[a-zA-Z_:][\w:.-]*(?=\s*=))|("[^"]*"|'[^']*'|`[^`]*`)|(\b(?:import|from|export|default|class|extends|const|let|var|function|return|async|await|if|else|switch|case|break|continue|try|catch|finally|throw|new|typeof|instanceof|true|false|null|undefined|npm|pnpm|yarn|bun|npx|install|add|run|build|test|init|exec)\b)|(--as-[\w-]+|\b(?:initAsterComponents|setButtonLoading|setFieldValidation|validateInput|computeSelectionState|syncTableOverflow|showToast|openDialog|closeDialog|openDrawer|closeDrawer|useEffect|useState|useMemo|useCallback|useRef|useContext|onMounted|onMount|ref|reactive|computed|addEventListener|removeEventListener|getElementById|querySelector|querySelectorAll|setAttribute|getAttribute|removeAttribute|classList|contains|add|remove|toggle|document|window)\b)|(\b\d+(?:\.\d+)?(?:px|rem|em|ms|s|%|vw|vh)?\b)/gm;
 
       const esc = (s: string) => String(s)
         .replace(/&/g, '&amp;')
@@ -238,6 +238,10 @@ import Sidebar from '../components/Sidebar.astro';
         });
       }
       enhanceCodeBlocks(document);
+
+      // Export globally for interactive pages like /playground
+      (window as any).asterHighlightCode = highlightCode;
+      (window as any).asterEnhanceCodeBlocks = enhanceCodeBlocks;
 
       // 3. Theme Toggle
       const themeBtn = document.getElementById('theme-toggle-btn');
@@ -464,6 +468,24 @@ import Sidebar from '../components/Sidebar.astro';
               const orig = copyPromptBtn.textContent;
               copyPromptBtn.textContent = 'Copied Prompt!';
               setTimeout(() => { copyPromptBtn.textContent = orig; }, 1600);
+            } catch (err) {}
+          }
+          return;
+        }
+
+        const copyTokenBtn = target?.closest('[data-copy-token]') as HTMLElement | null;
+        if (copyTokenBtn) {
+          const tokenName = copyTokenBtn.getAttribute('data-copy-token') || copyTokenBtn.textContent?.trim() || '';
+          if (tokenName) {
+            try {
+              await navigator.clipboard.writeText(tokenName);
+              copyTokenBtn.classList.add('is-copied');
+              const origTitle = copyTokenBtn.getAttribute('title') || '';
+              copyTokenBtn.setAttribute('title', 'Copied to clipboard!');
+              setTimeout(() => {
+                copyTokenBtn.classList.remove('is-copied');
+                if (origTitle) copyTokenBtn.setAttribute('title', origTitle);
+              }, 1500);
             } catch (err) {}
           }
         }

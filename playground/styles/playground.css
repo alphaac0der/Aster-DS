@@ -516,7 +516,10 @@ body[data-kind="playground"] .docs-main { padding: 24px 0 64px; }
   background-size: 16px 16px;
   pointer-events: none;
 }
-.preview-canvas > * { position: relative; z-index: 1; }
+.preview-canvas > * { position: relative; z-index: auto; }
+.preview-canvas > .as-drawer { position: fixed; z-index: 1100; }
+.preview-canvas > dialog.as-dialog { position: fixed; z-index: 1000; }
+.preview-canvas > .as-toast-container { position: fixed; z-index: 9999; }
 .preview-canvas[hidden],
 .preview-code[hidden],
 .preview-prompt[hidden],
