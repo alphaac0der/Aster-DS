@@ -1,0 +1,147 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { componentsData } from '../../data/components.js';
+
+export async function getStaticPaths() {
+  const slugs = Object.keys(componentsData);
+  return slugs.map((slug, index) => {
+    const prevSlug = index > 0 ? slugs[index - 1] : slugs[slugs.length - 1];
+    const nextSlug = index < slugs.length - 1 ? slugs[index + 1] : slugs[0];
+    return {
+      params: { slug },
+      props: { 
+        component: componentsData[slug],
+        prevComponent: componentsData[prevSlug],
+        nextComponent: componentsData[nextSlug]
+      }
+    };
+  });
+}
+
+const { slug } = Astro.params;
+const { component, prevComponent, nextComponent } = Astro.props;
+---
+
+<DocsLayout 
+  title={`${component.name} — Aster Design System`}
+  description={component.description}
+>
+  <div style="max-width: 920px;">
+    <!-- Component Header -->
+    <div style="margin-bottom: 28px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 20px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <span style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em;">
+          Component Contract
+        </span>
+        <span class="as-badge as-badge--neutral" style="font-size: 11px;">{component.status}</span>
+        <span class="as-badge as-badge--neutral" style="font-size: 11px;">W3C DTCG Tokens</span>
+      </div>
+
+      <h1 style="font-size: 38px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
+        {component.name}
+      </h1>
+
+      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
+        {component.description}
+      </p>
+    </div>
+
+    <!-- 4-Tab Component Showcase Card -->
+    <div class="component-showcase">
+      <!-- Live Interactive Stage -->
+      <div class="showcase-stage" set:html={component.previewHtml} />
+
+      <!-- Tabs Navigation -->
+      <div class="showcase-tabs-nav" role="tablist">
+        <button type="button" class="showcase-tab-btn" data-tab="preview" aria-selected="true" role="tab">
+          <i class="ph ph-eye"></i> Preview Notes
+        </button>
+        <button type="button" class="showcase-tab-btn" data-tab="code" aria-selected="false" role="tab">
+          <i class="ph ph-code"></i> HTML Code
+        </button>
+        <button type="button" class="showcase-tab-btn" data-tab="prompt" aria-selected="false" role="tab">
+          <i class="ph ph-robot"></i> Agent Prompt
+        </button>
+        <button type="button" class="showcase-tab-btn" data-tab="anatomy" aria-selected="false" role="tab">
+          <i class="ph ph-ruler"></i> Anatomy & Tokens
+        </button>
+      </div>
+
+      <!-- Tab Panes -->
+      <!-- 1. Preview Notes -->
+      <div class="showcase-tab-pane active" data-pane="preview">
+        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 8px;">Interactive Behavior</h3>
+        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.6; margin: 0 0 16px;">
+          This live preview uses Aster's native compiled CSS and JavaScript behavior (<code>dist/css/aster.css</code> and <code>dist/js/aster.js</code>). Hover, press, and navigate with the keyboard to verify kinetic states.
+        </p>
+        <div style="font-size: 13px; color: var(--as-semantic-color-text-subtle); display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+          <span>• Single Standard Density</span>
+          <span>• High Contrast WCAG AA</span>
+          <span>• Native Element: <code>{component.element}</code></span>
+        </div>
+      </div>
+
+      <!-- 2. Code Snippet -->
+      <div class="showcase-tab-pane" data-pane="code">
+        <div class="code-box">
+          <button class="copy-btn">Copy</button>
+          <pre><code>{component.codeSnippet}</code></pre>
+        </div>
+      </div>
+
+      <!-- 3. Agent Prompt -->
+      <div class="showcase-tab-pane" data-pane="prompt">
+        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); margin: 0 0 12px;">
+          Copy this structured rule block into prompts for LLM and coding agents (Claude, GPT, Gemini, Cursor) to enforce compliant output:
+        </p>
+        <div class="code-box">
+          <button class="copy-btn">Copy</button>
+          <pre><code>{component.promptSnippet}</code></pre>
+        </div>
+      </div>
+
+      <!-- 4. Anatomy & Tokens -->
+      <div class="showcase-tab-pane" data-pane="anatomy">
+        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 12px;">Token Bindings & Geometry</h3>
+        <div style="overflow-x: auto;">
+          <table class="as-table" style="width: 100%; font-size: 13.5px;">
+            <thead>
+              <tr>
+                <th style="text-align: left; padding: 10px 12px;">Property</th>
+                <th style="text-align: left; padding: 10px 12px;">Specification</th>
+                <th style="text-align: left; padding: 10px 12px;">Canonical Token Binding</th>
+                <th style="text-align: left; padding: 10px 12px;">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {component.anatomyRows.map((row) => (
+                <tr>
+                  <td style="padding: 10px 12px; font-weight: 500;">{row.property}</td>
+                  <td style="padding: 10px 12px; color: var(--as-semantic-color-text-muted);">{row.value}</td>
+                  <td style="padding: 10px 12px;">
+                    <code style="font-family: var(--as-typography-font-family-mono); font-size: 12px; background: var(--as-semantic-color-surface-subtle); padding: 2px 6px; border-radius: var(--as-radius-sm);">
+                      {row.token}
+                    </code>
+                  </td>
+                  <td style="padding: 10px 12px; color: var(--as-semantic-color-text-subtle);">{row.type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation footer -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
+      <a href={`/components/${prevComponent.slug}`} class="as-button as-button--ghost" style="text-decoration: none;">
+        <i class="ph ph-arrow-left"></i>
+        <span class="as-button__label">Previous: {prevComponent.name}</span>
+      </a>
+      <a href={`/components/${nextComponent.slug}`} class="as-button as-button--secondary" style="text-decoration: none;">
+        <span class="as-button__label">Next: {nextComponent.name}</span>
+        <i class="ph ph-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</DocsLayout>

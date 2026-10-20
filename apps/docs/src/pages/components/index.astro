@@ -1,0 +1,72 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const componentsList = [
+  { slug: 'button', name: 'Button', desc: 'Interactive tactile button with Shade-DS cursor-origin circular hover spotlight and loading states.' },
+  { slug: 'accordion', name: 'Accordion', desc: 'Vertically stacked expandable disclosure panels with keyboard navigation and smooth height expansion.' },
+  { slug: 'input', name: 'Input', desc: 'Accessible text field with Shade-DS 44px control height, clear action button, and double 1px glass glow.' },
+  { slug: 'table', name: 'Table', desc: 'Accessible data table with sticky headers, sortable columns, and multi-row selection.' },
+  { slug: 'dialog', name: 'Dialog', desc: 'Modal dialog overlay with backdrop blur, focus trap, Escape key handling, and macOS close dot.' },
+  { slug: 'drawer', name: 'Drawer', desc: 'Sliding sheet from screen edges with focus trap and swipe/keyboard dismiss.' },
+  { slug: 'tabs', name: 'Tabs', desc: 'Accessible tabbed navigation interface with roving tabindex and smooth indicator transitions.' },
+  { slug: 'alert', name: 'Alert', desc: 'Contextual notification banners with status semantic colors (info, success, warning, critical).' },
+  { slug: 'badge', name: 'Badge', desc: 'Compact status pill indicators with semantic color variants.' },
+  { slug: 'checkbox', name: 'Checkbox', desc: 'Accessible custom checkbox with indeterminate state and tactile focus ring.' },
+  { slug: 'radio', name: 'Radio', desc: 'Accessible radio button group with keyboard arrow navigation.' },
+  { slug: 'switch', name: 'Switch', desc: 'Toggle switch with smooth spring transition and accessible switch role.' },
+  { slug: 'slider', name: 'Slider', desc: 'Numeric range slider with custom styled track and thumb.' },
+  { slug: 'select', name: 'Select', desc: 'Custom dropdown select menu with keyboard search and accessible listbox semantics.' },
+  { slug: 'textarea', name: 'Textarea', desc: 'Multi-line text input with character counter and auto-expanding height.' },
+  { slug: 'tooltip', name: 'Tooltip', desc: 'Contextual micro-popover appearing on pointer hover or keyboard focus.' },
+  { slug: 'toast', name: 'Toast', desc: 'Ephemeral notification toasts with queue management and auto-dismiss.' },
+  { slug: 'popover', name: 'Popover', desc: 'Rich content popover positioned relative to anchor triggers.' },
+  { slug: 'dropdown', name: 'Dropdown', desc: 'Action menu with items, dividers, and keyboard navigation.' },
+  { slug: 'progress', name: 'Progress', desc: 'Determinate and indeterminate progress indicator bars.' },
+  { slug: 'skeleton', name: 'Skeleton', desc: 'Placeholder loading pulses for asynchronous content states.' }
+];
+---
+
+<DocsLayout 
+  title="Components — Aster Design System"
+  description="All 21 production components in the Aster Design System, built with zero dependencies and native CSS/JS."
+>
+  <div style="max-width: 980px;">
+    <!-- Title & Header -->
+    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
+      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
+        Component Library
+      </div>
+      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
+        Components
+      </h1>
+      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
+        Explore all 21 production components. Every component adheres to strict semantic token precedence, single standard density, and WCAG AA contrast.
+      </p>
+    </div>
+
+    <!-- Component Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+      {componentsList.map((c) => (
+        <a 
+          href={`/components/${c.slug}`}
+          style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; padding: 22px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card); transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;"
+          class="component-card-link"
+        >
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+              <h2 style="font-size: 17px; font-weight: 600; margin: 0;">{c.name}</h2>
+              <span class="as-badge as-badge--neutral" style="font-size: 11px;">Production</span>
+            </div>
+            <p style="font-size: 13.5px; line-height: 1.5; color: var(--as-semantic-color-text-muted); margin: 0;">
+              {c.desc}
+            </p>
+          </div>
+          <div style="margin-top: 20px; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--as-semantic-color-interactive-primary);">
+            <span>View Component</span>
+            <i class="ph ph-arrow-right"></i>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</DocsLayout>

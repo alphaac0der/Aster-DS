@@ -1,0 +1,158 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "Aster Design System — One source of truth for humans and AI agents",
+  description = "A token-first, zero-dependency design system designed to provide one authoritative source of truth with dual human and agent interfaces.",
+  image = "/assets/brand/og-image.png"
+} = Astro.props;
+
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/asterds-logo-white.svg" />
+
+  <!-- Google Fonts: Bebas Neue, Manrope, Space Mono, Merriweather -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+
+  <!-- Prevent Theme Flash -->
+  <script is:inline>
+    (function() {
+      try {
+        const stored = localStorage.getItem('aster-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Legacy Hash Route Redirect -->
+  <script is:inline>
+    (function() {
+      try {
+        if (window.location.hash && window.location.hash.startsWith('#/')) {
+          var target = window.location.hash.substring(2).split('?')[0].trim().toLowerCase();
+          var guideRoutes = ['tokens', 'principles', 'installation', 'frameworks', 'introduction', 'designers', 'developers', 'agents'];
+          var componentRoutes = [
+            'button', 'input', 'textarea', 'select', 'checkbox', 'radio', 'switch', 'slider',
+            'table', 'badge', 'progress', 'skeleton', 'alert', 'tooltip', 'toast', 'dialog',
+            'drawer', 'popover', 'dropdown', 'tabs', 'accordion'
+          ];
+          
+          if (target === 'overview' || target === '' || target === 'home') {
+            window.location.replace('/');
+          } else if (target === 'playground') {
+            window.location.replace('/playground');
+          } else if (target === 'components') {
+            window.location.replace('/components');
+          } else if (guideRoutes.indexOf(target) !== -1) {
+            window.location.replace('/docs/' + (target === 'introduction' ? '' : target));
+          } else if (componentRoutes.indexOf(target) !== -1) {
+            window.location.replace('/components/' + target);
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="site-shell">
+    <slot />
+  </div>
+
+  <!-- Aster Components Client Runtime Behavior -->
+  <script>
+    import { initAsterComponents } from '../../../../dist/js/aster.js';
+    
+    function setup() {
+      initAsterComponents(document);
+
+      // Theme toggle buttons
+      document.querySelectorAll('[data-action="toggle-theme"]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('aster-theme', next);
+          } catch (e) {}
+        });
+      });
+
+      // Showcase tab switching
+      document.querySelectorAll('.component-showcase').forEach((sc) => {
+        const tabs = sc.querySelectorAll('.showcase-tab-btn');
+        const panes = sc.querySelectorAll('.showcase-tab-pane');
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+            tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+            panes.forEach((p) => {
+              if (p.getAttribute('data-pane') === target) {
+                p.classList.add('active');
+              } else {
+                p.classList.remove('active');
+              }
+            });
+          });
+        });
+      });
+
+      // Code copy button
+      document.querySelectorAll('.copy-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const codeEl = btn.closest('.code-box')?.querySelector('pre code') || btn.closest('.code-box')?.querySelector('pre');
+          if (codeEl) {
+            try {
+              await navigator.clipboard.writeText(codeEl.textContent || '');
+              const orig = btn.textContent;
+              btn.textContent = 'Copied!';
+              setTimeout(() => { btn.textContent = orig; }, 1600);
+            } catch (err) {
+              console.error('Clipboard copy failed', err);
+            }
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setup);
+    } else {
+      setup();
+    }
+  </script>
+</body>
+</html>

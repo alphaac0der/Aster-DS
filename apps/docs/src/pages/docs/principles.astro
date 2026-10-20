@@ -1,0 +1,65 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const principles = [
+  { num: '1', title: 'Understand Before Solving', desc: 'Identify the user need, context, constraints, and success criteria before writing code or assembling components. Do not jump to implementation without understanding interaction requirements.' },
+  { num: '2', title: 'Purpose Before Appearance', desc: 'Visual and interaction design must serve function, convey hierarchy, and communicate state. Visual polish is not a substitute for clarity, usability, or accessibility.' },
+  { num: '3', title: 'Evidence Before Certainty', desc: 'Distinguish verified facts from hypotheses. Never claim an accessibility standard is met or that a test passed without running the verification tools and observing the result.' },
+  { num: '4', title: 'Accessibility is Foundational', desc: 'Accessibility is not a post-launch audit; it is a core constraint. Token pairings achieve WCAG 2.2 AA contrast ratios, controls provide minimum 40px/44px touch targets, and all motion respects prefers-reduced-motion.' },
+  { num: '5', title: 'Consistency Enables Confidence', desc: 'Reuse established design tokens and canonical components. Introduce new tokens or style overrides only when a clear, documented requirement justifies an exception.' },
+  { num: '6', title: 'Simplicity is Earned', desc: 'Prefer the simplest solution that meets all requirements. Avoid unnecessary dependencies, wrappers, or runtime abstractions.' },
+  { num: '7', title: 'Explicit Decision Records', desc: 'Document consequential architectural and design decisions. Maintain clear decision records that explain what was chosen, why, and what trade-offs were made.' },
+  { num: '8', title: 'Respectful Synthesis & Clear Attribution', desc: 'Learn from industry-leading design systems without copying their identity wholesale. When adopting external patterns (such as Shade-DS interaction kinetics or Phosphor icons), obtain explicit permission and clearly document third-party attribution.' },
+  { num: '9', title: 'Continuous Quality Verification', desc: 'A design system is only as good as its contracts. Continually validate design token outputs, component CSS/JS compilation, Figma variable schemas, and real-browser interactions.' },
+  { num: '10', title: 'Truthful Documentation', desc: 'Never present an assumption as a verified fact. Disclose what has been tested and what requires contextual evaluation in consumer applications.' }
+];
+---
+
+<DocsLayout 
+  title="Core Principles — Aster Design System"
+  description="The foundational design and engineering principles of the Aster Design System."
+>
+  <div style="max-width: 860px;">
+    <!-- Title & Header -->
+    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
+      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
+        Philosophy & Ethics
+      </div>
+      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
+        Core Principles
+      </h1>
+      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
+        Aster exists to make digital interface design and implementation coherent, accessible, understandable, and maintainable for both human teams and AI coding agents.
+      </p>
+    </div>
+
+    <!-- Principles Grid -->
+    <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 48px;">
+      {principles.map((p) => (
+        <div style="border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card); padding: 24px;">
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;">
+            <span style="font-family: var(--as-typography-font-family-mono); font-size: 14px; font-weight: 700; color: var(--as-semantic-color-interactive-primary); background: var(--as-semantic-color-surface-subtle); width: 28px; height: 28px; border-radius: var(--as-radius-sm); display: inline-flex; align-items: center; justify-content: center;">
+              {p.num}
+            </span>
+            <h2 style="font-size: 18px; font-weight: 600; margin: 0;">{p.title}</h2>
+          </div>
+          <p style="font-size: 14.5px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0; padding-left: 40px;">
+            {p.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Navigation footer -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
+      <a href="/docs/tokens" class="as-button as-button--ghost" style="text-decoration: none;">
+        <i class="ph ph-arrow-left"></i>
+        <span class="as-button__label">Design Tokens</span>
+      </a>
+      <a href="/docs/installation" class="as-button as-button--secondary" style="text-decoration: none;">
+        <span class="as-button__label">Next: Installation</span>
+        <i class="ph ph-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</DocsLayout>

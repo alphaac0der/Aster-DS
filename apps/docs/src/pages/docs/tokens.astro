@@ -1,0 +1,129 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout 
+  title="Design Tokens — Aster Design System"
+  description="W3C DTCG-compliant design token architecture across primitive, semantic, and density tiers."
+>
+  <div style="max-width: 860px;">
+    <!-- Title & Header -->
+    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
+      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
+        Design Foundations
+      </div>
+      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
+        Design Tokens
+      </h1>
+      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
+        Aster treats design tokens as version-controlled code, establishing a single authoritative source of truth in Git (<code>tokens/</code>) compiled into CSS custom properties via Style Dictionary.
+      </p>
+    </div>
+
+    <!-- 1. Token Architecture -->
+    <section style="margin-bottom: 40px;">
+      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">1. Token Architecture</h2>
+      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
+        Aster organizes design tokens into a disciplined <strong>3-tier hierarchy</strong>:
+      </p>
+      
+      <div class="code-box" style="margin-bottom: 20px;">
+        <pre><code>tokens/
+├── primitive/     # Raw design values (colors, dimensions, font families, curves)
+├── semantic/      # Purpose-driven, context-agnostic roles (light & dark parity)
+└── density/       # Standard sizing and spacing metrics (comfortable.json)</code></pre>
+      </div>
+
+      <ul style="padding-left: 20px; line-height: 1.8; color: var(--as-semantic-color-text-muted); font-size: 14.5px;">
+        <li><strong style="color: var(--as-semantic-color-text-default);">Primitive Tokens (<code>tokens/primitive/</code>):</strong> Atomic palette, typography scale, spacing steps, and radii. Primitives define the foundation but should <em>never</em> be referenced directly in component markup.</li>
+        <li><strong style="color: var(--as-semantic-color-text-default);">Semantic Tokens (<code>tokens/semantic/</code>):</strong> Intent-based roles (<code>surface</code>, <code>text</code>, <code>border</code>, <code>interactive</code>, <code>status</code>). Semantic tokens maintain <strong>identical variable names</strong> across light and dark modes.</li>
+        <li><strong style="color: var(--as-semantic-color-text-default);">Density Tokens (<code>tokens/density/</code>):</strong> Unified standard control dimensions (<code>40px</code> control height, <code>44px</code> input height).</li>
+      </ul>
+    </section>
+
+    <!-- 2. Naming Grammar -->
+    <section style="margin-bottom: 40px;">
+      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">2. Ergonomic Naming Grammar</h2>
+      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
+        Aster tokens follow a strict, predictable naming grammar:
+      </p>
+      <div class="code-box" style="margin-bottom: 20px;">
+        <pre><code>--as-[category]-[context]-[role]-[variant]</code></pre>
+      </div>
+      <div style="background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-md); padding: 18px; font-size: 14px; line-height: 1.7;">
+        <div>• <strong>Primitives:</strong> <code>--as-color-primitive-*</code>, <code>--as-space-*</code>, <code>--as-radius-*</code>, <code>--as-typography-*</code></div>
+        <div>• <strong>Semantic Colors:</strong> <code>--as-semantic-color-surface-*</code>, <code>--as-semantic-color-text-*</code>, <code>--as-semantic-color-border-*</code></div>
+        <div>• <strong>Density Metrics:</strong> <code>--as-density-control-height</code>, <code>--as-density-control-padding-y</code></div>
+      </div>
+    </section>
+
+    <!-- 3. Neutral Foundation -->
+    <section style="margin-bottom: 40px;">
+      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">3. Neutral Palette & Surface Hierarchy</h2>
+      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
+        High-contrast neutral surface pairings providing mathematically validated WCAG AA/AAA contrast:
+      </p>
+
+      <div style="overflow-x: auto;">
+        <table class="as-table" style="width: 100%; font-size: 13.5px;">
+          <thead>
+            <tr>
+              <th style="text-align: left; padding: 10px 12px;">Token Variable</th>
+              <th style="text-align: left; padding: 10px 12px;">Hex Value</th>
+              <th style="text-align: left; padding: 10px 12px;">Role & Intended Surface</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-surface-canvas</code></td>
+              <td style="padding: 10px 12px;"><code>#ffffff</code> / <code>#121212</code></td>
+              <td style="padding: 10px 12px;">Base screen canvas surface</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-surface-card</code></td>
+              <td style="padding: 10px 12px;"><code>#f5f5f5</code> / <code>#1e1e1e</code></td>
+              <td style="padding: 10px 12px;">Elevated container, dialog, and card surface</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-surface-subtle</code></td>
+              <td style="padding: 10px 12px;"><code>#eeeeee</code> / <code>#333333</code></td>
+              <td style="padding: 10px 12px;">Muted background fills, pill tags, and table striping</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-text-default</code></td>
+              <td style="padding: 10px 12px;"><code>#121212</code> / <code>#e0e0e0</code></td>
+              <td style="padding: 10px 12px;">Primary high-contrast reading text (&gt;14:1 AAA)</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-text-muted</code></td>
+              <td style="padding: 10px 12px;"><code>#555555</code> / <code>#aaaaaa</code></td>
+              <td style="padding: 10px 12px;">Secondary explanatory text (&gt;6.8:1 AA)</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-border-subtle</code></td>
+              <td style="padding: 10px 12px;"><code>#eeeeee</code> / <code>#333333</code></td>
+              <td style="padding: 10px 12px;">Hairline container borders and dividers</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px;"><code>--as-semantic-color-border-focus</code></td>
+              <td style="padding: 10px 12px;"><code>#1565c0</code> / <code>#64b5f6</code></td>
+              <td style="padding: 10px 12px;">Accessible keyboard focus indicator ring</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Navigation footer -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
+      <a href="/docs" class="as-button as-button--ghost" style="text-decoration: none;">
+        <i class="ph ph-arrow-left"></i>
+        <span class="as-button__label">Introduction</span>
+      </a>
+      <a href="/docs/principles" class="as-button as-button--secondary" style="text-decoration: none;">
+        <span class="as-button__label">Next: Core Principles</span>
+        <i class="ph ph-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</DocsLayout>

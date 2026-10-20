@@ -1,0 +1,138 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const {
+  title,
+  description,
+  currentPath = Astro.url.pathname
+} = Astro.props;
+
+import BaseLayout from './BaseLayout.astro';
+
+const guides = [
+  { name: 'Introduction', path: '/docs' },
+  { name: 'Design Tokens', path: '/docs/tokens' },
+  { name: 'Core Principles', path: '/docs/principles' },
+  { name: 'Installation', path: '/docs/installation' },
+  { name: 'Framework Integration', path: '/docs/frameworks' }
+];
+
+const components = [
+  { name: 'Accordion', path: '/components/accordion' },
+  { name: 'Alert', path: '/components/alert' },
+  { name: 'Badge', path: '/components/badge' },
+  { name: 'Button', path: '/components/button' },
+  { name: 'Checkbox', path: '/components/checkbox' },
+  { name: 'Dialog', path: '/components/dialog' },
+  { name: 'Drawer', path: '/components/drawer' },
+  { name: 'Dropdown', path: '/components/dropdown' },
+  { name: 'Input', path: '/components/input' },
+  { name: 'Popover', path: '/components/popover' },
+  { name: 'Progress', path: '/components/progress' },
+  { name: 'Radio', path: '/components/radio' },
+  { name: 'Select', path: '/components/select' },
+  { name: 'Skeleton', path: '/components/skeleton' },
+  { name: 'Slider', path: '/components/slider' },
+  { name: 'Switch', path: '/components/switch' },
+  { name: 'Table', path: '/components/table' },
+  { name: 'Tabs', path: '/components/tabs' },
+  { name: 'Textarea', path: '/components/textarea' },
+  { name: 'Toast', path: '/components/toast' },
+  { name: 'Tooltip', path: '/components/tooltip' }
+];
+
+function isActive(path: string) {
+  if (path === '/docs') {
+    return currentPath === '/docs' || currentPath === '/docs/';
+  }
+  return currentPath.startsWith(path);
+}
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- Header -->
+  <header class="site-header">
+    <div style="display: flex; align-items: center; gap: 32px;">
+      <a href="/" class="header-brand">
+        <svg width="24" height="24" viewBox="0 0 376 382" fill="currentColor">
+          <path d="M210.5 239C210.517 241.153 209.862 243.258 208.627 245.023C207.392 246.787 205.638 248.122 203.609 248.844L161.977 263.983L146.844 305.609C146.098 307.619 144.755 309.352 142.995 310.576C141.235 311.8 139.143 312.455 137 312.455C134.857 312.455 132.764 311.8 131.005 310.576C129.245 309.352 127.902 307.619 127.156 305.609L112.023 263.977L70.3906 248.844C68.3811 248.098 66.6481 246.755 65.4242 244.995C64.2004 243.235 63.5444 241.143 63.5444 239C63.5444 236.857 64.2004 234.764 65.4242 233.005C66.6481 231.245 68.3811 229.902 70.3906 229.156L112.023 214.023L127.156 172.391C127.902 170.381 129.245 168.648 131.005 167.424C132.764 166.2 134.857 165.544 137 165.544C139.143 165.544 141.235 166.2 142.995 167.424C144.755 168.648 146.098 170.381 146.844 172.391L161.983 214.023L203.609 229.156C205.638 229.878 207.392 231.213 208.627 232.977C209.862 234.742 210.517 236.847 210.5 239Z" />
+          <path d="M21 20H142C198 20.1667 354.5 53 354.5 198V361.5" stroke="currentColor" stroke-width="40" stroke-linecap="round" fill="none" />
+          <path d="M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315" stroke="currentColor" stroke-width="40" stroke-linecap="round" fill="none" />
+        </svg>
+        <span class="header-brand-title">ASTER DS</span>
+      </a>
+
+      <nav class="header-nav">
+        <a href="/docs" class={currentPath.startsWith('/docs') ? 'active' : ''}>Docs</a>
+        <a href="/components" class={currentPath.startsWith('/components') ? 'active' : ''}>Components</a>
+        <a href="/playground" class={currentPath.startsWith('/playground') ? 'active' : ''}>Playground</a>
+      </nav>
+    </div>
+
+    <div class="header-actions">
+      <!-- Theme Toggle -->
+      <button 
+        type="button" 
+        data-action="toggle-theme" 
+        class="as-button as-button--ghost" 
+        style="width: 36px; height: 36px; padding: 0; min-width: 36px; justify-content: center;"
+        aria-label="Toggle light/dark theme"
+      >
+        <i class="ph ph-sun" style="font-size: 18px;"></i>
+      </button>
+
+      <!-- GitHub Link -->
+      <a 
+        href="https://github.com/alphaac0der/Aster-DS" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="as-button as-button--ghost"
+        style="width: 36px; height: 36px; padding: 0; min-width: 36px; justify-content: center; text-decoration: none;"
+        aria-label="GitHub Repository"
+      >
+        <i class="ph ph-github-logo" style="font-size: 18px;"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Site Body -->
+  <div class="site-body">
+    <!-- Left Navigation Sidebar -->
+    <aside class="site-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-heading">Getting Started</div>
+        <ul class="sidebar-list">
+          {guides.map((item) => (
+            <li class="sidebar-item">
+              <a href={item.path} class={isActive(item.path) ? 'active' : ''}>
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-heading">Components</div>
+        <ul class="sidebar-list">
+          {components.map((item) => (
+            <li class="sidebar-item">
+              <a href={item.path} class={isActive(item.path) ? 'active' : ''}>
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="site-content">
+      <slot />
+    </main>
+  </div>
+</BaseLayout>

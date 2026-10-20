@@ -1,0 +1,70 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout 
+  title="Aster Design System — One source of truth for humans and AI agents" 
+  description="Aster Design System is a token-first, zero-dependency design system designed to provide one authoritative source of truth with dual human and agent interfaces."
+>
+  <div style="max-width: 860px; margin: 0 auto; padding-top: 24px;">
+    <!-- Hero Section -->
+    <div style="margin-bottom: 48px;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: var(--as-radius-full); background-color: var(--as-semantic-color-surface-subtle); border: 1px solid var(--as-semantic-color-border-subtle); margin-bottom: 20px;">
+        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: var(--as-semantic-color-status-success);"></span>
+        <span style="font-family: var(--as-typography-font-family-mono); font-size: 12px; font-weight: 500; color: var(--as-semantic-color-text-muted);">v0.0.1 Public Release</span>
+      </div>
+
+      <h1 style="font-family: var(--as-typography-font-family-display); font-size: clamp(48px, 8vw, 76px); line-height: 0.95; letter-spacing: 0.02em; margin: 0 0 20px; font-weight: 700;">
+        DESIGN SYSTEM FOR HUMANS & AI AGENTS
+      </h1>
+
+      <p style="font-size: 18px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 32px; max-width: 680px;">
+        Aster is a token-first, zero-dependency design system delivering native web components, mathematical WCAG 2.2 AA contrast, and dual human-and-agent interfaces.
+      </p>
+
+      <!-- CTA Row -->
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+        <a href="/components/button" class="as-button as-button--primary" style="text-decoration: none;">
+          <span class="as-button__label">Explore Components</span>
+          <i class="ph ph-arrow-right"></i>
+        </a>
+        <a href="/docs" class="as-button as-button--secondary" style="text-decoration: none;">
+          <span class="as-button__label">Read Documentation</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Install Snippet -->
+    <div class="code-box" style="margin-bottom: 56px;">
+      <button class="copy-btn" aria-label="Copy install command">Copy</button>
+      <pre><code>npm install aster-ds</code></pre>
+    </div>
+
+    <!-- Feature Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 64px;">
+      <div style="padding: 24px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card);">
+        <i class="ph ph-lightning" style="font-size: 28px; margin-bottom: 12px; display: inline-block;"></i>
+        <h3 style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Zero Runtime Dependencies</h3>
+        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.5; margin: 0;">
+          Pure native HTML5 elements, CSS Custom Properties, and browser ES modules. Framework consumers integrate Aster using standard HTML classes.
+        </p>
+      </div>
+
+      <div style="padding: 24px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card);">
+        <i class="ph ph-palette" style="font-size: 28px; margin-bottom: 12px; display: inline-block;"></i>
+        <h3 style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">W3C DTCG Design Tokens</h3>
+        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.5; margin: 0;">
+          Strict semantic token precedence, single standard density, and automated Figma variable sync for seamless design-to-code parity.
+        </p>
+      </div>
+
+      <div style="padding: 24px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card);">
+        <i class="ph ph-robot" style="font-size: 28px; margin-bottom: 12px; display: inline-block;"></i>
+        <h3 style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Agent-Native Contracts</h3>
+        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.5; margin: 0;">
+          Tailored machine-readable coding skills and component specs ensure AI coding agents compose reliable, accessible, and compliant UI.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocsLayout>
