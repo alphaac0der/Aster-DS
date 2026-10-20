@@ -37,6 +37,7 @@ Aster DS includes a dedicated local setup plugin located in [`tools/figma-plugin
      ```
      tools/figma-plugin/manifest.json
      ```
+     *(Located inside your cloned Aster DS repository folder)*
    - Figma will register `Aster DS Library Setup` under your Development plugins.
 
 3. **Run the Setup:**

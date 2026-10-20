@@ -19,14 +19,14 @@ This document contains licensing notices and attribution for third-party softwar
 - **Project:** [Shade-DS](https://github.com/shifatmasud/Shade-DS)
 - **Author:** Shifat Masud ([@shifatmasud](https://github.com/shifatmasud))
 - **Status in Aster DS:** Foundational visual grammar and component reference.
-- **Permission Record:** Explicit personal permission was granted by Shifat Masud to use, adapt, and build upon Shade-DS components directly in Aster DS (formally recorded in `records/DECISION-LOG.md`, DEC-023).
+- **Permission Record:** Explicit personal permission was granted by Shifat Masud to use, adapt, and build upon Shade-DS components directly in Aster DS (author authorization confirmed on 2026-10-18; formal public redistribution permission under MIT marked UNRESOLVED pending written confirmation).
 - **Scope of Derivation:**
   - **10 Direct Component Reproductions:** Button (`button.js`, `button.css`), Input (`input.js`, `input.css`), Textarea (`textarea.js`, `textarea.css`), Select (`select.js`, `select.css`), Switch (`switch.js`, `switch.css`), Slider (`slider.js`, `slider.css`), Accordion (`accordion.js`, `accordion.css`), Tabs (`tabs.js`, `tabs.css`), Dialog (`dialog.js`, `dialog.css`), Badge (`badge.js`, `badge.css`).
   - **11 Consistent Component Extensions:** Checkbox, Radio Group, Alert, Drawer, Popover, Dropdown Menu, Tooltip, Toast, Progress, Skeleton, Data Table.
   - **Design Tokens:** Neutral color surfaces (`#121212`, `#1E1E1E`, `#F5F5F5`, `#FFFFFF`), corner radius scale (`4px`, `8px`, `12px`, `9999px`), double 1px glass glow border box-shadows, and spring physics.
 - **Upstream Relationship & Permission Context:**
-  - Author Shifat Masud personally granted direct permission to the Aster DS project owner to utilize, adapt, and build upon Shade-DS components, geometry, states, and design tokens for Aster DS (formally recorded in `records/DECISION-LOG.md`, DEC-023).
-  - The project owner has confirmed this direct personal authorization. While the upstream GitHub repository (`shifatmasud/Shade-DS`) does not currently include an independent open-source license file, Aster DS incorporates and extends these components under this direct authorization from the author, with full, prominent, and respectful attribution maintained across all project documentation.
+  - Author Shifat Masud personally granted direct permission to the Aster DS project owner to utilize, adapt, and build upon Shade-DS components, geometry, states, and design tokens for Aster DS (confirmed on 2026-10-18).
+  - The project owner has confirmed this direct personal authorization. While the upstream GitHub repository (`shifatmasud/Shade-DS`) does not currently include an independent open-source license file, Aster DS incorporates and extends these components under this direct authorization from the author, with full, prominent, and respectful attribution maintained across all project documentation. Sublicensing and public redistribution terms under MIT are currently marked UNRESOLVED pending formal clarification from the author.
 
 ---
 

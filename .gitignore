@@ -47,4 +47,5 @@ coverage/
 scratch/
 .artifacts/
 governance/
+records/
 *.zip

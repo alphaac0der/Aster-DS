@@ -1544,16 +1544,34 @@ async function runBrowserAudit() {
     // 1. Home Landing Page at Root '/' (Light & Dark)
     await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/' });
     await wait(600);
-    await cdp.eval(`document.getElementById('btn-theme-light').click()`);
+    await cdp.eval(`(() => {
+      const toggle = document.getElementById('theme-toggle-btn');
+      const lightBtn = document.getElementById('btn-theme-light');
+      if (lightBtn) lightBtn.click();
+      else if (toggle && document.documentElement.getAttribute('data-theme') === 'dark') toggle.click();
+      else document.documentElement.setAttribute('data-theme', 'light');
+    })()`);
     await wait(250);
     await saveScreenshot('phase15-home-light.png');
 
-    await cdp.eval(`document.getElementById('btn-theme-dark').click()`);
+    await cdp.eval(`(() => {
+      const toggle = document.getElementById('theme-toggle-btn');
+      const darkBtn = document.getElementById('btn-theme-dark');
+      if (darkBtn) darkBtn.click();
+      else if (toggle && document.documentElement.getAttribute('data-theme') !== 'dark') toggle.click();
+      else document.documentElement.setAttribute('data-theme', 'dark');
+    })()`);
     await wait(300);
     await saveScreenshot('phase15-home-dark.png');
 
     // Switch back to Light Mode
-    await cdp.eval(`document.getElementById('btn-theme-light').click()`);
+    await cdp.eval(`(() => {
+      const toggle = document.getElementById('theme-toggle-btn');
+      const lightBtn = document.getElementById('btn-theme-light');
+      if (lightBtn) lightBtn.click();
+      else if (toggle && document.documentElement.getAttribute('data-theme') === 'dark') toggle.click();
+      else document.documentElement.setAttribute('data-theme', 'light');
+    })()`);
     await wait(200);
 
     // 2. Separate Interactive Playground Page (#/playground)
@@ -1566,10 +1584,22 @@ async function runBrowserAudit() {
     await wait(600);
     await saveScreenshot('phase15-button-preview.png');
 
-    await cdp.eval(`document.getElementById('btn-theme-dark')?.click()`);
+    await cdp.eval(`(() => {
+      const toggle = document.getElementById('theme-toggle-btn');
+      const darkBtn = document.getElementById('btn-theme-dark');
+      if (darkBtn) darkBtn.click();
+      else if (toggle && document.documentElement.getAttribute('data-theme') !== 'dark') toggle.click();
+      else document.documentElement.setAttribute('data-theme', 'dark');
+    })()`);
     await wait(250);
     await saveScreenshot('phase15-button-dark.png');
-    await cdp.eval(`document.getElementById('btn-theme-light')?.click()`);
+    await cdp.eval(`(() => {
+      const toggle = document.getElementById('theme-toggle-btn');
+      const lightBtn = document.getElementById('btn-theme-light');
+      if (lightBtn) lightBtn.click();
+      else if (toggle && document.documentElement.getAttribute('data-theme') === 'dark') toggle.click();
+      else document.documentElement.setAttribute('data-theme', 'light');
+    })()`);
     await wait(250);
 
     await cdp.eval(`document.querySelector('#view-button .preview-card .preview-tab[data-tab="code"]').click()`);

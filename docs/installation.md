@@ -54,7 +54,7 @@ Aster distinguishes between **source-tree paths** (for contributors working on A
 | `components/` | Source-Tree Only | Authoritative modular component sources (compiled to `dist/`). |
 | `build-tools/` | Source-Tree Only | Verification suites, Figma exporter, and compiler utilities. |
 | `playground/` | Source-Tree Only | Interactive documentation portal site source. |
-| `records/` | Source-Tree Only | Architectural decision records (`records/DECISION-LOG.md`) and roadmap status. |
+| `tools/` | Source-Tree Only | Local Figma library setup plugin (`tools/figma-plugin/`). |
 
 ---
 

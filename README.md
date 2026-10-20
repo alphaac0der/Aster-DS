@@ -141,7 +141,7 @@ Aster-DS/
 ├── playground/          # Production documentation portal and component showcase
 ├── examples/            # Minimal consumer integration examples
 ├── build-tools/         # Compilers, validators, and browser CDP audit tools
-└── records/             # Architectural decision log (DECISION-LOG.md) and status (STATUS.md)
+└── tools/               # Local Figma library setup plugin (code.js, manifest.json)
 ```
 
 ---

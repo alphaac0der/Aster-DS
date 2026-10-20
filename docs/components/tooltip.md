@@ -1,7 +1,6 @@
 # Aster Tooltip Component Contract
 
-**Status:** APPROVED PROPOSAL (Phase 10 — Batch B)  
-**Design System Alignment:** Aligns with [Design Principles](../principles.md) and [DEC-013](../../records/DECISION-LOG.md).
+**Design System Alignment:** Aligns with [Design Principles](../principles.md) and [Token Architecture](../tokens.md).
 
 ---
 

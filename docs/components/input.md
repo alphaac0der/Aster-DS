@@ -1,7 +1,6 @@
 # Aster Input / Form Field Component Contract
 
-**Status:** APPROVED PROPOSAL (Phase 7B)  
-**Design System Alignment:** Aligns with [Design Principles](../principles.md) and [DEC-007 / DEC-010](../../records/DECISION-LOG.md).
+**Design System Alignment:** Aligns with [Design Principles](../principles.md) and [Token Architecture](../tokens.md).
 
 ---
 
