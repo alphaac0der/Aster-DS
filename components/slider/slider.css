@@ -116,6 +116,19 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
 }
 
+/* Mozilla Track & Progress Styling */
+.as-slider::-moz-range-track {
+  background-color: color-mix(in srgb, var(--as-semantic-color-text-default) 14%, transparent);
+  border-radius: var(--as-radius-full);
+  height: 6px;
+}
+
+.as-slider::-moz-range-progress {
+  background-color: var(--as-semantic-color-interactive-primary);
+  border-radius: var(--as-radius-full);
+  height: 6px;
+}
+
 /* Focus Visible */
 .as-slider:focus-visible {
   outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus);

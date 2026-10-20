@@ -45,6 +45,21 @@
   cursor: pointer;
 }
 
+/* Accessible options styling across OS and browser popup renderers */
+.as-select option {
+  background-color: var(--as-semantic-color-surface-card);
+  color: var(--as-semantic-color-text-default);
+  padding: 8px 12px;
+  font-family: var(--as-typography-font-family-sans);
+  font-size: 14px;
+}
+
+.as-select option:checked {
+  background-color: var(--as-semantic-color-surface-subtle);
+  color: var(--as-semantic-color-interactive-primary);
+  font-weight: var(--as-typography-font-weight-semibold);
+}
+
 /* Chevron icon placed at right — Shade-DS spring rotation */
 .as-select-chevron {
   position: absolute;
@@ -77,6 +92,11 @@
   border: none;
   outline: none;
   box-shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default);
+}
+
+.as-select-box:has(.as-select:focus-visible) {
+  outline: var(--as-elevation-border-focus, 2px) solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
 }
 
 .as-select-box.is-open .as-select-chevron {

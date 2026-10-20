@@ -16,9 +16,22 @@ export function syncSliderProgress(slider, valueDisplay = null) {
 
   slider.style.setProperty('--_progress', `${percent}%`);
 
-  if (valueDisplay) {
-    valueDisplay.textContent = slider.value;
+  const display = valueDisplay || 
+    slider.closest('.as-slider-field')?.querySelector('.as-slider-field__value') ||
+    (slider.id ? (document.querySelector(`[data-slider-value="${slider.id}"]`) || document.getElementById(`${slider.id}-val`)) : null);
+
+  if (display) {
+    if (!display.dataset.unit) {
+      if (display.textContent.includes('%')) display.dataset.unit = '%';
+      else if (display.textContent.includes('px')) display.dataset.unit = 'px';
+      else if (display.textContent.includes('ms')) display.dataset.unit = 'ms';
+      else display.dataset.unit = '';
+    }
+    const unit = display.dataset.unit || '';
+    display.textContent = `${slider.value}${unit}`;
   }
+
+  slider.setAttribute('aria-valuenow', String(val));
 }
 
 export function initSlider(root = typeof document !== 'undefined' ? document : null) {
@@ -28,18 +41,21 @@ export function initSlider(root = typeof document !== 'undefined' ? document : n
   // Sync all sliders in root on initialization
   const sliders = root.querySelectorAll('input[type="range"].as-slider');
   sliders.forEach((slider) => {
-    const field = slider.closest('.as-slider-field');
-    const valueDisplay = field ? field.querySelector('.as-slider-field__value') : null;
-    syncSliderProgress(slider, valueDisplay);
+    syncSliderProgress(slider);
   });
 
-  // Delegated input listener for real-time progress track sync
+  // Delegated input and change listeners for real-time progress track sync (mouse drag, touch, keyboard arrow keys)
   root.addEventListener('input', (event) => {
     const target = event.target;
     if (target && target.matches && target.matches('input[type="range"].as-slider')) {
-      const field = target.closest('.as-slider-field');
-      const valueDisplay = field ? field.querySelector('.as-slider-field__value') : null;
-      syncSliderProgress(target, valueDisplay);
+      syncSliderProgress(target);
+    }
+  });
+
+  root.addEventListener('change', (event) => {
+    const target = event.target;
+    if (target && target.matches && target.matches('input[type="range"].as-slider')) {
+      syncSliderProgress(target);
     }
   });
 }

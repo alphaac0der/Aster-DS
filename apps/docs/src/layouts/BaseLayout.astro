@@ -242,6 +242,7 @@ import Sidebar from '../components/Sidebar.astro';
       // Export globally for interactive pages like /playground
       (window as any).asterHighlightCode = highlightCode;
       (window as any).asterEnhanceCodeBlocks = enhanceCodeBlocks;
+      (window as any).asterInitComponents = initAsterComponents;
 
       // 3. Theme Toggle
       const themeBtn = document.getElementById('theme-toggle-btn');
@@ -574,23 +575,7 @@ import Sidebar from '../components/Sidebar.astro';
       document.getElementById('fill-invalid')?.addEventListener('click', () => setWs('Acme Platform!'));
       document.getElementById('fill-valid')?.addEventListener('click', () => setWs('acme-platform'));
 
-      // 10. Interactive Slider Live Progress Update
-      document.addEventListener('input', (e) => {
-        const target = e.target as HTMLElement | null;
-        const slider = target?.closest('.as-slider') as HTMLInputElement | null;
-        if (!slider) return;
-        slider.style.setProperty('--_progress', `${slider.value}%`);
-        const valEl = document.getElementById('home-card-slider-val');
-        if (valEl && slider.id === 'home-card-slider') {
-          valEl.textContent = `${slider.value}%`;
-        }
-      });
-      document.querySelectorAll('.as-slider').forEach((s) => {
-        const slider = s as HTMLInputElement;
-        slider.style.setProperty('--_progress', `${slider.value}%`);
-      });
-
-      // 11. Interactive Home Cards
+      // 10. Interactive Home Cards
       const homeBtn = document.getElementById('home-card-btn');
       if (homeBtn) {
         homeBtn.onclick = () => {

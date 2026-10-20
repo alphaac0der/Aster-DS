@@ -2,17 +2,40 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { componentsData } from '../../data/components.js';
 
+export const canonicalOrder = [
+  'accordion',
+  'alert',
+  'badge',
+  'button',
+  'checkbox',
+  'dialog',
+  'drawer',
+  'dropdown',
+  'input',
+  'popover',
+  'progress',
+  'radio',
+  'select',
+  'skeleton',
+  'slider',
+  'switch',
+  'table',
+  'tabs',
+  'textarea',
+  'toast',
+  'tooltip'
+];
+
 export async function getStaticPaths() {
-  const slugs = Object.keys(componentsData);
-  return slugs.map((slug, index) => {
-    const prevSlug = index > 0 ? slugs[index - 1] : slugs[slugs.length - 1];
-    const nextSlug = index < slugs.length - 1 ? slugs[index + 1] : slugs[0];
+  return canonicalOrder.map((slug, index) => {
+    const prevSlug = index > 0 ? canonicalOrder[index - 1] : null;
+    const nextSlug = index < canonicalOrder.length - 1 ? canonicalOrder[index + 1] : null;
     return {
       params: { slug },
       props: { 
         component: componentsData[slug],
-        prevComponent: componentsData[prevSlug],
-        nextComponent: componentsData[nextSlug]
+        prevComponent: prevSlug ? componentsData[prevSlug] : null,
+        nextComponent: nextSlug ? componentsData[nextSlug] : null
       }
     };
   });
@@ -123,21 +146,29 @@ const { component, prevComponent, nextComponent } = Astro.props;
 
       <!-- Sequential Component Pagination Footer -->
       <nav class="doc-pagination" aria-label="Documentation Pagination">
-        <a href={`/components/${prevComponent.slug}`} class="doc-pagination__link doc-pagination__link--prev" rel="prev">
-          <span class="doc-pagination__dir">
-            <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> 
-            Previous
-          </span>
-          <span class="doc-pagination__title">{prevComponent.name}</span>
-        </a>
+        {prevComponent ? (
+          <a href={`/components/${prevComponent.slug}`} class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+            <span class="doc-pagination__dir">
+              <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> 
+              Previous
+            </span>
+            <span class="doc-pagination__title">{prevComponent.name}</span>
+          </a>
+        ) : (
+          <span class="doc-pagination__placeholder" aria-hidden="true"></span>
+        )}
 
-        <a href={`/components/${nextComponent.slug}`} class="doc-pagination__link doc-pagination__link--next" rel="next">
-          <span class="doc-pagination__dir">
-            Next 
-            <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </span>
-          <span class="doc-pagination__title">{nextComponent.name}</span>
-        </a>
+        {nextComponent ? (
+          <a href={`/components/${nextComponent.slug}`} class="doc-pagination__link doc-pagination__link--next" rel="next">
+            <span class="doc-pagination__dir">
+              Next 
+              <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </span>
+            <span class="doc-pagination__title">{nextComponent.name}</span>
+          </a>
+        ) : (
+          <span class="doc-pagination__placeholder" aria-hidden="true"></span>
+        )}
       </nav>
     </div>
   </article>

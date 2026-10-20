@@ -90,12 +90,22 @@ export function initToast(root = typeof document !== 'undefined' ? document : nu
   if (!root || initializedRoots.has(root)) return;
   initializedRoots.add(root);
 
-  // Delegated listener for dismiss button
+  // Delegated listener for declarative toast triggers: data-toast-trigger
   root.addEventListener('click', (event) => {
-    const target = event.target;
-    if (target && target.matches && target.matches('.as-toast__close, .as-toast__close *')) {
-      const btn = target.closest('.as-toast__close');
-      const toast = btn ? btn.closest('.as-toast') : null;
+    const trigger = event.target.closest('[data-toast-trigger]');
+    if (trigger) {
+      showToast({
+        title: trigger.getAttribute('data-toast-title') || 'Action Complete',
+        message: trigger.getAttribute('data-toast-message') || '',
+        variant: trigger.getAttribute('data-toast-variant') || 'info',
+        duration: trigger.getAttribute('data-toast-duration') ? parseInt(trigger.getAttribute('data-toast-duration'), 10) : 4000
+      });
+      return;
+    }
+
+    const closeBtn = event.target.closest('.as-toast__close');
+    if (closeBtn) {
+      const toast = closeBtn.closest('.as-toast');
       if (toast) {
         dismissToast(toast);
       }

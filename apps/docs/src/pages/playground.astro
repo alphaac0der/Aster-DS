@@ -30,6 +30,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="pg-dock__title">Interactive Stage</div>
             <button type="button" class="pg-dock__btn" data-pg-comp="button" aria-pressed="true"><span>Button</span><small>40px pill</small></button>
             <button type="button" class="pg-dock__btn" data-pg-comp="input" aria-pressed="false"><span>Input &amp; Field</span><small>44px · 4px r</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="select" aria-pressed="false"><span>Select</span><small>44px dropdown</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="slider" aria-pressed="false"><span>Slider</span><small>range track</small></button>
             <button type="button" class="pg-dock__btn" data-pg-comp="badge" aria-pressed="false"><span>Badge</span><small>status pill</small></button>
             <button type="button" class="pg-dock__btn" data-pg-comp="alert" aria-pressed="false"><span>Alert Banner</span><small>red dot close</small></button>
             <button type="button" class="pg-dock__btn" data-pg-comp="switch" aria-pressed="false"><span>Switch</span><small>44x24px</small></button>
@@ -187,6 +189,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           return `<div class="as-form-field${isErr ? ' as-form-field--error' : ''}">\n  <label class="as-form-field__label" for="pg-inp-demo">Cluster Name</label>\n  <div class="as-input-box">\n    <input id="pg-inp-demo" class="as-input" type="text" value="${st.label}"${isDis ? ' disabled' : ''}${isErr ? ' aria-invalid="true"' : ''} />\n    <button type="button" class="as-input__action as-input__action--clear" aria-label="Clear">\n      <svg class="as-icon" width="14" height="14" aria-hidden="true"><use href="#i-x"/></svg>\n    </button>\n  </div>\n  <div class="as-form-field__helper">Enter valid cluster identifier.</div>\n</div>`;
         }
       },
+      select: {
+        title: 'Select',
+        variants: ['default', 'disabled'],
+        defaultVariant: 'default',
+        defaultLabel: 'Environment Tier',
+        blueprint: ['Height: 44px (--as-density-control-height)', 'Radius: 4px (--as-radius-sm)', 'Border: Double 1px Glass Glow', 'Native Listbox semantics'],
+        render(st) {
+          const isDis = st.variant === 'disabled';
+          return `<div class="as-form-field">\n  <label class="as-form-field__label" for="pg-sel-demo">${st.label}</label>\n  <div class="as-select-box">\n    <select class="as-select" id="pg-sel-demo"${isDis ? ' disabled' : ''}>\n      <option value="prod">Production (us-east-1)</option>\n      <option value="staging" selected>Staging (eu-central-1)</option>\n      <option value="dev">Development (local)</option>\n    </select>\n    <svg class="as-select-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>\n  </div>\n</div>`;
+        }
+      },
+      slider: {
+        title: 'Slider',
+        variants: ['default', 'disabled'],
+        defaultVariant: 'default',
+        defaultLabel: 'CPU Allocation',
+        blueprint: ['Track Height: 6px', 'Thumb: 18px circle with elevation shadow', 'Range Fill: Dynamic --_progress custom property', 'Live synchronized value display'],
+        render(st) {
+          const isDis = st.variant === 'disabled';
+          return `<div class="as-slider-field">\n  <div class="as-slider-field__header">\n    <label class="as-slider-field__label" for="pg-slider-demo">${st.label}</label>\n    <span class="as-slider-field__value">75%</span>\n  </div>\n  <input type="range" class="as-slider" id="pg-slider-demo" min="0" max="100" value="75" style="--_progress: 75%;"${isDis ? ' disabled' : ''} />\n</div>`;
+        }
+      },
       badge: {
         title: 'Badge',
         variants: ['neutral', 'success', 'warning', 'critical', 'info'],
@@ -253,6 +277,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       const html = recipe.render(PG_STATE);
       mount.innerHTML = html;
+
+      if (typeof (window as any).asterInitComponents === 'function') {
+        (window as any).asterInitComponents(mount);
+      }
 
       if (bpBox) {
         bpBox.hidden = !PG_STATE.showBlueprint;
