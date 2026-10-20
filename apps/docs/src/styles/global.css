@@ -1,261 +1,47 @@
-/* Aster Design System — Documentation Global Styles */
+/* Aster Design System — Canonical Documentation Styles */
 @import "../../../../dist/css/tokens.css";
 @import "../../../../dist/css/components.css";
 @import "../../../../playground/styles/playground.css";
 
-/* Reset & layout overrides for Astro clean URL documentation */
-:root {
-  --header-height: 60px;
-  --sidebar-width: 270px;
-}
+/* ==========================================================================
+   Astro Clean-URL Architecture Parity Overrides
+   Ensures view visibility, active navigation state, and responsive behavior.
+   ========================================================================== */
 
-html, body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: var(--as-semantic-color-surface-canvas);
-  color: var(--as-semantic-color-text-default);
-  font-family: var(--as-typography-font-family-sans);
-  -webkit-font-smoothing: antialiased;
-}
-
-.site-shell {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Header */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--header-height);
-  background-color: var(--as-semantic-color-surface-canvas);
-  border-bottom: 1px solid var(--as-semantic-color-border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-}
-
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--as-semantic-color-text-default);
-}
-
-.header-brand img {
-  height: 24px;
-  width: auto;
-}
-
-.header-brand-title {
-  font-family: var(--as-typography-font-family-display);
-  font-size: 22px;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.header-nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.header-nav a {
-  text-decoration: none;
-  color: var(--as-semantic-color-text-muted);
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 150ms ease;
-}
-
-.header-nav a:hover,
-.header-nav a.active {
-  color: var(--as-semantic-color-text-default);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Layout Body */
-.site-body {
-  display: flex;
-  flex: 1;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* Sidebar */
-.site-sidebar {
-  width: var(--sidebar-width);
-  flex-shrink: 0;
-  border-right: 1px solid var(--as-semantic-color-border-subtle);
-  padding: 28px 20px 48px;
-  position: sticky;
-  top: var(--header-height);
-  height: calc(100vh - var(--header-height));
-  overflow-y: auto;
-}
-
-.sidebar-group {
-  margin-bottom: 24px;
-}
-
-.sidebar-heading {
-  font-family: var(--as-typography-font-family-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--as-semantic-color-text-subtle);
-  margin-bottom: 10px;
-  padding: 0 8px;
-}
-
-.sidebar-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-item a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 7px 10px;
-  border-radius: var(--as-radius-md);
-  font-size: 13.5px;
-  color: var(--as-semantic-color-text-muted);
-  text-decoration: none;
-  transition: background-color 120ms ease, color 120ms ease;
-}
-
-.sidebar-item a:hover {
-  background-color: var(--as-semantic-color-surface-subtle);
-  color: var(--as-semantic-color-text-default);
-}
-
-.sidebar-item a.active {
-  background-color: var(--as-semantic-color-surface-card);
-  color: var(--as-semantic-color-text-default);
-  font-weight: 600;
-}
-
-/* Content */
-.site-content {
-  flex: 1;
-  min-width: 0;
-  padding: 36px 48px 80px;
-}
-
-/* Component Showcase Card */
-.component-showcase {
-  border: 1px solid var(--as-semantic-color-border-subtle);
-  border-radius: var(--as-radius-lg);
-  background-color: var(--as-semantic-color-surface-card);
-  overflow: hidden;
-  margin: 24px 0 40px;
-}
-
-.showcase-stage {
-  padding: 48px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
-  background-color: var(--as-semantic-color-surface-canvas);
-  border-bottom: 1px solid var(--as-semantic-color-border-subtle);
-}
-
-.showcase-tabs-nav {
-  display: flex;
-  gap: 2px;
-  background-color: var(--as-semantic-color-surface-subtle);
-  padding: 4px;
-  border-bottom: 1px solid var(--as-semantic-color-border-subtle);
-}
-
-.showcase-tab-btn {
-  background: transparent;
-  border: none;
-  font-family: var(--as-typography-font-family-sans);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--as-semantic-color-text-muted);
-  padding: 6px 14px;
-  border-radius: var(--as-radius-sm);
-  cursor: pointer;
-  transition: all 120ms ease;
-}
-
-.showcase-tab-btn:hover {
-  color: var(--as-semantic-color-text-default);
-}
-
-.showcase-tab-btn[aria-selected="true"] {
-  background-color: var(--as-semantic-color-surface-canvas);
-  color: var(--as-semantic-color-text-default);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
-}
-
-.showcase-tab-pane {
-  display: none;
-  padding: 24px;
-}
-
-.showcase-tab-pane.active {
+/* In Astro clean-URL architecture, the view rendered on the page is always visible */
+.doc-view {
   display: block;
 }
 
-/* Code block container */
-.code-box {
-  background: var(--as-semantic-color-surface-canvas);
-  border-radius: var(--as-radius-md);
-  border: 1px solid var(--as-semantic-color-border-subtle);
-  overflow: hidden;
-  position: relative;
+/* Active navigation links in documentation sidebar */
+.nav-link--active,
+.nav-link[aria-current="page"] {
+  color: var(--doc-ink, #0f0f0f);
+  background: var(--as-semantic-color-surface-card, rgba(0, 0, 0, 0.04));
+  font-weight: 600;
 }
 
-.code-box pre {
-  margin: 0;
-  padding: 16px 20px;
-  overflow-x: auto;
-  font-family: var(--as-typography-font-family-mono);
-  font-size: 13px;
-  line-height: 1.6;
+[data-theme="dark"] .nav-link--active,
+[data-theme="dark"] .nav-link[aria-current="page"] {
+  color: #ffffff;
+  background: var(--as-semantic-color-surface-card, rgba(255, 255, 255, 0.06));
 }
 
-.copy-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 6px 10px;
-  font-size: 12px;
-  background: var(--as-semantic-color-surface-card);
-  border: 1px solid var(--as-semantic-color-border-subtle);
-  border-radius: var(--as-radius-sm);
-  color: var(--as-semantic-color-text-muted);
-  cursor: pointer;
+/* Active navigation link in top header */
+.top-nav a.active {
+  color: var(--doc-ink, #0f0f0f);
+  font-weight: 600;
 }
 
-.copy-btn:hover {
-  color: var(--as-semantic-color-text-default);
-  background: var(--as-semantic-color-surface-subtle);
+[data-theme="dark"] .top-nav a.active {
+  color: #ffffff;
 }
 
-@media (max-width: 860px) {
-  .site-sidebar {
-    display: none;
-  }
-  .site-content {
-    padding: 24px 20px 60px;
-  }
+/* Ensure brand and top-nav links retain standard button cursor and decoration */
+.top-nav a {
+  text-decoration: none;
+}
+
+.brand {
+  text-decoration: none;
 }

@@ -18,48 +18,47 @@ const principles = [
 <DocsLayout 
   title="Core Principles — Aster Design System"
   description="The foundational design and engineering principles of the Aster Design System."
+  currentPath="/docs/principles"
 >
-  <div style="max-width: 860px;">
-    <!-- Title & Header -->
-    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
-      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-        Philosophy & Ethics
-      </div>
-      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
-        Core Principles
-      </h1>
-      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
-        Aster exists to make digital interface design and implementation coherent, accessible, understandable, and maintainable for both human teams and AI coding agents.
-      </p>
-    </div>
+  <article class="doc-view" id="view-principles" data-title="Core Principles" data-section="docs" aria-labelledby="t-principles">
+    <header class="page-head">
+      <div class="eyebrow">Foundations &middot; Philosophy</div>
+      <h1 id="t-principles" tabindex="-1">Core Principles</h1>
+      <p class="lead">Aster exists to make digital interface design and implementation coherent, accessible, understandable, and maintainable for both human teams and AI coding agents.</p>
+    </header>
 
-    <!-- Principles Grid -->
-    <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 48px;">
-      {principles.map((p) => (
-        <div style="border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card); padding: 24px;">
-          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;">
-            <span style="font-family: var(--as-typography-font-family-mono); font-size: 14px; font-weight: 700; color: var(--as-semantic-color-interactive-primary); background: var(--as-semantic-color-surface-subtle); width: 28px; height: 28px; border-radius: var(--as-radius-sm); display: inline-flex; align-items: center; justify-content: center;">
-              {p.num}
-            </span>
-            <h2 style="font-size: 18px; font-weight: 600; margin: 0;">{p.title}</h2>
-          </div>
-          <p style="font-size: 14.5px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0; padding-left: 40px;">
-            {p.desc}
-          </p>
+    <div class="doc-body">
+      <!-- Principles List -->
+      <section class="doc-section">
+        <h2>10 Normative Principles</h2>
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+          {principles.map((p) => (
+            <div style="border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card); padding: 20px 24px;">
+              <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;">
+                <span style="font-family: var(--as-typography-font-family-mono); font-size: 13px; font-weight: 700; color: var(--as-semantic-color-text-default); background: var(--as-semantic-color-surface-subtle); width: 28px; height: 28px; border-radius: var(--as-radius-sm); display: inline-flex; align-items: center; justify-content: center;">
+                  {p.num}
+                </span>
+                <h3 style="font-size: 17px; font-weight: 600; margin: 0;">{p.title}</h3>
+              </div>
+              <p style="font-size: 14.5px; line-height: 1.6; color: var(--doc-ink, #0f0f0f); margin: 0; padding-left: 40px;">
+                {p.desc}
+              </p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </section>
 
-    <!-- Navigation footer -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
-      <a href="/docs/tokens" class="as-button as-button--ghost" style="text-decoration: none;">
-        <i class="ph ph-arrow-left"></i>
-        <span class="as-button__label">Design Tokens</span>
-      </a>
-      <a href="/docs/installation" class="as-button as-button--secondary" style="text-decoration: none;">
-        <span class="as-button__label">Next: Installation</span>
-        <i class="ph ph-arrow-right"></i>
-      </a>
+      <!-- Navigation footer -->
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <a href="/docs/installation" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">&larr; Installation</span>
+        </a>
+        <a href="/docs/tokens" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">Design Tokens &rarr;</span>
+        </a>
+      </nav>
     </div>
-  </div>
+  </article>
 </DocsLayout>

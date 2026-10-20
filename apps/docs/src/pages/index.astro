@@ -1,70 +1,187 @@
 ---
-import DocsLayout from '../layouts/DocsLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<DocsLayout 
+<BaseLayout 
   title="Aster Design System — One source of truth for humans and AI agents" 
-  description="Aster Design System is a token-first, zero-dependency design system designed to provide one authoritative source of truth with dual human and agent interfaces."
+  description="Browser-native interface system engineered for Designers, Developers, and AI Coding Agents."
+  kind="landing"
+  currentPath="/"
 >
-  <div style="max-width: 860px; margin: 0 auto; padding-top: 24px;">
-    <!-- Hero Section -->
-    <div style="margin-bottom: 48px;">
-      <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: var(--as-radius-full); background-color: var(--as-semantic-color-surface-subtle); border: 1px solid var(--as-semantic-color-border-subtle); margin-bottom: 20px;">
-        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: var(--as-semantic-color-status-success);"></span>
-        <span style="font-family: var(--as-typography-font-family-mono); font-size: 12px; font-weight: 500; color: var(--as-semantic-color-text-muted);">v0.0.1 Public Release</span>
-      </div>
+  <div class="docs-shell">
+    <main class="docs-main" id="main-content">
+      <article class="doc-view" id="view-overview" data-active="" data-title="Home" data-section="overview" data-kind="landing" aria-labelledby="t-overview">
+        <div class="landing--minimal">
+          <!-- Hero Section -->
+          <section class="hero--minimal">
+            <h1 id="t-overview" class="hero__title--minimal" tabindex="-1">ASTER DS</h1>
+            <p class="hero__lead--minimal">Browser-native interface system engineered for Designers, Developers, and AI Coding Agents.</p>
+            <div class="hero__cta--minimal">
+              <a class="as-button as-button--primary as-button--lg" href="/docs"><span class="as-button__label">Documentation</span></a>
+              <a class="as-button as-button--secondary as-button--lg" href="/playground"><span class="as-button__label">Playground</span></a>
+              <a class="as-button as-button--outline as-button--lg" href="/components"><span class="as-button__label">Components</span></a>
+            </div>
+          </section>
 
-      <h1 style="font-family: var(--as-typography-font-family-display); font-size: clamp(48px, 8vw, 76px); line-height: 0.95; letter-spacing: 0.02em; margin: 0 0 20px; font-weight: 700;">
-        DESIGN SYSTEM FOR HUMANS & AI AGENTS
-      </h1>
+          <!-- Real Interactive Component Showcase Cards Grid -->
+          <section class="home-components-grid" aria-label="Interactive Component Showcase">
+            <!-- 1. Button -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview">
+                <button type="button" class="as-button as-button--primary as-button--md" id="home-card-btn" data-enable-success="true">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-star"/></svg>
+                  <span class="as-button__label">Button</span>
+                </button>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/button" class="home-comp-card__name">Button</a>
+                <a href="/components/button" class="home-comp-card__arrow-btn" aria-label="Go to Button component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
 
-      <p style="font-size: 18px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 32px; max-width: 680px;">
-        Aster is a token-first, zero-dependency design system delivering native web components, mathematical WCAG 2.2 AA contrast, and dual human-and-agent interfaces.
-      </p>
+            <!-- 2. Switch -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview">
+                <label class="as-switch" for="home-card-switch">
+                  <input type="checkbox" id="home-card-switch" class="as-switch-input" checked role="switch">
+                  <span class="as-switch-track"><span class="as-switch-thumb"></span></span>
+                </label>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/switch" class="home-comp-card__name">Switch</a>
+                <a href="/components/switch" class="home-comp-card__arrow-btn" aria-label="Go to Switch component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
 
-      <!-- CTA Row -->
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
-        <a href="/components/button" class="as-button as-button--primary" style="text-decoration: none;">
-          <span class="as-button__label">Explore Components</span>
-          <i class="ph ph-arrow-right"></i>
-        </a>
-        <a href="/docs" class="as-button as-button--secondary" style="text-decoration: none;">
-          <span class="as-button__label">Read Documentation</span>
-        </a>
-      </div>
-    </div>
+            <!-- 3. Radio Button -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview">
+                <div class="as-radio-group as-radio-group--horizontal" style="gap:24px;align-items:center;justify-content:center;">
+                  <label class="as-radio-field" style="cursor:pointer;margin:0;">
+                    <span class="as-radio"><input type="radio" name="home-radio-showcase" class="as-radio-input" checked value="opt1" aria-label="Option 1"></span>
+                  </label>
+                  <label class="as-radio-field" style="cursor:pointer;margin:0;">
+                    <span class="as-radio"><input type="radio" name="home-radio-showcase" class="as-radio-input" value="opt2" aria-label="Option 2"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/radio" class="home-comp-card__name">Radio Button</a>
+                <a href="/components/radio" class="home-comp-card__arrow-btn" aria-label="Go to Radio Button component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
 
-    <!-- Quick Install Snippet -->
-    <div class="code-box" style="margin-bottom: 56px;">
-      <button class="copy-btn" aria-label="Copy install command">Copy</button>
-      <pre><code>npm install aster-ds</code></pre>
-    </div>
+            <!-- 4. Slider -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview" style="width:100%;">
+                <div style="width:100%;max-width:200px;display:flex;flex-direction:column;gap:6px;">
+                  <input type="range" class="as-slider" id="home-card-slider" min="0" max="100" value="65" aria-label="Slider showcase">
+                  <div style="display:flex;justify-content:flex-end;">
+                    <span id="home-card-slider-val" style="font-family:var(--doc-mono);font-size:11px;color:var(--doc-muted);">65%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/slider" class="home-comp-card__name">Slider</a>
+                <a href="/components/slider" class="home-comp-card__arrow-btn" aria-label="Go to Slider component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
 
-    <!-- Feature Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 64px;">
-      <div style="padding: 24px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card);">
-        <i class="ph ph-lightning" style="font-size: 28px; margin-bottom: 12px; display: inline-block;"></i>
-        <h3 style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Zero Runtime Dependencies</h3>
-        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.5; margin: 0;">
-          Pure native HTML5 elements, CSS Custom Properties, and browser ES modules. Framework consumers integrate Aster using standard HTML classes.
-        </p>
-      </div>
+            <!-- 5. Badge -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview">
+                <div style="display:flex;gap:10px;align-items:center;justify-content:center;">
+                  <span class="as-badge as-badge--success" id="home-badge-healthy" style="cursor:pointer;" title="Status: Healthy"><span class="as-badge__dot"></span>Healthy</span>
+                  <span class="as-badge as-badge--warning" id="home-badge-sync" style="cursor:pointer;" title="Status: Syncing"><span class="as-badge__dot"></span>Sync</span>
+                </div>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/badge" class="home-comp-card__name">Badge</a>
+                <a href="/components/badge" class="home-comp-card__arrow-btn" aria-label="Go to Badge component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
 
-      <div style="padding: 24px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card);">
-        <i class="ph ph-palette" style="font-size: 28px; margin-bottom: 12px; display: inline-block;"></i>
-        <h3 style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">W3C DTCG Design Tokens</h3>
-        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.5; margin: 0;">
-          Strict semantic token precedence, single standard density, and automated Figma variable sync for seamless design-to-code parity.
-        </p>
-      </div>
+            <!-- 6. Checkbox -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview">
+                <div style="display:flex;gap:18px;align-items:center;justify-content:center;">
+                  <label class="as-checkbox-field" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;margin:0;">
+                    <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="home-cb-showcase-1" checked></span>
+                    <span style="font-size:13px;font-family:var(--doc-sans);color:var(--doc-ink);">Enabled</span>
+                  </label>
+                  <label class="as-checkbox-field" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;margin:0;">
+                    <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="home-cb-showcase-2"></span>
+                    <span style="font-size:13px;font-family:var(--doc-sans);color:var(--doc-muted);">Optional</span>
+                  </label>
+                </div>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/checkbox" class="home-comp-card__name">Checkbox</a>
+                <a href="/components/checkbox" class="home-comp-card__arrow-btn" aria-label="Go to Checkbox component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
 
-      <div style="padding: 24px; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background-color: var(--as-semantic-color-surface-card);">
-        <i class="ph ph-robot" style="font-size: 28px; margin-bottom: 12px; display: inline-block;"></i>
-        <h3 style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Agent-Native Contracts</h3>
-        <p style="font-size: 14px; color: var(--as-semantic-color-text-muted); line-height: 1.5; margin: 0;">
-          Tailored machine-readable coding skills and component specs ensure AI coding agents compose reliable, accessible, and compliant UI.
-        </p>
-      </div>
-    </div>
+            <!-- 7. Progress -->
+            <div class="home-comp-card">
+              <div class="home-comp-card__preview" style="width:100%;">
+                <div class="as-progress-field" style="width:100%;max-width:210px;cursor:pointer;" id="home-card-progress-field" title="Click to cycle progress">
+                  <div class="as-progress-field__header">
+                    <span class="as-progress-field__label" style="font-size:13px;">Processing</span>
+                    <span class="as-progress-field__value" id="home-card-progress-val">68%</span>
+                  </div>
+                  <div class="as-progress" role="progressbar" id="home-card-progress" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+                    <div class="as-progress__bar" id="home-card-progress-bar" style="width:68%;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="home-comp-card__footer">
+                <a href="/components/progress" class="home-comp-card__name">Progress</a>
+                <a href="/components/progress" class="home-comp-card__arrow-btn" aria-label="Go to Progress component documentation">
+                  <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3 Concise Discipline Paths -->
+          <section class="audience-cards--minimal" aria-label="Audience disciplines">
+            <div class="audience-card--minimal">
+              <div class="audience-card__icon"><svg class="as-icon" width="22" height="22" aria-hidden="true"><use href="#i-sliders"/></svg></div>
+              <h3>For Designers</h3>
+              <p>Figma tokens, 4pt spatial grid, blueprint geometry specs, and token-driven handoff.</p>
+              <a class="as-button as-button--tertiary as-button--sm" href="/docs/principles"><span class="as-button__label">Explore Hub &rarr;</span></a>
+            </div>
+            <div class="audience-card--minimal">
+              <div class="audience-card__icon"><svg class="as-icon" width="22" height="22" aria-hidden="true"><use href="#i-plug"/></svg></div>
+              <h3>For Developers</h3>
+              <p>Browser-native web components, vanilla CSS tokens, zero external runtime dependencies.</p>
+              <a class="as-button as-button--tertiary as-button--sm" href="/docs/frameworks"><span class="as-button__label">Explore Hub &rarr;</span></a>
+            </div>
+            <div class="audience-card--minimal">
+              <div class="audience-card__icon"><svg class="as-icon" width="22" height="22" aria-hidden="true"><use href="#i-star"/></svg></div>
+              <h3>For AI Agents</h3>
+              <p>Structured prompt contracts, deterministic JSON specs, token-bound code generation.</p>
+              <a class="as-button as-button--tertiary as-button--sm" href="/docs/tokens"><span class="as-button__label">Explore Hub &rarr;</span></a>
+            </div>
+          </section>
+
+          <footer class="site-footer" style="margin-top: 48px;">
+            <span>Aster Design System &middot; v0.0.1 &middot; Zero-dependency browser-native architecture</span>
+          </footer>
+        </div>
+      </article>
+    </main>
   </div>
-</DocsLayout>
+</BaseLayout>

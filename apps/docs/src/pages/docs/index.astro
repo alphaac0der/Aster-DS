@@ -5,53 +5,45 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 <DocsLayout 
   title="Introduction — Aster Design System"
   description="Aster Design System is a token-first, zero-dependency design system designed to provide one authoritative source of truth with dual human and agent interfaces."
+  currentPath="/docs"
 >
-  <div style="max-width: 820px;">
-    <!-- Title & Overview -->
-    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
-      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-        Getting Started
-      </div>
-      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
-        Introduction
-      </h1>
-      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
-        Aster DS is a token-first, zero-dependency design system engineered to deliver a single authoritative source of truth with dual interfaces for developers and AI coding agents.
-      </p>
+  <article class="doc-view" id="view-introduction" data-title="Introduction" data-section="docs" aria-labelledby="t-introduction">
+    <header class="page-head">
+      <div class="eyebrow">Getting Started</div>
+      <h1 id="t-introduction" tabindex="-1">Introduction</h1>
+      <p class="lead">Aster DS is a token-first, zero-dependency design system engineered to deliver a single authoritative source of truth with dual interfaces for developers and AI coding agents.</p>
+    </header>
+
+    <div class="doc-body">
+      <!-- Dual Interfaces -->
+      <section class="doc-section">
+        <h2>Dual Human &amp; Agent Interfaces</h2>
+        <p>Unlike traditional design systems built exclusively for human engineers, Aster provides paired human and agent documentation:</p>
+        <ul style="padding-left: 20px; line-height: 1.8; color: var(--doc-ink, #0f0f0f); font-size: 14.5px;">
+          <li><strong>Human-Facing Interface:</strong> Interactive documentation, component playgrounds, and zero-framework HTML/CSS patterns in <code>docs/</code>, <code>components/</code>, and <code>apps/docs/</code>.</li>
+          <li><strong>Agent-Facing Interface:</strong> Machine-readable design tokens, component contracts, and structured coding skills in <code>AGENTS.md</code> and <code>skills/</code>.</li>
+        </ul>
+      </section>
+
+      <!-- Canonical Source of Truth -->
+      <section class="doc-section">
+        <h2>Canonical Source of Truth</h2>
+        <p>Aster enforces strict unidirectional compilation from source files to distribution outputs:</p>
+        <div style="background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-md); padding: 20px; font-size: 14px; line-height: 1.7;">
+          <div><strong>&bull; Design Tokens Source:</strong> <code>tokens/**/*.json</code> (W3C DTCG format)</div>
+          <div><strong>&bull; Component Source:</strong> <code>components/&lt;component&gt;/*.&#123;js,css&#125;</code> and <code>components/base/base.css</code></div>
+          <div><strong>&bull; Distribution Outputs:</strong> <code>dist/css/tokens.css</code>, <code>dist/css/components.css</code>, <code>dist/css/aster.css</code>, and <code>dist/js/aster.js</code></div>
+        </div>
+      </section>
+
+      <!-- Navigation footer -->
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <span class="doc-pagination__placeholder"></span>
+        <a href="/docs/installation" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">Installation &rarr;</span>
+        </a>
+      </nav>
     </div>
-
-    <!-- Dual Interfaces -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">Dual Human & Agent Interfaces</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Unlike traditional design systems built exclusively for human engineers, Aster provides paired human and agent documentation:
-      </p>
-      <ul style="padding-left: 20px; line-height: 1.8; color: var(--as-semantic-color-text-muted); font-size: 14.5px;">
-        <li><strong style="color: var(--as-semantic-color-text-default);">Human-Facing Interface:</strong> Interactive documentation, component playgrounds, and zero-framework HTML/CSS patterns in <code>docs/</code>, <code>components/</code>, and <code>apps/docs/</code>.</li>
-        <li><strong style="color: var(--as-semantic-color-text-default);">Agent-Facing Interface:</strong> Machine-readable design tokens, component contracts, and structured coding skills in <code>AGENTS.md</code> and <code>skills/</code>.</li>
-      </ul>
-    </section>
-
-    <!-- Canonical Source of Truth -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">Canonical Source of Truth</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Aster enforces strict unidirectional compilation from source files to distribution outputs:
-      </p>
-      <div style="background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-md); padding: 20px; font-size: 14px; line-height: 1.7;">
-        <div><strong>• Design Tokens Source:</strong> <code>tokens/**/*.json</code> (W3C DTCG format)</div>
-        <div><strong>• Component Source:</strong> <code>components/&lt;component&gt;/*.&#123;js,css&#125;</code> and <code>components/base/base.css</code></div>
-        <div><strong>• Distribution Outputs:</strong> <code>dist/css/tokens.css</code>, <code>dist/css/components.css</code>, <code>dist/css/aster.css</code>, and <code>dist/js/aster.js</code></div>
-      </div>
-    </section>
-
-    <!-- Navigation footer -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
-      <div></div>
-      <a href="/docs/tokens" class="as-button as-button--secondary" style="text-decoration: none;">
-        <span class="as-button__label">Next: Design Tokens</span>
-        <i class="ph ph-arrow-right"></i>
-      </a>
-    </div>
-  </div>
+  </article>
 </DocsLayout>

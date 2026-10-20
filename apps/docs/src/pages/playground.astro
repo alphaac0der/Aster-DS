@@ -1,181 +1,161 @@
 ---
-import DocsLayout from '../layouts/DocsLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<DocsLayout 
+<BaseLayout 
   title="Interactive Playground — Aster Design System"
   description="Interactive Aster Component Workbench: manipulate live properties, toggle blueprint measurement overlays, and copy synchronized code."
+  kind="playground"
+  currentPath="/playground"
 >
-  <div style="max-width: 1100px;">
-    <!-- Page Header -->
-    <header style="margin-bottom: 24px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 20px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-        <div>
-          <span style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em;">
-            Interactive Component Workbench
-          </span>
-          <h1 style="font-size: 34px; font-weight: 700; margin: 4px 0 8px; letter-spacing: -0.02em;">
-            Live Component Playground
-          </h1>
-        </div>
-        <div style="display: flex; gap: 8px;">
-          <a class="as-button as-button--secondary" href="/components" style="text-decoration: none;">
-            <span class="as-button__label">Component Specs &rarr;</span>
-          </a>
-        </div>
-      </div>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
-        Select a component, manipulate live properties and states, toggle blueprint measurement callouts, and copy synchronized HTML/JS code.
-      </p>
-    </header>
-
-    <!-- Playground Workspace -->
-    <div class="pg-workspace" style="display: grid; grid-template-columns: 200px 1fr 240px; gap: 20px; align-items: start;">
-      <!-- Left Component Selector Dock -->
-      <aside class="pg-dock" aria-label="Playground component selector" style="background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); padding: 16px;">
-        <div style="font-family: var(--as-typography-font-family-mono); font-size: 11px; text-transform: uppercase; color: var(--as-semantic-color-text-subtle); margin-bottom: 12px; letter-spacing: 0.05em;">
-          Interactive Stage
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-          <button type="button" class="pg-dock__btn" data-pg-comp="button" aria-pressed="true">
-            <span>Button</span>
-            <small style="display: block; font-size: 11px; color: var(--as-semantic-color-text-subtle);">40px pill</small>
-          </button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="input" aria-pressed="false">
-            <span>Input &amp; Field</span>
-            <small style="display: block; font-size: 11px; color: var(--as-semantic-color-text-subtle);">44px · 4px r</small>
-          </button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="badge" aria-pressed="false">
-            <span>Badge</span>
-            <small style="display: block; font-size: 11px; color: var(--as-semantic-color-text-subtle);">status pill</small>
-          </button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="alert" aria-pressed="false">
-            <span>Alert Banner</span>
-            <small style="display: block; font-size: 11px; color: var(--as-semantic-color-text-subtle);">red dot close</small>
-          </button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="switch" aria-pressed="false">
-            <span>Switch</span>
-            <small style="display: block; font-size: 11px; color: var(--as-semantic-color-text-subtle);">44x24px</small>
-          </button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="dialog" aria-pressed="false">
-            <span>Dialog Modal</span>
-            <small style="display: block; font-size: 11px; color: var(--as-semantic-color-text-subtle);">&lt;dialog&gt;</small>
-          </button>
-        </div>
-
-        <div style="font-family: var(--as-typography-font-family-mono); font-size: 11px; text-transform: uppercase; color: var(--as-semantic-color-text-subtle); margin: 20px 0 10px; letter-spacing: 0.05em;">
-          All 21 Specs
-        </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-          <a class="as-badge as-badge--neutral" href="/components/button" style="text-decoration: none; font-size: 10px;">Button</a>
-          <a class="as-badge as-badge--neutral" href="/components/input" style="text-decoration: none; font-size: 10px;">Input</a>
-          <a class="as-badge as-badge--neutral" href="/components/table" style="text-decoration: none; font-size: 10px;">Table</a>
-          <a class="as-badge as-badge--neutral" href="/components/dialog" style="text-decoration: none; font-size: 10px;">Dialog</a>
-          <a class="as-badge as-badge--neutral" href="/components/accordion" style="text-decoration: none; font-size: 10px;">Accordion</a>
-          <a class="as-badge as-badge--neutral" href="/components" style="text-decoration: none; font-size: 10px;">More &rarr;</a>
-        </div>
-      </aside>
-
-      <!-- Center Interactive Stage + Live Code Output -->
-      <div class="pg-center" style="display: flex; flex-direction: column; gap: 20px;">
-        <div class="pg-stage-box" style="border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background: var(--as-semantic-color-surface-card); overflow: hidden;">
-          <!-- Stage Toolbar -->
-          <div class="pg-stage-toolbar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); background: var(--as-semantic-color-surface-subtle);">
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500;">
-              <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--as-semantic-color-status-success); display: inline-block;"></span>
-              <span>Live Stage</span>
+  <div class="docs-shell">
+    <main class="docs-main" id="main-content">
+      <article class="doc-view" id="view-playground" data-title="Interactive Playground" data-section="playground" data-kind="playground" aria-labelledby="t-playground">
+        <header class="page-head" style="margin-bottom: 20px; padding-bottom: 16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <div>
+              <span class="eyebrow">Interactive Component Workbench &middot; Shade-DS Stage Architecture</span>
+              <h1 id="t-playground" tabindex="-1" style="font-size: clamp(28px, 3.5vw, 38px); margin-top: 4px;">Live Component Playground</h1>
             </div>
-            <div style="display: flex; gap: 8px;">
-              <button type="button" class="as-button as-button--ghost" id="pg-toggle-blueprint" aria-pressed="true" style="height: 28px; padding: 0 10px; font-size: 12px;">
-                Blueprint Rulers
-              </button>
-              <button type="button" class="as-button as-button--ghost" id="pg-toggle-surface" aria-pressed="false" style="height: 28px; padding: 0 10px; font-size: 12px;">
-                Elevated Surface
-              </button>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a class="as-button as-button--secondary" href="/components/button"><span class="as-button__label">Component Docs &rarr;</span></a>
             </div>
           </div>
+          <p class="lead" style="margin-top: 8px; font-size: 15px;">Select a component, manipulate live properties and states, toggle blueprint measurement callouts, and copy synchronized HTML/JS code.</p>
+        </header>
 
-          <!-- Stage Canvas -->
-          <div class="pg-stage-canvas" id="pg-stage-canvas" data-surface="canvas" style="padding: 60px 32px; min-height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: var(--as-semantic-color-surface-canvas); transition: background 150ms ease;">
-            <div id="pg-stage-mount" style="display: flex; align-items: center; justify-content: center; width: 100%;"></div>
-            <div class="pg-blueprint-overlay" id="pg-blueprint-overlay" style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;" aria-label="Component blueprint measurements"></div>
+        <div class="pg-workspace">
+          <!-- Left Component Selector Dock -->
+          <aside class="pg-dock" aria-label="Playground component selector">
+            <div class="pg-dock__title">Interactive Stage</div>
+            <button type="button" class="pg-dock__btn" data-pg-comp="button" aria-pressed="true"><span>Button</span><small>40px pill</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="input" aria-pressed="false"><span>Input &amp; Field</span><small>44px · 4px r</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="badge" aria-pressed="false"><span>Badge</span><small>status pill</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="alert" aria-pressed="false"><span>Alert Banner</span><small>red dot close</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="switch" aria-pressed="false"><span>Switch</span><small>44x24px</small></button>
+            <button type="button" class="pg-dock__btn" data-pg-comp="dialog" aria-pressed="false"><span>Dialog Modal</span><small>&lt;dialog&gt;</small></button>
+
+            <div class="pg-dock__title" style="margin-top: 12px;">All 21 Component Specs</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px;">
+              <a class="pill" href="/components/button">Button</a>
+              <a class="pill" href="/components/input">Input</a>
+              <a class="pill" href="/components/textarea">Textarea</a>
+              <a class="pill" href="/components/select">Select</a>
+              <a class="pill" href="/components/checkbox">Checkbox</a>
+              <a class="pill" href="/components/radio">Radio</a>
+              <a class="pill" href="/components/switch">Switch</a>
+              <a class="pill" href="/components/slider">Slider</a>
+              <a class="pill" href="/components/table">Table</a>
+              <a class="pill" href="/components/badge">Badge</a>
+              <a class="pill" href="/components/progress">Progress</a>
+              <a class="pill" href="/components/skeleton">Skeleton</a>
+              <a class="pill" href="/components/alert">Alert</a>
+              <a class="pill" href="/components/tooltip">Tooltip</a>
+              <a class="pill" href="/components/toast">Toast</a>
+              <a class="pill" href="/components/dialog">Dialog</a>
+              <a class="pill" href="/components/drawer">Drawer</a>
+              <a class="pill" href="/components/popover">Popover</a>
+              <a class="pill" href="/components/dropdown">Dropdown</a>
+              <a class="pill" href="/components/tabs">Tabs</a>
+              <a class="pill" href="/components/accordion">Accordion</a>
+            </div>
+          </aside>
+
+          <!-- Center Interactive Stage + Live Code Output -->
+          <div class="pg-center">
+            <div class="pg-stage-box">
+              <div class="pg-stage-toolbar">
+                <div class="pg-stage-toolbar__left">
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--as-semantic-color-status-success-text);display:inline-block;"></span>
+                  <span>Live Canvas</span>
+                </div>
+                <div class="pg-stage-toolbar__actions">
+                  <button type="button" class="pg-chip-toggle" id="pg-toggle-blueprint" aria-pressed="true">Blueprint Rulers</button>
+                  <button type="button" class="pg-chip-toggle" id="pg-toggle-surface" aria-pressed="false">Elevated Surface</button>
+                  <button type="button" class="pg-chip-toggle" id="pg-toggle-theme" aria-pressed="false">Theme: Light</button>
+                </div>
+              </div>
+              <div class="pg-stage-canvas" id="pg-stage-canvas" data-surface="canvas">
+                <div id="pg-stage-mount" style="display:flex;align-items:center;justify-content:center;"></div>
+                <div class="pg-blueprint-overlay" id="pg-blueprint-overlay" aria-label="Component blueprint measurements"></div>
+              </div>
+            </div>
+
+            <!-- Synchronized Live Code Block -->
+            <div class="code-block" id="pg-live-code">
+              <div class="code-block__bar">
+                <div class="code-block__meta">
+                  <span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span>Live Generated Markup &middot; HTML</span>
+                </div>
+                <button type="button" class="copy-btn">Copy Code</button>
+              </div>
+              <div class="code-editor-body">
+                <div class="code-gutter" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+                <pre><code id="pg-live-code-el" data-highlighted="true"></code></pre>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Live Code Block -->
-        <div class="code-box" id="pg-live-code">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); background: var(--as-semantic-color-surface-subtle); font-size: 12px; color: var(--as-semantic-color-text-subtle);">
-            <span>Live Generated Markup · HTML</span>
-            <button type="button" class="copy-btn" style="position: static;">Copy Code</button>
-          </div>
-          <pre style="margin: 0; padding: 16px;"><code id="pg-live-code-el"></code></pre>
-        </div>
-      </div>
+          <!-- Right Property Control Panel -->
+          <aside class="pg-controls" id="pg-control-panel" aria-label="Component property controls">
+            <div class="pg-controls__title">Live Property Controls</div>
 
-      <!-- Right Property Controls Panel -->
-      <aside class="pg-controls" id="pg-control-panel" aria-label="Component property controls" style="background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); padding: 20px;">
-        <div style="font-family: var(--as-typography-font-family-mono); font-size: 11px; text-transform: uppercase; color: var(--as-semantic-color-text-subtle); margin-bottom: 16px; letter-spacing: 0.05em;">
-          Live Controls
-        </div>
+            <div class="pg-control-group">
+              <label for="pg-ctrl-variant">Variant / Mode</label>
+              <div class="as-select-box">
+                <select class="as-select" id="pg-ctrl-variant">
+                  <option value="primary" selected>primary</option>
+                  <option value="secondary">secondary</option>
+                  <option value="destructive">destructive</option>
+                  <option value="ghost">ghost</option>
+                </select>
+                <svg class="as-select-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>
+              </div>
+            </div>
 
-        <div style="margin-bottom: 16px;">
-          <label for="pg-ctrl-variant" style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px;">Variant / Mode</label>
-          <div class="as-select-box" style="width: 100%;">
-            <select class="as-select" id="pg-ctrl-variant" style="width: 100%; height: 38px;">
-              <option value="primary" selected>primary</option>
-              <option value="secondary">secondary</option>
-              <option value="destructive">destructive</option>
-              <option value="ghost">ghost</option>
-            </select>
-          </div>
-        </div>
+            <div class="pg-control-group">
+              <label for="pg-ctrl-label">Label / Title Copy</label>
+              <input class="as-input" type="text" id="pg-ctrl-label" value="Deploy Cluster" />
+            </div>
 
-        <div style="margin-bottom: 20px;">
-          <label for="pg-ctrl-label" style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px;">Label Text</label>
-          <input class="as-input" type="text" id="pg-ctrl-label" value="Deploy Cluster" style="width: 100%; height: 38px;" />
+            <div class="pg-control-group" style="gap: 10px; padding-top: 6px;">
+              <label class="as-checkbox-field">
+                <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-icon" checked></span>
+                <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Show Leading Icon / Dot</span></span>
+              </label>
+              <label class="as-checkbox-field">
+                <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-loading"></span>
+                <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Async Loading (aria-busy)</span></span>
+              </label>
+              <label class="as-checkbox-field">
+                <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-aria-disabled"></span>
+                <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Focus-Retaining Disabled</span></span>
+              </label>
+              <label class="as-checkbox-field">
+                <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-disabled"></span>
+                <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Native Disabled (:disabled)</span></span>
+              </label>
+            </div>
+          </aside>
         </div>
-
-        <div style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 16px;">
-          <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-            <input type="checkbox" id="pg-ctrl-icon" checked style="accent-color: var(--as-semantic-color-interactive-primary);" />
-            <span>Show Leading Icon</span>
-          </label>
-          <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-            <input type="checkbox" id="pg-ctrl-loading" style="accent-color: var(--as-semantic-color-interactive-primary);" />
-            <span>Async Loading (aria-busy)</span>
-          </label>
-          <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-            <input type="checkbox" id="pg-ctrl-aria-disabled" style="accent-color: var(--as-semantic-color-interactive-primary);" />
-            <span>Focus-Retaining Disabled</span>
-          </label>
-          <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-            <input type="checkbox" id="pg-ctrl-disabled" style="accent-color: var(--as-semantic-color-interactive-primary);" />
-            <span>Native Disabled</span>
-          </label>
-        </div>
-      </aside>
-    </div>
+      </article>
+    </main>
   </div>
 
-  <!-- Interactive Playground Client Controller -->
+  <!-- Playground Dynamic Script -->
   <script>
-    import { initAsterComponents } from '../../../../dist/js/aster.js';
-
-    const esc = (s) => String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-
     const PG_STATE = {
       comp: 'button',
       variant: 'primary',
       label: 'Deploy Cluster',
-      disabled: false,
-      ariaDisabled: false,
+      hasIcon: true,
       loading: false,
-      showIcon: true,
+      ariaDisabled: false,
+      disabled: false,
       showBlueprint: true,
-      surface: 'canvas'
+      surface: 'canvas',
+      theme: 'light'
     };
 
     const PG_RECIPES = {
@@ -184,80 +164,73 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         variants: ['primary', 'secondary', 'destructive', 'ghost'],
         defaultVariant: 'primary',
         defaultLabel: 'Deploy Cluster',
-        blueprint: ['Height: 40px (--as-density-control-height)', 'Padding X: 24px (--as-space-6)', 'Padding Y: 8px', 'Radius: 9999px (--as-radius-full)', 'Font: Manrope 14px / 500'],
+        blueprint: ['Height: 40px (--as-density-control-height)', 'Radius: 9999px (Pill)', 'Padding: 24px left / 24px right', 'StateLayer: Pointer origin hover radial'],
         render(st) {
-          const iconHtml = st.showIcon
-            ? '<i class="ph ph-star" style="margin-right: 6px;"></i>'
-            : '';
-          const spinnerHtml = st.loading
-            ? '<span class="as-spinner" aria-hidden="true"></span> '
-            : iconHtml;
-          const attrs = [
-            'type="button"',
-            `class="as-button as-button--${st.variant}"`,
-            'id="pg-live-btn"',
-            st.disabled ? 'disabled' : '',
-            st.ariaDisabled ? 'aria-disabled="true"' : '',
-            st.loading ? 'aria-busy="true"' : ''
-          ].filter(Boolean).join(' ');
-          return `<button ${attrs}>\n  ${spinnerHtml}<span class="as-button__label">${esc(st.label || 'Button')}</span>\n</button>`;
+          const classes = ['as-button', `as-button--${st.variant}`];
+          const attrs = [];
+          if (st.loading) attrs.push('aria-busy="true"');
+          if (st.ariaDisabled) attrs.push('aria-disabled="true"');
+          if (st.disabled) attrs.push('disabled');
+          const icon = st.hasIcon ? '<svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-star"/></svg>\n  ' : '';
+          return `<button type="button" class="${classes.join(' ')}"${attrs.length ? ' ' + attrs.join(' ') : ''}>\n  ${icon}<span class="as-button__label">${st.label || 'Button'}</span>\n</button>`;
         }
       },
       input: {
         title: 'Input & Field',
-        variants: ['default', 'error'],
+        variants: ['default', 'error', 'disabled'],
         defaultVariant: 'default',
-        defaultLabel: 'Workspace Identifier',
-        blueprint: ['Height: 44px (Exact Shade-DS)', 'Padding X: 12px (--as-space-3)', 'Radius: 4px (--as-radius-sm)', 'Surface: Canvas #121212 / Double 1px Glass Glow'],
+        defaultLabel: 'Production Cluster',
+        blueprint: ['Height: 44px (Comfortable)', 'Radius: 4px (--as-radius-sm)', 'Border: Double 1px Glass Glow', 'Padding: 12px left / 36px right'],
         render(st) {
           const isErr = st.variant === 'error';
-          return `<div class="as-form-field${isErr ? ' as-form-field--error' : ''}" style="width: 320px; margin: 0;">\n  <label class="as-form-field__label" for="pg-live-input">${esc(st.label || 'Workspace Identifier')}</label>\n  <div class="as-input-box">\n    <input class="as-input" type="text" id="pg-live-input" value="acme-production"${st.disabled ? ' disabled' : ''}${isErr ? ' aria-invalid="true"' : ''} />\n  </div>\n  <p class="as-form-field__helper">${isErr ? 'Invalid slug format.' : 'Lowercase letters, numbers, and hyphens.'}</p>\n</div>`;
+          const isDis = st.variant === 'disabled';
+          return `<div class="as-form-field${isErr ? ' as-form-field--error' : ''}">\n  <label class="as-form-field__label" for="pg-inp-demo">Cluster Name</label>\n  <div class="as-input-box">\n    <input id="pg-inp-demo" class="as-input" type="text" value="${st.label}"${isDis ? ' disabled' : ''}${isErr ? ' aria-invalid="true"' : ''} />\n    <button type="button" class="as-input__action as-input__action--clear" aria-label="Clear">\n      <svg class="as-icon" width="14" height="14" aria-hidden="true"><use href="#i-x"/></svg>\n    </button>\n  </div>\n  <div class="as-form-field__helper">Enter valid cluster identifier.</div>\n</div>`;
         }
       },
       badge: {
         title: 'Badge',
         variants: ['neutral', 'success', 'warning', 'critical', 'info'],
         defaultVariant: 'success',
-        defaultLabel: 'Healthy Cluster',
-        blueprint: ['Height: 24px', 'Padding X: 10px', 'Radius: 9999px (--as-radius-full)', 'Dot: 6px circle'],
+        defaultLabel: 'Live Traffic',
+        blueprint: ['Height: 22px', 'Radius: 9999px (Full Pill)', 'Padding: 4px 10px', 'Typography: 12px / 500 Medium'],
         render(st) {
-          return `<span class="as-badge as-badge--${st.variant}">\n  ${st.showIcon ? '<span class="as-badge__dot"></span>' : ''}${esc(st.label || 'Healthy')}\n</span>`;
+          return `<span class="as-badge as-badge--${st.variant}">\n  <span class="as-badge__dot"></span>\n  ${st.label || 'Badge'}\n</span>`;
         }
       },
       alert: {
-        title: 'Alert',
-        variants: ['warning', 'critical', 'success', 'info'],
+        title: 'Alert Banner',
+        variants: ['info', 'success', 'warning', 'critical'],
         defaultVariant: 'warning',
-        defaultLabel: 'Rolling Upgrade Scheduled',
-        blueprint: ['Padding: 16px (--as-space-4)', 'Radius: 8px (--as-radius-md)', 'Close Control: 12px Solid Red Dot', 'Surface: Status Surface with Glass Glow'],
+        defaultLabel: 'Rolling upgrade scheduled for 02:00 UTC.',
+        blueprint: ['Radius: 8px (--as-radius-md)', 'Border: 1px subtle', 'Close Button: 12px Shade-DS Red Dot', 'Typography: 14px Manrope'],
         render(st) {
-          return `<div class="as-alert as-alert--${st.variant}" role="region" aria-label="System Alert" style="width: min(100%, 460px);">\n  <div class="as-alert__content">\n    <div class="as-alert__title">${esc(st.label || 'System Notice')}</div>\n    <div class="as-alert__description">Worker nodes in eu-west-1a will rebalance automatically.</div>\n  </div>\n  <button type="button" class="as-alert__close" aria-label="Dismiss alert"></button>\n</div>`;
+          return `<div class="as-alert as-alert--${st.variant}" role="alert">\n  <div class="as-alert__icon"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-alert"/></svg></div>\n  <div class="as-alert__content">\n    <div class="as-alert__title">Notice</div>\n    <div class="as-alert__message">${st.label}</div>\n  </div>\n  <button type="button" class="as-alert__close" aria-label="Dismiss alert"></button>\n</div>`;
         }
       },
       switch: {
         title: 'Switch',
-        variants: ['checked', 'unchecked'],
-        defaultVariant: 'checked',
-        defaultLabel: 'Automatic Failover Routing',
-        blueprint: ['Track: 44px x 24px', 'Thumb: 18px circle', 'Radius: 9999px (--as-radius-full)'],
+        variants: ['default', 'disabled'],
+        defaultVariant: 'default',
+        defaultLabel: 'Maintenance Mode',
+        blueprint: ['Dimensions: 44px × 24px', 'Radius: 9999px (Pill Track)', 'Thumb: 18px circle with spring transition', 'WCAG: role="switch"'],
         render(st) {
-          const checked = st.variant === 'checked' ? ' checked' : '';
-          return `<label class="as-switch-field">\n  <span class="as-switch">\n    <input type="checkbox" role="switch" class="as-switch-input"${checked}${st.disabled ? ' disabled' : ''}>\n    <span class="as-switch-track"><span class="as-switch-thumb"></span></span>\n  </span>\n  <span class="as-switch-field__content">\n    <span class="as-switch-field__label">${esc(st.label || 'Automatic Failover')}</span>\n  </span>\n</label>`;
+          const isDis = st.variant === 'disabled';
+          return `<label class="as-switch-field">\n  <span class="as-switch">\n    <input type="checkbox" class="as-switch-input" role="switch" checked${isDis ? ' disabled' : ''} />\n    <span class="as-switch-track"><span class="as-switch-thumb"></span></span>\n  </span>\n  <span class="as-switch-field__label">${st.label}</span>\n</label>`;
         }
       },
       dialog: {
         title: 'Dialog Modal',
         variants: ['primary', 'secondary'],
         defaultVariant: 'primary',
-        defaultLabel: 'Open Interactive Dialog',
-        blueprint: ['Max Width: 400px', 'Radius: 16px (--as-radius-lg)', 'Close Button: 12px Solid Red Dot', 'Backdrop: 20px blur with Glass Glow'],
+        defaultLabel: 'Open Modal Dialog',
+        blueprint: ['Max Width: 400px (Shade-DS)', 'Radius: 16px (--as-radius-lg)', 'Close Button: 12px Shade-DS Red Dot', 'Surface: 20px blur with Double 1px Glass Glow'],
         render(st) {
-          return `<button type="button" class="as-button as-button--${st.variant}" data-dialog-open="pg-dialog-demo">\n  <span class="as-button__label">${esc(st.label || 'Open Interactive Dialog')}</span>\n</button>\n<dialog class="as-dialog" id="pg-dialog-demo">\n  <div class="as-dialog__panel">\n    <div class="as-dialog__header">\n      <h3 class="as-dialog__title">Interactive Confirmation</h3>\n      <button type="button" class="as-dialog__close" data-dialog-close aria-label="Close dialog"></button>\n    </div>\n    <div class="as-dialog__body">This modal demonstrates native HTML5 dialog semantics, backdrop blur, and focus trapping.</div>\n    <div class="as-dialog__footer">\n      <button type="button" class="as-button as-button--secondary" data-dialog-close><span class="as-button__label">Cancel</span></button>\n      <button type="button" class="as-button as-button--primary" data-dialog-close><span class="as-button__label">Confirm Action</span></button>\n    </div>\n  </div>\n</dialog>`;
+          return `<button type="button" class="as-button as-button--${st.variant}">\n  <span class="as-button__label">${st.label}</span>\n</button>`;
         }
       }
     };
 
-    function syncPlaygroundStage() {
+    function syncStage() {
       const mount = document.getElementById('pg-stage-mount');
       const bpBox = document.getElementById('pg-blueprint-overlay');
       const codeEl = document.getElementById('pg-live-code-el');
@@ -271,96 +244,134 @@ import DocsLayout from '../layouts/DocsLayout.astro';
       }
       if (varSelect) {
         varSelect.innerHTML = recipe.variants
-          .map((v) => `<option value="${v}"${v === PG_STATE.variant ? ' selected' : ''}>${v}</option>`)
+          .map(v => `<option value="${v}"${v === PG_STATE.variant ? ' selected' : ''}>${v}</option>`)
           .join('');
       }
       if (labelInput && document.activeElement !== labelInput) {
         labelInput.value = PG_STATE.label;
       }
 
-      const htmlSnippet = recipe.render(PG_STATE);
-      mount.innerHTML = htmlSnippet;
+      const html = recipe.render(PG_STATE);
+      mount.innerHTML = html;
 
       if (bpBox) {
         bpBox.hidden = !PG_STATE.showBlueprint;
-        bpBox.innerHTML = recipe.blueprint.map((b) => `<span class="as-badge as-badge--neutral" style="font-size: 11px;"><code>${esc(b)}</code></span>`).join('');
+        bpBox.innerHTML = recipe.blueprint.map(b => `<span class="anatomy-badge"><code>${b}</code></span>`).join('');
       }
 
-      codeEl.textContent = htmlSnippet;
-      initAsterComponents(mount);
+      codeEl.textContent = html;
     }
 
-    // Component dock selection
-    document.querySelectorAll('.pg-dock__btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const comp = btn.getAttribute('data-pg-comp');
-        if (!comp || !PG_RECIPES[comp]) return;
-        PG_STATE.comp = comp;
-        PG_STATE.variant = PG_RECIPES[comp].defaultVariant;
-        PG_STATE.label = PG_RECIPES[comp].defaultLabel;
-        PG_STATE.disabled = false;
-        PG_STATE.ariaDisabled = false;
-        PG_STATE.loading = false;
-        
-        const disBox = document.getElementById('pg-ctrl-disabled');
-        const ariaBox = document.getElementById('pg-ctrl-aria-disabled');
-        const loadBox = document.getElementById('pg-ctrl-loading');
-        if (disBox) disBox.checked = false;
-        if (ariaBox) ariaBox.checked = false;
-        if (loadBox) loadBox.checked = false;
-        
-        document.querySelectorAll('.pg-dock__btn').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-        syncPlaygroundStage();
+    function initPlayground() {
+      document.querySelectorAll('.pg-dock__btn').forEach((btn) => {
+        btn.onclick = () => {
+          const comp = btn.getAttribute('data-pg-comp');
+          if (!comp || !PG_RECIPES[comp]) return;
+          PG_STATE.comp = comp;
+          PG_STATE.variant = PG_RECIPES[comp].defaultVariant;
+          PG_STATE.label = PG_RECIPES[comp].defaultLabel;
+          PG_STATE.disabled = false;
+          PG_STATE.ariaDisabled = false;
+          PG_STATE.loading = false;
+          const disBox = document.getElementById('pg-ctrl-disabled') as HTMLInputElement;
+          const ariaBox = document.getElementById('pg-ctrl-aria-disabled') as HTMLInputElement;
+          const loadBox = document.getElementById('pg-ctrl-loading') as HTMLInputElement;
+          if (disBox) disBox.checked = false;
+          if (ariaBox) ariaBox.checked = false;
+          if (loadBox) loadBox.checked = false;
+          document.querySelectorAll('.pg-dock__btn').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+          syncStage();
+        };
       });
-    });
 
-    document.getElementById('pg-ctrl-variant')?.addEventListener('change', (e) => {
-      PG_STATE.variant = e.target.value;
-      syncPlaygroundStage();
-    });
+      const varSelect = document.getElementById('pg-ctrl-variant');
+      if (varSelect) {
+        varSelect.onchange = (e) => {
+          PG_STATE.variant = (e.target as HTMLSelectElement).value;
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-ctrl-label')?.addEventListener('input', (e) => {
-      PG_STATE.label = e.target.value;
-      syncPlaygroundStage();
-    });
+      const labelInput = document.getElementById('pg-ctrl-label');
+      if (labelInput) {
+        labelInput.oninput = (e) => {
+          PG_STATE.label = (e.target as HTMLInputElement).value;
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-ctrl-icon')?.addEventListener('change', (e) => {
-      PG_STATE.showIcon = e.target.checked;
-      syncPlaygroundStage();
-    });
+      const iconBox = document.getElementById('pg-ctrl-icon') as HTMLInputElement;
+      if (iconBox) {
+        iconBox.onchange = () => {
+          PG_STATE.hasIcon = iconBox.checked;
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-ctrl-loading')?.addEventListener('change', (e) => {
-      PG_STATE.loading = e.target.checked;
-      syncPlaygroundStage();
-    });
+      const loadBox = document.getElementById('pg-ctrl-loading') as HTMLInputElement;
+      if (loadBox) {
+        loadBox.onchange = () => {
+          PG_STATE.loading = loadBox.checked;
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-ctrl-aria-disabled')?.addEventListener('change', (e) => {
-      PG_STATE.ariaDisabled = e.target.checked;
-      syncPlaygroundStage();
-    });
+      const ariaBox = document.getElementById('pg-ctrl-aria-disabled') as HTMLInputElement;
+      if (ariaBox) {
+        ariaBox.onchange = () => {
+          PG_STATE.ariaDisabled = ariaBox.checked;
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-ctrl-disabled')?.addEventListener('change', (e) => {
-      PG_STATE.disabled = e.target.checked;
-      syncPlaygroundStage();
-    });
+      const disBox = document.getElementById('pg-ctrl-disabled') as HTMLInputElement;
+      if (disBox) {
+        disBox.onchange = () => {
+          PG_STATE.disabled = disBox.checked;
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-toggle-blueprint')?.addEventListener('click', (e) => {
-      PG_STATE.showBlueprint = !PG_STATE.showBlueprint;
-      e.target.setAttribute('aria-pressed', String(PG_STATE.showBlueprint));
-      syncPlaygroundStage();
-    });
+      // Blueprint toggle
+      const bpBtn = document.getElementById('pg-toggle-blueprint');
+      if (bpBtn) {
+        bpBtn.onclick = () => {
+          PG_STATE.showBlueprint = !PG_STATE.showBlueprint;
+          bpBtn.setAttribute('aria-pressed', String(PG_STATE.showBlueprint));
+          syncStage();
+        };
+      }
 
-    document.getElementById('pg-toggle-surface')?.addEventListener('click', (e) => {
+      // Surface toggle
+      const surfBtn = document.getElementById('pg-toggle-surface');
       const canvas = document.getElementById('pg-stage-canvas');
-      if (!canvas) return;
-      const isCard = canvas.getAttribute('data-surface') === 'card';
-      const next = isCard ? 'canvas' : 'card';
-      canvas.setAttribute('data-surface', next);
-      canvas.style.backgroundColor = next === 'card' ? 'var(--as-semantic-color-surface-card)' : 'var(--as-semantic-color-surface-canvas)';
-      e.target.setAttribute('aria-pressed', String(next === 'card'));
-    });
+      if (surfBtn && canvas) {
+        surfBtn.onclick = () => {
+          const next = canvas.getAttribute('data-surface') === 'canvas' ? 'card' : 'canvas';
+          canvas.setAttribute('data-surface', next);
+          surfBtn.setAttribute('aria-pressed', String(next === 'card'));
+        };
+      }
 
-    // Boot stage
-    syncPlaygroundStage();
+      // Stage Theme toggle
+      const stgThemeBtn = document.getElementById('pg-toggle-theme');
+      if (stgThemeBtn && canvas) {
+        stgThemeBtn.onclick = () => {
+          const current = canvas.getAttribute('data-theme') || 'light';
+          const next = current === 'light' ? 'dark' : 'light';
+          canvas.setAttribute('data-theme', next);
+          stgThemeBtn.setAttribute('aria-pressed', String(next === 'dark'));
+          stgThemeBtn.textContent = `Theme: ${next.charAt(0).toUpperCase() + next.slice(1)}`;
+        };
+      }
+
+      syncStage();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPlayground);
+    } else {
+      initPlayground();
+    }
   </script>
-</DocsLayout>
+</BaseLayout>

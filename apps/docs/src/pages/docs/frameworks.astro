@@ -1,41 +1,37 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
-const reactProviderSnippet = `'use client';
+const reactSnippet = `import 'aster-ds/aster.css';
 import { useEffect } from 'react';
 import { initAsterComponents } from 'aster-ds';
-import 'aster-ds/aster.css';
 
-export function AsterProvider({ children }) {
+export function Button({ children, variant = 'primary' }) {
   useEffect(() => {
     initAsterComponents(document);
   }, []);
 
-  return <>{children}</>;
-}`;
-
-const reactButtonSnippet = `export function DeployButton({ onDeploy, loading }) {
   return (
-    <button 
-      type="button" 
-      className="as-button as-button--primary"
-      onClick={onDeploy}
-      aria-busy={loading ? "true" : undefined}
-    >
-      <span className="as-button__label">Deploy Service</span>
+    <button className={\`as-button as-button--\${variant}\`}>
+      <span className="as-button__label">{children}</span>
     </button>
   );
 }`;
 
-const vueSnippet = `import { createApp } from 'vue';
+const vueSnippet = `<script setup>
+import { onMounted } from 'vue';
 import { initAsterComponents } from 'aster-ds';
 import 'aster-ds/aster.css';
-import App from './App.vue';
 
-const app = createApp(App);
-app.mount('#app');
+onMounted(() => {
+  initAsterComponents(document);
+});
+</script>
 
-initAsterComponents(document);`;
+<template>
+  <button class="as-button as-button--primary">
+    <span class="as-button__label"><slot /></span>
+  </button>
+</template>`;
 
 const svelteSnippet = `<script>
   import { onMount } from 'svelte';
@@ -47,94 +43,80 @@ const svelteSnippet = `<script>
   });
 </script>
 
-<slot />`;
+<button class="as-button as-button--primary">
+  <span class="as-button__label"><slot /></span>
+</button>`;
 ---
 
 <DocsLayout 
   title="Framework Integration — Aster Design System"
-  description="How to integrate Aster DS with React, Next.js, Vue, Svelte, and Astro."
+  description="How to integrate Aster DS in React, Next.js, Vue, Svelte, and Astro."
+  currentPath="/docs/frameworks"
 >
-  <div style="max-width: 860px;">
-    <!-- Title & Header -->
-    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
-      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-        Integration Guide
-      </div>
-      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
-        Framework Integration
-      </h1>
-      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
-        Aster DS is browser-native, built with standard HTML5 elements, CSS custom properties, and vanilla ES modules. Integrate seamlessly into any modern framework without proprietary wrapper dependencies.
-      </p>
+  <article class="doc-view" id="view-frameworks" data-title="Framework Integration" data-section="docs" aria-labelledby="t-frameworks">
+    <header class="page-head">
+      <div class="eyebrow">Foundations &middot; Integration</div>
+      <h1 id="t-frameworks" tabindex="-1">Framework Integration</h1>
+      <p class="lead">Zero runtime dependencies. Consume Aster DS seamlessly across React, Next.js, Vue, Svelte, and Astro using standard CSS and idempotent ES modules.</p>
+    </header>
+
+    <div class="doc-body">
+      <!-- Philosophy -->
+      <section class="doc-section">
+        <h2>Zero Framework Lock-in</h2>
+        <p>Aster delivers native web components and standard CSS custom properties. You do not need framework-specific wrappers to use Aster DS in any modern framework.</p>
+      </section>
+
+      <!-- React & Next.js -->
+      <section class="doc-section">
+        <h2>React &amp; Next.js (App Router / Pages)</h2>
+        <p>Import Aster CSS globally and call <code>initAsterComponents</code> inside a <code>useEffect</code> or client component:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>React Component (Button.jsx)</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{reactSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- Vue 3 -->
+      <section class="doc-section">
+        <h2>Vue 3</h2>
+        <p>Initialize components inside <code>onMounted</code> hook:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>Vue Component (Button.vue)</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{vueSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- Svelte -->
+      <section class="doc-section">
+        <h2>Svelte / SvelteKit</h2>
+        <p>Use Aster classes directly with <code>onMount</code> initialization:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>Svelte Component (Button.svelte)</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{svelteSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- Navigation footer -->
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <a href="/docs/tokens" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">&larr; Design Tokens</span>
+        </a>
+        <a href="/components" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">Components &rarr;</span>
+        </a>
+      </nav>
     </div>
-
-    <!-- 1. Architectural Model -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">1. Architectural Model & Event Delegation</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        All Aster kinetic behaviors (pointer-origin hover spotlight, field validation, table sorting, dialog backdrop trap, accordion toggle) are orchestrated via <strong>event delegation</strong>:
-      </p>
-      <ul style="padding-left: 20px; line-height: 1.8; color: var(--as-semantic-color-text-muted); font-size: 14.5px;">
-        <li><strong style="color: var(--as-semantic-color-text-default);">Zero Wrapper Lock-In:</strong> Use native HTML classes like <code>.as-button</code>, <code>.as-input</code>, and <code>.as-table</code>.</li>
-        <li><strong style="color: var(--as-semantic-color-text-default);">Idempotency:</strong> <code>initAsterComponents(root)</code> can be invoked multiple times across dynamic subtrees or component mounts without duplicate listeners.</li>
-        <li><strong style="color: var(--as-semantic-color-text-default);">Framework Reactivity:</strong> Aster classes do not interfere with virtual DOM reactivity (React state, Vue <code>v-model</code>, Svelte stores).</li>
-      </ul>
-    </section>
-
-    <!-- 2. React / Next.js -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">2. React / Next.js Integration</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        In React or Next.js (App Router), initialize Aster in a root client provider or layout effect:
-      </p>
-      <div class="code-box" style="margin-bottom: 16px;">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{reactProviderSnippet}</code></pre>
-      </div>
-
-      <p style="font-size: 14.5px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 8px;">
-        Then author components using standard JSX:
-      </p>
-      <div class="code-box">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{reactButtonSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- 3. Vue 3 Integration -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">3. Vue 3 Integration</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        In Vue 3, initialize in <code>main.js</code> or <code>App.vue</code>:
-      </p>
-      <div class="code-box" style="margin-bottom: 16px;">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{vueSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- 4. Svelte Integration -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">4. Svelte Integration</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        In Svelte / SvelteKit, initialize inside <code>+layout.svelte</code> on mount:
-      </p>
-      <div class="code-box" style="margin-bottom: 16px;">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{svelteSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- Navigation footer -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
-      <a href="/docs/installation" class="as-button as-button--ghost" style="text-decoration: none;">
-        <i class="ph ph-arrow-left"></i>
-        <span class="as-button__label">Installation</span>
-      </a>
-      <a href="/components" class="as-button as-button--secondary" style="text-decoration: none;">
-        <span class="as-button__label">Browse Components</span>
-        <i class="ph ph-arrow-right"></i>
-      </a>
-    </div>
-  </div>
+  </article>
 </DocsLayout>

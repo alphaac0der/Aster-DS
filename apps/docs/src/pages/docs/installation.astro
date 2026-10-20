@@ -28,93 +28,97 @@ const fontSnippet = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <DocsLayout 
   title="Installation — Aster Design System"
   description="How to install and configure Aster DS in modern web applications."
+  currentPath="/docs/installation"
 >
-  <div style="max-width: 860px;">
-    <!-- Title & Header -->
-    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
-      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-        Getting Started
-      </div>
-      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
-        Installation
-      </h1>
-      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
-        Install, import, and configure Aster DS in modern web applications using npm or direct browser distributions.
-      </p>
+  <article class="doc-view" id="view-installation" data-title="Installation" data-section="docs" aria-labelledby="t-installation">
+    <header class="page-head">
+      <div class="eyebrow">Getting Started</div>
+      <h1 id="t-installation" tabindex="-1">Installation</h1>
+      <p class="lead">Install, import, and configure Aster DS in modern web applications using npm or direct browser distributions.</p>
+    </header>
+
+    <div class="doc-body">
+      <!-- 1. Package Installation -->
+      <section class="doc-section">
+        <h2>1. Install using npm</h2>
+        <p>Install the official Aster DS package from the npm registry:</p>
+        <div class="code-block" style="margin-bottom: 16px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>Terminal</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{npmInstallSnippet}</code></pre>
+        </div>
+
+        <p style="font-size: 14px; color: var(--doc-muted); margin: 0 0 8px;">Or with your preferred package manager:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>Terminal</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{pmInstallSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- 2. Import Styles -->
+      <section class="doc-section">
+        <h2>2. Import CSS Stylesheets</h2>
+        <p>Import Aster's compiled stylesheets in your application's entrypoint or layout:</p>
+        <div class="code-block" style="margin-bottom: 16px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>JavaScript / CSS Entry</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{cssImportSnippet}</code></pre>
+        </div>
+
+        <p style="font-size: 14px; color: var(--doc-muted); margin: 0 0 8px;">Or import tokens and components separately:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>JavaScript / CSS Entry</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{cssIndivSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- 3. Typography Setup -->
+      <section class="doc-section">
+        <h2>3. Typography Web Fonts</h2>
+        <p>Include the 4 canonical Google Fonts in your document's <code>&lt;head&gt;</code>:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>HTML &lt;head&gt;</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{fontSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- 4. Interactive Behaviors -->
+      <section class="doc-section">
+        <h2>4. Initialize Behaviors</h2>
+        <p>Aster components feature zero runtime framework dependencies. Initialize delegated behaviors (dialog focus trap, ripple effects, drawer dismiss) once on mount:</p>
+        <div class="code-block" style="margin-bottom: 24px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>Client Entry</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{jsInitSnippet}</code></pre>
+        </div>
+      </section>
+
+      <!-- Navigation footer -->
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <a href="/docs" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">&larr; Introduction</span>
+        </a>
+        <a href="/docs/principles" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">Core Principles &rarr;</span>
+        </a>
+      </nav>
     </div>
-
-    <!-- 1. Package Installation -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">1. Install using npm</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Install the official Aster DS package from the npm registry:
-      </p>
-      <div class="code-box" style="margin-bottom: 16px;">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{npmInstallSnippet}</code></pre>
-      </div>
-
-      <p style="font-size: 14px; color: var(--as-semantic-color-text-subtle); margin: 0 0 8px;">Or with your preferred package manager:</p>
-      <div class="code-box" style="margin-bottom: 24px;">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{pmInstallSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- 2. Import Stylesheets -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">2. Import Stylesheets</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Import the all-in-one stylesheet at the entry point of your application:
-      </p>
-      <div class="code-box" style="margin-bottom: 16px;">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{cssImportSnippet}</code></pre>
-      </div>
-
-      <p style="font-size: 14.5px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 12px;">
-        Or import tokens and components individually if composing custom styles:
-      </p>
-      <div class="code-box">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{cssIndivSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- 3. Initialize Behaviors -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">3. Initialize Component Behaviors</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Initialize Aster's delegated event listeners. This is idempotent and can be safely called once on <code>document</code>:
-      </p>
-      <div class="code-box">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{jsInitSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- 4. Google Fonts -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">4. Recommended Typography Setup</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Aster uses four Google Fonts: <strong>Bebas Neue</strong> (Display), <strong>Manrope</strong> (Sans interface), <strong>Space Mono</strong> (Code & Data), and <strong>Merriweather</strong> (Editorial). Include them in your HTML <code>&lt;head&gt;</code>:
-      </p>
-      <div class="code-box">
-        <button class="copy-btn">Copy</button>
-        <pre><code>{fontSnippet}</code></pre>
-      </div>
-    </section>
-
-    <!-- Navigation footer -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
-      <a href="/docs/principles" class="as-button as-button--ghost" style="text-decoration: none;">
-        <i class="ph ph-arrow-left"></i>
-        <span class="as-button__label">Core Principles</span>
-      </a>
-      <a href="/docs/frameworks" class="as-button as-button--secondary" style="text-decoration: none;">
-        <span class="as-button__label">Next: Frameworks</span>
-        <i class="ph ph-arrow-right"></i>
-      </a>
-    </div>
-  </div>
+  </article>
 </DocsLayout>

@@ -1,129 +1,147 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const semanticTokens = [
+  { name: '--as-semantic-color-surface-canvas', light: '#FFFFFF', dark: '#121212', role: 'Primary background surface' },
+  { name: '--as-semantic-color-surface-card', light: '#F5F5F5', dark: '#1E1E1E', role: 'Elevated container card surface' },
+  { name: '--as-semantic-color-surface-subtle', light: '#EEEEEE', dark: '#282828', role: 'Subtle hover / secondary container' },
+  { name: '--as-semantic-color-text-default', light: '#121212', dark: '#E0E0E0', role: 'High-contrast primary body text' },
+  { name: '--as-semantic-color-text-muted', light: '#555555', dark: '#AAAAAA', role: 'Secondary / supporting description text' },
+  { name: '--as-semantic-color-border-subtle', light: '#E0E0E0', dark: '#333333', role: 'Dividers and soft boundaries' },
+  { name: '--as-semantic-color-border-strong', light: '#777777', dark: '#777777', role: 'Form control outlines (3:1 contrast)' },
+  { name: '--as-semantic-color-border-focus', light: '#1565C0', dark: '#64B5F6', role: 'Focus ring indicator (3:1 contrast)' }
+];
+
+const densityTokens = [
+  { name: '--as-density-control-height', value: '40px', role: 'Button standard height' },
+  { name: '--as-density-control-height-comfortable', value: '44px', role: 'Form field / Input / Select height' },
+  { name: '--as-density-control-padding-x', value: '24px', role: 'Button horizontal padding (--as-space-6)' },
+  { name: '--as-density-control-padding-y', value: '8px', role: 'Button vertical padding' }
+];
+
+const radiusTokens = [
+  { name: '--as-radius-sm', value: '4px', role: 'Inputs, selects, textareas, tags' },
+  { name: '--as-radius-md', value: '8px', role: 'Alerts, popovers, small cards' },
+  { name: '--as-radius-lg', value: '12px', role: 'Accordions, dialogs, drawers' },
+  { name: '--as-radius-xl', value: '16px', role: 'Prominent floating modal containers' },
+  { name: '--as-radius-full', value: '9999px', role: 'Pill buttons, badges, avatars' }
+];
 ---
 
 <DocsLayout 
   title="Design Tokens — Aster Design System"
-  description="W3C DTCG-compliant design token architecture across primitive, semantic, and density tiers."
+  description="W3C DTCG-compliant design token catalog with strict semantic precedence and WCAG 2.2 AA contrast compliance."
+  currentPath="/docs/tokens"
 >
-  <div style="max-width: 860px;">
-    <!-- Title & Header -->
-    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--as-semantic-color-border-subtle); padding-bottom: 24px;">
-      <div style="font-family: var(--as-typography-font-family-mono); font-size: 12px; color: var(--as-semantic-color-text-subtle); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-        Design Foundations
-      </div>
-      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em;">
-        Design Tokens
-      </h1>
-      <p style="font-size: 16px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0;">
-        Aster treats design tokens as version-controlled code, establishing a single authoritative source of truth in Git (<code>tokens/</code>) compiled into CSS custom properties via Style Dictionary.
-      </p>
+  <article class="doc-view" id="view-tokens" data-title="Design Tokens" data-section="docs" aria-labelledby="t-tokens">
+    <header class="page-head">
+      <div class="eyebrow">Foundations &middot; Tokens</div>
+      <h1 id="t-tokens" tabindex="-1">Design Tokens</h1>
+      <p class="lead">W3C DTCG-compliant design token catalog with mathematical WCAG 2.2 AA contrast compliance and single standard density.</p>
+    </header>
+
+    <div class="doc-body">
+      <!-- Semantic Color Tokens Table -->
+      <section class="doc-section">
+        <h2>Semantic Color Tokens</h2>
+        <p>Components bind strictly to semantic color tokens. Primitive colors exist solely as internal definitions.</p>
+        <div style="overflow-x: auto; margin-top: 16px;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col">CSS Custom Property</th>
+                <th scope="col">Light</th>
+                <th scope="col">Dark</th>
+                <th scope="col">Semantic Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              {semanticTokens.map((t) => (
+                <tr>
+                  <td><code>{t.name}</code></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style={`display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: ${t.light}; border: 1px solid rgba(0,0,0,0.1);`}></span>
+                      <code>{t.light}</code>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style={`display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: ${t.dark}; border: 1px solid rgba(255,255,255,0.2);`}></span>
+                      <code>{t.dark}</code>
+                    </div>
+                  </td>
+                  <td>{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Density & Sizing Tokens -->
+      <section class="doc-section">
+        <h2>Density Tokens (Single Standard Scale)</h2>
+        <p>Aster DS adheres to a single standard density scale. Compact mode is not used.</p>
+        <div style="overflow-x: auto; margin-top: 16px;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col">CSS Custom Property</th>
+                <th scope="col">Value</th>
+                <th scope="col">Control Ergonomics</th>
+              </tr>
+            </thead>
+            <tbody>
+              {densityTokens.map((t) => (
+                <tr>
+                  <td><code>{t.name}</code></td>
+                  <td><code>{t.value}</code></td>
+                  <td>{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Corner Radius Tokens -->
+      <section class="doc-section">
+        <h2>Corner Radius Tokens</h2>
+        <p>Minimum corner radius is 4px. 2px radii are strictly prohibited.</p>
+        <div style="overflow-x: auto; margin-top: 16px;">
+          <table class="as-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col">CSS Custom Property</th>
+                <th scope="col">Radius</th>
+                <th scope="col">Component Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {radiusTokens.map((t) => (
+                <tr>
+                  <td><code>{t.name}</code></td>
+                  <td><code>{t.value}</code></td>
+                  <td>{t.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Navigation footer -->
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <a href="/docs/principles" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">&larr; Core Principles</span>
+        </a>
+        <a href="/docs/frameworks" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">Framework Integration &rarr;</span>
+        </a>
+      </nav>
     </div>
-
-    <!-- 1. Token Architecture -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">1. Token Architecture</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Aster organizes design tokens into a disciplined <strong>3-tier hierarchy</strong>:
-      </p>
-      
-      <div class="code-box" style="margin-bottom: 20px;">
-        <pre><code>tokens/
-├── primitive/     # Raw design values (colors, dimensions, font families, curves)
-├── semantic/      # Purpose-driven, context-agnostic roles (light & dark parity)
-└── density/       # Standard sizing and spacing metrics (comfortable.json)</code></pre>
-      </div>
-
-      <ul style="padding-left: 20px; line-height: 1.8; color: var(--as-semantic-color-text-muted); font-size: 14.5px;">
-        <li><strong style="color: var(--as-semantic-color-text-default);">Primitive Tokens (<code>tokens/primitive/</code>):</strong> Atomic palette, typography scale, spacing steps, and radii. Primitives define the foundation but should <em>never</em> be referenced directly in component markup.</li>
-        <li><strong style="color: var(--as-semantic-color-text-default);">Semantic Tokens (<code>tokens/semantic/</code>):</strong> Intent-based roles (<code>surface</code>, <code>text</code>, <code>border</code>, <code>interactive</code>, <code>status</code>). Semantic tokens maintain <strong>identical variable names</strong> across light and dark modes.</li>
-        <li><strong style="color: var(--as-semantic-color-text-default);">Density Tokens (<code>tokens/density/</code>):</strong> Unified standard control dimensions (<code>40px</code> control height, <code>44px</code> input height).</li>
-      </ul>
-    </section>
-
-    <!-- 2. Naming Grammar -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">2. Ergonomic Naming Grammar</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        Aster tokens follow a strict, predictable naming grammar:
-      </p>
-      <div class="code-box" style="margin-bottom: 20px;">
-        <pre><code>--as-[category]-[context]-[role]-[variant]</code></pre>
-      </div>
-      <div style="background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-md); padding: 18px; font-size: 14px; line-height: 1.7;">
-        <div>• <strong>Primitives:</strong> <code>--as-color-primitive-*</code>, <code>--as-space-*</code>, <code>--as-radius-*</code>, <code>--as-typography-*</code></div>
-        <div>• <strong>Semantic Colors:</strong> <code>--as-semantic-color-surface-*</code>, <code>--as-semantic-color-text-*</code>, <code>--as-semantic-color-border-*</code></div>
-        <div>• <strong>Density Metrics:</strong> <code>--as-density-control-height</code>, <code>--as-density-control-padding-y</code></div>
-      </div>
-    </section>
-
-    <!-- 3. Neutral Foundation -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="font-size: 22px; font-weight: 600; margin: 0 0 16px;">3. Neutral Palette & Surface Hierarchy</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: var(--as-semantic-color-text-muted); margin: 0 0 16px;">
-        High-contrast neutral surface pairings providing mathematically validated WCAG AA/AAA contrast:
-      </p>
-
-      <div style="overflow-x: auto;">
-        <table class="as-table" style="width: 100%; font-size: 13.5px;">
-          <thead>
-            <tr>
-              <th style="text-align: left; padding: 10px 12px;">Token Variable</th>
-              <th style="text-align: left; padding: 10px 12px;">Hex Value</th>
-              <th style="text-align: left; padding: 10px 12px;">Role & Intended Surface</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-surface-canvas</code></td>
-              <td style="padding: 10px 12px;"><code>#ffffff</code> / <code>#121212</code></td>
-              <td style="padding: 10px 12px;">Base screen canvas surface</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-surface-card</code></td>
-              <td style="padding: 10px 12px;"><code>#f5f5f5</code> / <code>#1e1e1e</code></td>
-              <td style="padding: 10px 12px;">Elevated container, dialog, and card surface</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-surface-subtle</code></td>
-              <td style="padding: 10px 12px;"><code>#eeeeee</code> / <code>#333333</code></td>
-              <td style="padding: 10px 12px;">Muted background fills, pill tags, and table striping</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-text-default</code></td>
-              <td style="padding: 10px 12px;"><code>#121212</code> / <code>#e0e0e0</code></td>
-              <td style="padding: 10px 12px;">Primary high-contrast reading text (&gt;14:1 AAA)</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-text-muted</code></td>
-              <td style="padding: 10px 12px;"><code>#555555</code> / <code>#aaaaaa</code></td>
-              <td style="padding: 10px 12px;">Secondary explanatory text (&gt;6.8:1 AA)</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-border-subtle</code></td>
-              <td style="padding: 10px 12px;"><code>#eeeeee</code> / <code>#333333</code></td>
-              <td style="padding: 10px 12px;">Hairline container borders and dividers</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 12px;"><code>--as-semantic-color-border-focus</code></td>
-              <td style="padding: 10px 12px;"><code>#1565c0</code> / <code>#64b5f6</code></td>
-              <td style="padding: 10px 12px;">Accessible keyboard focus indicator ring</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Navigation footer -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--as-semantic-color-border-subtle); padding-top: 24px; margin-top: 48px;">
-      <a href="/docs" class="as-button as-button--ghost" style="text-decoration: none;">
-        <i class="ph ph-arrow-left"></i>
-        <span class="as-button__label">Introduction</span>
-      </a>
-      <a href="/docs/principles" class="as-button as-button--secondary" style="text-decoration: none;">
-        <span class="as-button__label">Next: Core Principles</span>
-        <i class="ph ph-arrow-right"></i>
-      </a>
-    </div>
-  </div>
+  </article>
 </DocsLayout>
