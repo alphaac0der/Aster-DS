@@ -43,9 +43,9 @@ const { component, prevComponent, nextComponent } = Astro.props;
 
       <nav class="component-audience-nav" aria-label="Component audience perspective">
         <span class="audience-nav-label">Audience Hubs:</span>
-        <a href="/docs/principles" class="audience-chip">For Designers</a>
-        <a href="/docs/frameworks" class="audience-chip">For Developers</a>
-        <a href="/docs/tokens" class="audience-chip">For AI Agents</a>
+        <a href="/docs/principles#designers" class="audience-chip">For Designers</a>
+        <a href="/docs/frameworks#developers" class="audience-chip">For Developers</a>
+        <a href="/docs/tokens#agents" class="audience-chip">For AI Agents</a>
       </nav>
     </header>
 
@@ -66,12 +66,12 @@ const { component, prevComponent, nextComponent } = Astro.props;
             </div>
           </div>
 
-          <!-- TAB 1: PREVIEW -->
+          <!-- TAB 1: PREVIEW (Rendered directly into .preview-canvas without extra wrapper) -->
           <div class="preview-canvas" role="tabpanel" aria-label={`${component.name} live preview`}>
-            <div set:html={component.previewHtml} />
+            <Fragment set:html={component.previewHtml} />
           </div>
 
-          <!-- TAB 2: CODE -->
+          <!-- TAB 2: CODE (Deterministic Multi-Category Syntax Highlighting) -->
           <div class="preview-code" role="tabpanel" aria-label={`${component.name} implementation code`} hidden>
             <div class="code-block">
               <div class="code-block__bar">
@@ -85,7 +85,7 @@ const { component, prevComponent, nextComponent } = Astro.props;
             </div>
           </div>
 
-          <!-- TAB 3: PROMPT -->
+          <!-- TAB 3: PROMPT (AI Agent Implementation Prompt) -->
           <div class="preview-prompt" role="tabpanel" aria-label={`${component.name} AI agent prompt`} hidden>
             <div class="prompt-panel">
               <div class="prompt-panel__bar">
@@ -102,32 +102,24 @@ const { component, prevComponent, nextComponent } = Astro.props;
             </div>
           </div>
 
-          <!-- TAB 4: ANATOMY -->
+          <!-- TAB 4: ANATOMY (Technical Blueprint Box, Rulers, Callouts, Designer Explanation, Spec Table) -->
           <div class="preview-anatomy" role="tabpanel" aria-label={`${component.name} visual anatomy and measurements`} hidden>
-            <div class="anatomy-panel">
-              <div class="anatomy-stage">
-                <div class="anatomy-blueprint-head">
-                  <span>Technical Blueprint &middot; {component.name}</span>
-                  <span>Standard Density &middot; 4pt Spatial Scale</span>
-                </div>
-                <div class="anatomy-measurements">
-                  <table class="as-table" style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th scope="col">Part / Property</th>
-                        <th scope="col">Concrete Value</th>
-                        <th scope="col">Canonical Design Token</th>
-                        <th scope="col">Sizing Behavior</th>
-                      </tr>
-                    </thead>
-                    <tbody set:html={component.anatomyRows} />
-                  </table>
-                </div>
-              </div>
-            </div>
+            <Fragment set:html={component.anatomyHtml} />
           </div>
         </div>
       </section>
+
+      <!-- Usage Guidance -->
+      {component.usageHtml && <Fragment set:html={component.usageHtml} />}
+
+      <!-- Variants & Interactive States -->
+      {component.variantsHtml && <Fragment set:html={component.variantsHtml} />}
+
+      <!-- Accessibility Specifications -->
+      {component.a11yHtml && <Fragment set:html={component.a11yHtml} />}
+
+      <!-- Canonical Token Bindings -->
+      {component.tokensHtml && <Fragment set:html={component.tokensHtml} />}
 
       <!-- Sequential Component Pagination Footer -->
       <nav class="doc-pagination" aria-label="Documentation Pagination">

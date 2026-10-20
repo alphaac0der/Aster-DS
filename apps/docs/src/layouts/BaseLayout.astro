@@ -16,6 +16,7 @@ const {
 } = Astro.props;
 
 import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
 ---
 
 <!DOCTYPE html>
@@ -159,6 +160,9 @@ import '../styles/global.css';
   <div id="global-live-region" class="as-sr-only" role="status" aria-live="polite"></div>
   <div class="scrim" id="scrim"></div>
 
+  <!-- Off-Canvas Sidebar Navigation (Available on all pages for mobile drawer) -->
+  {kind !== 'docs' && <Sidebar currentPath={currentPath} />}
+
   <!-- Page Slot -->
   <slot />
 
@@ -177,13 +181,65 @@ import '../styles/global.css';
 
   <!-- Interactive Client Behavior Scripts -->
   <script>
-    import { initAsterComponents } from '../../../../dist/js/aster.js';
+    import { 
+      initAsterComponents,
+      setButtonLoading,
+      validateInput
+    } from '../../../../dist/js/aster.js';
 
     function initClient() {
       // 1. Initialize Aster component behaviors
       initAsterComponents(document);
 
-      // 2. Theme Toggle
+      // 2. Deterministic Multi-Category Syntax Highlighter & Line Numbers
+      const MASTER_TOKEN_RE = /(&lt;!--[\s\S]*?--&gt;|\/\*[\s\S]*?\*\/|\/\/[^\n]*|^\s*#[^\n]*)|(&lt;\/?[a-zA-Z][\w:-]*|\/?&gt;)|(\b[a-zA-Z_:][\w:.-]*(?=\s*=))|("[^"]*"|'[^']*'|`[^`]*`)|(\b(?:import|from|export|const|let|var|function|return|async|await|if|else|new|true|false|null|undefined|document|window)\b)|(--as-[\w-]+|\b(?:initAsterComponents|setButtonLoading|setFieldValidation|validateInput|computeSelectionState|syncTableOverflow|showToast|addEventListener|getElementById|querySelector)\b)|(\b\d+(?:\.\d+)?(?:px|rem|ms|s|%)?\b)/gm;
+
+      const esc = (s: string) => String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      function highlightCode(rawText: string) {
+        const escaped = esc(rawText);
+        return escaped.replace(MASTER_TOKEN_RE, (match, com, tag, attr, str, kw, fn, num) => {
+          if (com) return `<span class="tok-com">${com}</span>`;
+          if (tag) return `<span class="tok-tag">${tag}</span>`;
+          if (attr) return `<span class="tok-attr">${attr}</span>`;
+          if (str) return `<span class="tok-str">${str}</span>`;
+          if (kw) return `<span class="tok-kw">${kw}</span>`;
+          if (fn) return `<span class="tok-fn">${fn}</span>`;
+          if (num) return `<span class="tok-num">${num}</span>`;
+          return match;
+        });
+      }
+
+      function enhanceCodeBlocks(scope: HTMLElement | Document = document) {
+        scope.querySelectorAll('.code-block').forEach((block) => {
+          const codeEl = block.querySelector('code') as HTMLElement | null;
+          if (!codeEl || codeEl.dataset.highlighted === 'true') return;
+          const raw = (codeEl.textContent || '').trim();
+          codeEl.dataset.raw = raw;
+          codeEl.innerHTML = highlightCode(raw);
+          codeEl.dataset.highlighted = 'true';
+
+          const pre = codeEl.closest('pre');
+          if (pre && !pre.parentElement?.classList.contains('code-editor-body')) {
+            const linesCount = raw.split('\n').length;
+            const wrapper = document.createElement('div');
+            wrapper.className = 'code-editor-body';
+            const gutter = document.createElement('div');
+            gutter.className = 'code-gutter';
+            gutter.setAttribute('aria-hidden', 'true');
+            gutter.innerHTML = Array.from({ length: linesCount }, (_, i) => `<span>${i + 1}</span>`).join('');
+            pre.parentNode?.insertBefore(wrapper, pre);
+            wrapper.appendChild(gutter);
+            wrapper.appendChild(pre);
+          }
+        });
+      }
+      enhanceCodeBlocks(document);
+
+      // 3. Theme Toggle
       const themeBtn = document.getElementById('theme-toggle-btn');
       if (themeBtn) {
         themeBtn.onclick = () => {
@@ -194,28 +250,56 @@ import '../styles/global.css';
         };
       }
 
-      // 3. Mobile Navigation Drawer
+      // 4. Mobile Navigation Drawer (Standard Aster body[data-nav-open])
       const menuBtn = document.getElementById('menu-btn');
-      const sidebar = document.getElementById('sidebar');
       const scrim = document.getElementById('scrim');
-      if (menuBtn && sidebar && scrim) {
-        const toggleMenu = () => {
-          const open = sidebar.classList.toggle('sidebar--open');
-          scrim.classList.toggle('scrim--open', open);
-          menuBtn.setAttribute('aria-expanded', String(open));
-        };
-        menuBtn.onclick = toggleMenu;
-        scrim.onclick = () => {
-          sidebar.classList.remove('sidebar--open');
-          scrim.classList.remove('scrim--open');
-          menuBtn.setAttribute('aria-expanded', 'false');
+      
+      function openNav() {
+        document.body.setAttribute('data-nav-open', '');
+        menuBtn?.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeNav() {
+        document.body.removeAttribute('data-nav-open');
+        menuBtn?.setAttribute('aria-expanded', 'false');
+      }
+
+      if (menuBtn) {
+        menuBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (document.body.hasAttribute('data-nav-open')) {
+            closeNav();
+          } else {
+            openNav();
+          }
         };
       }
 
-      // 4. Command Palette Search (Ctrl+K)
-      const palette = document.getElementById('palette');
+      if (scrim) {
+        scrim.onclick = closeNav;
+      }
+
+      // Close on navigation link click
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('.nav-link') || target?.closest('.sidebar a')) {
+          closeNav();
+        }
+      });
+
+      // Close on Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (document.body.hasAttribute('data-nav-open')) {
+            closeNav();
+          }
+        }
+      });
+
+      // 5. Command Palette Search (Ctrl+K)
+      const palette = document.getElementById('palette') as HTMLDialogElement | null;
       const searchTrigger = document.getElementById('search-trigger');
-      const paletteInput = document.getElementById('palette-input');
+      const paletteInput = document.getElementById('palette-input') as HTMLInputElement | null;
       const paletteList = document.getElementById('palette-list');
 
       const searchablePages = [
@@ -275,8 +359,8 @@ import '../styles/global.css';
           paletteInput.focus();
         };
 
-        paletteInput.oninput = (e) => {
-          renderPalette(e.target.value);
+        paletteInput.oninput = (e: Event) => {
+          renderPalette((e.target as HTMLInputElement).value);
         };
 
         window.addEventListener('keydown', (e) => {
@@ -294,9 +378,10 @@ import '../styles/global.css';
         });
       }
 
-      // 5. Component 4-Tab Workbench Controller (Preview | Code | Prompt | Anatomy)
+      // 6. Component 4-Tab Workbench Controller (Preview | Code | Prompt | Anatomy)
       document.addEventListener('click', (e) => {
-        const tab = e.target.closest('.preview-tab');
+        const target = e.target as HTMLElement | null;
+        const tab = target?.closest('.preview-tab') as HTMLElement | null;
         if (!tab) return;
         const card = tab.closest('.preview-card');
         if (!card) return;
@@ -305,27 +390,63 @@ import '../styles/global.css';
         tabs.forEach((t) => {
           const active = t === tab;
           t.setAttribute('aria-selected', String(active));
-          t.tabIndex = active ? 0 : -1;
+          (t as HTMLElement).tabIndex = active ? 0 : -1;
         });
 
-        const canvas = card.querySelector('.preview-canvas');
-        const code = card.querySelector('.preview-code');
-        const prompt = card.querySelector('.preview-prompt');
-        const anatomy = card.querySelector('.preview-anatomy');
+        const canvas = card.querySelector('.preview-canvas') as HTMLElement | null;
+        const code = card.querySelector('.preview-code') as HTMLElement | null;
+        const prompt = card.querySelector('.preview-prompt') as HTMLElement | null;
+        const anatomy = card.querySelector('.preview-anatomy') as HTMLElement | null;
         if (canvas) canvas.hidden = mode !== 'preview';
-        if (code) code.hidden = mode !== 'code';
+        if (code) {
+          code.hidden = mode !== 'code';
+          if (!code.hidden) enhanceCodeBlocks(code);
+        }
         if (prompt) prompt.hidden = mode !== 'prompt';
         if (anatomy) anatomy.hidden = mode !== 'anatomy';
       });
 
-      // 6. Copy Code and Copy Prompt Buttons
+      // Keyboard support for 4-tabs (ArrowLeft, ArrowRight, Home, End)
+      document.addEventListener('keydown', (e) => {
+        const target = e.target as HTMLElement | null;
+        const tab = target?.closest('.preview-tab') as HTMLElement | null;
+        if (!tab) return;
+        const card = tab.closest('.preview-card');
+        if (!card) return;
+        const tabs = Array.from(card.querySelectorAll('.preview-tab')) as HTMLElement[];
+        const idx = tabs.indexOf(tab);
+        if (idx === -1) return;
+        let nextTab: HTMLElement | null = null;
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          nextTab = tabs[(idx + 1) % tabs.length];
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          nextTab = tabs[(idx - 1 + tabs.length) % tabs.length];
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          nextTab = tabs[0];
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          nextTab = tabs[tabs.length - 1];
+        }
+        if (nextTab) {
+          nextTab.click();
+          nextTab.focus();
+        }
+      });
+
+      // 7. Copy Code and Copy Prompt Buttons (copies raw text, not highlighted HTML)
       document.addEventListener('click', async (e) => {
-        const copyBtn = e.target.closest('.copy-btn');
+        const target = e.target as HTMLElement | null;
+        const copyBtn = target?.closest('.copy-btn') as HTMLElement | null;
         if (copyBtn) {
-          const codeEl = copyBtn.closest('.code-block')?.querySelector('pre code') || copyBtn.closest('.code-block')?.querySelector('pre');
+          const block = copyBtn.closest('.code-block');
+          const codeEl = (block?.querySelector('code') || block?.querySelector('pre')) as HTMLElement | null;
           if (codeEl) {
             try {
-              await navigator.clipboard.writeText(codeEl.textContent || '');
+              const text = (codeEl.dataset.raw || codeEl.textContent || '').trim();
+              await navigator.clipboard.writeText(text);
               const orig = copyBtn.textContent;
               copyBtn.textContent = 'Copied!';
               setTimeout(() => { copyBtn.textContent = orig; }, 1600);
@@ -334,9 +455,9 @@ import '../styles/global.css';
           return;
         }
 
-        const copyPromptBtn = e.target.closest('.copy-prompt-btn');
+        const copyPromptBtn = target?.closest('.copy-prompt-btn') as HTMLElement | null;
         if (copyPromptBtn) {
-          const promptEl = copyPromptBtn.closest('.prompt-panel')?.querySelector('.prompt-panel__pre');
+          const promptEl = copyPromptBtn.closest('.prompt-panel')?.querySelector('.prompt-panel__pre') as HTMLElement | null;
           if (promptEl) {
             try {
               await navigator.clipboard.writeText(promptEl.textContent || '');
@@ -348,9 +469,93 @@ import '../styles/global.css';
         }
       });
 
-      // 7. Interactive Slider Live Progress Update
+      // 8. Button Matrix Dynamic Generator
+      (function buildButtonMatrix() {
+        const matrixBody = document.querySelector('[data-matrix="button"] tbody');
+        if (!matrixBody || matrixBody.children.length > 0) return;
+        const BTN_VARIANTS = ['primary', 'secondary', 'destructive', 'ghost'];
+        const BTN_STATES = [
+          ['default', ''],
+          ['hover', 'is-hover'],
+          ['pressed', 'is-pressed'],
+          ['focus', 'is-focus'],
+          ['loading', ''],
+          ['disabled', '']
+        ];
+        BTN_VARIANTS.forEach((v) => {
+          const tr = document.createElement('tr');
+          const th = document.createElement('th');
+          th.scope = 'row';
+          th.textContent = v[0].toUpperCase() + v.slice(1);
+          tr.appendChild(th);
+          BTN_STATES.forEach(([state, cls]) => {
+            const td = document.createElement('td');
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = `as-button as-button--${v} ${cls}`.trim();
+            if (state === 'loading') {
+              b.setAttribute('aria-busy', 'true');
+              b.innerHTML = '<span class="as-spinner" aria-hidden="true"></span><span class="as-button__label">Saving</span>';
+            } else {
+              b.innerHTML = '<span class="as-button__label">Button</span>';
+            }
+            if (state === 'disabled') b.disabled = true;
+            if (cls) b.tabIndex = -1;
+            td.appendChild(b);
+            tr.appendChild(td);
+          });
+          matrixBody.appendChild(tr);
+        });
+      })();
+
+      // 9. Component Interactive Demos
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        const sim = target?.closest('[data-sim-save]') as HTMLElement | null;
+        if (sim) {
+          if (sim.getAttribute('aria-busy') === 'true') return;
+          const label = (sim.querySelector('.as-button__label') || sim) as HTMLElement;
+          const orig = label.textContent || '';
+          setButtonLoading(sim, true, 'Saving');
+          setTimeout(() => {
+            setButtonLoading(sim, false);
+            label.textContent = orig;
+          }, 1600);
+        }
+      });
+
+      const ariaTarget = document.getElementById('aria-target');
+      const ariaToggle = document.getElementById('aria-toggle');
+      if (ariaTarget && ariaToggle) {
+        ariaToggle.addEventListener('click', () => {
+          const disabled = ariaTarget.getAttribute('aria-disabled') === 'true';
+          const label = ariaTarget.querySelector('.as-button__label');
+          const toggleLabel = ariaToggle.querySelector('.as-button__label') || ariaToggle;
+          if (disabled) {
+            ariaTarget.removeAttribute('aria-disabled');
+            if (label) label.textContent = 'Publish';
+            toggleLabel.textContent = 'Disable it';
+          } else {
+            ariaTarget.setAttribute('aria-disabled', 'true');
+            if (label) label.textContent = 'Focus-retaining disabled';
+            toggleLabel.textContent = 'Enable it';
+          }
+        });
+      }
+
+      const setWs = (v: string) => {
+        const input = document.getElementById('in-ws') as HTMLInputElement | null;
+        if (!input) return;
+        input.value = v;
+        validateInput(input);
+      };
+      document.getElementById('fill-invalid')?.addEventListener('click', () => setWs('Acme Platform!'));
+      document.getElementById('fill-valid')?.addEventListener('click', () => setWs('acme-platform'));
+
+      // 10. Interactive Slider Live Progress Update
       document.addEventListener('input', (e) => {
-        const slider = e.target.closest('.as-slider');
+        const target = e.target as HTMLElement | null;
+        const slider = target?.closest('.as-slider') as HTMLInputElement | null;
         if (!slider) return;
         slider.style.setProperty('--_progress', `${slider.value}%`);
         const valEl = document.getElementById('home-card-slider-val');
@@ -359,10 +564,11 @@ import '../styles/global.css';
         }
       });
       document.querySelectorAll('.as-slider').forEach((s) => {
-        s.style.setProperty('--_progress', `${s.value}%`);
+        const slider = s as HTMLInputElement;
+        slider.style.setProperty('--_progress', `${slider.value}%`);
       });
 
-      // 8. Interactive Home Cards
+      // 11. Interactive Home Cards
       const homeBtn = document.getElementById('home-card-btn');
       if (homeBtn) {
         homeBtn.onclick = () => {

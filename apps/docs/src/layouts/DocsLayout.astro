@@ -12,70 +12,13 @@ const {
 } = Astro.props;
 
 import BaseLayout from './BaseLayout.astro';
-
-const components = [
-  { name: 'Accordion', path: '/components/accordion' },
-  { name: 'Alert', path: '/components/alert' },
-  { name: 'Badge', path: '/components/badge' },
-  { name: 'Button', path: '/components/button' },
-  { name: 'Checkbox', path: '/components/checkbox' },
-  { name: 'Dialog', path: '/components/dialog' },
-  { name: 'Drawer', path: '/components/drawer' },
-  { name: 'Dropdown Menu', path: '/components/dropdown' },
-  { name: 'Input & Field', path: '/components/input' },
-  { name: 'Popover', path: '/components/popover' },
-  { name: 'Progress', path: '/components/progress' },
-  { name: 'Radio Group', path: '/components/radio' },
-  { name: 'Select', path: '/components/select' },
-  { name: 'Skeleton', path: '/components/skeleton' },
-  { name: 'Slider', path: '/components/slider' },
-  { name: 'Switch', path: '/components/switch' },
-  { name: 'Data Table', path: '/components/table' },
-  { name: 'Tabs', path: '/components/tabs' },
-  { name: 'Textarea', path: '/components/textarea' },
-  { name: 'Toast', path: '/components/toast' },
-  { name: 'Tooltip', path: '/components/tooltip' }
-];
-
-function isCurrent(path: string) {
-  if (path === '/docs') {
-    return currentPath === '/docs' || currentPath === '/docs/';
-  }
-  return currentPath === path || currentPath === path + '/';
-}
+import Sidebar from '../components/Sidebar.astro';
 ---
 
 <BaseLayout title={title} description={description} currentPath={currentPath} kind="docs">
   <div class="docs-shell">
     <!-- Canonical Documentation Sidebar -->
-    <nav class="sidebar" id="sidebar" aria-label="Documentation">
-      <div class="nav-group">
-        <h2>Getting Started</h2>
-        <a class={`nav-link ${isCurrent('/docs') ? 'nav-link--active' : ''}`} href="/docs" aria-current={isCurrent('/docs') ? 'page' : undefined}>Introduction</a>
-        <a class={`nav-link ${isCurrent('/docs/installation') ? 'nav-link--active' : ''}`} href="/docs/installation" aria-current={isCurrent('/docs/installation') ? 'page' : undefined}>Installation</a>
-      </div>
-
-      <div class="nav-group">
-        <h2>Audience Hubs</h2>
-        <a class={`nav-link ${isCurrent('/docs/frameworks') ? 'nav-link--active' : ''}`} href="/docs/frameworks" aria-current={isCurrent('/docs/frameworks') ? 'page' : undefined}>For Developers</a>
-        <a class={`nav-link ${isCurrent('/docs/principles') ? 'nav-link--active' : ''}`} href="/docs/principles" aria-current={isCurrent('/docs/principles') ? 'page' : undefined}>For Designers</a>
-        <a class={`nav-link ${isCurrent('/docs/tokens') ? 'nav-link--active' : ''}`} href="/docs/tokens" aria-current={isCurrent('/docs/tokens') ? 'page' : undefined}>For AI Agents</a>
-      </div>
-
-      <div class="nav-group">
-        <h2>Foundations</h2>
-        <a class={`nav-link ${isCurrent('/docs/tokens') ? 'nav-link--active' : ''}`} href="/docs/tokens" aria-current={isCurrent('/docs/tokens') ? 'page' : undefined}>Color System &amp; Tokens</a>
-        <a class={`nav-link ${isCurrent('/docs/principles') ? 'nav-link--active' : ''}`} href="/docs/principles" aria-current={isCurrent('/docs/principles') ? 'page' : undefined}>Design Principles</a>
-        <a class={`nav-link ${isCurrent('/docs/frameworks') ? 'nav-link--active' : ''}`} href="/docs/frameworks" aria-current={isCurrent('/docs/frameworks') ? 'page' : undefined}>Framework Integration</a>
-      </div>
-
-      <div class="nav-group">
-        <h2>Components</h2>
-        {components.map((c) => (
-          <a class={`nav-link ${isCurrent(c.path) ? 'nav-link--active' : ''}`} href={c.path} aria-current={isCurrent(c.path) ? 'page' : undefined}>{c.name}</a>
-        ))}
-      </div>
-    </nav>
+    <Sidebar currentPath={currentPath} />
 
     <!-- Main Content Area -->
     <main class="docs-main" id="main-content">
