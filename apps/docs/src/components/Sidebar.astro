@@ -60,6 +60,11 @@ function isCurrent(path: string) {
   </div>
 
   <div class="nav-group">
+    <h2>Patterns</h2>
+    <a class={`nav-link ${isCurrent('/docs/patterns') ? 'nav-link--active' : ''}`} href="/docs/patterns" aria-current={isCurrent('/docs/patterns') ? 'page' : undefined}>Common layouts</a>
+  </div>
+
+  <div class="nav-group">
     <h2>Components</h2>
     {components.map((c) => (
       <a class={`nav-link ${isCurrent(c.path) ? 'nav-link--active' : ''}`} href={c.path} aria-current={isCurrent(c.path) ? 'page' : undefined}>{c.name}</a>

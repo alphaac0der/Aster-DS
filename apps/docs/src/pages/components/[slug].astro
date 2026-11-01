@@ -1,6 +1,7 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { componentsData } from '../../data/components.js';
+import { guidance } from '../../data/guidance.js';
 
 export const canonicalOrder = [
   'accordion',
@@ -46,11 +47,12 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const { component, prevComponent, nextComponent } = Astro.props;
+const guide = guidance[component.slug];
 ---
 
 <DocsLayout 
   title={`${component.name} — Aster Design System`}
-  description={component.description}
+  description={guide.summary}
   currentPath={`/components/${slug}`}
 >
   <article class="doc-view" id={`view-${component.slug}`} data-title={component.name} data-section="components" aria-labelledby={`t-${component.slug}`}>
@@ -58,7 +60,7 @@ const { component, prevComponent, nextComponent } = Astro.props;
     <header class="page-head">
       <div class="eyebrow">Components &middot; {component.category}</div>
       <h1 id={`t-${component.slug}`} tabindex="-1">{component.name}</h1>
-      <p class="lead">{component.description}</p>
+      <p class="lead">{guide.summary}</p>
       
       <div class="component-meta">
         <span class="meta-tag meta-tag--success" title="Checked automatically with axe-core in light and dark themes on every CI run. Automated scans cover only part of WCAG.">Automated a11y scan passing</span>
@@ -128,11 +130,21 @@ const { component, prevComponent, nextComponent } = Astro.props;
         </div>
       </section>
 
-      <!-- Usage Guidance -->
-      {component.usageHtml && <Fragment set:html={component.usageHtml} />}
+      <!-- Do and Don't -->
+      <section class="doc-section">
+        <h2>When to use it</h2>
+        <div class="fd-rules">
+          <div class="fd-rule"><h3>Do</h3><ul>{guide.do.map((t) => <li>{t}</li>)}</ul></div>
+          <div class="fd-rule"><h3>Don't</h3><ul>{guide.dont.map((t) => <li>{t}</li>)}</ul></div>
+        </div>
+      </section>
 
-      <!-- Variants & Interactive States -->
-      {component.variantsHtml && <Fragment set:html={component.variantsHtml} />}
+      <!-- Variants and states, rendered from the real component -->
+      <section class="doc-section" data-states-section hidden>
+        <h2>Variants &amp; States</h2>
+        <p>Every option, rendered live with real styles.</p>
+        <div data-states={component.slug}></div>
+      </section>
 
       <!-- Accessibility Specifications -->
       {component.a11yHtml && <Fragment set:html={component.a11yHtml} />}
@@ -170,9 +182,12 @@ const { component, prevComponent, nextComponent } = Astro.props;
   </article>
 
   <script>
-    import { initAnatomy, applyMeasurements } from '../../../../../playground/scripts/anatomy.js';
+    import { initAnatomy, applyMeasurements, renderStates } from '../../../../../playground/scripts/anatomy.js';
+    import { initFoundations } from '../../../../../playground/scripts/foundations.js';
 
     initAnatomy();
+    document.querySelectorAll('[data-states]').forEach(renderStates);
+    initFoundations();
     const slug = document.querySelector('[data-anatomy]')?.getAttribute('data-anatomy');
     const measure = () => { if (slug) applyMeasurements(slug); };
     measure();

@@ -1,0 +1,170 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const signIn = `<form class="as-card" style="max-width: 400px;">
+  <header class="as-card__header">
+    <h3 class="as-card__title">Sign in</h3>
+    <p class="as-card__description">Use your work email and password.</p>
+  </header>
+  <div class="as-form-field">
+    <label class="as-form-field__label" for="login-email">Email</label>
+    <div class="as-input-box">
+      <input class="as-input" type="email" id="login-email" autocomplete="email" required>
+    </div>
+  </div>
+  <div class="as-form-field">
+    <label class="as-form-field__label" for="login-password">Password</label>
+    <div class="as-input-box">
+      <input class="as-input" type="password" id="login-password" autocomplete="current-password" required>
+    </div>
+  </div>
+  <label class="as-checkbox-field">
+    <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input"></span>
+    <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Keep me signed in</span></span>
+  </label>
+  <footer class="as-card__footer">
+    <button type="submit" class="as-button as-button--primary"><span class="as-button__label">Sign in</span></button>
+    <a class="as-link" href="#sign-in">Forgot your password?</a>
+  </footer>
+</form>`;
+
+const settings = `<section class="as-card" style="max-width: 560px;">
+  <header class="as-card__header">
+    <h3 class="as-card__title">Notifications</h3>
+    <p class="as-card__description">These settings apply immediately.</p>
+  </header>
+  <label class="as-switch-field">
+    <span class="as-switch">
+      <input type="checkbox" role="switch" class="as-switch-input" checked>
+      <span class="as-switch-track"><span class="as-switch-thumb"></span></span>
+    </span>
+    <span class="as-switch-field__content">
+      <span class="as-switch-field__label">Deployment alerts</span>
+      <span class="as-switch-field__description">Tell me when a deployment fails.</span>
+    </span>
+  </label>
+  <label class="as-switch-field">
+    <span class="as-switch">
+      <input type="checkbox" role="switch" class="as-switch-input">
+      <span class="as-switch-track"><span class="as-switch-thumb"></span></span>
+    </span>
+    <span class="as-switch-field__content">
+      <span class="as-switch-field__label">Weekly summary</span>
+      <span class="as-switch-field__description">Email me a report every Monday.</span>
+    </span>
+  </label>
+</section>`;
+
+const filters = `<div style="display: flex; flex-direction: column; gap: var(--as-space-4); width: 100%;">
+  <div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--as-space-3);">
+    <div class="as-form-field" style="flex: 1 1 220px; margin: 0;">
+      <label class="as-form-field__label" for="filter-search">Search nodes</label>
+      <div class="as-input-box"><input class="as-input" type="search" id="filter-search"></div>
+    </div>
+    <div class="as-form-field" style="flex: 0 1 180px; margin: 0;">
+      <label class="as-form-field__label" for="filter-status">Status</label>
+      <div class="as-select-box">
+        <select class="as-select" id="filter-status">
+          <option>All</option>
+          <option>Active</option>
+          <option>Offline</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="as-table-container">
+    <div class="as-table-scroll">
+      <table class="as-table as-table--interactive">
+        <caption class="as-sr-only">Cluster nodes</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="as-table__th">Node</th>
+            <th scope="col" class="as-table__th">Status</th>
+            <th scope="col" class="as-table__th as-table__th--num">Latency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="as-table__row">
+            <th scope="row" class="as-table__cell as-table__cell--primary">iad-01</th>
+            <td class="as-table__cell"><span class="as-badge as-badge--success">Active</span></td>
+            <td class="as-table__cell as-table__cell--num">1.24 ms</td>
+          </tr>
+          <tr class="as-table__row">
+            <th scope="row" class="as-table__cell as-table__cell--primary">gru-05</th>
+            <td class="as-table__cell"><span class="as-badge as-badge--critical">Offline</span></td>
+            <td class="as-table__cell as-table__cell--num">38.70 ms</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>`;
+
+const states = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--as-space-4); width: 100%;">
+  <section class="as-card">
+    <h3 class="as-card__title">No projects yet</h3>
+    <p class="as-card__description">Create your first project to start tracking deployments.</p>
+    <footer class="as-card__footer">
+      <button type="button" class="as-button as-button--primary"><span class="as-button__label">Create project</span></button>
+    </footer>
+  </section>
+  <div class="as-alert as-alert--critical" role="alert" style="align-self: start;">
+    <div class="as-alert__content">
+      <div class="as-alert__title">Couldn't load projects</div>
+      <div class="as-alert__description">Check your connection, then reload the page.</div>
+    </div>
+  </div>
+  <div aria-busy="true" style="display: flex; gap: var(--as-space-3); align-self: start;">
+    <div class="as-skeleton as-skeleton--avatar" aria-hidden="true" style="width: 40px; height: 40px; flex: none;"></div>
+    <div style="flex: 1; display: flex; flex-direction: column; gap: var(--as-space-2);">
+      <div class="as-skeleton as-skeleton--text" aria-hidden="true" style="width: 100%;"></div>
+      <div class="as-skeleton as-skeleton--text" aria-hidden="true" style="width: 60%;"></div>
+    </div>
+  </div>
+</div>`;
+
+const patterns = [
+  { id: 'sign-in', title: 'Sign-in form', intro: 'Keep it short, with visible labels. The primary button comes first, and the password help is a link because it leads somewhere else.', html: signIn },
+  { id: 'settings', title: 'Settings', intro: 'Use switches when a change applies immediately. Each one names the setting and says what it does.', html: settings },
+  { id: 'filters', title: 'Table with filters', intro: 'Put filters directly above the data they change, and align the fields along their bottom edge. Connecting the filters to your data is up to your app.', html: filters },
+  { id: 'states', title: 'Empty, error, and loading', intro: 'Every data view needs these three. An empty state offers a next step, an error says how to recover, and a skeleton matches the shape of what is loading.', html: states }
+];
+---
+
+<DocsLayout title="Patterns — Aster Design System" description="Common layouts built only from Aster components, with code to copy." currentPath="/docs/patterns">
+  <article class="doc-view" id="view-patterns" data-active data-title="Patterns" data-section="docs" aria-labelledby="t-patterns">
+    <header class="page-head">
+      <div class="eyebrow">Patterns</div>
+      <h1 id="t-patterns" tabindex="-1">Patterns</h1>
+      <p class="lead">Common layouts built only from Aster components. Copy the code as a starting point, then connect it to your own data and logic.</p>
+    </header>
+
+    <div class="doc-body">
+      {patterns.map((p) => (
+        <section class="doc-section" id={p.id}>
+          <h2>{p.title}</h2>
+          <p>{p.intro}</p>
+          <div class="fd-pattern" set:html={p.html}></div>
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__meta"><span>HTML</span></div>
+              <button type="button" class="copy-btn">Copy Code</button>
+            </div>
+            <pre><code>{p.html}</code></pre>
+          </div>
+        </section>
+      ))}
+
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <a href="/docs/frameworks" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">Framework Integration</span>
+        </a>
+        <a href="/components" class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">Components</span>
+        </a>
+      </nav>
+    </div>
+  </article>
+</DocsLayout>

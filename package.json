@@ -64,6 +64,7 @@
     "test:components": "node build-tools/verify-component-contracts.js",
     "test:exports": "node build-tools/verify-package-exports.js",
     "test:browser": "node build-tools/audit-browser.js",
+    "test:snapshot:update": "node -e \"process.env.UPDATE_STYLE_SNAPSHOT='1';import('./build-tools/audit-browser.js')\"",
     "test:website": "node build-tools/verify-website-ux.js",
     "test:pack": "npm pack --dry-run",
     "test:isolated-build": "node build-tools/verify-isolated-build.js",

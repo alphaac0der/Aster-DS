@@ -4,6 +4,13 @@ All notable changes to the `aster-ds` npm package. Versions follow [semantic ver
 
 ## Unreleased
 
+### Documentation
+- Added Do and Don't guidance and a live states gallery to every component page.
+- Added a Patterns page and a manual testing checklist.
+- Rewrote component summaries in plain language.
+
+## 0.2.0
+
 ### Added
 - **New components:** Card, Link, and Avatar.
 - **Motion tokens** now live in `tokens.css`, so importing tokens alone gives you `--as-motion-*`.

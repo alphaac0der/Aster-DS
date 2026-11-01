@@ -106,7 +106,7 @@ assert(install.includes('initAsterComponents'), 'Installation documents initAste
 for (const text of ['Before you start', 'unpkg.com/aster-ds@', 'Check it works']) {
   assert(install.includes(text), `Installation includes "${text}"`);
 }
-for (const route of ['docs/color', 'docs/typography', 'docs/spacing', 'docs/elevation', 'docs/motion', 'docs/tokens', 'docs/principles', 'docs/frameworks', 'components']) {
+for (const route of ['docs/color', 'docs/typography', 'docs/spacing', 'docs/elevation', 'docs/motion', 'docs/tokens', 'docs/principles', 'docs/frameworks', 'docs/patterns', 'components']) {
   assert(/<h1[\s>]/.test(page(route)), `/${route} renders a page heading`);
 }
 
@@ -127,7 +127,7 @@ order.forEach((slug, i) => {
 
 // 4b. Guide page order
 console.log('\n4b. Checking Guide Page Order:');
-const guideOrder = ['docs', 'docs/installation', 'docs/color', 'docs/typography', 'docs/spacing', 'docs/elevation', 'docs/motion', 'docs/tokens', 'docs/principles', 'docs/frameworks'];
+const guideOrder = ['docs', 'docs/installation', 'docs/color', 'docs/typography', 'docs/spacing', 'docs/elevation', 'docs/motion', 'docs/tokens', 'docs/principles', 'docs/frameworks', 'docs/patterns', 'components'];
 guideOrder.slice(0, -1).forEach((route, i) => {
   const nav = page(route).slice(page(route).indexOf('class="doc-pagination"'));
   assert(nav.includes(`href="/${guideOrder[i + 1]}"`), `/${route} links forward to /${guideOrder[i + 1]}`);

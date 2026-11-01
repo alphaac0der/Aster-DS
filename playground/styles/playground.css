@@ -789,6 +789,15 @@ body[data-kind="playground"] .toc {
   .pa-part { transition: none; }
 }
 
+.pa-gallery__group { margin-top: var(--as-space-5); }
+.pa-gallery__group h3 { margin-bottom: var(--as-space-2); font-size: var(--as-typography-font-size-base); font-weight: var(--as-typography-font-weight-semibold); letter-spacing: 0; }
+.pa-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: var(--as-space-3); }
+.pa-gallery__cell { display: flex; flex-direction: column; min-width: 0; margin: 0; border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); overflow: hidden; }
+.pa-gallery__cell .pa-sample { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: auto; min-height: 112px; max-width: 100%; padding: var(--as-space-6) var(--as-space-4); overflow: hidden; }
+.pa-gallery__cell .pa-sample > * { max-width: 100%; }
+.pa-gallery__cell figcaption { padding: var(--as-space-2) var(--as-space-3); border-top: 1px solid var(--as-semantic-color-border-subtle); background: var(--as-semantic-color-surface-card); font-family: var(--as-typography-font-family-mono); font-size: var(--as-typography-font-size-xs); color: var(--as-semantic-color-text-muted); }
+.pa-gallery__cell .as-table-container { min-width: 0; }
+
 /* ==========================================================================
    8b. Foundations pages
    ========================================================================== */
@@ -820,6 +829,14 @@ body[data-kind="playground"] .toc {
 .fd-motion-head { display: flex; align-items: center; justify-content: space-between; gap: var(--as-space-4); flex-wrap: wrap; }
 .fd-note { margin-top: var(--as-space-3); font-size: var(--as-typography-font-size-xs); color: var(--as-semantic-color-text-muted); }
 .fd-note:empty { display: none; }
+.fd-pattern { display: flex; justify-content: center; margin: var(--as-space-4) 0; padding: var(--as-space-6); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); background: var(--as-semantic-color-surface-canvas); }
+.fd-pattern > * { flex: 1; }
+.fd-pattern .as-form-field { margin-bottom: 0; }
+.fd-rule { padding: var(--as-space-4); border-radius: var(--as-radius-md); background: var(--as-semantic-color-surface-card); }
+.fd-rule h3 { margin-bottom: var(--as-space-2); font-size: var(--as-typography-font-size-base); font-weight: var(--as-typography-font-weight-semibold); letter-spacing: 0; }
+.fd-rule ul { margin: 0; padding-left: var(--as-space-5); font-size: var(--as-typography-font-size-base); line-height: 1.5; }
+.fd-rule li + li { margin-top: var(--as-space-1); }
+.fd-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--as-space-3); margin-top: var(--as-space-3); }
 
 @media (max-width: 719px) {
   .fd-row { grid-template-columns: minmax(0, 1fr); gap: var(--as-space-3); }

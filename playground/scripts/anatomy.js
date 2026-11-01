@@ -159,7 +159,7 @@ const ANATOMY = {
   toast: {
     width: 360,
     note: 'Shown in place here. In use it floats at the bottom right of the screen.',
-    html: `<div class="as-toast as-toast--success" role="status"><div class="as-toast__content"><div class="as-toast__title">Cluster Rebalanced</div><div class="as-toast__message">Workloads distributed across 3 zones.</div></div><button type="button" class="as-toast__close" aria-label="Dismiss notification"></button></div>`,
+    html: (v) => `<div class="as-toast as-toast--${v.variant}" role="status"><div class="as-toast__content"><div class="as-toast__title">Cluster Rebalanced</div><div class="as-toast__message">Workloads distributed across 3 zones.</div></div><button type="button" class="as-toast__close" aria-label="Dismiss notification"></button></div>`,
     parts: [
       part('.as-toast', 'Container', 'The floating card.', true),
       part('.as-toast__title', 'Title', 'What happened.'),
@@ -371,13 +371,13 @@ function sizeOf(el) {
 /* --------------------------------------------------------------------------
    Sample + panel
    -------------------------------------------------------------------------- */
-function buildSample(slug, cfg, recipe) {
+function buildSample(slug, cfg, recipe, overrides = {}, idSuffix = '') {
   const sample = document.createElement('div');
   sample.className = 'pa-sample';
   sample.dataset.slug = slug;
   sample.inert = true;
-  const values = Object.fromEntries(recipe.controls.map((c) => [c.key, c.value]));
-  sample.innerHTML = cfg.html || recipe.render(values);
+  const values = { ...Object.fromEntries(recipe.controls.map((c) => [c.key, c.value])), ...overrides };
+  sample.innerHTML = cfg.html ? cfg.html(values) : recipe.render(values);
   if (cfg.pick) {
     const keep = sample.querySelector(cfg.pick);
     sample.replaceChildren(keep);
@@ -387,8 +387,12 @@ function buildSample(slug, cfg, recipe) {
   }
   if (cfg.reveal) sample.querySelectorAll('[hidden]').forEach((n) => n.removeAttribute('hidden'));
   sample.querySelectorAll('*').forEach((n) => {
-    ['id', 'for', 'aria-labelledby', 'aria-describedby', 'aria-controls'].forEach((a) => n.removeAttribute(a));
-    if (n.name) n.name = `pa-${slug}`;
+    ['id', 'for', 'aria-labelledby', 'aria-describedby', 'aria-controls'].forEach((a) => {
+      if (!n.hasAttribute(a)) return;
+      if (idSuffix) n.setAttribute(a, n.getAttribute(a).split(/\s+/).map((v) => `${v}-${idSuffix}`).join(' '));
+      else n.removeAttribute(a);
+    });
+    if (n.name) n.name = `pa-${slug}-${idSuffix}`;
   });
   const width = cfg.width || WIDTHS[recipe.width];
   if (width) sample.style.width = `${width}px`;
@@ -584,6 +588,35 @@ function mount(host) {
   new MutationObserver(schedule).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   document.fonts?.ready.then(schedule);
   layout();
+}
+
+/** Renders every variant and state of a component from its playground controls. */
+export function renderStates(host) {
+  const slug = host.dataset.states;
+  const cfg = ANATOMY[slug];
+  const recipe = RECIPES.find((r) => r.slug === slug);
+  if (!cfg || !recipe || cfg.pick) return;
+  const groups = recipe.controls
+    .filter((c) => c.type === 'select' || c.type === 'switch')
+    .map((c) => ({ label: c.label, cells: c.type === 'switch'
+      ? [{ name: 'On', value: true }, { name: 'Off', value: false }].map((o) => ({ ...o, key: c.key }))
+      : c.options.map((o) => ({ name: o, value: o, key: c.key })) }));
+  if (!groups.length) return;
+  let n = 0;
+  host.innerHTML = groups.map((g) => `<div class="pa-gallery__group"><h3>${esc(g.label)}</h3><div class="pa-gallery" data-group></div></div>`).join('');
+  host.querySelectorAll('[data-group]').forEach((grid, i) => {
+    groups[i].cells.forEach((cell) => {
+      const figure = document.createElement('figure');
+      figure.className = 'pa-gallery__cell';
+      const sample = buildSample(slug, cfg, recipe, { [cell.key]: cell.value }, `g${(n += 1)}`);
+      sample.style.width = '';
+      const caption = document.createElement('figcaption');
+      caption.textContent = cell.name;
+      figure.append(sample, caption);
+      grid.appendChild(figure);
+    });
+  });
+  host.closest('[data-states-section]')?.removeAttribute('hidden');
 }
 
 /** Reads every part of a component from an off-screen render. */

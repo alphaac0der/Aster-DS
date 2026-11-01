@@ -95,7 +95,7 @@ Before submitting a pull request or proposing changes, all quality verification 
 | `npm run test:exports` | Validates `package.json` entry points, export map targets, and live consumer imports. |
 | `npm run test:pack` | Validates package whitelist via `npm pack --dry-run` (43 files). |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox strictly without `scratch/`. |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit executing 156 real DOM interaction assertions. |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit executing 166 real DOM interaction assertions. |
 
 ---
 

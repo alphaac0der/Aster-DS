@@ -1352,6 +1352,25 @@ async function runBrowserAudit() {
     const blankChips = await cdp.eval(`[...document.querySelectorAll('.component-meta .meta-tag')].filter((el) => el.offsetWidth && !el.textContent.trim()).length`);
     assert('Components without a fixed height show no blank header chip', blankChips === 0, String(blankChips));
 
+    // 9C-3: Variants, states, guidance, and live token values
+    const galleryProblems = [];
+    for (const slug of COMPONENT_ROUTES) {
+      await goto(`/components/${slug}`, 450);
+      const g = await cdp.eval(`
+        (() => {
+          const section = document.querySelector('[data-states-section]');
+          return {
+            cells: section ? section.querySelectorAll('.pa-gallery__cell').length : 0,
+            hidden: section ? section.hidden : true,
+            rules: document.querySelectorAll('.fd-rule li').length,
+            emptyTokens: [...document.querySelectorAll('[data-resolve]')].filter((el) => !el.textContent.trim()).map((el) => el.dataset.resolve)
+          };
+        })()
+      `);
+      if (g.rules < 4 || g.emptyTokens.length || (!['dialog', 'drawer', 'tooltip'].includes(slug) && (g.hidden || !g.cells))) galleryProblems.push(`${slug}: ${JSON.stringify(g)}`);
+    }
+    assert('Component pages have guidance, a live states gallery, and resolved tokens', galleryProblems.length === 0, galleryProblems.join(' | ') || 'all pages');
+
     // 9D: Playground
     await goto('/playground');
     const playgroundPageAudit = await cdp.eval(`
@@ -1489,6 +1508,47 @@ async function runBrowserAudit() {
       assert(`${route} resolves all its tokens`, empty.length === 0, empty.join(', ') || 'all resolved');
     }
 
+    // 9H-3: Keyboard walkthrough with real key events
+    const press = async (key, code, keyCode, text) => {
+      await cdp.send('Input.dispatchKeyEvent', { type: 'keyDown', key, code, windowsVirtualKeyCode: keyCode, text });
+      await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: keyCode });
+      await wait(120);
+    };
+    const keys = {
+      tab: () => press('Tab', 'Tab', 9),
+      enter: () => press('Enter', 'Enter', 13, '\r'),
+      escape: () => press('Escape', 'Escape', 27),
+      right: () => press('ArrowRight', 'ArrowRight', 39)
+    };
+    await goto('/docs');
+    await keys.tab();
+    assert('First Tab on a page reaches the skip link', await cdp.eval(`document.activeElement.classList.contains('skip-link')`));
+    await goto('/playground');
+    await cdp.eval(`document.querySelector('#pg-toggle-panel').focus()`);
+    await keys.enter();
+    assert('Enter on Inspect opens the inspector', await cdp.eval(`!document.querySelector('#pg-panel').hidden`));
+    await cdp.eval(`document.querySelector('#pg-panel-close').focus()`);
+    await keys.escape();
+    assert('Escape closes the inspector and returns focus to Inspect', await cdp.eval(`document.querySelector('#pg-panel').hidden && document.activeElement.id === 'pg-toggle-panel'`));
+    await cdp.eval(`document.querySelector('#pg-open-picker').focus()`);
+    await keys.enter();
+    let trapped = await cdp.eval(`document.querySelector('#pg-picker').open`);
+    for (let i = 0; i < 30 && trapped; i += 1) {
+      await press('Tab', 'Tab', 9);
+      trapped = await cdp.eval(`Boolean(document.activeElement.closest('#pg-picker')) || document.activeElement === document.body`);
+    }
+    assert('Component picker keeps focus inside while open', trapped);
+    await keys.escape();
+    assert('Escape closes the picker and returns focus', await cdp.eval(`!document.querySelector('#pg-picker').open && document.activeElement.id === 'pg-open-picker'`));
+    const before = await cdp.eval(`document.querySelector('#pg-dock-name').textContent`);
+    await cdp.eval(`document.activeElement.blur()`);
+    await keys.right();
+    assert('Arrow keys switch the playground component', (await cdp.eval(`document.querySelector('#pg-dock-name').textContent`)) !== before);
+    await goto('/components/button');
+    await cdp.eval(`document.querySelector('.preview-tab[data-tab="preview"]').focus()`);
+    await keys.right();
+    assert('Arrow keys move between component page tabs', await cdp.eval(`document.activeElement.dataset.tab === 'code'`));
+
     // 9H: Guide pages
     await goto('/docs/installation');
     assert('Installation page documents the stylesheet import', await cdp.eval(`document.querySelector('#view-installation')?.textContent.includes('aster.css') === true`));
@@ -1509,7 +1569,7 @@ async function runBrowserAudit() {
     `;
     const formatAxe = (rows) => rows.map((r) => `${r.where} [${r.theme}] ${r.id} (${r.impact}, ${r.count}x) ${r.target} ${r.detail}`).join(' | ');
     const axeReport = { site: [], stage: [] };
-    const sitePages = ['/', '/docs', '/docs/installation', '/docs/color', '/docs/typography', '/docs/spacing', '/docs/elevation', '/docs/motion', '/docs/tokens', '/docs/principles', '/docs/frameworks', '/components', '/playground', ...COMPONENT_ROUTES.map((s) => `/components/${s}`)];
+    const sitePages = ['/', '/docs', '/docs/installation', '/docs/color', '/docs/typography', '/docs/spacing', '/docs/elevation', '/docs/motion', '/docs/tokens', '/docs/principles', '/docs/frameworks', '/docs/patterns', '/components', '/playground', ...COMPONENT_ROUTES.map((s) => `/components/${s}`)];
     for (const theme of ['light', 'dark']) {
       for (const route of sitePages) {
         await goto(route, 600);
@@ -1518,8 +1578,11 @@ async function runBrowserAudit() {
         // Measure final states, not whichever frame of a transition the scan lands on.
         await cdp.eval(`document.head.insertAdjacentHTML('beforeend', '<style>*,*::before,*::after{transition:none!important;animation:none!important}</style>')`);
         await wait(60);
+        // The gallery is inert for keyboard users. Scan it anyway to reach forced hover and press states.
+        await cdp.eval(`document.querySelectorAll('.pa-gallery__cell .pa-sample[inert]').forEach((el) => { el.inert = false; if (el.querySelector(':disabled')) el.setAttribute('data-scan-skip', ''); })`);
         await cdp.eval(axeSource);
-        const rows = await cdp.eval(axeRun('document'));
+        // Disabled controls are exempt from contrast rules (WCAG SC 1.4.3).
+        const rows = await cdp.eval(axeRun("{ exclude: [['[data-scan-skip]']] }"));
         rows.forEach((r) => axeReport.site.push({ ...r, where: route, theme }));
       }
       await goto('/playground', 600);
@@ -1535,6 +1598,62 @@ async function runBrowserAudit() {
     }
     assert(`axe finds no WCAG A/AA violations on ${sitePages.length} docs pages in both themes`, axeReport.site.length === 0, formatAxe(axeReport.site) || 'clean');
     assert('axe finds no WCAG A/AA violations in the 24 rendered components in both themes', axeReport.stage.length === 0, formatAxe(axeReport.stage) || 'clean');
+
+    // ----------------------------------------------------------------------------------
+    // Suite 9J: Style regression. Compares computed styles, not pixels, because font
+    // rendering differs between machines. Update with: npm run test:snapshot:update
+    // ----------------------------------------------------------------------------------
+    console.log('\n--- Suite 9J: Style Regression Snapshot ---');
+    const snapshotPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'style-snapshot.json');
+    const current = {};
+    for (const theme of ['light', 'dark']) {
+      await goto('/playground', 600);
+      const part = await cdp.eval(`
+        (async () => {
+          document.documentElement.setAttribute('data-theme', '${theme}');
+          document.head.insertAdjacentHTML('beforeend', '<style>*,*::before,*::after{transition:none!important;animation:none!important}</style>');
+          const props = ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderTopLeftRadius', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'backgroundColor', 'boxShadow', 'opacity', 'columnGap'];
+          const out = {};
+          const read = (prefix) => {
+            const seen = new Set();
+            document.querySelectorAll('#pg-stage-mount [class*="as-"]').forEach((el) => {
+              const cls = [...el.classList].filter((c) => c.startsWith('as-')).join('.');
+              if (seen.has(cls)) return;
+              seen.add(cls);
+              const cs = getComputedStyle(el);
+              out[prefix + '|' + cls] = props.map((p) => cs[p]).join(' | ');
+            });
+          };
+          for (const btn of document.querySelectorAll('.pg-dock__btn')) {
+            btn.click();
+            const slug = btn.dataset.pgComp;
+            await new Promise((r) => setTimeout(r, 30));
+            read('${theme}/' + slug);
+            for (const select of document.querySelectorAll('#pg-controls select')) {
+              const start = select.value;
+              for (const opt of [...select.options]) {
+                if (opt.value === start) continue;
+                select.value = opt.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                read('${theme}/' + slug + '/' + select.dataset.key + '=' + opt.value);
+              }
+              select.value = start;
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }
+          return out;
+        })()
+      `.split('${theme}').join(theme));
+      Object.assign(current, part);
+    }
+    if (process.env.UPDATE_STYLE_SNAPSHOT) {
+      fs.writeFileSync(snapshotPath, JSON.stringify(current, null, 1) + '\n');
+      console.log(`  ✓ Updated style snapshot (${Object.keys(current).length} entries)`);
+    }
+    const stored = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapshotPath, 'utf8')) : {};
+    const changed = [...new Set([...Object.keys(stored), ...Object.keys(current)])].filter((k) => stored[k] !== current[k]);
+    assert('Component styles match the approved snapshot', Object.keys(stored).length > 0 && changed.length === 0,
+      changed.length ? `${changed.length} changed. First: ${changed.slice(0, 8).map((k) => `${k}\n    was: ${stored[k]}\n    now: ${current[k]}`).join('\n  ')}` : `${Object.keys(current).length} entries`);
 
     // ----------------------------------------------------------------------------------
     // Suite 10: Visual evidence capture

@@ -105,10 +105,11 @@ Before proposing or finalizing changes to tokens, components, or documentation, 
 | `npm run test:components` | Verifies concrete token bindings, section schemas, and single-density rules across all 24 components. |
 | `npm run test:docs` | Verifies documentation references in `docs/` and `skills/` match production CSS variables. |
 | `npm run test:exports` | Validates `package.json` entry points, export map targets, and ESM self-imports. |
+| `npm run test:snapshot:update` | Approves intentional style changes by rewriting `build-tools/style-snapshot.json`. Review the diff before committing. |
 | `npm run test:pack` | Executes dry-run package bundling check (`npm pack --dry-run`). |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox strictly without `scratch/`. |
 | `npm test` | Runs the aggregate quality suite (`figma`, `contrast`, `components`, `docs`, `exports`, `pack`, `isolated-build`). |
-| `npm run test:browser` | Runs the headless Chrome behavioral audit and axe-core accessibility scan against the built docs site. Requires Node 22+ (156 real DOM interaction tests; alias for `node build-tools/audit-browser.js`). |
+| `npm run test:browser` | Runs the headless Chrome behavioral audit and axe-core accessibility scan against the built docs site. Requires Node 22+ (166 real DOM interaction tests; alias for `node build-tools/audit-browser.js`). |
 
 > [!NOTE]
 > Never claim a test passed unless the command was executed and the output was observed.
