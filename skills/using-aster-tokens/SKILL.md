@@ -73,7 +73,7 @@ Always follow this order of precedence when styling UI components:
 | Critical Message | `var(--as-semantic-color-status-critical-text)` | Error and destructive action text & Red Dot button |
 | Focus Message | `var(--as-semantic-color-status-focus-text)` | Focus / info status message text |
 | Active Message | `var(--as-semantic-color-status-active-text)` | Active purple status text |
-| Control Height | `var(--as-density-control-height)` | `40px` standard height for Buttons, Inputs, Selects |
+| Control Height | `var(--as-density-control-height)` | `40px` control height for table headers and icon buttons (Buttons use `--as-space-12`, 48px) |
 | Button Horizontal Pad | `var(--as-space-6)` | `24px` left and right padding on `.as-button` |
 | Input Horizontal Pad | `var(--as-density-control-padding-x)` | `16px` left and right padding on `.as-input-box` |
 | Table Row Height | `var(--as-density-table-row-height)` | `48px` standardized table rows |
@@ -93,8 +93,8 @@ Always follow this order of precedence when styling UI components:
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--as-density-control-height);
-  padding: var(--as-density-control-padding-y) var(--as-space-6);
+  height: var(--as-space-12);
+  padding: var(--as-space-4) var(--as-space-6);
   background-color: var(--as-semantic-color-interactive-primary);
   color: var(--as-semantic-color-interactive-primary-text);
   font-family: var(--as-typography-font-family-sans);

@@ -235,7 +235,7 @@ Aster uses a unified, consistent default density across the entire design system
 
 | Token | Value | Usage |
 |---|---|---|
-| `--as-density-control-height` | `40px` | Standard interactive control height (Button, Input, Select) |
+| `--as-density-control-height` | `40px` | Standard control height (table headers, icon buttons) |
 | `--as-density-control-padding-x` | `16px` | Standard form input horizontal padding |
 | `--as-density-control-padding-y` | `8px` | Standard control vertical padding |
 | `--as-density-table-row-height` | `48px` | Standard data table row height |

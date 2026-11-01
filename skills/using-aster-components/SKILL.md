@@ -51,7 +51,7 @@ AI agents must strictly respect these system boundaries:
 2. **Strict Semantic Token Precedence:**
    - Component styles must bind **only** to semantic tokens (`--as-semantic-color-*`), density tokens (`--as-density-*`), and structural foundation tokens (`--as-space-*`, `--as-radius-*`, `--as-elevation-*`).
 3. **Standard Density Ergonomics:**
-   - Components adhere to standard density tokens (`--as-density-control-height` at 40px for buttons, 44px for form inputs and selects, and `--as-density-table-row-height` at 44px), ensuring consistent touch targets across mobile and desktop.
+   - Components adhere to standard density tokens (48px for buttons via `--as-space-12`, 44px for form inputs and selects, and `--as-density-table-row-height` at 44px), ensuring consistent touch targets across mobile and desktop.
 
 ---
 
@@ -185,8 +185,8 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  height: var(--as-density-control-height);
-  padding: 0 calc(var(--as-density-control-padding-x) + 4px);
+  height: var(--as-space-12);
+  padding: var(--as-space-4) var(--as-space-6);
   border: 0;
   border-radius: var(--as-radius-full);
   font-family: var(--as-typography-font-family-sans);
@@ -985,7 +985,7 @@ When generating or reviewing button code, verify each item:
 - [ ] **Accessible Name:** Has non-empty visible text or an explicit `aria-label`.
 - [ ] **Semantic Tokens Only:** Binds strictly to `--as-semantic-color-*` and `--as-density-*`. No primitive colors.
 - [ ] **Focus Visible:** Does not remove focus outlines (`outline: none`) without providing Aster's focus ring (`--as-elevation-border-focus` and `--as-semantic-color-border-focus`).
-- [ ] **Target Size:** Target size satisfies WCAG 2.5.8 Level AA (minimum 24×24px; Aster buttons measure 40px height in standard density).
+- [ ] **Target Size:** Target size satisfies WCAG 2.5.8 Level AA (minimum 24×24px; Aster buttons measure 48px height in standard density).
 - [ ] **Disabled-State Discipline:**
   - Uses native `<button disabled>` by default for ordinary disabled controls.
   - If `aria-disabled="true"` is used to retain keyboard focus, authoritative action handlers synchronously check disabled state before executing business logic, and form submission independently validates eligibility.
@@ -1008,7 +1008,7 @@ When generating or reviewing form field code, verify each item:
 - [ ] **Error Lifecycle & Scenario-Dependent Announcements:** Errors validate on `blur`/submit and clear on `input`. Form submission errors use deliberate focus management; field-level validation errors never steal focus. Dynamic announcements use scenario-dependent strategies (`aria-live="polite"` or managed focus), distinguishing structural `aria-describedby` association from runtime announcements.
 - [ ] **Non-Color-Alone Error:** Error states combine red border with an error icon, error text prefix, and descriptive text message.
 - [ ] **Semantic Tokens Only:** Styles bind strictly to `--as-semantic-color-*`, `--as-density-*`, `--as-space-*`, and `--as-radius-*`.
-- [ ] **Standard Density:** Uses canonical control height (44px for form inputs, 40px for buttons) without arbitrary one-off pixel heights.
+- [ ] **Standard Density:** Uses canonical control height (44px for form inputs, 48px for buttons) without arbitrary one-off pixel heights.
 - [ ] **Focus Visible & Child Control Focus:** Provides high-contrast 2px focus ring (`--as-elevation-border-focus` solid `--as-semantic-color-border-focus`). Every internal interactive child control retains its own distinct visible focus indicator, unobscured by wrapper treatment.
 - [ ] **Target Size Verification (WCAG 2.5.8):** Verifies the full interactive target bounding box (including width, clickable padding, and any nested interactive buttons) and spacing exceptions, rather than assuming height alone satisfies compliance.
 - [ ] **Informative Floor:** Helper and error font sizes adhere to `--as-typography-font-size-xs` (`12px`).
@@ -1074,6 +1074,7 @@ When generating or reviewing textarea code, verify each item:
 When generating or reviewing select dropdown code, verify each item:
 
 - [ ] **Native Select Element:** Uses native `<select class="as-select">` with `<option>` children.
+- [ ] **Popup Styling:** Relies on the `appearance: base-select` enhancement in `select.css`. Does not rebuild the popup with custom ARIA listboxes, and accepts the native popup as the fallback.
 - [ ] **Pill Geometry:** Container `.as-select-box` matches control heights (44px standard).
 - [ ] **Focus Visible:** High-contrast 2px focus ring renders on `:focus-visible`.
 - [ ] **Chevron Decoration:** Chevron icon is marked `aria-hidden="true"`.

@@ -2,7 +2,7 @@
  * Aster Design System — Button Component Styles
  * Canonical Source: components/button/button.css
  *
- * Implements the Shade-DS-inspired pill button with 24px horizontal padding,
+ * Implements the Shade-DS-inspired pill button with 16px vertical and 24px horizontal padding (48px height),
  * cursor-origin circular hover fill (::before expanding from --_x, --_y to --_max-d),
  * subtle hover lift, crisp 80ms press compression, keyboard focus ring, and reduced-motion support.
  */
@@ -23,8 +23,8 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  height: var(--as-density-control-height);
-  padding: var(--as-density-control-padding-y, 8px) var(--as-space-6, 24px);
+  height: var(--as-space-12, 48px);
+  padding: var(--as-space-4, 16px) var(--as-space-6, 24px);
   border: 0;
   border-radius: var(--as-radius-full);
   font-family: var(--as-typography-font-family-sans);
@@ -210,7 +210,7 @@
   --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Shade-DS Size Modifiers: S (32px), M (40px default), L (56px full pill) */
+/* Shade-DS Size Modifiers: S (32px), M (48px default), L (56px full pill) */
 .as-button--sm {
   height: 32px;
   padding: 0 var(--as-space-3, 12px);

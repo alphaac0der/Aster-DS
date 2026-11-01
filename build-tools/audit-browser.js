@@ -218,6 +218,8 @@ async function runBrowserAudit() {
           standardHeight: parseFloat(csP.height),
           paddingLeft: csP.paddingLeft,
           paddingRight: csP.paddingRight,
+          paddingTop: csP.paddingTop,
+          paddingBottom: csP.paddingBottom,
           hasCompactEl: Boolean(compactPrimary),
           borderRadius: csP.borderRadius,
           primaryBg: csP.backgroundColor,
@@ -225,8 +227,9 @@ async function runBrowserAudit() {
         };
       })()
     `);
-    assert('Button Standard Height is 40px', btnGeometry.standardHeight === 40, `${btnGeometry.standardHeight}px`);
+    assert('Button Standard Height is 48px', btnGeometry.standardHeight === 48, `${btnGeometry.standardHeight}px`);
     assert('Button horizontal padding is 24px left and 24px right', btnGeometry.paddingLeft === '24px' && btnGeometry.paddingRight === '24px', `${btnGeometry.paddingLeft} / ${btnGeometry.paddingRight}`);
+    assert('Button vertical padding is 16px top and 16px bottom', btnGeometry.paddingTop === '16px' && btnGeometry.paddingBottom === '16px', `${btnGeometry.paddingTop} / ${btnGeometry.paddingBottom}`);
     assert('Compact mode button removed (single Standard density)', btnGeometry.hasCompactEl === false);
     assert('Button Primary fill is Shade-DS monochrome #0F0F0F in Light Mode', btnGeometry.primaryBg === 'rgb(15, 15, 15)', btnGeometry.primaryBg);
     assert('Button is full pill shape (9999px radius)', parseInt(btnGeometry.borderRadius) >= 999, btnGeometry.borderRadius);
@@ -1401,6 +1404,27 @@ async function runBrowserAudit() {
     assert('Interactive Playground switches component stage and updates live syntax-highlighted code dynamically',
       playgroundPageAudit.hasAlertCloseInStage && playgroundPageAudit.updatedStageText && playgroundPageAudit.liveCodeTokens > 0
     );
+
+    // 9D-2: Focus ring and select popup under the documentation stylesheet
+    await cdp.eval(`location.hash = '#/input'`);
+    await wait(300);
+    const inputFocusAudit = await cdp.eval(`
+      (() => {
+        const input = document.querySelector('#in-ws');
+        input.focus();
+        return getComputedStyle(input).outlineStyle;
+      })()
+    `);
+    assert('Inner input draws no second focus ring under docs global :focus-visible', inputFocusAudit === 'none', inputFocusAudit);
+    await cdp.eval(`location.hash = '#/select'`);
+    await wait(300);
+    const selectPopupAudit = await cdp.eval(`
+      (() => ({
+        supported: CSS.supports('appearance', 'base-select'),
+        appearance: getComputedStyle(document.querySelector('#sel-demo-input')).appearance
+      }))()
+    `);
+    assert('Select uses the customizable popup where the browser supports it', !selectPopupAudit.supported || selectPopupAudit.appearance === 'base-select', JSON.stringify(selectPopupAudit));
 
     // 9E: Live Slider Dynamic Synchronization in Showcase
     await cdp.eval(`location.hash = '#/slider'`);

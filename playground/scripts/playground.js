@@ -2,13 +2,12 @@
  * Aster Design System — Documentation & Interactive Playground Client Script (Phase 15)
  * Vanilla JavaScript, zero dependencies.
  * Features:
- *   - Hash router supporting `/` (Home), `#/playground` (Shade-DS-inspired live stage),
+ *   - Hash router supporting `/` (Home), `#/playground` (full-bleed component stage),
  *     audience hubs, foundations, and all 21 component pages.
  *   - 4-tab component showcase controller (Preview, Code, Prompt, Anatomy) with keyboard support.
  *   - Deterministic multi-category syntax highlighter (tags, attributes, strings, keywords,
  *     functions/tokens, numbers, comments) with line-number gutters.
- *   - Interactive Playground controller with live component stage, blueprint measurement
- *     overlays, real-time property controls, and synchronized code generation.
+ *   - Mounts the shared Playground stage (see ./stage.js).
  */
 import {
   initAsterComponents,
@@ -19,6 +18,7 @@ import {
   syncTableOverflow,
   showToast
 } from '../../dist/js/aster.js';
+import { mountStage } from './stage.js';
 
 (() => {
   'use strict';
@@ -77,11 +77,6 @@ import {
     if (themeBtn) {
       themeBtn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
       themeBtn.setAttribute('title', isDark ? 'Switch to light theme' : 'Switch to dark theme');
-    }
-    const pgThemeBtn = $('#pg-toggle-theme');
-    if (pgThemeBtn) {
-      pgThemeBtn.setAttribute('aria-pressed', String(isDark));
-      pgThemeBtn.textContent = isDark ? 'Theme: Dark' : 'Theme: Light';
     }
     const favLink = $('#favicon-link');
     if (favLink) {
@@ -177,7 +172,7 @@ import {
     closeNav();
     buildToc();
     if (route === 'colors') renderColors();
-    if (route === 'playground') syncPlaygroundStage();
+    if (route === 'playground') playgroundStage.refresh();
     if (opts.scroll !== false) window.scrollTo({ top: 0, behavior: 'auto' });
     if (opts.focus) {
       const h1 = $('h1', view);
@@ -796,193 +791,9 @@ import {
   renderTable();
 
   /* ------------------------------------------------------------------------
-     12. Separate Interactive Playground Controller (`#/playground`)
+     12. Playground Stage (`#/playground`) — shared engine in ./stage.js
      ------------------------------------------------------------------------ */
-  const PG_STATE = {
-    comp: 'button',
-    variant: 'primary',
-    label: 'Deploy Cluster',
-    disabled: false,
-    ariaDisabled: false,
-    loading: false,
-    showIcon: true,
-    showBlueprint: true,
-    surface: 'canvas'
-  };
-
-  const PG_RECIPES = {
-    button: {
-      title: 'Button',
-      variants: ['primary', 'secondary', 'destructive', 'ghost'],
-      defaultVariant: 'primary',
-      defaultLabel: 'Deploy Cluster',
-      blueprint: ['Height: 40px (--as-density-control-height)', 'Padding X: 24px (--as-space-6)', 'Padding Y: 8px', 'Radius: 9999px (--as-radius-full)', 'Font: Manrope 14px / 500'],
-      render(st) {
-        const iconHtml = st.showIcon
-          ? '<svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-star"/></svg>'
-          : '';
-        const spinnerHtml = st.loading
-          ? '<span class="as-spinner" aria-hidden="true"></span>'
-          : iconHtml;
-        const attrs = [
-          'type="button"',
-          `class="as-button as-button--${st.variant}"`,
-          'id="pg-live-btn"',
-          st.disabled ? 'disabled' : '',
-          st.ariaDisabled ? 'aria-disabled="true"' : '',
-          st.loading ? 'aria-busy="true"' : ''
-        ].filter(Boolean).join(' ');
-        return `<button ${attrs}>\n  ${spinnerHtml ? spinnerHtml + '\n  ' : ''}<span class="as-button__label">${esc(st.label || 'Button')}</span>\n</button>`;
-      }
-    },
-    input: {
-      title: 'Input & Field',
-      variants: ['default', 'error'],
-      defaultVariant: 'default',
-      defaultLabel: 'Workspace Identifier',
-      blueprint: ['Height: 44px (Exact Shade-DS)', 'Padding X: 12px (--as-space-3)', 'Radius: 4px (--as-radius-sm / Shade-DS Radius.S)', 'Surface: Canvas #121212 / Double 1px Glass Glow'],
-      render(st) {
-        const isErr = st.variant === 'error';
-        return `<div class="as-form-field${isErr ? ' as-form-field--error' : ''}" style="width: 340px; margin: 0;">\n  <label class="as-form-field__label" for="pg-live-input">${esc(st.label || 'Workspace Identifier')}</label>\n  <div class="as-input-box">\n    <input class="as-input" type="text" id="pg-live-input" value="acme-production"${st.disabled ? ' disabled' : ''}${isErr ? ' aria-invalid="true"' : ''} />\n  </div>\n  <p class="as-form-field__helper">${isErr ? 'Invalid slug format.' : 'Lowercase letters, numbers, and hyphens.'}</p>\n</div>`;
-      }
-    },
-    badge: {
-      title: 'Badge',
-      variants: ['success', 'warning', 'critical', 'info', 'muted'],
-      defaultVariant: 'success',
-      defaultLabel: 'Healthy Cluster',
-      blueprint: ['Height: 24px', 'Padding X: 10px', 'Radius: 9999px (--as-radius-full)', 'Dot: 6px circle'],
-      render(st) {
-        return `<span class="as-badge as-badge--${st.variant}">\n  ${st.showIcon ? '<span class="as-badge__dot"></span>' : ''}${esc(st.label || 'Healthy')}\n</span>`;
-      }
-    },
-    alert: {
-      title: 'Alert',
-      variants: ['warning', 'critical', 'success', 'info'],
-      defaultVariant: 'warning',
-      defaultLabel: 'Rolling Kernel Upgrade Scheduled',
-      blueprint: ['Padding: 16px (--as-space-4)', 'Radius: 8px (--as-radius-md)', 'Close Control: 12px Shade-DS Solid Red Dot', 'Surface: Shade-DS Status Surface with Double 1px Glass Glow'],
-      render(st) {
-        return `<div class="as-alert as-alert--${st.variant}" role="region" aria-label="System Alert" style="width: min(100%, 480px);">\n  <div class="as-alert__content">\n    <div class="as-alert__title">${esc(st.label || 'System Notice')}</div>\n    <div class="as-alert__description">Worker nodes in eu-west-1a will rebalance automatically.</div>\n  </div>\n  <button type="button" class="as-alert__close" aria-label="Dismiss alert"></button>\n</div>`;
-      }
-    },
-    switch: {
-      title: 'Switch',
-      variants: ['checked', 'unchecked'],
-      defaultVariant: 'checked',
-      defaultLabel: 'Automatic Failover Routing',
-      blueprint: ['Track: 44px x 24px', 'Thumb: 18px circle', 'Radius: 9999px (--as-radius-full)'],
-      render(st) {
-        const checked = st.variant === 'checked' ? ' checked' : '';
-        return `<label class="as-switch-field">\n  <span class="as-switch">\n    <input type="checkbox" role="switch" class="as-switch-input"${checked}${st.disabled ? ' disabled' : ''}>\n    <span class="as-switch-track"><span class="as-switch-thumb"></span></span>\n  </span>\n  <span class="as-switch-field__content">\n    <span class="as-switch-field__label">${esc(st.label || 'Automatic Failover')}</span>\n  </span>\n</label>`;
-      }
-    },
-    dialog: {
-      title: 'Dialog Modal',
-      variants: ['primary', 'secondary'],
-      defaultVariant: 'primary',
-      defaultLabel: 'Open Interactive Dialog',
-      blueprint: ['Max Width: 400px (Shade-DS)', 'Radius: 16px (--as-radius-lg)', 'Close Button: 12px Shade-DS Solid Red Dot', 'Surface: 20px blur with Double 1px Glass Glow'],
-      render(st) {
-        return `<button type="button" class="as-button as-button--${st.variant}" data-dialog-open="pg-showcase-dlg">\n  <span class="as-button__label">${esc(st.label || 'Open Interactive Dialog')}</span>\n</button>`;
-      }
-    }
-  };
-
-  function syncPlaygroundStage() {
-    const mount = $('#pg-stage-mount');
-    const bpBox = $('#pg-blueprint-overlay');
-    const codeEl = $('#pg-live-code-el');
-    const varSelect = $('#pg-ctrl-variant');
-    const labelInput = $('#pg-ctrl-label');
-    if (!mount || !codeEl) return;
-
-    const recipe = PG_RECIPES[PG_STATE.comp] || PG_RECIPES.button;
-    if (!recipe.variants.includes(PG_STATE.variant)) {
-      PG_STATE.variant = recipe.defaultVariant;
-    }
-    if (varSelect) {
-      varSelect.innerHTML = recipe.variants
-        .map((v) => `<option value="${v}"${v === PG_STATE.variant ? ' selected' : ''}>${v}</option>`)
-        .join('');
-    }
-    if (labelInput && document.activeElement !== labelInput) {
-      labelInput.value = PG_STATE.label;
-    }
-
-    const htmlSnippet = recipe.render(PG_STATE);
-    mount.innerHTML = htmlSnippet;
-
-    if (bpBox) {
-      bpBox.hidden = !PG_STATE.showBlueprint;
-      bpBox.innerHTML = recipe.blueprint.map((b) => `<span class="anatomy-badge"><code>${esc(b)}</code></span>`).join('');
-    }
-
-    codeEl.dataset.raw = htmlSnippet;
-    codeEl.innerHTML = highlightCode(htmlSnippet);
-  }
-
-  $$('.pg-dock__btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const comp = btn.dataset.pgComp;
-      if (!comp || !PG_RECIPES[comp]) return;
-      PG_STATE.comp = comp;
-      PG_STATE.variant = PG_RECIPES[comp].defaultVariant;
-      PG_STATE.label = PG_RECIPES[comp].defaultLabel;
-      PG_STATE.disabled = false;
-      PG_STATE.ariaDisabled = false;
-      PG_STATE.loading = false;
-      const disBox = $('#pg-ctrl-disabled');
-      const ariaBox = $('#pg-ctrl-aria-disabled');
-      const loadBox = $('#pg-ctrl-loading');
-      if (disBox) disBox.checked = false;
-      if (ariaBox) ariaBox.checked = false;
-      if (loadBox) loadBox.checked = false;
-      $$('.pg-dock__btn').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-      syncPlaygroundStage();
-      announce(`Selected ${PG_RECIPES[comp].title} in playground.`);
-    });
-  });
-
-  $('#pg-ctrl-variant')?.addEventListener('change', (e) => {
-    PG_STATE.variant = e.target.value;
-    syncPlaygroundStage();
-  });
-  $('#pg-ctrl-label')?.addEventListener('input', (e) => {
-    PG_STATE.label = e.target.value;
-    syncPlaygroundStage();
-  });
-  $('#pg-ctrl-disabled')?.addEventListener('change', (e) => {
-    PG_STATE.disabled = e.target.checked;
-    syncPlaygroundStage();
-  });
-  $('#pg-ctrl-aria-disabled')?.addEventListener('change', (e) => {
-    PG_STATE.ariaDisabled = e.target.checked;
-    syncPlaygroundStage();
-  });
-  $('#pg-ctrl-loading')?.addEventListener('change', (e) => {
-    PG_STATE.loading = e.target.checked;
-    syncPlaygroundStage();
-  });
-  $('#pg-ctrl-icon')?.addEventListener('change', (e) => {
-    PG_STATE.showIcon = e.target.checked;
-    syncPlaygroundStage();
-  });
-  $('#pg-toggle-blueprint')?.addEventListener('click', (e) => {
-    PG_STATE.showBlueprint = !PG_STATE.showBlueprint;
-    e.currentTarget.setAttribute('aria-pressed', String(PG_STATE.showBlueprint));
-    syncPlaygroundStage();
-  });
-  $('#pg-toggle-surface')?.addEventListener('click', (e) => {
-    PG_STATE.surface = PG_STATE.surface === 'canvas' ? 'subtle' : 'canvas';
-    const canvas = $('#pg-stage-canvas');
-    if (canvas) canvas.dataset.surface = PG_STATE.surface;
-    e.currentTarget.setAttribute('aria-pressed', String(PG_STATE.surface === 'subtle'));
-  });
-  $('#pg-toggle-theme')?.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-  });
+  const playgroundStage = mountStage($('#pg-root'), { docsHref: (slug) => `#/${slug}` });
 
   /* ------------------------------------------------------------------------
      13. Motion Page & Toast Triggers
@@ -1104,7 +915,6 @@ import {
   const params = new URLSearchParams(location.search);
   const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   setTheme(params.get('theme') || store.get('aster-theme') || (sysDark ? 'dark' : 'light'), true);
-  syncPlaygroundStage();
   show(parseHash(), { scroll: false });
   refreshResolved();
 })();

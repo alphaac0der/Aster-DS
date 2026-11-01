@@ -633,8 +633,8 @@ async function buildButtonComponentSet(parent, variableMap, textStyles, effectSt
 
   const varRadiusFull = variableMap.get('dimensions/radius/full');
   const varSpace6 = variableMap.get('dimensions/space/6');
-  const varSpace2 = variableMap.get('dimensions/space/2');
-  const varControlHeight = variableMap.get('density/control/height');
+  const varSpace4 = variableMap.get('dimensions/space/4');
+  const varControlHeight = variableMap.get('dimensions/space/12');
   const varFocusRing = variableMap.get('semantic/color/border/focus');
   const varBorderSubtle = variableMap.get('semantic/color/border/subtle');
 
@@ -664,7 +664,7 @@ async function buildButtonComponentSet(parent, variableMap, textStyles, effectSt
       btn.counterAxisAlignItems = 'CENTER';
       btn.primaryAxisSizingMode = 'AUTO';
       btn.counterAxisSizingMode = 'FIXED';
-      btn.resize(140, 40);
+      btn.resize(140, 48);
 
       // Positioning in 2D Matrix
       btn.x = 140 + col * 190;
@@ -673,16 +673,16 @@ async function buildButtonComponentSet(parent, variableMap, textStyles, effectSt
       // Spacing & Geometry
       btn.paddingLeft = 24;
       btn.paddingRight = 24;
-      btn.paddingTop = 8;
-      btn.paddingBottom = 8;
+      btn.paddingTop = 16;
+      btn.paddingBottom = 16;
       btn.itemSpacing = 8;
       btn.cornerRadius = 9999;
 
       bindNodeVariable(btn, 'cornerRadius', varRadiusFull);
       bindNodeVariable(btn, 'paddingLeft', varSpace6);
       bindNodeVariable(btn, 'paddingRight', varSpace6);
-      bindNodeVariable(btn, 'paddingTop', varSpace2);
-      bindNodeVariable(btn, 'paddingBottom', varSpace2);
+      bindNodeVariable(btn, 'paddingTop', varSpace4);
+      bindNodeVariable(btn, 'paddingBottom', varSpace4);
       bindNodeVariable(btn, 'minHeight', varControlHeight);
 
       let fillVar = null;
@@ -796,7 +796,7 @@ async function buildButtonComponentSet(parent, variableMap, textStyles, effectSt
   // Combine into single Figma Component Set
   const componentSet = figma.combineAsVariants(components, card);
   componentSet.name = 'Button';
-  componentSet.description = 'Aster Design System standard pill button (40px height, full-pill radius, 4 variants, 5 states).';
+  componentSet.description = 'Aster Design System standard pill button (48px height, full-pill radius, 4 variants, 5 states).';
   parent.appendChild(card);
 }
 
@@ -1383,7 +1383,7 @@ async function buildContextualShowcase(parent, variableMap, textStyles, effectSt
   actionsRow.itemSpacing = 12;
   actionsRow.primaryAxisSizingMode = 'FIXED';
   actionsRow.counterAxisSizingMode = 'AUTO';
-  actionsRow.resize(396, 40);
+  actionsRow.resize(396, 48);
   actionsRow.fills = [];
 
   const footerSpacer = figma.createFrame();
@@ -1399,10 +1399,10 @@ async function buildContextualShowcase(parent, variableMap, textStyles, effectSt
   cancelBtn.counterAxisAlignItems = 'CENTER';
   cancelBtn.paddingLeft = 20;
   cancelBtn.paddingRight = 20;
-  cancelBtn.paddingTop = 8;
-  cancelBtn.paddingBottom = 8;
+  cancelBtn.paddingTop = 16;
+  cancelBtn.paddingBottom = 16;
   cancelBtn.cornerRadius = 9999;
-  cancelBtn.resize(88, 40);
+  cancelBtn.resize(88, 48);
   cancelBtn.fills = [makeSolidPaint(variableMap.get('semantic/color/surface/subtle'), { r: 0.94, g: 0.94, b: 0.94 })];
   cancelBtn.strokes = [makeSolidPaint(variableMap.get('semantic/color/border/subtle'), { r: 0.85, g: 0.85, b: 0.85 })];
   cancelBtn.strokeWeight = 1;
@@ -1424,10 +1424,10 @@ async function buildContextualShowcase(parent, variableMap, textStyles, effectSt
   deployBtn.itemSpacing = 8;
   deployBtn.paddingLeft = 24;
   deployBtn.paddingRight = 24;
-  deployBtn.paddingTop = 8;
-  deployBtn.paddingBottom = 8;
+  deployBtn.paddingTop = 16;
+  deployBtn.paddingBottom = 16;
   deployBtn.cornerRadius = 9999;
-  deployBtn.resize(140, 40);
+  deployBtn.resize(140, 48);
   deployBtn.fills = [makeSolidPaint(variableMap.get('semantic/color/interactive/primary'), { r: 0.06, g: 0.06, b: 0.06 })];
 
   const deployIcon = createIconNode(ICONS.sparkle, 'Sparkle Icon', 16);

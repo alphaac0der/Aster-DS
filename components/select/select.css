@@ -60,6 +60,123 @@
   font-weight: var(--as-typography-font-weight-semibold);
 }
 
+/* The wrapper draws the focus state. This outranks page-level :focus-visible resets,
+   which would otherwise paint a second ring on the inner control. */
+.as-select:focus-visible {
+  outline: none;
+}
+
+/*
+ * Customizable popup: the options match .as-dropdown__menu while staying a native
+ * <select> (no JS, no markup change, same keyboard and form behavior). Browsers
+ * without appearance: base-select keep their native popup.
+ */
+@supports (appearance: base-select) {
+  .as-select,
+  .as-select::picker(select) {
+    appearance: base-select;
+  }
+
+  .as-select {
+    display: flex;
+    align-items: center;
+  }
+
+  .as-select::picker-icon {
+    display: none;
+  }
+
+  .as-select::picker(select) {
+    /* Open downward like the dropdown; flip up only when there is no room below */
+    position-try-order: normal;
+    margin: var(--as-space-1) 0;
+    padding: var(--as-space-1);
+    border: none;
+    border-radius: var(--as-radius-md);
+    background-color: color-mix(in srgb, var(--as-semantic-color-surface-card) 95%, transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--as-semantic-color-text-default);
+    box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: as-select-in 200ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  [data-theme="dark"] .as-select::picker(select) {
+    box-shadow: 0 0 1px 0px rgba(255, 255, 255, 0.14), inset 0 0 1px 0px rgba(255, 255, 255, 0.14), 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .as-select option {
+    display: flex;
+    align-items: center;
+    gap: var(--as-space-2);
+    padding: var(--as-space-2) var(--as-space-3);
+    border-radius: var(--as-radius-sm);
+    background-color: transparent;
+    color: var(--as-semantic-color-text-default);
+    font-size: var(--as-typography-font-size-base);
+    font-weight: var(--as-typography-font-weight-regular);
+    cursor: pointer;
+    transition: background-color 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .as-select option:checked {
+    background-color: transparent;
+    color: var(--as-semantic-color-text-default);
+    font-weight: var(--as-typography-font-weight-medium);
+  }
+
+  .as-select option:hover,
+  .as-select option:focus,
+  .as-select option:focus-visible {
+    background-color: var(--as-semantic-color-surface-muted);
+    outline: none;
+  }
+
+  .as-select option:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Selection is marked by shape as well as weight, never by color alone */
+  .as-select option::checkmark {
+    order: 1;
+    margin-left: auto;
+    color: var(--as-semantic-color-text-muted);
+  }
+
+  /* Native open state is authoritative here; a mouse-opened menu needs no focus ring */
+  .as-select-box:has(.as-select:open) {
+    outline: none;
+    box-shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default);
+  }
+
+  .as-select-box:has(.as-select:open) .as-select-chevron {
+    transform: rotate(180deg);
+    color: var(--as-semantic-color-text-default);
+  }
+
+  .as-select-box.is-open:not(:has(.as-select:open)) .as-select-chevron {
+    transform: none;
+  }
+
+  @keyframes as-select-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .as-select::picker(select) {
+      animation: none;
+    }
+
+    .as-select option {
+      transition: none;
+    }
+  }
+}
+
 /* Chevron icon placed at right — Shade-DS spring rotation */
 .as-select-chevron {
   position: absolute;

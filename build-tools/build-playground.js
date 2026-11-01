@@ -25,23 +25,23 @@ const unesc = (s) => String(s)
  */
 const COMPONENT_ANATOMY_SPECS = {
   button: {
-    height: '40px (--as-density-control-height)',
+    height: '48px (--as-space-12)',
     paddingX: '24px left / 24px right (--as-space-6)',
-    paddingY: '8px top / 8px bottom (--as-density-control-padding-y)',
+    paddingY: '16px top / 16px bottom (--as-space-4)',
     radius: '9999px (--as-radius-full)',
     typography: 'Manrope · 14px (--as-typography-font-size-sm) · 500 Medium',
     iconGap: '16px icon · 8px gap (--as-space-2)',
     focusRing: '2px solid (--as-semantic-color-border-focus) + 2px offset',
     parts: [
-      ['1', 'Pill Container', '.as-button', 'Fixed 40px height, 9999px pill radius, overflow hidden for radial hover fill'],
+      ['1', 'Pill Container', '.as-button', 'Fixed 48px height, 9999px pill radius, overflow hidden for radial hover fill'],
       ['2', 'Cursor Fill Layer', '.as-button::before', 'Content-dependent radial circle anchored at (--x, --y) pointer coordinates'],
       ['3', 'Label Text', '.as-button__label', 'Content-dependent width, Manrope 14px / 500 weight, 24px horizontal padding'],
       ['4', 'Icon / Spinner', '.as-icon / .as-spinner', 'Fixed 16px × 16px bounding box with 8px gap from label']
     ],
     rows: [
-      ['Control Height', '40px', '--as-density-control-height', 'Fixed'],
+      ['Control Height', '48px', '--as-space-12', 'Fixed'],
       ['Horizontal Padding (Left / Right)', '24px / 24px', '--as-space-6', 'Fixed'],
-      ['Vertical Padding (Top / Bottom)', '8px / 8px', '--as-density-control-padding-y', 'Fixed'],
+      ['Vertical Padding (Top / Bottom)', '16px / 16px', '--as-space-4', 'Fixed'],
       ['Minimum Width', '64px (40px icon-only)', '--as-space-16', 'Content-Dependent (expands with label)'],
       ['Corner Radius', '9999px (Full Pill)', '--as-radius-full', 'Fixed'],
       ['Typography', 'Manrope, 14px, weight 500, line-height 1.2', '--as-typography-font-family-sans / --as-typography-font-size-sm', 'Fixed'],
@@ -620,10 +620,10 @@ export function buildPaginationHtml(currentRoute) {
 
 const BLUEPRINT_CONFIGS = {
   button: {
-    compWidth: 160, compHeight: 56, radius: 28, isPill: true,
+    compWidth: 160, compHeight: 48, radius: 24, isPill: true,
     paddingLeft: 24, paddingRight: 24, gap: 8,
     iconWidth: 20, iconHeight: 20, iconType: 'sparkle', label: 'Do Magic',
-    topLabel: '160', leftLabel: '56',
+    topLabel: '160', leftLabel: '48',
     bottomPadLeft: '24', bottomGap: '8', bottomPadRight: '24'
   },
   input: {
@@ -891,7 +891,7 @@ function buildDesignerExplanation(config, spec) {
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>${spec.height}</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>${spec.height}</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -1119,141 +1119,15 @@ export function buildPlayground() {
   `;
 
   // --------------------------------------------------------------------------------
-  // 2. Separate Interactive Playground Page (`#/playground`) — Shade-DS Reference
+  // 2. Playground Stage (`#/playground`) — rendered by playground/scripts/stage.js
   // --------------------------------------------------------------------------------
   const playgroundViewHtml = `
     <!-- =====================================================================
          SEPARATE INTERACTIVE PLAYGROUND PAGE (#/playground)
          ===================================================================== -->
     <article class="doc-view" id="view-playground" data-title="Interactive Playground" data-section="playground" data-kind="playground" aria-labelledby="t-playground">
-      <header class="page-head" style="margin-bottom: 20px; padding-bottom: 16px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-          <div>
-            <span class="eyebrow">Interactive Component Workbench &middot; Shade-DS Stage Architecture</span>
-            <h1 id="t-playground" tabindex="-1" style="font-size: clamp(28px, 3.5vw, 38px); margin-top: 4px;">Live Component Playground</h1>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <a class="as-button as-button--secondary" href="#/button"><span class="as-button__label">Component Docs &rarr;</span></a>
-          </div>
-        </div>
-        <p class="lead" style="margin-top: 8px; font-size: 15px;">Select a component, manipulate live properties and states, toggle blueprint measurement callouts, and copy synchronized HTML/JS code.</p>
-      </header>
-
-      <div class="pg-workspace">
-        <!-- Left Component Selector Dock -->
-        <aside class="pg-dock" aria-label="Playground component selector">
-          <div class="pg-dock__title">Interactive Stage</div>
-          <button type="button" class="pg-dock__btn" data-pg-comp="button" aria-pressed="true"><span>Button</span><small>40px pill</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="input" aria-pressed="false"><span>Input &amp; Field</span><small>44px · 4px r</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="badge" aria-pressed="false"><span>Badge</span><small>status pill</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="alert" aria-pressed="false"><span>Alert Banner</span><small>red dot close</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="switch" aria-pressed="false"><span>Switch</span><small>44x24px</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="dialog" aria-pressed="false"><span>Dialog Modal</span><small>&lt;dialog&gt;</small></button>
-
-          <div class="pg-dock__title" style="margin-top: 12px;">All 21 Component Specs</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px;">
-            <a class="pill" href="#/button">Button</a>
-            <a class="pill" href="#/input">Input</a>
-            <a class="pill" href="#/textarea">Textarea</a>
-            <a class="pill" href="#/select">Select</a>
-            <a class="pill" href="#/checkbox">Checkbox</a>
-            <a class="pill" href="#/radio">Radio</a>
-            <a class="pill" href="#/switch">Switch</a>
-            <a class="pill" href="#/slider">Slider</a>
-            <a class="pill" href="#/table">Table</a>
-            <a class="pill" href="#/badge">Badge</a>
-            <a class="pill" href="#/progress">Progress</a>
-            <a class="pill" href="#/skeleton">Skeleton</a>
-            <a class="pill" href="#/alert">Alert</a>
-            <a class="pill" href="#/tooltip">Tooltip</a>
-            <a class="pill" href="#/toast">Toast</a>
-            <a class="pill" href="#/dialog">Dialog</a>
-            <a class="pill" href="#/drawer">Drawer</a>
-            <a class="pill" href="#/popover">Popover</a>
-            <a class="pill" href="#/dropdown">Dropdown</a>
-            <a class="pill" href="#/tabs">Tabs</a>
-            <a class="pill" href="#/accordion">Accordion</a>
-          </div>
-        </aside>
-
-        <!-- Center Interactive Stage + Live Code Output -->
-        <div class="pg-center">
-          <div class="pg-stage-box">
-            <div class="pg-stage-toolbar">
-              <div class="pg-stage-toolbar__left">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--as-semantic-color-status-success-text);display:inline-block;"></span>
-                <span>Live Canvas</span>
-              </div>
-              <div class="pg-stage-toolbar__actions">
-                <button type="button" class="pg-chip-toggle" id="pg-toggle-blueprint" aria-pressed="true">Blueprint Rulers</button>
-                <button type="button" class="pg-chip-toggle" id="pg-toggle-surface" aria-pressed="false">Elevated Surface</button>
-                <button type="button" class="pg-chip-toggle" id="pg-toggle-theme" aria-pressed="false">Theme: Light</button>
-              </div>
-            </div>
-            <div class="pg-stage-canvas" id="pg-stage-canvas" data-surface="canvas">
-              <div id="pg-stage-mount" style="display:flex;align-items:center;justify-content:center;"></div>
-              <div class="pg-blueprint-overlay" id="pg-blueprint-overlay" aria-label="Component blueprint measurements"></div>
-            </div>
-          </div>
-
-          <!-- Synchronized Live Code Block -->
-          <div class="code-block" id="pg-live-code">
-            <div class="code-block__bar">
-              <div class="code-block__meta">
-                <span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span>Live Generated Markup &middot; HTML</span>
-              </div>
-              <button type="button" class="copy-btn">Copy Code</button>
-            </div>
-            <div class="code-editor-body">
-              <div class="code-gutter" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span></div>
-              <pre><code id="pg-live-code-el" data-highlighted="true"></code></pre>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Property Control Panel -->
-        <aside class="pg-controls" id="pg-control-panel" aria-label="Component property controls">
-          <div class="pg-controls__title">Live Property Controls</div>
-
-          <div class="pg-control-group">
-            <label for="pg-ctrl-variant">Variant / Mode</label>
-            <div class="as-select-box">
-              <select class="as-select" id="pg-ctrl-variant">
-                <option value="primary" selected>primary</option>
-                <option value="secondary">secondary</option>
-                <option value="destructive">destructive</option>
-                <option value="ghost">ghost</option>
-              </select>
-              <svg class="as-select-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>
-            </div>
-          </div>
-
-          <div class="pg-control-group">
-            <label for="pg-ctrl-label">Label / Title Copy</label>
-            <input class="as-input" type="text" id="pg-ctrl-label" value="Deploy Cluster" />
-          </div>
-
-          <div class="pg-control-group" style="gap: 10px; padding-top: 6px;">
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-icon" checked></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Show Leading Icon / Dot</span></span>
-            </label>
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-loading"></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Async Loading (aria-busy)</span></span>
-            </label>
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-aria-disabled"></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Focus-Retaining Disabled</span></span>
-            </label>
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-disabled"></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Native Disabled (:disabled)</span></span>
-            </label>
-          </div>
-        </aside>
-      </div>
+      <h1 id="t-playground" class="as-sr-only" tabindex="-1">Interactive Playground</h1>
+      <div id="pg-root"></div>
     </article>
   `;
 
@@ -1270,7 +1144,7 @@ export function buildPlayground() {
           <span class="meta-tag meta-tag--success">Figma Variables Synced</span>
           <span class="meta-tag meta-tag--accent">26/26 WCAG 2.2 AA Contrast</span>
           <span class="meta-tag">4px Minimum Radius</span>
-          <span class="meta-tag">Standard 40px Control Rhythm</span>
+          <span class="meta-tag">Standard 48px Button Rhythm</span>
         </div>
       </header>
 
@@ -1488,7 +1362,7 @@ npm run test:browser</code></pre>
             </div>
             <div class="spec-card">
               <h4>Single Standard Density</h4>
-              <p>Aster enforces a single standard density scale. Control heights are 40px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
+              <p>Aster enforces a single standard density scale. Control heights are 48px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
               <a href="#/themes-density">Explore Density &amp; Themes &rarr;</a>
             </div>
             <div class="spec-card">
@@ -1980,7 +1854,7 @@ initAsterComponents(document);</code></pre>
       <header class="page-head">
         <div class="eyebrow">Foundations &middot; Adaptation</div>
         <h1 id="t-themes-density">Themes &amp; Standard Density</h1>
-        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (40px interactive controls and 44px table rows).</p>
+        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (48px buttons, 44px inputs, and 44px table rows).</p>
       </header>
       <div class="doc-body">
         <section class="doc-section">
@@ -1990,7 +1864,7 @@ initAsterComponents(document);</code></pre>
             <table class="spec-table">
               <thead><tr><th>Dimension Role</th><th>Token</th><th>Resolved Value</th></tr></thead>
               <tbody>
-                <tr><td>Control Height (Button, Input, Select)</td><td><code>--as-density-control-height</code></td><td><strong>40px</strong></td></tr>
+                <tr><td>Control Height (Table Headers, Icon Buttons)</td><td><code>--as-density-control-height</code></td><td><strong>40px</strong></td></tr>
                 <tr><td>Button Horizontal Padding</td><td><code>--as-space-6</code></td><td><strong>24px left / 24px right</strong></td></tr>
                 <tr><td>Table Row Height</td><td><code>--as-density-table-row-height</code></td><td><strong>44px</strong></td></tr>
                 <tr><td>Card Padding</td><td><code>--as-density-card-padding</code></td><td><strong>24px</strong></td></tr>
@@ -2272,7 +2146,7 @@ initAsterComponents(document);</code></pre>
     name: 'Button',
     slug: 'button',
     category: 'Form Controls',
-    description: 'Tactile 40px pill button with 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.',
+    description: 'Tactile 48px pill button with 16px top/bottom and 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.',
     element: '<button>',
     previewHtml: `
       <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 660px;">
@@ -2303,7 +2177,7 @@ initAsterComponents(document);</code></pre>
         </div>
       </div>
     `,
-    codeSnippet: `&lt;!-- Primary Monochrome Pill Action (40px height, 24px horizontal padding) --&gt;
+    codeSnippet: `&lt;!-- Primary Monochrome Pill Action (48px height, 16px vertical and 24px horizontal padding) --&gt;
 &lt;button type="button" class="as-button as-button--primary"&gt;
   &lt;span class="as-button__label"&gt;Deploy Cluster&lt;/span&gt;
 &lt;/button&gt;
@@ -2320,7 +2194,7 @@ initAsterComponents(document);</code></pre>
 &lt;button type="button" class="as-button as-button--ghost"&gt;
   &lt;span class="as-button__label"&gt;Inspect Logs&lt;/span&gt;
 &lt;/button&gt;`,
-    usageGuidance: 'Buttons trigger immediate actions. Aster buttons feature a 40px height, 24px left and right horizontal padding (--as-space-6), full pill geometry (9999px radius), and a Shade-DS cursor-origin circular hover fill.',
+    usageGuidance: 'Buttons trigger immediate actions. Aster buttons feature a 48px height, 16px vertical padding (--as-space-4), 24px left and right horizontal padding (--as-space-6), full pill geometry (9999px radius), and a Shade-DS cursor-origin circular hover fill.',
     whenToUse: 'Form submissions, modal confirmations, workflow triggers, and primary commands.',
     whenNotToUse: 'Navigating between pages or documentation sections (use semantic <a> anchor elements).',
     variantsTable: `
@@ -2339,7 +2213,7 @@ initAsterComponents(document);</code></pre>
       <tr><td>Primary Fill</td><td><code>--as-semantic-color-interactive-primary</code></td><td>#0f0f0f (Light) / #ffffff (Dark)</td></tr>
       <tr><td>Text on Primary</td><td><code>--as-semantic-color-text-on-primary</code></td><td>#ffffff (Light) / #0f0f0f (Dark)</td></tr>
       <tr><td>Horizontal Padding</td><td><code>--as-space-6</code></td><td>24px left / 24px right</td></tr>
-      <tr><td>Control Height</td><td><code>--as-density-control-height</code></td><td>40px</td></tr>
+      <tr><td>Control Height</td><td><code>--as-space-12</code></td><td>48px</td></tr>
       <tr><td>Pill Radius</td><td><code>--as-radius-full</code></td><td>9999px</td></tr>
     `
   });

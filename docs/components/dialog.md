@@ -46,7 +46,7 @@ The Dialog component presents critical information or asks for confirmation in a
 | `data-dialog-close` | Attribute | Optional | Declarative trigger hook for closing the ancestor dialog |
 
 ### Layout & Density
-- **Standard Density:** Follows canonical dialog geometry with `var(--as-space-5)` body padding, 12px radius (`var(--as-radius-lg)`), and standard 40px action buttons.
+- **Standard Density:** Follows canonical dialog geometry with `var(--as-space-5)` body padding, 12px radius (`var(--as-radius-lg)`), and standard 48px action buttons.
 
 ---
 

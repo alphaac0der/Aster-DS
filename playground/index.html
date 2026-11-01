@@ -354,134 +354,8 @@
          SEPARATE INTERACTIVE PLAYGROUND PAGE (#/playground)
          ===================================================================== -->
     <article class="doc-view" id="view-playground" data-title="Interactive Playground" data-section="playground" data-kind="playground" aria-labelledby="t-playground">
-      <header class="page-head" style="margin-bottom: 20px; padding-bottom: 16px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-          <div>
-            <span class="eyebrow">Interactive Component Workbench &middot; Shade-DS Stage Architecture</span>
-            <h1 id="t-playground" tabindex="-1" style="font-size: clamp(28px, 3.5vw, 38px); margin-top: 4px;">Live Component Playground</h1>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <a class="as-button as-button--secondary" href="#/button"><span class="as-button__label">Component Docs &rarr;</span></a>
-          </div>
-        </div>
-        <p class="lead" style="margin-top: 8px; font-size: 15px;">Select a component, manipulate live properties and states, toggle blueprint measurement callouts, and copy synchronized HTML/JS code.</p>
-      </header>
-
-      <div class="pg-workspace">
-        <!-- Left Component Selector Dock -->
-        <aside class="pg-dock" aria-label="Playground component selector">
-          <div class="pg-dock__title">Interactive Stage</div>
-          <button type="button" class="pg-dock__btn" data-pg-comp="button" aria-pressed="true"><span>Button</span><small>40px pill</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="input" aria-pressed="false"><span>Input &amp; Field</span><small>44px · 4px r</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="badge" aria-pressed="false"><span>Badge</span><small>status pill</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="alert" aria-pressed="false"><span>Alert Banner</span><small>red dot close</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="switch" aria-pressed="false"><span>Switch</span><small>44x24px</small></button>
-          <button type="button" class="pg-dock__btn" data-pg-comp="dialog" aria-pressed="false"><span>Dialog Modal</span><small>&lt;dialog&gt;</small></button>
-
-          <div class="pg-dock__title" style="margin-top: 12px;">All 21 Component Specs</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px;">
-            <a class="pill" href="#/button">Button</a>
-            <a class="pill" href="#/input">Input</a>
-            <a class="pill" href="#/textarea">Textarea</a>
-            <a class="pill" href="#/select">Select</a>
-            <a class="pill" href="#/checkbox">Checkbox</a>
-            <a class="pill" href="#/radio">Radio</a>
-            <a class="pill" href="#/switch">Switch</a>
-            <a class="pill" href="#/slider">Slider</a>
-            <a class="pill" href="#/table">Table</a>
-            <a class="pill" href="#/badge">Badge</a>
-            <a class="pill" href="#/progress">Progress</a>
-            <a class="pill" href="#/skeleton">Skeleton</a>
-            <a class="pill" href="#/alert">Alert</a>
-            <a class="pill" href="#/tooltip">Tooltip</a>
-            <a class="pill" href="#/toast">Toast</a>
-            <a class="pill" href="#/dialog">Dialog</a>
-            <a class="pill" href="#/drawer">Drawer</a>
-            <a class="pill" href="#/popover">Popover</a>
-            <a class="pill" href="#/dropdown">Dropdown</a>
-            <a class="pill" href="#/tabs">Tabs</a>
-            <a class="pill" href="#/accordion">Accordion</a>
-          </div>
-        </aside>
-
-        <!-- Center Interactive Stage + Live Code Output -->
-        <div class="pg-center">
-          <div class="pg-stage-box">
-            <div class="pg-stage-toolbar">
-              <div class="pg-stage-toolbar__left">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--as-semantic-color-status-success-text);display:inline-block;"></span>
-                <span>Live Canvas</span>
-              </div>
-              <div class="pg-stage-toolbar__actions">
-                <button type="button" class="pg-chip-toggle" id="pg-toggle-blueprint" aria-pressed="true">Blueprint Rulers</button>
-                <button type="button" class="pg-chip-toggle" id="pg-toggle-surface" aria-pressed="false">Elevated Surface</button>
-                <button type="button" class="pg-chip-toggle" id="pg-toggle-theme" aria-pressed="false">Theme: Light</button>
-              </div>
-            </div>
-            <div class="pg-stage-canvas" id="pg-stage-canvas" data-surface="canvas">
-              <div id="pg-stage-mount" style="display:flex;align-items:center;justify-content:center;"></div>
-              <div class="pg-blueprint-overlay" id="pg-blueprint-overlay" aria-label="Component blueprint measurements"></div>
-            </div>
-          </div>
-
-          <!-- Synchronized Live Code Block -->
-          <div class="code-block" id="pg-live-code">
-            <div class="code-block__bar">
-              <div class="code-block__meta">
-                <span class="code-block__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span>Live Generated Markup &middot; HTML</span>
-              </div>
-              <button type="button" class="copy-btn">Copy Code</button>
-            </div>
-            <div class="code-editor-body">
-              <div class="code-gutter" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span></div>
-              <pre><code id="pg-live-code-el" data-highlighted="true"></code></pre>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Property Control Panel -->
-        <aside class="pg-controls" id="pg-control-panel" aria-label="Component property controls">
-          <div class="pg-controls__title">Live Property Controls</div>
-
-          <div class="pg-control-group">
-            <label for="pg-ctrl-variant">Variant / Mode</label>
-            <div class="as-select-box">
-              <select class="as-select" id="pg-ctrl-variant">
-                <option value="primary" selected>primary</option>
-                <option value="secondary">secondary</option>
-                <option value="destructive">destructive</option>
-                <option value="ghost">ghost</option>
-              </select>
-              <svg class="as-select-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"></polyline></svg>
-            </div>
-          </div>
-
-          <div class="pg-control-group">
-            <label for="pg-ctrl-label">Label / Title Copy</label>
-            <input class="as-input" type="text" id="pg-ctrl-label" value="Deploy Cluster" />
-          </div>
-
-          <div class="pg-control-group" style="gap: 10px; padding-top: 6px;">
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-icon" checked></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Show Leading Icon / Dot</span></span>
-            </label>
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-loading"></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Async Loading (aria-busy)</span></span>
-            </label>
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-aria-disabled"></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Focus-Retaining Disabled</span></span>
-            </label>
-            <label class="as-checkbox-field">
-              <span class="as-checkbox"><input type="checkbox" class="as-checkbox-input" id="pg-ctrl-disabled"></span>
-              <span class="as-checkbox-field__content"><span class="as-checkbox-field__label">Native Disabled (:disabled)</span></span>
-            </label>
-          </div>
-        </aside>
-      </div>
+      <h1 id="t-playground" class="as-sr-only" tabindex="-1">Interactive Playground</h1>
+      <div id="pg-root"></div>
     </article>
 
 
@@ -541,7 +415,7 @@
             </div>
             <div class="spec-card">
               <h4>Single Standard Density</h4>
-              <p>Aster enforces a single standard density scale. Control heights are 40px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
+              <p>Aster enforces a single standard density scale. Control heights are 48px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
               <a href="#/themes-density">Explore Density &amp; Themes &rarr;</a>
             </div>
             <div class="spec-card">
@@ -892,7 +766,7 @@ initAsterComponents(document);</code></pre>
           <span class="meta-tag meta-tag--success">Figma Variables Synced</span>
           <span class="meta-tag meta-tag--accent">26/26 WCAG 2.2 AA Contrast</span>
           <span class="meta-tag">4px Minimum Radius</span>
-          <span class="meta-tag">Standard 40px Control Rhythm</span>
+          <span class="meta-tag">Standard 48px Button Rhythm</span>
         </div>
       </header>
 
@@ -1322,7 +1196,7 @@ npm run test:browser</code></pre>
       <header class="page-head">
         <div class="eyebrow">Foundations &middot; Adaptation</div>
         <h1 id="t-themes-density">Themes &amp; Standard Density</h1>
-        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (40px interactive controls and 44px table rows).</p>
+        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (48px buttons, 44px inputs, and 44px table rows).</p>
       </header>
       <div class="doc-body">
         <section class="doc-section">
@@ -1332,7 +1206,7 @@ npm run test:browser</code></pre>
             <table class="spec-table">
               <thead><tr><th>Dimension Role</th><th>Token</th><th>Resolved Value</th></tr></thead>
               <tbody>
-                <tr><td>Control Height (Button, Input, Select)</td><td><code>--as-density-control-height</code></td><td><strong>40px</strong></td></tr>
+                <tr><td>Control Height (Table Headers, Icon Buttons)</td><td><code>--as-density-control-height</code></td><td><strong>40px</strong></td></tr>
                 <tr><td>Button Horizontal Padding</td><td><code>--as-space-6</code></td><td><strong>24px left / 24px right</strong></td></tr>
                 <tr><td>Table Row Height</td><td><code>--as-density-table-row-height</code></td><td><strong>44px</strong></td></tr>
                 <tr><td>Card Padding</td><td><code>--as-density-card-padding</code></td><td><strong>24px</strong></td></tr>
@@ -1744,7 +1618,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>52px trigger header height</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>52px trigger header height</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -2239,7 +2113,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>Content-dependent (min 56px)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>Content-dependent (min 56px)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -2730,7 +2604,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>24px (--as-space-6)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>24px (--as-space-6)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -2924,10 +2798,10 @@ npm run test:browser
       <header class="page-head">
         <div class="eyebrow">Components &middot; Form Controls</div>
         <h1 id="t-button" tabindex="-1">Button</h1>
-        <p class="lead">Tactile 40px pill button with 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.</p>
+        <p class="lead">Tactile 48px pill button with 16px top/bottom and 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.</p>
         <div class="component-meta">
           <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
-          <span class="meta-tag meta-tag--accent">40px</span>
+          <span class="meta-tag meta-tag--accent">48px</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;button&gt;</span>
         </div>
@@ -2999,7 +2873,7 @@ npm run test:browser
                   </div>
                   <button type="button" class="copy-btn">Copy Code</button>
                 </div>
-                <pre><code>&lt;!-- Primary Monochrome Pill Action (40px height, 24px horizontal padding) --&gt;
+                <pre><code>&lt;!-- Primary Monochrome Pill Action (48px height, 16px vertical and 24px horizontal padding) --&gt;
 &lt;button type="button" class="as-button as-button--primary"&gt;
   &lt;span class="as-button__label"&gt;Deploy Cluster&lt;/span&gt;
 &lt;/button&gt;
@@ -3035,7 +2909,7 @@ npm run test:browser
 - **Component:** Button (`button`)
 - **Category:** Form Controls
 - **Native Element:** `&lt;button&gt;`
-- **Summary:** Tactile 40px pill button with 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.
+- **Summary:** Tactile 48px pill button with 16px top/bottom and 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.
 - **When to Use:** Form submissions, modal confirmations, workflow triggers, and primary commands.
 - **When Not to Use:** Navigating between pages or documentation sections (use semantic &lt;a&gt; anchor elements).
 
@@ -3047,7 +2921,7 @@ npm run test:browser
 
 ## 3. Canonical HTML Structure &amp; Classes
 ```html
-&lt;!-- Primary Monochrome Pill Action (40px height, 24px horizontal padding) --&gt;
+&lt;!-- Primary Monochrome Pill Action (48px height, 16px vertical and 24px horizontal padding) --&gt;
 &lt;button type=&quot;button&quot; class=&quot;as-button as-button--primary&quot;&gt;
   &lt;span class=&quot;as-button__label&quot;&gt;Deploy Cluster&lt;/span&gt;
 &lt;/button&gt;
@@ -3067,9 +2941,9 @@ npm run test:browser
 ```
 
 ## 4. Exact Geometry &amp; Token Bindings (Standard Density)
-- **Height:** 40px (--as-density-control-height)
+- **Height:** 48px (--as-space-12)
 - **Horizontal Padding:** 24px left / 24px right (--as-space-6)
-- **Vertical Padding:** 8px top / 8px bottom (--as-density-control-padding-y)
+- **Vertical Padding:** 16px top / 16px bottom (--as-space-4)
 - **Corner Radius:** 9999px (--as-radius-full)
 - **Typography:** Manrope · 14px (--as-typography-font-size-sm) · 500 Medium
 - **Icon / Secondary Control:** 16px icon · 8px gap (--as-space-2)
@@ -3101,7 +2975,7 @@ npm run test:browser
 
                   <!-- Exact Technical Measurement Blueprint Box Matching Reference Image -->
                   <div class="anatomy-blueprint-box" aria-label="Button geometric measurement blueprint">
-                    <svg class="anatomy-blueprint-svg" viewBox="0 0 560 236" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="anatomy-blueprint-svg" viewBox="0 0 560 228" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="hatch-button" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
         <line x1="0" y1="0" x2="0" y2="6" stroke="#D9A7F7" stroke-width="1.2" stroke-opacity="0.25" />
@@ -3112,36 +2986,36 @@ npm run test:browser
     </defs>
 
     <!-- Canvas Background -->
-    <rect width="560" height="236" rx="8" fill="var(--doc-sub, #18181b)" />
-    <rect width="560" height="236" rx="8" fill="url(#grid-button)" />
+    <rect width="560" height="228" rx="8" fill="var(--doc-sub, #18181b)" />
+    <rect width="560" height="228" rx="8" fill="url(#grid-button)" />
 
     <!-- Outer Bounding Box (Lavender Dotted Envelope) -->
-    <rect x="200" y="60" width="160" height="56" rx="28" fill="var(--doc-card, #222226)" stroke="var(--doc-line-strong, #3f3f46)" stroke-width="1" />
+    <rect x="200" y="60" width="160" height="48" rx="24" fill="var(--doc-card, #222226)" stroke="var(--doc-line-strong, #3f3f46)" stroke-width="1" />
 
 
       <!-- Corner Negative Space Hatching for Capsule Pill -->
       <g opacity="0.35">
-        <rect x="200" y="60" width="28" height="28" fill="url(#hatch-button)" />
-        <rect x="332" y="60" width="28" height="28" fill="url(#hatch-button)" />
-        <rect x="200" y="88" width="28" height="28" fill="url(#hatch-button)" />
-        <rect x="332" y="88" width="28" height="28" fill="url(#hatch-button)" />
+        <rect x="200" y="60" width="24" height="24" fill="url(#hatch-button)" />
+        <rect x="336" y="60" width="24" height="24" fill="url(#hatch-button)" />
+        <rect x="200" y="84" width="24" height="24" fill="url(#hatch-button)" />
+        <rect x="336" y="84" width="24" height="24" fill="url(#hatch-button)" />
       </g>
-      <rect x="200" y="60" width="160" height="56" rx="28" fill="var(--doc-card, #222226)" stroke="#D9A7F7" stroke-width="1" stroke-opacity="0.6" />
+      <rect x="200" y="60" width="160" height="48" rx="24" fill="var(--doc-card, #222226)" stroke="#D9A7F7" stroke-width="1" stroke-opacity="0.6" />
 
 
     <!-- Hatched Padding Zones -->
-    <rect x="200" y="60" width="24" height="56" rx="0" fill="url(#hatch-button)" />
-    <rect x="336" y="60" width="24" height="56" rx="0" fill="url(#hatch-button)" />
+    <rect x="200" y="60" width="24" height="48" rx="0" fill="url(#hatch-button)" />
+    <rect x="336" y="60" width="24" height="48" rx="0" fill="url(#hatch-button)" />
 
     <!-- Child Slots: Icon & Label -->
 
-      <g transform="translate(224, 78)">
+      <g transform="translate(224, 74)">
         <rect width="20" height="20" rx="3" fill="rgba(217, 167, 247, 0.08)" stroke="#D9A7F7" stroke-width="1" stroke-dasharray="2 2" />
         <g transform="translate(1, 1) scale(0.0703125)" fill="#D9A7F7">
           <path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/>
         </g>
       </g>
-      <g transform="translate(252, 77)">
+      <g transform="translate(252, 73)">
         <rect width="84" height="22" rx="3" fill="rgba(217, 167, 247, 0.08)" stroke="#D9A7F7" stroke-width="1" stroke-dasharray="2 2" />
         <text x="42" y="11" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle">Do Magic</text>
       </g>
@@ -3161,41 +3035,41 @@ npm run test:browser
     <!-- LEFT DIMENSION LINE (Orange Height) -->
     <g>
       <line x1="200" y1="60" x2="164" y2="60" stroke="#FF9800" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="200" y1="116" x2="164" y2="116" stroke="#FF9800" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="164" y1="60" x2="164" y2="116" stroke="#FF9800" stroke-width="1" />
+      <line x1="200" y1="108" x2="164" y2="108" stroke="#FF9800" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="164" y1="60" x2="164" y2="108" stroke="#FF9800" stroke-width="1" />
       <line x1="160" y1="60" x2="168" y2="60" stroke="#FF9800" stroke-width="1" />
-      <line x1="160" y1="116" x2="168" y2="116" stroke="#FF9800" stroke-width="1" />
-      <rect x="146" y="80" width="36" height="16" rx="3" fill="#161618" stroke="#FF9800" stroke-width="0.6" />
-      <text x="164" y="88" fill="#FF9800" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">56</text>
+      <line x1="160" y1="108" x2="168" y2="108" stroke="#FF9800" stroke-width="1" />
+      <rect x="146" y="76" width="36" height="16" rx="3" fill="#161618" stroke="#FF9800" stroke-width="0.6" />
+      <text x="164" y="84" fill="#FF9800" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">48</text>
     </g>
 
     <!-- BOTTOM DIMENSION LINES (Lavender Left Pad, Gap, Right Pad) -->
 
-      <line x1="200" y1="116" x2="200" y2="144" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="224" y1="116" x2="224" y2="144" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="200" y1="144" x2="224" y2="144" stroke="#D9A7F7" stroke-width="1" />
-      <line x1="200" y1="140" x2="200" y2="148" stroke="#D9A7F7" stroke-width="1" />
-      <line x1="224" y1="140" x2="224" y2="148" stroke="#D9A7F7" stroke-width="1" />
-      <rect x="200" y="136" width="24" height="16" rx="3" fill="#161618" stroke="#D9A7F7" stroke-width="0.6" />
-      <text x="212" y="144" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">24</text>
+      <line x1="200" y1="108" x2="200" y2="136" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="224" y1="108" x2="224" y2="136" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="200" y1="136" x2="224" y2="136" stroke="#D9A7F7" stroke-width="1" />
+      <line x1="200" y1="132" x2="200" y2="140" stroke="#D9A7F7" stroke-width="1" />
+      <line x1="224" y1="132" x2="224" y2="140" stroke="#D9A7F7" stroke-width="1" />
+      <rect x="200" y="128" width="24" height="16" rx="3" fill="#161618" stroke="#D9A7F7" stroke-width="0.6" />
+      <text x="212" y="136" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">24</text>
 
 
-      <line x1="244" y1="116" x2="244" y2="164" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="252" y1="116" x2="252" y2="164" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="244" y1="164" x2="252" y2="164" stroke="#D9A7F7" stroke-width="1" />
-      <line x1="244" y1="160" x2="244" y2="168" stroke="#D9A7F7" stroke-width="1" />
-      <line x1="252" y1="160" x2="252" y2="168" stroke="#D9A7F7" stroke-width="1" />
-      <rect x="239.5" y="156" width="17" height="16" rx="3" fill="#161618" stroke="#D9A7F7" stroke-width="0.6" />
-      <text x="248" y="164" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text>
+      <line x1="244" y1="108" x2="244" y2="156" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="252" y1="108" x2="252" y2="156" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="244" y1="156" x2="252" y2="156" stroke="#D9A7F7" stroke-width="1" />
+      <line x1="244" y1="152" x2="244" y2="160" stroke="#D9A7F7" stroke-width="1" />
+      <line x1="252" y1="152" x2="252" y2="160" stroke="#D9A7F7" stroke-width="1" />
+      <rect x="239.5" y="148" width="17" height="16" rx="3" fill="#161618" stroke="#D9A7F7" stroke-width="0.6" />
+      <text x="248" y="156" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text>
 
 
-      <line x1="336" y1="116" x2="336" y2="144" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="360" y1="116" x2="360" y2="144" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
-      <line x1="336" y1="144" x2="360" y2="144" stroke="#D9A7F7" stroke-width="1" />
-      <line x1="336" y1="140" x2="336" y2="148" stroke="#D9A7F7" stroke-width="1" />
-      <line x1="360" y1="140" x2="360" y2="148" stroke="#D9A7F7" stroke-width="1" />
-      <rect x="336" y="136" width="24" height="16" rx="3" fill="#161618" stroke="#D9A7F7" stroke-width="0.6" />
-      <text x="348" y="144" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">24</text>
+      <line x1="336" y1="108" x2="336" y2="136" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="360" y1="108" x2="360" y2="136" stroke="#D9A7F7" stroke-width="0.5" stroke-dasharray="2 2" stroke-opacity="0.4" />
+      <line x1="336" y1="136" x2="360" y2="136" stroke="#D9A7F7" stroke-width="1" />
+      <line x1="336" y1="132" x2="336" y2="140" stroke="#D9A7F7" stroke-width="1" />
+      <line x1="360" y1="132" x2="360" y2="140" stroke="#D9A7F7" stroke-width="1" />
+      <rect x="336" y="128" width="24" height="16" rx="3" fill="#161618" stroke="#D9A7F7" stroke-width="0.6" />
+      <text x="348" y="136" fill="#D9A7F7" font-family="'Space Mono', monospace" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle">24</text>
 
   </svg>
                   </div>
@@ -3233,8 +3107,8 @@ npm run test:browser
                   <div class="anatomy-rulers" aria-label="Key geometric measurements">
                     <div class="anatomy-ruler-card">
                       <span>Height / Box</span>
-                      <strong>40px</strong>
-                      <small>40px (--as-density-control-height)</small>
+                      <strong>48px</strong>
+                      <small>48px (--as-space-12)</small>
                     </div>
                     <div class="anatomy-ruler-card">
                       <span>Horizontal Padding</span>
@@ -3243,8 +3117,8 @@ npm run test:browser
                     </div>
                     <div class="anatomy-ruler-card">
                       <span>Vertical Padding</span>
-                      <strong>8px top / 8px bottom</strong>
-                      <small>8px top / 8px bottom (--as-density-control-padding-y)</small>
+                      <strong>16px top / 16px bottom</strong>
+                      <small>16px top / 16px bottom (--as-space-4)</small>
                     </div>
                     <div class="anatomy-ruler-card">
                       <span>Corner Radius</span>
@@ -3279,7 +3153,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>40px (--as-density-control-height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>48px (--as-space-12)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -3335,8 +3209,8 @@ npm run test:browser
 
       <tr>
         <td><strong>Control Height</strong></td>
-        <td><code>40px</code></td>
-        <td><code>--as-density-control-height</code></td>
+        <td><code>48px</code></td>
+        <td><code>--as-space-12</code></td>
         <td><span class="pill">Fixed</span></td>
       </tr>
 
@@ -3349,8 +3223,8 @@ npm run test:browser
 
       <tr>
         <td><strong>Vertical Padding (Top / Bottom)</strong></td>
-        <td><code>8px / 8px</code></td>
-        <td><code>--as-density-control-padding-y</code></td>
+        <td><code>16px / 16px</code></td>
+        <td><code>--as-space-4</code></td>
         <td><span class="pill">Fixed</span></td>
       </tr>
 
@@ -3400,7 +3274,7 @@ npm run test:browser
         <!-- Usage Guidance -->
         <section class="doc-section">
           <h2>Usage &amp; Design Guidance</h2>
-          <p>Buttons trigger immediate actions. Aster buttons feature a 40px height, 24px left and right horizontal padding (--as-space-6), full pill geometry (9999px radius), and a Shade-DS cursor-origin circular hover fill.</p>
+          <p>Buttons trigger immediate actions. Aster buttons feature a 48px height, 16px vertical padding (--as-space-4), 24px left and right horizontal padding (--as-space-6), full pill geometry (9999px radius), and a Shade-DS cursor-origin circular hover fill.</p>
           <div class="spec-grid">
             <div class="spec-card">
               <h4>When to use</h4>
@@ -3458,7 +3332,7 @@ npm run test:browser
       <tr><td>Primary Fill</td><td><code>--as-semantic-color-interactive-primary</code></td><td>#0f0f0f (Light) / #ffffff (Dark)</td></tr>
       <tr><td>Text on Primary</td><td><code>--as-semantic-color-text-on-primary</code></td><td>#ffffff (Light) / #0f0f0f (Dark)</td></tr>
       <tr><td>Horizontal Padding</td><td><code>--as-space-6</code></td><td>24px left / 24px right</td></tr>
-      <tr><td>Control Height</td><td><code>--as-density-control-height</code></td><td>40px</td></tr>
+      <tr><td>Control Height</td><td><code>--as-space-12</code></td><td>48px</td></tr>
       <tr><td>Pill Radius</td><td><code>--as-radius-full</code></td><td>9999px</td></tr>
 
               </tbody>
@@ -3812,7 +3686,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>28px × 28px hit target (18px visual box)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>28px × 28px hit target (18px visual box)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -4386,7 +4260,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>44px row height (--as-density-table-row-height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>44px row height (--as-density-table-row-height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -4960,7 +4834,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>Max 600px (min(85vh, 600px))</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>Max 600px (min(85vh, 600px))</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -5484,7 +5358,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>100vh full viewport height</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>100vh full viewport height</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -5972,7 +5846,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>36px per menuitem</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>36px per menuitem</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -6473,7 +6347,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>44px (Exact Shade-DS Control Height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>44px (Exact Shade-DS Control Height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -7009,7 +6883,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>Content-dependent</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>Content-dependent</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -7488,7 +7362,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>8px track height (--as-space-2)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>8px track height (--as-space-2)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -7988,7 +7862,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>28px × 28px hit target (18px visual circle)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>28px × 28px hit target (18px visual circle)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -8483,7 +8357,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>40px (--as-density-control-height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>40px (--as-density-control-height)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -8952,7 +8826,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>16px text line / 40px avatar circle</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>16px text line / 40px avatar circle</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -9413,7 +9287,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>32px interactive hit height (6px track)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>32px interactive hit height (6px track)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -9925,7 +9799,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>24px track height × 44px track width</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>24px track height × 44px track width</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -10414,7 +10288,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>42px tab trigger height</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>42px tab trigger height</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -10889,7 +10763,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>Min 96px (auto-expands)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>Min 96px (auto-expands)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -11400,7 +11274,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>Content-dependent (min 56px)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>Content-dependent (min 56px)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">
@@ -11882,7 +11756,7 @@ npm run test:browser
       <div class="designer-expl-card">
         <div class="designer-expl-card__number">01</div>
         <h4>Spatial Grid &amp; 4pt Alignment System</h4>
-        <p>The <strong>Content-dependent (min 28px)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard touch targets (40px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
+        <p>The <strong>Content-dependent (min 28px)</strong> bounding envelope adheres strictly to Aster’s 4pt baseline grid (Base Unit = 4px). Standard button targets (48px) and large interactive touch targets (56px) are exact multiples of 4 and 8. This guarantees pixel-perfect subpixel rasterization on standard 1&times; displays and crisp anti-aliasing across high-DPI (2&times;/3&times;) Retina viewports without fractional blur.</p>
       </div>
 
       <div class="designer-expl-card">

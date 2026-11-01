@@ -28,7 +28,7 @@ The Aster Skeleton component renders placeholder shapes to reduce perceived late
 |---|---|---|
 | Text | Line placeholder (14px height) | `var(--as-radius-sm)` |
 | Avatar | Circular placeholder (40px) | `var(--as-radius-full)` |
-| Button | Pill placeholder (40px) | `var(--as-radius-full)` |
+| Button | Pill placeholder (48px) | `var(--as-radius-full)` |
 | Card | Box placeholder (120px) | `var(--as-radius-lg)` |
 
 ---
@@ -38,7 +38,7 @@ The Aster Skeleton component renders placeholder shapes to reduce perceived late
 - Hidden from assistive technology: Declares `aria-hidden="true"`.
 - Parent region declares `aria-busy="true"` until loaded.
 - Reduced motion: Shimmer wave is disabled under `prefers-reduced-motion: reduce`.
-- Standard density: Skeletons mirror standard control geometry (40px button/control placeholders, 44px input placeholders).
+- Standard density: Skeletons mirror standard control geometry (48px button placeholders, 44px input placeholders).
 
 ---
 

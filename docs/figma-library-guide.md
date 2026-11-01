@@ -106,9 +106,9 @@ Aster DS components in Figma are structured as structured 2D matrices inside ele
 
 - **Anatomy:** Horizontal Auto Layout, center aligned.
 - **Dimensions & Geometry:**
-  - Control Height: `40px` (bound to `density/control/height`).
+  - Control Height: `48px` (bound to `dimensions/space/12`).
   - Horizontal Padding: `24px` (bound to `dimensions/space/6`).
-  - Vertical Padding: `8px` (bound to `dimensions/space/2`).
+  - Vertical Padding: `16px` (bound to `dimensions/space/4`).
   - Corner Radius: `9999px` (bound to `dimensions/radius/full`).
   - Inner Gap: `8px` (bound to `dimensions/space/2`).
 - **Typography:** `Aster / Body (Medium)` (`Manrope Medium 14px`).

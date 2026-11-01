@@ -42,7 +42,8 @@ The Aster Select component provides an accessible dropdown selection field built
 
 ## 3. Interaction & Keyboard Accessibility
 
-- Native `<select>` guarantees 100% platform accessibility on mobile, screen readers, and desktop.
+- The control remains a native `<select>`, so form participation and platform keyboard behavior are unchanged.
+- Popup: browsers supporting `appearance: base-select` render the Aster menu described in section 6. Others show their native popup.
 - Keyboard navigation: `Space` or `Alt + Down` opens menu, arrow keys navigate options.
 - Focus visibility: 2px ring with 2px offset (`var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus)`).
 - Control height meets Aster standards (44px standard height).
@@ -62,6 +63,9 @@ The Aster Select component provides an accessible dropdown selection field built
 | Text Color | `var(--as-semantic-color-text-default)` |
 | Chevron / Placeholder | `var(--as-semantic-color-text-muted)` |
 | Border Radius | `var(--as-radius-full)` (9999px) |
+| Popup Radius | `var(--as-radius-md)` |
+| Option Radius | `var(--as-radius-sm)` |
+| Option Hover / Focus | `var(--as-semantic-color-surface-muted)` |
 | Transition Duration | `var(--as-motion-duration-base)` |
 | Transition Easing | `var(--as-motion-ease-out)` |
 
@@ -83,4 +87,4 @@ The Aster Select component provides an accessible dropdown selection field built
 ## 6. Scope Disclosure & Implementation Boundaries
 
 > [!WARNING]
-> Native `<select>` popup rendering is managed by the OS and browser. Custom styled option menus are deferred to overlay components (`DropdownMenu`).
+> The Aster popup is progressive enhancement through `appearance: base-select`, with no JavaScript or markup changes. It is styled to match `DropdownMenu`, but browsers without support render the OS popup. Use `DropdownMenu` for actions and `Select` for choosing a form value.

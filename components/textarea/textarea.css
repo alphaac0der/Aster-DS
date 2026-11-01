@@ -55,6 +55,12 @@
 }
 
 /* Focus */
+/* The wrapper draws the focus state. This outranks page-level :focus-visible resets,
+   which would otherwise paint a second ring on the inner control. */
+.as-textarea:focus-visible {
+  outline: none;
+}
+
 .as-textarea-box:has(.as-textarea:focus) {
   border: none;
   outline: none;

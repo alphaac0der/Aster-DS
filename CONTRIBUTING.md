@@ -25,7 +25,7 @@ Aster enforces a strict separation between canonical source files and compiled d
 ### 2.1 Single Standard Density (Normative Requirement)
 - Aster operates with a single unified **Standard** density scale (`--as-density-*`).
 - **Do NOT introduce or use compact mode or `[data-density="compact"]` selectors.**
-- Standard interactive control heights are **40px** for buttons and **44px** for form inputs and selects, ensuring consistent touch ergonomics across devices (exceeding WCAG SC 2.5.8 24×24px minimum).
+- Standard interactive control heights are **48px** for buttons and **44px** for form inputs and selects, ensuring consistent touch ergonomics across devices (exceeding WCAG SC 2.5.8 24×24px minimum).
 
 ### 2.2 Strict Semantic Token Precedence
 - Component styles and layouts MUST bind exclusively to semantic tokens (`--as-semantic-color-*`), density tokens (`--as-density-*`), and structural foundation tokens (`--as-space-*`, `--as-radius-*`, `--as-elevation-*`).
@@ -95,7 +95,7 @@ Before submitting a pull request or proposing changes, all quality verification 
 | `npm run test:exports` | Validates `package.json` entry points, export map targets, and live consumer imports. |
 | `npm run test:pack` | Validates package whitelist via `npm pack --dry-run` (43 files). |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox strictly without `scratch/`. |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit executing 139 real DOM interaction assertions. |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit executing 142 real DOM interaction assertions. |
 
 ---
 

@@ -60,7 +60,7 @@
 }
 
 .as-skeleton--button {
-  height: var(--as-density-control-height, 40px);
+  height: var(--as-space-12, 48px);
   width: 120px;
   border-radius: var(--as-radius-full);
 }

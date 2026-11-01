@@ -133,12 +133,12 @@ Buttons must define explicit, distinct visual expressions across all supported s
 
 ## 3. Dimensions & Spatial Geometry
 
-Buttons use Aster's standard 40px control height with generous **24px horizontal padding** (`--as-space-6`) for balanced pill proportions:
+Buttons use a 48px height with **16px vertical padding** (`--as-space-4`) and generous **24px horizontal padding** (`--as-space-6`) for balanced pill proportions:
 
 | Dimensional Attribute | Standard Value (`:root`) | Canonical Token Binding |
 |---|---|---|
-| **Control Height** | `40px` | `var(--as-density-control-height)` |
-| **Vertical Padding** | `8px` | `var(--as-density-control-padding-y)` |
+| **Control Height** | `48px` | `var(--as-space-12)` |
+| **Vertical Padding** | `16px` (top & bottom) | `var(--as-space-4)` |
 | **Horizontal Padding** | `24px` (left & right) | `var(--as-space-6)` |
 | **Typography Size** | `14px` (`0.875rem`) | `var(--as-typography-font-size-base)` |
 | **Font Family** | `Manrope` | `var(--as-typography-font-family-sans)` |
@@ -147,7 +147,7 @@ Buttons use Aster's standard 40px control height with generous **24px horizontal
 | **Gap (Icon-Text)** | `8px` | `var(--as-space-2)` |
 
 > [!NOTE]
-> The 40px standard control height exceeds the normative WCAG 2.5.8 target size minimum (24×24px).
+> The 48px button height exceeds the normative WCAG 2.5.8 target size minimum (24×24px).
 
 ---
 
@@ -203,7 +203,7 @@ These requirements are legally binding and non-negotiable:
    - Sticky headers, floating panels, or dialog footers must never entirely obscure a focused button.
 5. **Target Size (Minimum) (SC 2.5.8 - Level AA):**
    - Interactive click targets must be at least **24×24 CSS px**, except where inline, user-agent determined, or separated by sufficient spacing.
-   - *Verification:* Aster buttons measure 40×40px minimum in Standard density, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum.
+   - *Verification:* Aster buttons measure 48px tall in Standard density, comfortably exceeding the 24×24px WCAG SC 2.5.8 minimum.
 6. **Name, Role, Value (SC 4.1.2 - Level A):**
    - Buttons must have a programmatically determinable accessible name. Icon-only buttons must provide an `aria-label`.
 
@@ -212,7 +212,7 @@ These requirements are legally binding and non-negotiable:
 - **Double-Activation Prevention:** When a button triggers an asynchronous workflow, it must prevent repeated activations while in the `loading` state.
 
 ### 5.3 Aster Conventions (Internal System Rules)
-- **Standard Height:** 40px standard control height (`--as-density-control-height`) is an internal design system baseline, not a WCAG mandate.
+- **Standard Height:** 48px button height (`--as-space-12`) is an internal design system baseline, not a WCAG mandate.
 - **2px Focus Ring:** `outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus); outline-offset: 2px;` is an Aster-wide focus ring convention.
 - **Non-Color-Alone State Communication:** Destructive buttons should pair red critical color with unambiguous text copy (e.g. "Delete Project", not just "Confirm").
 

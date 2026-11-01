@@ -87,6 +87,12 @@
   color: var(--as-semantic-color-text-default);
 }
 
+/* The wrapper draws the focus state. This outranks page-level :focus-visible resets,
+   which would otherwise paint a second ring on the inner control. */
+.as-input:focus-visible {
+  outline: none;
+}
+
 .as-input::placeholder {
   color: var(--as-semantic-color-text-muted);
   opacity: 0.6;
