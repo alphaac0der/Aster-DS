@@ -45,6 +45,7 @@
 }
 
 .as-slider {
+  color: var(--as-semantic-color-text-default);
   appearance: none;
   -webkit-appearance: none;
   width: 100%;
