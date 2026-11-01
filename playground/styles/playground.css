@@ -396,7 +396,7 @@ body[data-kind="playground"] .toc {
 .doc-section > .matrix-wrap,
 .doc-section > .code-block,
 .doc-section > .spec-wrap { margin-top: 18px; }
-.doc-section a:not(.nav-link):not(.as-button):not(.audience-chip) {
+.doc-section a:not(.nav-link):not(.as-button):not(.audience-chip):not(.as-card):not(.as-link) {
   color: var(--doc-ink); text-decoration: underline; text-underline-offset: 3px;
 }
 .note {
