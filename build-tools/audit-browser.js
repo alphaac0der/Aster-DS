@@ -1348,6 +1348,10 @@ async function runBrowserAudit() {
       assert(`${slug} header chip shows its measured height`, text === chip, text);
     }
 
+    await goto('/components/card', 700);
+    const blankChips = await cdp.eval(`[...document.querySelectorAll('.component-meta .meta-tag')].filter((el) => el.offsetWidth && !el.textContent.trim()).length`);
+    assert('Components without a fixed height show no blank header chip', blankChips === 0, String(blankChips));
+
     // 9D: Playground
     await goto('/playground');
     const playgroundPageAudit = await cdp.eval(`

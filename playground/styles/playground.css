@@ -421,6 +421,7 @@ body[data-kind="playground"] .toc {
   outline: none;
   color: var(--doc-muted);
 }
+.meta-tag[hidden] { display: none; }
 .meta-tag--success {
   color: var(--as-semantic-color-status-success-text);
   background: var(--doc-sub);

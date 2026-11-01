@@ -108,7 +108,7 @@ Before proposing or finalizing changes to tokens, components, or documentation, 
 | `npm run test:pack` | Executes dry-run package bundling check (`npm pack --dry-run`). |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox strictly without `scratch/`. |
 | `npm test` | Runs the aggregate quality suite (`figma`, `contrast`, `components`, `docs`, `exports`, `pack`, `isolated-build`). |
-| `npm run test:browser` | Runs the headless Chrome behavioral audit and axe-core accessibility scan against the built docs site. Requires Node 22+ (155 real DOM interaction tests; alias for `node build-tools/audit-browser.js`). |
+| `npm run test:browser` | Runs the headless Chrome behavioral audit and axe-core accessibility scan against the built docs site. Requires Node 22+ (156 real DOM interaction tests; alias for `node build-tools/audit-browser.js`). |
 
 > [!NOTE]
 > Never claim a test passed unless the command was executed and the output was observed.
