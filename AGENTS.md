@@ -45,7 +45,7 @@ When authoring or modifying component styles or application UI, agents MUST stri
    - **Do NOT introduce or use compact mode or `[data-density="compact"]`** selectors. Standard control heights are 48px for buttons and 44px for inputs/selects to ensure consistent touch ergonomics.
 4. **Corner Radius Policy:**
    - Minimum component corner radius is **4px** (`--as-radius-sm`).
-   - Default card and dialog corner radius is **8px** (`--as-radius-md`) to **16px** (`--as-radius-xl`).
+   - Default card and dialog corner radius is **8px** (`--as-radius-md`) to **12px** (`--as-radius-lg`).
    - Full pill radius **9999px** (`--as-radius-full`) is reserved for buttons and badges.
    - **Never use 2px radii.**
 5. **Four-Role Typography System:**

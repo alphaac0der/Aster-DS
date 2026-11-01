@@ -194,7 +194,7 @@ To maintain engineering integrity, Aster maintains strict boundaries regarding w
    - Automated checks (`test:contrast`) mathematically verify that designated foreground/background token pairs exceed WCAG 2.2 AA ratios (4.5:1 standard text, 3:1 UI boundaries).
    - Automated contrast tests **do not prove full WCAG 2.2 AA conformance**. Contextual typography sizes, user-generated content, and layout positioning must be verified in the final application.
 2. **Target Size (WCAG 2.5.8):**
-   - Standard controls provide 48px for buttons and 44px for inputs, selects, and table rows, establishing generous baseline physical dimensions.
+   - Standard controls provide 48px for buttons and 44px for inputs and selects, and 48px for table rows, establishing generous baseline physical dimensions.
    - Single standard density is enforced across all devices, eliminating compact mode in favor of consistent touch ergonomics. While standard control bounding boxes (40px/44px) are larger than the 24×24px minimum dimension specified in WCAG SC 2.5.8, control dimensions alone do not guarantee full criterion conformance, which also depends on spacing between adjacent targets and contextual application layout.
 3. **Screen Readers & Reflow:**
    - All components declare semantic HTML5 elements (`<button>`, `<input>`, `<table>`, `<dialog>`) and ARIA states (`aria-busy`, `aria-invalid`, `aria-sort`, `aria-expanded`).

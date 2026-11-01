@@ -154,7 +154,7 @@ Aster Data Tables adhere to Aster's unified Standard density architecture:
 
 | Dimensional Attribute | Standard Value | Canonical Token Binding |
 |---|---|---|
-| **Row Height (Baseline)** | `44px` | `var(--as-density-table-row-height)` |
+| **Row Height (Baseline)** | `48px` | `var(--as-density-table-row-height)` |
 | **Cell Vertical Padding** | `10px` | Derived to center text within row height |
 | **Cell Horizontal Padding**| `16px` | `var(--as-density-control-padding-x)` |
 | **Cell Typography Size** | `13px` (`0.8125rem`) | `var(--as-typography-font-size-sm)` |
@@ -165,8 +165,8 @@ Aster Data Tables adhere to Aster's unified Standard density architecture:
 
 > [!NOTE]
 > **Aster Convention & Target Size Separation:**
-> Standard row height (44px) is an **Aster Convention** tuned for desktop telemetry and enterprise workstations.
-> Setting a 44px row height does **not** by itself establish compliance with WCAG 2.5.8 Target Size (Minimum, Level AA) for interactive controls placed inside cells (e.g., checkboxes, action buttons, links). Each interactive target within a row must be evaluated independently for its actual bounding box (minimum 24×24px, or meeting spacing exceptions where a 24px diameter circle centered on the target does not overlap adjacent targets, or qualifying for inline text exceptions).
+> Standard row height (48px) is an **Aster Convention** tuned for desktop telemetry and enterprise workstations.
+> Setting a 48px row height does **not** by itself establish compliance with WCAG 2.5.8 Target Size (Minimum, Level AA) for interactive controls placed inside cells (e.g., checkboxes, action buttons, links). Each interactive target within a row must be evaluated independently for its actual bounding box (minimum 24×24px, or meeting spacing exceptions where a 24px diameter circle centered on the target does not overlap adjacent targets, or qualifying for inline text exceptions).
 
 ---
 
@@ -235,7 +235,7 @@ All structural, surface, border, and typographical properties bind strictly to c
 1. **Preferred Table Caption (`<caption>`):**
    - While WCAG allows accessible naming via various attributes (`aria-label`, `aria-labelledby`, preceding headings), Aster establishes native `<caption>` (visible or `.as-sr-only`) as its standard component convention.
 2. **Standard Row Height:**
-   - 44px baseline row height (`--as-density-table-row-height`).
+   - 48px baseline row height (`--as-density-table-row-height`).
 3. **2px Focus Ring:**
    - Aster's standard 2px focus ring (`--as-elevation-border-focus` solid `--as-semantic-color-border-focus`).
 4. **12px Text Floor:**

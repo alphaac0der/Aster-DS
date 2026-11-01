@@ -21,7 +21,7 @@ The Aster Select component provides an accessible dropdown selection field built
 ### Anatomical Sub-Elements
 
 1. **Field Container (`.as-form-field`):** Layout wrapper for label, select box, and feedback.
-2. **Select Box (`.as-select-box`):** Full pill-shaped control container (44px standard height).
+2. **Select Box (`.as-select-box`):** Rectangular field container with 4px corners (44px standard height).
 3. **Native Select (`.as-select`):** Native HTML `<select>` with `<option>` children.
 4. **Chevron Icon (`.as-select-chevron`):** Decorative SVG arrow cue.
 5. **Helper / Error Feedback:** Programmatically associated via `aria-describedby`.
@@ -32,11 +32,12 @@ The Aster Select component provides an accessible dropdown selection field built
 
 | State / Variant | Description | Token / Value Binding |
 |---|---|---|
-| Default | Card background with strong border | `var(--as-semantic-color-surface-card)` / `var(--as-semantic-color-border-strong)` |
-| Hover | High contrast border highlight | `var(--as-semantic-color-text-default)` |
-| Focus-Visible | High contrast 2px focus outline | `var(--as-semantic-color-border-focus)` |
-| Disabled | Muted surface with not-allowed cursor | `var(--as-semantic-color-surface-muted)` |
-| Invalid / Error | Critical status border and outline | `var(--as-semantic-color-status-critical-text)` |
+| Default | Canvas background with a soft 1px glow | `var(--as-semantic-color-surface-canvas)` / `var(--as-semantic-color-border-subtle)` |
+| Hover | Stronger glow | `var(--as-semantic-color-text-muted)` |
+| Open | Highest-contrast glow, chevron flips | `var(--as-semantic-color-text-default)` |
+| Focus-Visible | 2px focus outline | `var(--as-semantic-color-border-focus)` |
+| Disabled | Subtle surface at 40% opacity, not-allowed cursor | `var(--as-semantic-color-surface-subtle)` |
+| Invalid / Error | Critical status glow | `var(--as-semantic-color-status-critical-text)` |
 
 ---
 
@@ -54,15 +55,16 @@ The Aster Select component provides an accessible dropdown selection field built
 
 | Property / Area | CSS Custom Property Binding |
 |---|---|
-| Background (Rest) | `var(--as-semantic-color-surface-card)` |
-| Background (Disabled) | `var(--as-semantic-color-surface-muted)` |
-| Border (Rest) | `var(--as-semantic-color-border-strong)` |
-| Border (Hover) | `var(--as-semantic-color-text-default)` |
+| Background (Rest) | `var(--as-semantic-color-surface-canvas)` |
+| Background (Disabled) | `var(--as-semantic-color-surface-subtle)` |
+| Glow (Rest) | `var(--as-semantic-color-border-subtle)` |
+| Glow (Hover) | `var(--as-semantic-color-text-muted)` |
+| Glow (Open) | `var(--as-semantic-color-text-default)` |
 | Focus Outline | `var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus)` |
-| Error Border | `var(--as-semantic-color-status-critical-text)` |
+| Error Glow | `var(--as-semantic-color-status-critical-text)` |
 | Text Color | `var(--as-semantic-color-text-default)` |
-| Chevron / Placeholder | `var(--as-semantic-color-text-muted)` |
-| Border Radius | `var(--as-radius-full)` (9999px) |
+| Chevron | `var(--as-semantic-color-text-muted)` |
+| Border Radius | `var(--as-radius-sm)` (4px) |
 | Popup Radius | `var(--as-radius-md)` |
 | Option Radius | `var(--as-radius-sm)` |
 | Option Hover / Focus | `var(--as-semantic-color-surface-muted)` |
@@ -74,13 +76,13 @@ The Aster Select component provides an accessible dropdown selection field built
 ## 5. Requirements & Classification Framework
 
 ### 5.1 Normative Requirements (WCAG 2.2 Level AA Mandates)
-1. **Non-text Contrast (SC 1.4.11 - Level AA):** Control border and chevron icon meet ≥3.0:1 contrast.
+1. **Non-text Contrast (SC 1.4.11 - Level AA):** The chevron icon is intended to meet ≥3.0:1 contrast. The rest-state glow uses a subtle token, so verify field boundaries in context.
 2. **Keyboard Operability (SC 2.1.1 - Level A):** Standard native `<select>` keyboard operation.
 3. **Focus Visible (SC 2.4.7 - Level A):** Visible focus ring renders when select is focused.
 4. **Target Size (SC 2.5.8 - Level AA):** 44px control height comfortably exceeds the 24×24px requirement.
 
 ### 5.2 Aster Conventions
-- Full pill border radius (`var(--as-radius-full)`) coordinates with `.as-button` and `.as-input` aesthetic.
+- 4px corners (`var(--as-radius-sm)`) and a 44px height match `.as-input-box`, so fields align in forms.
 
 ---
 

@@ -47,3 +47,9 @@ jobs:
 
       - name: Verify isolated build without scratch
         run: npm run test:isolated-build
+
+      - name: Run browser behavior audit
+        run: npm run test:browser
+
+      - name: Verify website and documentation UX
+        run: node build-tools/verify-website-ux.js

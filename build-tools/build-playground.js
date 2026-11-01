@@ -98,22 +98,22 @@ const COMPONENT_ANATOMY_SPECS = {
     ]
   },
   select: {
-    height: '40px (--as-density-control-height)',
+    height: '44px (height: 44px)',
     paddingX: '12px left / 36px right (--as-space-3)',
     paddingY: '8px top / 8px bottom',
-    radius: '8px (--as-radius-md)',
+    radius: '4px (--as-radius-sm)',
     typography: 'Manrope · 14px · 400 Regular',
     iconGap: '16px × 16px custom chevron at right 12px',
     focusRing: '2px solid (--as-semantic-color-border-focus) + 1px offset',
     parts: [
       ['1', 'Select Box Wrapper', '.as-select-box', 'Relative positioning anchor for native select and SVG chevron'],
-      ['2', 'Native Select', '.as-select', 'Fixed 40px height, 8px radius, appearance: none, 36px right clearance'],
+      ['2', 'Native Select', '.as-select', 'Fixed 44px height, 4px radius, appearance: none, 36px right clearance'],
       ['3', 'Chevron Indicator', '.as-select-chevron', 'Fixed 16px × 16px pointer-events: none icon positioned 12px from right']
     ],
     rows: [
-      ['Control Height', '40px', '--as-density-control-height', 'Fixed'],
+      ['Control Height', '44px', 'height: 44px', 'Fixed'],
       ['Horizontal Padding', '12px left, 36px right (chevron clearance)', '--as-space-3', 'Fixed'],
-      ['Corner Radius', '8px', '--as-radius-md', 'Fixed'],
+      ['Corner Radius', '4px', '--as-radius-sm', 'Fixed'],
       ['Chevron Icon', '16px × 16px at right: 12px', '--as-space-3', 'Fixed'],
       ['Typography', 'Manrope, 14px, weight 400', '--as-typography-font-size-sm', 'Fixed']
     ]
@@ -203,7 +203,7 @@ const COMPONENT_ANATOMY_SPECS = {
     ]
   },
   table: {
-    height: '44px row height (--as-density-table-row-height)',
+    height: '48px row height (--as-density-table-row-height)',
     paddingX: '16px cell horizontal (--as-density-table-cell-padding-x)',
     paddingY: '8px cell vertical (--as-density-table-cell-padding-y)',
     radius: '12px container (--as-radius-lg)',
@@ -213,11 +213,11 @@ const COMPONENT_ANATOMY_SPECS = {
     parts: [
       ['1', 'Outer Container', '.as-table-container', '12px (--as-radius-lg) bordered card wrapping toolbar, scroll area, and footer'],
       ['2', 'Column Header', '.as-table__th', '12px uppercase header with optional .as-table__sort button'],
-      ['3', 'Data Row', '.as-table__row', '44px minimum height row with hover and [data-selected] highlight'],
+      ['3', 'Data Row', '.as-table__row', '48px minimum height row with hover and [data-selected] highlight'],
       ['4', 'Numeric / Primary Cell', '.as-table__cell', '16px × 8px padded cell with tabular-nums alignment for metrics']
     ],
     rows: [
-      ['Row Height', '44px', '--as-density-table-row-height', 'Fixed minimum'],
+      ['Row Height', '48px', '--as-density-table-row-height', 'Fixed minimum'],
       ['Cell Padding', '16px horizontal / 8px vertical', '--as-density-table-cell-padding-x / y', 'Fixed'],
       ['Checkbox Column Width', '44px', '.as-table__th--check', 'Fixed'],
       ['Container Radius', '12px', '--as-radius-lg', 'Fixed'],
@@ -348,13 +348,13 @@ const COMPONENT_ANATOMY_SPECS = {
     height: 'Max 600px (min(85vh, 600px))',
     paddingX: '16px header/footer (--as-space-4) · 20px body (--as-space-5)',
     paddingY: '16px vertical body padding · 48px header height',
-    radius: '16px (--as-radius-lg)',
+    radius: '12px (--as-radius-lg)',
     typography: 'Bebas Neue 38px hero · Manrope 12px uppercase label · 13.5px body',
     iconGap: '12px solid red dot dismiss control (--as-semantic-color-status-critical-text)',
     focusRing: 'Native <dialog> focus trap + 2px focus ring',
     parts: [
       ['1', 'Modal Scrim', '.as-dialog::backdrop', 'Full-viewport dimmed backdrop with 8px blur and click-outside dismiss'],
-      ['2', 'Glass Surface', '.as-dialog__surface', 'Max-width 400px card with 16px (--as-radius-lg) radius, backdrop blur (20px), and double 1px glass glow shadows'],
+      ['2', 'Glass Surface', '.as-dialog__surface', 'Max-width 400px card with 12px (--as-radius-lg) radius, backdrop blur (20px), and double 1px glass glow shadows'],
       ['3', 'Header & Red Dot Close', '.as-dialog__header / .as-dialog__close', '48px header with uppercase title and 12px solid red dot close button (#ff453a dark / #c5221f light), scale 1.2 on hover, 0.9 on active'],
       ['4', 'Hero & Body & Footer', '.as-dialog__hero / .as-dialog__body / .as-dialog__footer', 'Bebas Neue display title, scrollable rules list with custom thin scrollbar, and full-width pill CTA button']
     ],
@@ -362,7 +362,7 @@ const COMPONENT_ANATOMY_SPECS = {
       ['Panel Width', '400px (min(92vw, 400px))', 'max-width: 400px', 'Fixed cap / Responsive'],
       ['Max Height', '600px (min(85vh, 600px))', 'max-height: 600px', 'Fixed cap'],
       ['Header Height', '48px (Space.5XL)', 'min-height: 48px; padding: 0 16px', 'Fixed'],
-      ['Corner Radius', '16px', '--as-radius-lg', 'Fixed'],
+      ['Corner Radius', '12px', '--as-radius-lg', 'Fixed'],
       ['Outline / Glow', 'Double 1px glass glow box-shadow (border: none)', 'box-shadow: 0 0 1px ...', 'Fixed'],
       ['Close Control (Red Dot)', '12px circle (#ff453a dark / #c5221f light, scale 1.2 on hover, 0.9 active)', '.as-dialog__close', 'Fixed']
     ]
@@ -869,7 +869,7 @@ export function buildPlayground() {
               <thead><tr><th>Figma Collection</th><th>Modes</th><th>Payload Source</th></tr></thead>
               <tbody>
                 <tr><td><strong>Aster Colors</strong></td><td>Light (<code>1001:0</code>) &middot; Dark (<code>1001:1</code>)</td><td><code>dist/figma/aster-colors.json</code></td></tr>
-                <tr><td><strong>Aster Density</strong></td><td>Standard (<code>2001:0</code> — 40px controls, 44px table rows)</td><td><code>dist/figma/aster-density.json</code></td></tr>
+                <tr><td><strong>Aster Density</strong></td><td>Standard (<code>2001:0</code> — 40px controls, 48px table rows)</td><td><code>dist/figma/aster-density.json</code></td></tr>
                 <tr><td><strong>Aster Dimensions</strong></td><td>Value (<code>3001:0</code> — 4px spatial grid &amp; radius scale)</td><td><code>dist/figma/aster-dimensions.json</code></td></tr>
               </tbody>
             </table>
@@ -1003,7 +1003,6 @@ npm run test:browser</code></pre>
           <span class="meta-tag meta-tag--success">Zero Runtime Dependencies</span>
           <span class="meta-tag meta-tag--accent">109 Canonical Tokens</span>
           <span class="meta-tag">21 Components</span>
-          <span class="meta-tag">WCAG 2.2 AA</span>
         </div>
       </header>
 
@@ -1047,7 +1046,7 @@ npm run test:browser</code></pre>
             </div>
             <div class="spec-card">
               <h4>Single Standard Density</h4>
-              <p>Aster enforces a single standard density scale. Control heights are 48px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
+              <p>Aster enforces a single standard density scale. Control heights are 48px for buttons and 44px for inputs and 48px for table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
               <a href="#/themes-density">Explore Density &amp; Themes &rarr;</a>
             </div>
             <div class="spec-card">
@@ -1539,7 +1538,7 @@ initAsterComponents(document);</code></pre>
       <header class="page-head">
         <div class="eyebrow">Foundations &middot; Adaptation</div>
         <h1 id="t-themes-density">Themes &amp; Standard Density</h1>
-        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (48px buttons, 44px inputs, and 44px table rows).</p>
+        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (48px buttons, 44px inputs, and 48px table rows).</p>
       </header>
       <div class="doc-body">
         <section class="doc-section">
@@ -1552,7 +1551,6 @@ initAsterComponents(document);</code></pre>
                 <tr><td>Control Height (Table Headers, Icon Buttons)</td><td><code>--as-density-control-height</code></td><td><strong>40px</strong></td></tr>
                 <tr><td>Button Horizontal Padding</td><td><code>--as-space-6</code></td><td><strong>24px left / 24px right</strong></td></tr>
                 <tr><td>Table Row Height</td><td><code>--as-density-table-row-height</code></td><td><strong>44px</strong></td></tr>
-                <tr><td>Card Padding</td><td><code>--as-density-card-padding</code></td><td><strong>24px</strong></td></tr>
               </tbody>
             </table>
           </div>
@@ -1581,7 +1579,7 @@ initAsterComponents(document);</code></pre>
             <div class="preview-canvas" style="min-height: 180px;">
               <div id="enter-demo" class="is-entering" style="padding: 24px 32px; background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); box-shadow: var(--as-elevation-shadow-overlay); text-align: center;">
                 <h4 style="margin: 0 0 8px;">Modal Surface Elevation</h4>
-                <p style="margin: 0; color: var(--as-semantic-color-text-muted); font-size: 13px;">Entering using var(--as-motion-duration-md) and var(--as-motion-ease-decelerate).</p>
+                <p style="margin: 0; color: var(--as-semantic-color-text-muted); font-size: 13px;">Entering using var(--as-motion-duration-slow) and var(--as-motion-ease-out).</p>
               </div>
             </div>
           </div>
@@ -1610,7 +1608,6 @@ initAsterComponents(document);</code></pre>
         <h1 id="t-${config.slug}" tabindex="-1">${config.name}</h1>
         <p class="lead">${esc(config.description)}</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">${esc(spec.height.split(' (')[0])}</span>
           <span class="meta-tag">Radius: ${esc(spec.radius.split(' (')[0])}</span>
           <span class="meta-tag">Element: ${esc(config.element)}</span>
@@ -1809,7 +1806,7 @@ initAsterComponents(document);</code></pre>
     `,
     tokenRows: `
       <tr><td>Primary Fill</td><td><code>--as-semantic-color-interactive-primary</code></td><td>#0f0f0f (Light) / #ffffff (Dark)</td></tr>
-      <tr><td>Text on Primary</td><td><code>--as-semantic-color-text-on-primary</code></td><td>#ffffff (Light) / #0f0f0f (Dark)</td></tr>
+      <tr><td>Text on Primary</td><td><code>--as-semantic-color-interactive-primary-text</code></td><td>#ffffff (Light) / #0f0f0f (Dark)</td></tr>
       <tr><td>Horizontal Padding</td><td><code>--as-space-6</code></td><td>24px left / 24px right</td></tr>
       <tr><td>Control Height</td><td><code>--as-space-12</code></td><td>48px</td></tr>
       <tr><td>Pill Radius</td><td><code>--as-radius-full</code></td><td>9999px</td></tr>
@@ -1936,7 +1933,7 @@ initAsterComponents(document);</code></pre>
     name: 'Select',
     slug: 'select',
     category: 'Form Controls',
-    description: 'Native 40px dropdown selection control with 8px corner radius and custom high-contrast chevron indicator.',
+    description: 'Native 44px dropdown selection control with 4px corner radius and custom high-contrast chevron indicator.',
     element: '<select>',
     previewHtml: `
       <div class="as-form-field" style="max-width: 360px; width: 100%;">
@@ -1969,8 +1966,8 @@ initAsterComponents(document);</code></pre>
       <table class="spec-table">
         <thead><tr><th>State</th><th>Height</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Default</td><td>40px</td><td>Standard form control height with 8px radius</td></tr>
-          <tr><td>Disabled</td><td>40px</td><td>Unmodifiable state with 50% opacity</td></tr>
+          <tr><td>Default</td><td>44px</td><td>Standard form control height with 4px radius</td></tr>
+          <tr><td>Disabled</td><td>44px</td><td>Unmodifiable state with 50% opacity</td></tr>
         </tbody>
       </table>
     `,
@@ -1979,8 +1976,8 @@ initAsterComponents(document);</code></pre>
       <tr><td>Decorative Chevron</td><td>SVG chevron declares <code>aria-hidden="true"</code>.</td></tr>
     `,
     tokenRows: `
-      <tr><td>Control Height</td><td><code>--as-density-control-height</code></td><td>40px</td></tr>
-      <tr><td>Corner Radius</td><td><code>--as-radius-md</code></td><td>8px</td></tr>
+      <tr><td>Control Height</td><td><code>height: 44px</code></td><td>44px</td></tr>
+      <tr><td>Corner Radius</td><td><code>--as-radius-sm</code></td><td>4px</td></tr>
       <tr><td>Border Strong</td><td><code>--as-semantic-color-border-strong</code></td><td>#777777 / #777777</td></tr>
     `
   });
@@ -2157,7 +2154,7 @@ initAsterComponents(document);</code></pre>
     `,
     tokenRows: `
       <tr><td>Active Track</td><td><code>--as-semantic-color-interactive-primary</code></td><td>#0f0f0f / #ffffff</td></tr>
-      <tr><td>Active Thumb</td><td><code>--as-semantic-color-text-on-primary</code></td><td>#ffffff / #0f0f0f</td></tr>
+      <tr><td>Active Thumb</td><td><code>--as-semantic-color-interactive-primary-text</code></td><td>#ffffff / #0f0f0f</td></tr>
     `
   });
 
@@ -2215,7 +2212,7 @@ initAsterComponents(document);</code></pre>
     name: 'Data Table',
     slug: 'table',
     category: 'Data Display',
-    description: 'Structured tabular data display with 44px rows, column sorting, multi-row indeterminate selection, lifecycle states, and keyboard overflow scrolling.',
+    description: 'Structured tabular data display with 48px rows, column sorting, multi-row indeterminate selection, lifecycle states, and keyboard overflow scrolling.',
     element: '<table>',
     previewHtml: `
       <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
@@ -2301,14 +2298,14 @@ initAsterComponents(document);</code></pre>
     &lt;/table&gt;
   &lt;/div&gt;
 &lt;/div&gt;`,
-    usageGuidance: 'Data tables organize multi-attribute records across 44px rows with sortable column headers and multi-row selection.',
+    usageGuidance: 'Data tables organize multi-attribute records across 48px rows with sortable column headers and multi-row selection.',
     whenToUse: 'Datasets with comparable attributes such as server nodes, logs, and transactions.',
     whenNotToUse: 'Simple single-column lists or page layout grids.',
     variantsTable: `
       <table class="spec-table">
         <thead><tr><th>Feature</th><th>Selector</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Standard Table</td><td><code>.as-table</code></td><td>44px row height, 16px horizontal cell padding</td></tr>
+          <tr><td>Standard Table</td><td><code>.as-table</code></td><td>48px row height, 16px horizontal cell padding</td></tr>
           <tr><td>Interactive Rows</td><td><code>.as-table--interactive</code></td><td>Hover and <code>[data-selected]</code> row highlighting</td></tr>
         </tbody>
       </table>
@@ -2319,7 +2316,7 @@ initAsterComponents(document);</code></pre>
       <tr><td>Overflow Region</td><td>Scroll container receives <code>tabindex="0"</code> and <code>role="region"</code> when overflowing.</td></tr>
     `,
     tokenRows: `
-      <tr><td>Row Height</td><td><code>--as-density-table-row-height</code></td><td>44px</td></tr>
+      <tr><td>Row Height</td><td><code>--as-density-table-row-height</code></td><td>48px</td></tr>
       <tr><td>Header Surface</td><td><code>--as-semantic-color-surface-subtle</code></td><td>#f5f5f5 / #1e1e1e</td></tr>
       <tr><td>Row Divider</td><td><code>--as-semantic-color-border-subtle</code></td><td>#e0e0e0 / #333333</td></tr>
     `
@@ -2638,7 +2635,7 @@ showToast({
     name: 'Dialog',
     slug: 'dialog',
     category: 'Overlays & Dialogs',
-    description: 'Native <dialog> modal window with 16px radius, backdrop blur (20px), double 1px glass glow shadows, macOS red circular close control, and pill CTA footer.',
+    description: 'Native <dialog> modal window with 12px radius, backdrop blur (20px), double 1px glass glow shadows, macOS red circular close control, and pill CTA footer.',
     element: '<dialog>',
     previewHtml: `
       <div>
@@ -2715,14 +2712,14 @@ showToast({
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/dialog&gt;`,
-    usageGuidance: 'Dialogs interrupt workflow to display focused specs or capture critical decisions. Features double 1px glass glow outlines, 16px radius, Shade-DS 12px solid red dot close control, and high-contrast pill CTA.',
+    usageGuidance: 'Dialogs interrupt workflow to display focused specs or capture critical decisions. Features double 1px glass glow outlines, 12px radius, Shade-DS 12px solid red dot close control, and high-contrast pill CTA.',
     whenToUse: 'Focused system specs, irreversible confirmations, critical warnings, and modal workflows.',
     whenNotToUse: 'Deep multi-section inspection (use Drawer) or passive status updates (use Toast).',
     variantsTable: `
       <table class="spec-table">
         <thead><tr><th>Part</th><th>Dimensions</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Glass Surface</td><td>Max 400px width, 16px radius</td><td>Centered modal card with 20px blur and double 1px glass glow shadows (border: none)</td></tr>
+          <tr><td>Glass Surface</td><td>Max 400px width, 12px radius</td><td>Centered modal card with 20px blur and double 1px glass glow shadows (border: none)</td></tr>
           <tr><td>Header Bar</td><td>48px height, 16px padding</td><td>Uppercase section title and 12px solid red dot dismiss control</td></tr>
           <tr><td>Hero Header</td><td>38px Bebas Neue headline</td><td>Gradient background with subtle abstract geometric vector overlay</td></tr>
           <tr><td>Close Control</td><td>12px solid circle (<code>#ff453a</code> / <code>#c5221f</code>)</td><td>Solid red dot with kinetic hover (scale 1.2) and active (scale 0.9) states</td></tr>

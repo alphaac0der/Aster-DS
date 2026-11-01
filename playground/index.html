@@ -371,7 +371,6 @@
           <span class="meta-tag meta-tag--success">Zero Runtime Dependencies</span>
           <span class="meta-tag meta-tag--accent">109 Canonical Tokens</span>
           <span class="meta-tag">21 Components</span>
-          <span class="meta-tag">WCAG 2.2 AA</span>
         </div>
       </header>
 
@@ -415,7 +414,7 @@
             </div>
             <div class="spec-card">
               <h4>Single Standard Density</h4>
-              <p>Aster enforces a single standard density scale. Control heights are 48px for buttons and 44px for inputs and table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
+              <p>Aster enforces a single standard density scale. Control heights are 48px for buttons and 44px for inputs and 48px for table rows, ensuring comfortable touch targets that exceed WCAG SC 2.5.8 requirements.</p>
               <a href="#/themes-density">Explore Density &amp; Themes &rarr;</a>
             </div>
             <div class="spec-card">
@@ -806,7 +805,7 @@ initAsterComponents(document);</code></pre>
               <thead><tr><th>Figma Collection</th><th>Modes</th><th>Payload Source</th></tr></thead>
               <tbody>
                 <tr><td><strong>Aster Colors</strong></td><td>Light (<code>1001:0</code>) &middot; Dark (<code>1001:1</code>)</td><td><code>dist/figma/aster-colors.json</code></td></tr>
-                <tr><td><strong>Aster Density</strong></td><td>Standard (<code>2001:0</code> — 40px controls, 44px table rows)</td><td><code>dist/figma/aster-density.json</code></td></tr>
+                <tr><td><strong>Aster Density</strong></td><td>Standard (<code>2001:0</code> — 40px controls, 48px table rows)</td><td><code>dist/figma/aster-density.json</code></td></tr>
                 <tr><td><strong>Aster Dimensions</strong></td><td>Value (<code>3001:0</code> — 4px spatial grid &amp; radius scale)</td><td><code>dist/figma/aster-dimensions.json</code></td></tr>
               </tbody>
             </table>
@@ -1196,7 +1195,7 @@ npm run test:browser</code></pre>
       <header class="page-head">
         <div class="eyebrow">Foundations &middot; Adaptation</div>
         <h1 id="t-themes-density">Themes &amp; Standard Density</h1>
-        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (48px buttons, 44px inputs, and 44px table rows).</p>
+        <p class="lead">Dual Light and Dark themes paired with a single, unified Standard density rhythm (48px buttons, 44px inputs, and 48px table rows).</p>
       </header>
       <div class="doc-body">
         <section class="doc-section">
@@ -1209,7 +1208,6 @@ npm run test:browser</code></pre>
                 <tr><td>Control Height (Table Headers, Icon Buttons)</td><td><code>--as-density-control-height</code></td><td><strong>40px</strong></td></tr>
                 <tr><td>Button Horizontal Padding</td><td><code>--as-space-6</code></td><td><strong>24px left / 24px right</strong></td></tr>
                 <tr><td>Table Row Height</td><td><code>--as-density-table-row-height</code></td><td><strong>44px</strong></td></tr>
-                <tr><td>Card Padding</td><td><code>--as-density-card-padding</code></td><td><strong>24px</strong></td></tr>
               </tbody>
             </table>
           </div>
@@ -1252,7 +1250,7 @@ npm run test:browser</code></pre>
             <div class="preview-canvas" style="min-height: 180px;">
               <div id="enter-demo" class="is-entering" style="padding: 24px 32px; background: var(--as-semantic-color-surface-card); border: 1px solid var(--as-semantic-color-border-subtle); border-radius: var(--as-radius-lg); box-shadow: var(--as-elevation-shadow-overlay); text-align: center;">
                 <h4 style="margin: 0 0 8px;">Modal Surface Elevation</h4>
-                <p style="margin: 0; color: var(--as-semantic-color-text-muted); font-size: 13px;">Entering using var(--as-motion-duration-md) and var(--as-motion-ease-decelerate).</p>
+                <p style="margin: 0; color: var(--as-semantic-color-text-muted); font-size: 13px;">Entering using var(--as-motion-duration-slow) and var(--as-motion-ease-out).</p>
               </div>
             </div>
           </div>
@@ -1287,7 +1285,6 @@ npm run test:browser</code></pre>
         <h1 id="t-accordion" tabindex="-1">Accordion</h1>
         <p class="lead">Vertically stacked disclosure panels (12px container radius) with semantic headings and single/multi expand modes.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">52px trigger header height</span>
           <span class="meta-tag">Radius: 12px container</span>
           <span class="meta-tag">Element: &lt;h3&gt; + &lt;button aria-expanded&gt;</span>
@@ -1547,7 +1544,6 @@ npm run test:browser
         <h1 id="t-alert" tabindex="-1">Alert</h1>
         <p class="lead">Dismissible status banners with 8px radius, Shade-DS status surface, double 1px glass glow, and 12px solid red dot dismiss control.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">Content-dependent</span>
           <span class="meta-tag">Radius: 8px</span>
           <span class="meta-tag">Element: &lt;div role=&quot;region|alert&quot;&gt;</span>
@@ -1783,7 +1779,6 @@ npm run test:browser
         <h1 id="t-badge" tabindex="-1">Badge</h1>
         <p class="lead">24px status pills pairing full capsule geometry with semantic status colors and optional 6px dot indicators.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">24px</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;span&gt;</span>
@@ -2013,7 +2008,6 @@ npm run test:browser
         <h1 id="t-button" tabindex="-1">Button</h1>
         <p class="lead">Tactile 48px pill button with 16px top/bottom and 24px left/right padding, Shade-DS cursor-origin circular hover fill, accessible async loading state, and monochrome primary contrast.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">48px</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;button&gt;</span>
@@ -2243,7 +2237,7 @@ npm run test:browser
               <tbody>
 
       <tr><td>Primary Fill</td><td><code>--as-semantic-color-interactive-primary</code></td><td>#0f0f0f (Light) / #ffffff (Dark)</td></tr>
-      <tr><td>Text on Primary</td><td><code>--as-semantic-color-text-on-primary</code></td><td>#ffffff (Light) / #0f0f0f (Dark)</td></tr>
+      <tr><td>Text on Primary</td><td><code>--as-semantic-color-interactive-primary-text</code></td><td>#ffffff (Light) / #0f0f0f (Dark)</td></tr>
       <tr><td>Horizontal Padding</td><td><code>--as-space-6</code></td><td>24px left / 24px right</td></tr>
       <tr><td>Control Height</td><td><code>--as-space-12</code></td><td>48px</td></tr>
       <tr><td>Pill Radius</td><td><code>--as-radius-full</code></td><td>9999px</td></tr>
@@ -2282,7 +2276,6 @@ npm run test:browser
         <h1 id="t-checkbox" tabindex="-1">Checkbox</h1>
         <p class="lead">Accessible selection control with 28px touch target, 18px visual box, 4px corner radius, and checked/indeterminate states.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">28px × 28px hit target</span>
           <span class="meta-tag">Radius: 4px</span>
           <span class="meta-tag">Element: &lt;input type=&quot;checkbox&quot;&gt;</span>
@@ -2521,10 +2514,9 @@ npm run test:browser
       <header class="page-head">
         <div class="eyebrow">Components &middot; Data Display</div>
         <h1 id="t-table" tabindex="-1">Data Table</h1>
-        <p class="lead">Structured tabular data display with 44px rows, column sorting, multi-row indeterminate selection, lifecycle states, and keyboard overflow scrolling.</p>
+        <p class="lead">Structured tabular data display with 48px rows, column sorting, multi-row indeterminate selection, lifecycle states, and keyboard overflow scrolling.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
-          <span class="meta-tag meta-tag--accent">44px row height</span>
+          <span class="meta-tag meta-tag--accent">48px row height</span>
           <span class="meta-tag">Radius: 12px container</span>
           <span class="meta-tag">Element: &lt;table&gt;</span>
         </div>
@@ -2670,7 +2662,7 @@ npm run test:browser
 - **Component:** Data Table (`table`)
 - **Category:** Data Display
 - **Native Element:** `&lt;table&gt;`
-- **Summary:** Structured tabular data display with 44px rows, column sorting, multi-row indeterminate selection, lifecycle states, and keyboard overflow scrolling.
+- **Summary:** Structured tabular data display with 48px rows, column sorting, multi-row indeterminate selection, lifecycle states, and keyboard overflow scrolling.
 - **When to Use:** Datasets with comparable attributes such as server nodes, logs, and transactions.
 - **When Not to Use:** Simple single-column lists or page layout grids.
 
@@ -2706,7 +2698,7 @@ npm run test:browser
 ```
 
 ## 4. Exact Geometry &amp; Token Bindings (Standard Density)
-- **Height:** 44px row height (--as-density-table-row-height)
+- **Height:** 48px row height (--as-density-table-row-height)
 - **Horizontal Padding:** 16px cell horizontal (--as-density-table-cell-padding-x)
 - **Vertical Padding:** 8px cell vertical (--as-density-table-cell-padding-y)
 - **Corner Radius:** 12px container (--as-radius-lg)
@@ -2739,7 +2731,7 @@ npm run test:browser
         <!-- Usage Guidance -->
         <section class="doc-section">
           <h2>Usage &amp; Design Guidance</h2>
-          <p>Data tables organize multi-attribute records across 44px rows with sortable column headers and multi-row selection.</p>
+          <p>Data tables organize multi-attribute records across 48px rows with sortable column headers and multi-row selection.</p>
           <div class="spec-grid">
             <div class="spec-card">
               <h4>When to use</h4>
@@ -2761,7 +2753,7 @@ npm run test:browser
       <table class="spec-table">
         <thead><tr><th>Feature</th><th>Selector</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Standard Table</td><td><code>.as-table</code></td><td>44px row height, 16px horizontal cell padding</td></tr>
+          <tr><td>Standard Table</td><td><code>.as-table</code></td><td>48px row height, 16px horizontal cell padding</td></tr>
           <tr><td>Interactive Rows</td><td><code>.as-table--interactive</code></td><td>Hover and <code>[data-selected]</code> row highlighting</td></tr>
         </tbody>
       </table>
@@ -2796,7 +2788,7 @@ npm run test:browser
               <thead><tr><th>Role / Target</th><th>Custom Property Binding</th><th>Light / Dark Resolved</th></tr></thead>
               <tbody>
 
-      <tr><td>Row Height</td><td><code>--as-density-table-row-height</code></td><td>44px</td></tr>
+      <tr><td>Row Height</td><td><code>--as-density-table-row-height</code></td><td>48px</td></tr>
       <tr><td>Header Surface</td><td><code>--as-semantic-color-surface-subtle</code></td><td>#f5f5f5 / #1e1e1e</td></tr>
       <tr><td>Row Divider</td><td><code>--as-semantic-color-border-subtle</code></td><td>#e0e0e0 / #333333</td></tr>
 
@@ -2832,11 +2824,10 @@ npm run test:browser
       <header class="page-head">
         <div class="eyebrow">Components &middot; Overlays & Dialogs</div>
         <h1 id="t-dialog" tabindex="-1">Dialog</h1>
-        <p class="lead">Native &lt;dialog&gt; modal window with 16px radius, backdrop blur (20px), double 1px glass glow shadows, macOS red circular close control, and pill CTA footer.</p>
+        <p class="lead">Native &lt;dialog&gt; modal window with 12px radius, backdrop blur (20px), double 1px glass glow shadows, macOS red circular close control, and pill CTA footer.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">Max 600px</span>
-          <span class="meta-tag">Radius: 16px</span>
+          <span class="meta-tag">Radius: 12px</span>
           <span class="meta-tag">Element: &lt;dialog&gt;</span>
         </div>
         <nav class="component-audience-nav" aria-label="Component audience perspective">
@@ -2972,7 +2963,7 @@ npm run test:browser
 - **Component:** Dialog (`dialog`)
 - **Category:** Overlays &amp; Dialogs
 - **Native Element:** `&lt;dialog&gt;`
-- **Summary:** Native &lt;dialog&gt; modal window with 16px radius, backdrop blur (20px), double 1px glass glow shadows, macOS red circular close control, and pill CTA footer.
+- **Summary:** Native &lt;dialog&gt; modal window with 12px radius, backdrop blur (20px), double 1px glass glow shadows, macOS red circular close control, and pill CTA footer.
 - **When to Use:** Focused system specs, irreversible confirmations, critical warnings, and modal workflows.
 - **When Not to Use:** Deep multi-section inspection (use Drawer) or passive status updates (use Toast).
 
@@ -3019,7 +3010,7 @@ npm run test:browser
 - **Height:** Max 600px (min(85vh, 600px))
 - **Horizontal Padding:** 16px header/footer (--as-space-4) · 20px body (--as-space-5)
 - **Vertical Padding:** 16px vertical body padding · 48px header height
-- **Corner Radius:** 16px (--as-radius-lg)
+- **Corner Radius:** 12px (--as-radius-lg)
 - **Typography:** Bebas Neue 38px hero · Manrope 12px uppercase label · 13.5px body
 - **Icon / Secondary Control:** 12px solid red dot dismiss control (--as-semantic-color-status-critical-text)
 - **Focus Ring:** Native &lt;dialog&gt; focus trap + 2px focus ring
@@ -3049,7 +3040,7 @@ npm run test:browser
         <!-- Usage Guidance -->
         <section class="doc-section">
           <h2>Usage &amp; Design Guidance</h2>
-          <p>Dialogs interrupt workflow to display focused specs or capture critical decisions. Features double 1px glass glow outlines, 16px radius, Shade-DS 12px solid red dot close control, and high-contrast pill CTA.</p>
+          <p>Dialogs interrupt workflow to display focused specs or capture critical decisions. Features double 1px glass glow outlines, 12px radius, Shade-DS 12px solid red dot close control, and high-contrast pill CTA.</p>
           <div class="spec-grid">
             <div class="spec-card">
               <h4>When to use</h4>
@@ -3071,7 +3062,7 @@ npm run test:browser
       <table class="spec-table">
         <thead><tr><th>Part</th><th>Dimensions</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Glass Surface</td><td>Max 400px width, 16px radius</td><td>Centered modal card with 20px blur and double 1px glass glow shadows (border: none)</td></tr>
+          <tr><td>Glass Surface</td><td>Max 400px width, 12px radius</td><td>Centered modal card with 20px blur and double 1px glass glow shadows (border: none)</td></tr>
           <tr><td>Header Bar</td><td>48px height, 16px padding</td><td>Uppercase section title and 12px solid red dot dismiss control</td></tr>
           <tr><td>Hero Header</td><td>38px Bebas Neue headline</td><td>Gradient background with subtle abstract geometric vector overlay</td></tr>
           <tr><td>Close Control</td><td>12px solid circle (<code>#ff453a</code> / <code>#c5221f</code>)</td><td>Solid red dot with kinetic hover (scale 1.2) and active (scale 0.9) states</td></tr>
@@ -3146,7 +3137,6 @@ npm run test:browser
         <h1 id="t-drawer" tabindex="-1">Drawer</h1>
         <p class="lead">Full-height slide-over sheet panel (440px max-width) with backdrop scrim, focus trapping, and Shade-DS 12px solid red dot close control.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">100vh full viewport height</span>
           <span class="meta-tag">Radius: 0px edge panel</span>
           <span class="meta-tag">Element: &lt;div role=&quot;dialog&quot; aria-modal=&quot;true&quot;&gt;</span>
@@ -3395,7 +3385,6 @@ npm run test:browser
         <h1 id="t-dropdown" tabindex="-1">Dropdown Menu</h1>
         <p class="lead">Contextual action menu adhering to the W3C APG Menu Button pattern with roving ArrowUp/ArrowDown focus.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">36px per menuitem</span>
           <span class="meta-tag">Radius: 8px menu</span>
           <span class="meta-tag">Element: &lt;div role=&quot;menu&quot;&gt;</span>
@@ -3633,7 +3622,6 @@ npm run test:browser
         <h1 id="t-input" tabindex="-1">Input & Form Field</h1>
         <p class="lead">Single-line 44px text input with 4px corner radius (Shade-DS Radius.S), Canvas #121212 background, and double 1px glass glow (zero wireframe outline).</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">44px</span>
           <span class="meta-tag">Radius: 4px</span>
           <span class="meta-tag">Element: &lt;input&gt;</span>
@@ -3883,7 +3871,6 @@ npm run test:browser
         <h1 id="t-popover" tabindex="-1">Popover</h1>
         <p class="lead">Anchored floating contextual card (12px radius) with light dismissal, Escape support, and Shade-DS 12px solid red dot close control.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">Content-dependent</span>
           <span class="meta-tag">Radius: 12px</span>
           <span class="meta-tag">Element: &lt;div role=&quot;dialog&quot;&gt;</span>
@@ -4129,7 +4116,6 @@ npm run test:browser
         <h1 id="t-progress" tabindex="-1">Progress</h1>
         <p class="lead">Accessible 8px progress tracks communicating determinate completion percentages or indeterminate activity.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">8px track height</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;div role=&quot;progressbar&quot;&gt;</span>
@@ -4373,7 +4359,6 @@ npm run test:browser
         <h1 id="t-radio" tabindex="-1">Radio Group</h1>
         <p class="lead">Mutually exclusive option sets wrapped in semantic fieldsets with 28px touch targets and concentric selection dots.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">28px × 28px hit target</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;fieldset&gt; + &lt;input type=&quot;radio&quot;&gt;</span>
@@ -4612,11 +4597,10 @@ npm run test:browser
       <header class="page-head">
         <div class="eyebrow">Components &middot; Form Controls</div>
         <h1 id="t-select" tabindex="-1">Select</h1>
-        <p class="lead">Native 40px dropdown selection control with 8px corner radius and custom high-contrast chevron indicator.</p>
+        <p class="lead">Native 44px dropdown selection control with 4px corner radius and custom high-contrast chevron indicator.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
-          <span class="meta-tag meta-tag--accent">40px</span>
-          <span class="meta-tag">Radius: 8px</span>
+          <span class="meta-tag meta-tag--accent">44px</span>
+          <span class="meta-tag">Radius: 4px</span>
           <span class="meta-tag">Element: &lt;select&gt;</span>
         </div>
         <nav class="component-audience-nav" aria-label="Component audience perspective">
@@ -4701,7 +4685,7 @@ npm run test:browser
 - **Component:** Select (`select`)
 - **Category:** Form Controls
 - **Native Element:** `&lt;select&gt;`
-- **Summary:** Native 40px dropdown selection control with 8px corner radius and custom high-contrast chevron indicator.
+- **Summary:** Native 44px dropdown selection control with 4px corner radius and custom high-contrast chevron indicator.
 - **When to Use:** Selecting regions, roles, or categories from a predefined list.
 - **When Not to Use:** 2–3 options that benefit from immediate visibility (use Radio Group).
 
@@ -4726,10 +4710,10 @@ npm run test:browser
 ```
 
 ## 4. Exact Geometry &amp; Token Bindings (Standard Density)
-- **Height:** 40px (--as-density-control-height)
+- **Height:** 44px (height: 44px)
 - **Horizontal Padding:** 12px left / 36px right (--as-space-3)
 - **Vertical Padding:** 8px top / 8px bottom
-- **Corner Radius:** 8px (--as-radius-md)
+- **Corner Radius:** 4px (--as-radius-sm)
 - **Typography:** Manrope · 14px · 400 Regular
 - **Icon / Secondary Control:** 16px × 16px custom chevron at right 12px
 - **Focus Ring:** 2px solid (--as-semantic-color-border-focus) + 1px offset
@@ -4781,8 +4765,8 @@ npm run test:browser
       <table class="spec-table">
         <thead><tr><th>State</th><th>Height</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Default</td><td>40px</td><td>Standard form control height with 8px radius</td></tr>
-          <tr><td>Disabled</td><td>40px</td><td>Unmodifiable state with 50% opacity</td></tr>
+          <tr><td>Default</td><td>44px</td><td>Standard form control height with 4px radius</td></tr>
+          <tr><td>Disabled</td><td>44px</td><td>Unmodifiable state with 50% opacity</td></tr>
         </tbody>
       </table>
 
@@ -4815,8 +4799,8 @@ npm run test:browser
               <thead><tr><th>Role / Target</th><th>Custom Property Binding</th><th>Light / Dark Resolved</th></tr></thead>
               <tbody>
 
-      <tr><td>Control Height</td><td><code>--as-density-control-height</code></td><td>40px</td></tr>
-      <tr><td>Corner Radius</td><td><code>--as-radius-md</code></td><td>8px</td></tr>
+      <tr><td>Control Height</td><td><code>height: 44px</code></td><td>44px</td></tr>
+      <tr><td>Corner Radius</td><td><code>--as-radius-sm</code></td><td>4px</td></tr>
       <tr><td>Border Strong</td><td><code>--as-semantic-color-border-strong</code></td><td>#777777 / #777777</td></tr>
 
               </tbody>
@@ -4853,7 +4837,6 @@ npm run test:browser
         <h1 id="t-skeleton" tabindex="-1">Skeleton</h1>
         <p class="lead">Screen-reader-suppressed loading placeholders with smooth shimmer wave animation.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">16px text line / 40px avatar circle</span>
           <span class="meta-tag">Radius: 8px block</span>
           <span class="meta-tag">Element: &lt;div aria-hidden=&quot;true&quot;&gt;</span>
@@ -5079,7 +5062,6 @@ npm run test:browser
         <h1 id="t-slider" tabindex="-1">Slider</h1>
         <p class="lead">Numeric range input with dynamically synchronized track progress and tabular value display.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">32px interactive hit height</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;input type=&quot;range&quot;&gt;</span>
@@ -5312,7 +5294,6 @@ npm run test:browser
         <h1 id="t-switch" tabindex="-1">Switch</h1>
         <p class="lead">Tactile 44x24px binary toggle switch communicating immediate on/off system preferences.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">24px track height × 44px track width</span>
           <span class="meta-tag">Radius: 9999px</span>
           <span class="meta-tag">Element: &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;</span>
@@ -5522,7 +5503,7 @@ npm run test:browser
               <tbody>
 
       <tr><td>Active Track</td><td><code>--as-semantic-color-interactive-primary</code></td><td>#0f0f0f / #ffffff</td></tr>
-      <tr><td>Active Thumb</td><td><code>--as-semantic-color-text-on-primary</code></td><td>#ffffff / #0f0f0f</td></tr>
+      <tr><td>Active Thumb</td><td><code>--as-semantic-color-interactive-primary-text</code></td><td>#ffffff / #0f0f0f</td></tr>
 
               </tbody>
             </table>
@@ -5558,7 +5539,6 @@ npm run test:browser
         <h1 id="t-tabs" tabindex="-1">Tabs</h1>
         <p class="lead">W3C APG compliant tabbed navigation with roving tabindex and ArrowLeft/ArrowRight cycling.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">42px tab trigger height</span>
           <span class="meta-tag">Radius: 4px focus radius</span>
           <span class="meta-tag">Element: &lt;div role=&quot;tablist&quot;&gt; + &lt;div role=&quot;tabpanel&quot;&gt;</span>
@@ -5796,7 +5776,6 @@ npm run test:browser
         <h1 id="t-textarea" tabindex="-1">Textarea</h1>
         <p class="lead">Multi-line text area supporting dynamic auto-resizing, live character counter synchronization, and 8px corner radius.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">Min 96px</span>
           <span class="meta-tag">Radius: 8px</span>
           <span class="meta-tag">Element: &lt;textarea&gt;</span>
@@ -6031,7 +6010,6 @@ npm run test:browser
         <h1 id="t-toast" tabindex="-1">Toast</h1>
         <p class="lead">Ephemeral floating notifications injected into a polite live region with Shade-DS 12px red dot close controls.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">Content-dependent</span>
           <span class="meta-tag">Radius: 8px</span>
           <span class="meta-tag">Element: showToast() + &lt;div role=&quot;status&quot;&gt;</span>
@@ -6264,7 +6242,6 @@ npm run test:browser
         <h1 id="t-tooltip" tabindex="-1">Tooltip</h1>
         <p class="lead">Contextual micro-copy bubble with 4px corner radius adhering to WCAG 2.2 SC 1.4.13 with Escape dismissal.</p>
         <div class="component-meta">
-          <span class="meta-tag meta-tag--success">WCAG 2.2 AA</span>
           <span class="meta-tag meta-tag--accent">Content-dependent</span>
           <span class="meta-tag">Radius: 4px</span>
           <span class="meta-tag">Element: &lt;div role=&quot;tooltip&quot;&gt;</span>

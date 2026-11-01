@@ -51,7 +51,7 @@ AI agents must strictly respect these system boundaries:
 2. **Strict Semantic Token Precedence:**
    - Component styles must bind **only** to semantic tokens (`--as-semantic-color-*`), density tokens (`--as-density-*`), and structural foundation tokens (`--as-space-*`, `--as-radius-*`, `--as-elevation-*`).
 3. **Standard Density Ergonomics:**
-   - Components adhere to standard density tokens (48px for buttons via `--as-space-12`, 44px for form inputs and selects, and `--as-density-table-row-height` at 44px), ensuring consistent touch targets across mobile and desktop.
+   - Components adhere to standard density tokens (48px for buttons via `--as-space-12`, 44px for form inputs and selects, and `--as-density-table-row-height` at 48px), ensuring consistent touch targets across mobile and desktop.
 
 ---
 
@@ -715,7 +715,7 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
 - **Dynamic Sort Announcements:** Asynchronous sort updates should be announced through an auxiliary polite live region (`role="status"` / `aria-live="polite"`).
 
 #### Target Size Compliance (WCAG 2.5.8 Level AA)
-- Standard 44px table row height (`--as-density-table-row-height`) is an **Aster Convention** and does **not** by itself establish target-size compliance for interactive controls housed within cells (such as selection checkboxes, action buttons, icon triggers, or links).
+- Standard 48px table row height (`--as-density-table-row-height`) is an **Aster Convention** and does **not** by itself establish target-size compliance for interactive controls housed within cells (such as selection checkboxes, action buttons, icon triggers, or links).
 - Implementations must evaluate the actual bounding box of each interactive target (minimum 24×24px, or meeting spacing exceptions where a 24px diameter circle centered on the target does not overlap adjacent targets, or qualifying for inline text exceptions).
 
 #### Non-text Contrast & Decorative Dividers (SC 1.4.11 Level AA)
@@ -1025,7 +1025,7 @@ When generating or reviewing table code, verify each item:
 - [ ] **Target Size Verification (WCAG 2.5.8):** Verifies the full interactive target bounding box (minimum 24×24px or applicable spacing/inline exceptions) for all interactive controls housed within cells, rather than assuming row height alone establishes compliance.
 - [ ] **Non-text Contrast (SC 1.4.11):** Interactive controls, checkboxes, sort icons, and focus rings meet ≥3.0:1 contrast against adjacent surfaces; interior hairline dividing borders are decorative.
 - [ ] **Numeric Alignment:** Numeric and monetary data columns use right alignment (`text-align: right`) and tabular figures.
-- [ ] **Standard Density Table Tokens:** Rows bind strictly to `--as-density-table-row-height` (44px standard).
+- [ ] **Standard Density Table Tokens:** Rows bind strictly to `--as-density-table-row-height` (48px standard).
 - [ ] **Semantic Tokens Only:** Styles bind strictly to `--as-semantic-color-*`, `--as-density-*`, `--as-elevation-*`, and `--as-space-*`.
 - [ ] **Focus Visible on Nested Controls:** Sort buttons, scroll containers (when focusable), and row actions display visible focus rings.
 
@@ -1075,10 +1075,10 @@ When generating or reviewing select dropdown code, verify each item:
 
 - [ ] **Native Select Element:** Uses native `<select class="as-select">` with `<option>` children.
 - [ ] **Popup Styling:** Relies on the `appearance: base-select` enhancement in `select.css`. Does not rebuild the popup with custom ARIA listboxes, and accepts the native popup as the fallback.
-- [ ] **Pill Geometry:** Container `.as-select-box` matches control heights (44px standard).
+- [ ] **Field Geometry:** Container `.as-select-box` is 44px tall with 4px corners (`--as-radius-sm`), matching inputs.
 - [ ] **Focus Visible:** High-contrast 2px focus ring renders on `:focus-visible`.
 - [ ] **Chevron Decoration:** Chevron icon is marked `aria-hidden="true"`.
-- [ ] **Semantic Tokens Only:** Binds strictly to `--as-semantic-color-surface-card` and `--as-semantic-color-border-strong`.
+- [ ] **Semantic Tokens Only:** Binds strictly to `--as-semantic-color-surface-canvas` and `--as-semantic-color-border-strong`.
 
 ### 5.9 Slider Component Checklist
 

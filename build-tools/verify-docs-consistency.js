@@ -7,9 +7,25 @@ const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
 const tokensCssPath = join(rootDir, 'dist/css/tokens.css');
+const walkDocs = (dir) => readdirSync(dir).flatMap((name) => {
+  const path = join(dir, name);
+  return statSync(path).isDirectory() ? walkDocs(path) : [path];
+});
+// Everything people or agents read. A token named here must really exist.
 const docFiles = [
-  join(rootDir, 'docs/tokens.md'),
-  join(rootDir, 'skills/using-aster-tokens/SKILL.md')
+  ...walkDocs(join(rootDir, 'docs')),
+  ...walkDocs(join(rootDir, 'skills')),
+  ...walkDocs(join(rootDir, 'apps/docs/src/pages')),
+  join(rootDir, 'apps/docs/src/data/components.js'),
+  join(rootDir, 'build-tools/build-playground.js'),
+  join(rootDir, 'AGENTS.md'),
+  join(rootDir, 'README.md'),
+  join(rootDir, 'CONTRIBUTING.md')
+];
+// Motion and component-scoped variables are defined outside tokens.css.
+const extraDefinitionFiles = [
+  join(rootDir, 'dist/css/components.css'),
+  join(rootDir, 'playground/styles/playground.css')
 ];
 
 console.log('========================================================================================');
@@ -59,7 +75,7 @@ if (stale) {
 }
 
 // 3. Extract all valid CSS custom property names from dist/css/tokens.css
-const cssContent = readFileSync(tokensCssPath, 'utf8');
+const cssContent = [tokensCssPath, ...extraDefinitionFiles].map((file) => readFileSync(file, 'utf8')).join('\n');
 const validTokens = new Set();
 const cssVarRegex = /--as-[a-z0-9-]+(?=:)/g;
 let match;
