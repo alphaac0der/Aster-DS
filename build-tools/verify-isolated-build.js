@@ -60,8 +60,6 @@ try {
   execSync('node build-tools/build-components.js', { cwd: tempDir, stdio: 'inherit' });
   console.log('✔ PASS: build:components succeeded in sandbox.');
 
-  execSync('node build-tools/build-playground.js', { cwd: tempDir, stdio: 'inherit' });
-  console.log('✔ PASS: build:playground succeeded in sandbox.');
 
   execSync('node build-tools/export-figma-tokens.js', { cwd: tempDir, stdio: 'inherit' });
   console.log('✔ PASS: export:figma succeeded in sandbox.');
@@ -74,9 +72,7 @@ try {
     'dist/js/aster.js',
     'dist/figma/aster-colors.json',
     'dist/figma/aster-density.json',
-    'dist/figma/aster-dimensions.json',
-    'index.html',
-    'playground/index.html'
+    'dist/figma/aster-dimensions.json'
   ];
 
   for (const relOut of requiredOutputs) {

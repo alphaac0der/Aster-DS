@@ -54,9 +54,8 @@
   "scripts": {
     "build:tokens": "node build-tools/build-tokens.js",
     "build:components": "node build-tools/build-components.js",
-    "build:playground": "node build-tools/build-playground.js",
     "build:docs": "npm run build && npm --prefix apps/docs run build",
-    "build": "npm run build:tokens && npm run build:components && npm run build:playground && npm run export:figma",
+    "build": "npm run build:tokens && npm run build:components && npm run export:figma",
     "test:contrast": "node build-tools/verify-contrast.js",
     "test:docs": "node build-tools/verify-docs-consistency.js",
     "export:figma": "node build-tools/export-figma-tokens.js",
@@ -64,12 +63,14 @@
     "test:components": "node build-tools/verify-component-contracts.js",
     "test:exports": "node build-tools/verify-package-exports.js",
     "test:browser": "node build-tools/audit-browser.js",
+    "test:website": "node build-tools/verify-website-ux.js",
     "test:pack": "npm pack --dry-run",
     "test:isolated-build": "node build-tools/verify-isolated-build.js",
     "test": "npm run test:figma && npm run test:contrast && npm run test:components && npm run test:docs && npm run test:exports && npm run test:pack && npm run test:isolated-build",
-    "playground": "node build-tools/serve-playground.js"
+    "playground": "npm --prefix apps/docs run dev"
   },
   "devDependencies": {
+    "axe-core": "^4.14.0",
     "style-dictionary": "^5.6.1"
   },
   "workspaces": [

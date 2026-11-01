@@ -18,7 +18,7 @@ Aster delivers vanilla CSS custom properties and browser-native ES modules. It i
 
 ## 2. Building from Source
 
-Aster's canonical sources live under `tokens/` (design tokens in DTCG format) and `components/` (modular CSS and ES module behaviors). All files under `dist/` and `playground/index.html` are generated build outputs.
+Aster's canonical sources live under `tokens/` (design tokens in DTCG format) and `components/` (modular CSS and ES module behaviors). All files under `dist/` are generated build outputs.
 
 To build the entire system from scratch:
 
@@ -33,7 +33,6 @@ npm run build
 The composite `npm run build` script executes three sub-compilers in sequence:
 1. `npm run build:tokens`: Compiles `tokens/**/*.json` into `dist/css/tokens.css` (and split light/dark theme variants) using Style Dictionary.
 2. `npm run build:components`: Concatenates modular `components/**/*.css` into `dist/css/components.css`, creates the all-in-one `dist/css/aster.css`, and compiles modular behavior scripts into `dist/js/aster.js`.
-3. `npm run build:playground`: Compiles the self-contained documentation portal at `playground/index.html` across all 29 routes and 21 component showcases.
 
 ---
 
@@ -53,7 +52,7 @@ Aster distinguishes between **source-tree paths** (for contributors working on A
 | `tokens/` | Source-Tree Only | Authoritative design token JSON definitions (compiled to `dist/`). |
 | `components/` | Source-Tree Only | Authoritative modular component sources (compiled to `dist/`). |
 | `build-tools/` | Source-Tree Only | Verification suites, Figma exporter, and compiler utilities. |
-| `playground/` | Source-Tree Only | Interactive documentation portal site source. |
+| `apps/docs/`, `playground/` | Source-Tree Only | Documentation site source. |
 | `tools/` | Source-Tree Only | Local Figma library setup plugin (`tools/figma-plugin/`). |
 
 ---

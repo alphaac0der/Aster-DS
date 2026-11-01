@@ -58,6 +58,7 @@ const { component, prevComponent, nextComponent } = Astro.props;
       <p class="lead">{component.description}</p>
       
       <div class="component-meta">
+        <span class="meta-tag meta-tag--success" title="Checked automatically with axe-core in light and dark themes on every CI run. Automated scans cover only part of WCAG.">Automated a11y scan passing</span>
         <span class="meta-tag meta-tag--accent">{component.spec?.height?.split(' (')[0] || 'Standard Height'}</span>
         <span class="meta-tag">Radius: {component.spec?.radius?.split(' (')[0] || '4px'}</span>
         <span class="meta-tag">Element: {component.element}</span>

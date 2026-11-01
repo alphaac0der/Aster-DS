@@ -45,7 +45,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="home-comp-card">
               <div class="home-comp-card__preview">
                 <label class="as-switch" for="home-card-switch">
-                  <input type="checkbox" id="home-card-switch" class="as-switch-input" checked role="switch">
+                  <input type="checkbox" id="home-card-switch" class="as-switch-input" checked role="switch" aria-label="Example switch">
                   <span class="as-switch-track"><span class="as-switch-thumb"></span></span>
                 </label>
               </div>
@@ -141,7 +141,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <span class="as-progress-field__label" style="font-size:13px;">Processing</span>
                     <span class="as-progress-field__value" id="home-card-progress-val">68%</span>
                   </div>
-                  <div class="as-progress" role="progressbar" id="home-card-progress" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+                  <div class="as-progress" role="progressbar" id="home-card-progress" aria-label="Example progress" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
                     <div class="as-progress__bar" id="home-card-progress-bar" style="width:68%;"></div>
                   </div>
                 </div>

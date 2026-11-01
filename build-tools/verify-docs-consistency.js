@@ -17,7 +17,6 @@ const docFiles = [
   ...walkDocs(join(rootDir, 'skills')),
   ...walkDocs(join(rootDir, 'apps/docs/src/pages')),
   join(rootDir, 'apps/docs/src/data/components.js'),
-  join(rootDir, 'build-tools/build-playground.js'),
   join(rootDir, 'AGENTS.md'),
   join(rootDir, 'README.md'),
   join(rootDir, 'CONTRIBUTING.md')

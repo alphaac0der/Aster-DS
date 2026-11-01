@@ -22,7 +22,7 @@
       "status": {
         "success": {
           "subtle": { "$value": "#6dd78c", "$type": "color", "$description": "Shade-DS Dark Success Content 1" },
-          "default": { "$value": "#188038", "$type": "color", "$description": "Shade-DS Light Success Content 1 (WCAG AA 4.5:1+ calibrated)" },
+          "default": { "$value": "#167a35", "$type": "color", "$description": "Shade-DS Light Success Content 1 (WCAG AA 4.5:1+ calibrated)" },
           "surface-dark": { "$value": "#032a1d", "$type": "color", "$description": "Shade-DS Dark Success Surface 1" },
           "surface-light": { "$value": "#e6f4ea", "$type": "color", "$description": "Shade-DS Light Success Surface 1" }
         },
@@ -34,7 +34,7 @@
         },
         "critical": {
           "subtle": { "$value": "#ff453a", "$type": "color", "$description": "Shade-DS Dark Error Content 1 & red dot button" },
-          "default": { "$value": "#c5221f", "$type": "color", "$description": "Shade-DS Light Error Content 1" },
+          "default": { "$value": "#b91f1c", "$type": "color", "$description": "Shade-DS Light Error Content 1" },
           "surface-dark": { "$value": "#281718", "$type": "color", "$description": "Shade-DS Dark Error Surface 1" },
           "surface-light": { "$value": "#fbeaeb", "$type": "color", "$description": "Shade-DS Light Error Surface 1" }
         },

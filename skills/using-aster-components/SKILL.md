@@ -19,7 +19,7 @@ This guide instructs AI coding agents on how to construct, style, and validate A
   - `dist/css/tokens.css` (compiled design tokens)
   - `dist/css/components.css` (compiled component styles and motion defaults)
   - `dist/js/aster.js` (compiled component behavior and lifecycle functions)
-- **Playground Role:** `playground/` is a consumer of `dist/` assets; it is not a component source. Never import from `playground/` or rely on playground-specific selectors.
+- **Playground Role:** `playground/` and `apps/docs/` consume `dist/` assets; they are not component sources. Never import from `playground/` or rely on playground-specific selectors.
 
 ### 1.2 Clean Consumer Integration Model
 To consume Aster in any web application, load the browser-ready CSS and ES module:

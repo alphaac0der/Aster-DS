@@ -34,29 +34,6 @@ export function createPlaygroundServer() {
       const parsedUrl = new URL(req.url, `http://${HOST}:${PORT}`);
       let reqPath = decodeURIComponent(parsedUrl.pathname);
 
-      // Serve the Aster website directly at / and /index.html (Phase 15 requirement: Home at /)
-      if (reqPath === '/' || reqPath === '' || reqPath === '/index.html') {
-        const rootIndex = path.resolve(rootDir, 'index.html');
-        const fallbackIndex = path.resolve(rootDir, 'playground', 'index.html');
-        const entryFile = fs.existsSync(rootIndex) ? rootIndex : fallbackIndex;
-        if (!fs.existsSync(entryFile)) {
-          res.writeHead(404, { 'Content-Type': 'text/plain' });
-          res.end('Not Found: Portal entry point has not been built yet.');
-          return;
-        }
-        res.writeHead(200, {
-          'Content-Type': MIME_TYPES['.html'],
-          'X-Content-Type-Options': 'nosniff',
-          'Cache-Control': 'no-cache'
-        });
-        if (req.method === 'HEAD') {
-          res.end();
-          return;
-        }
-        fs.createReadStream(entryFile).pipe(res);
-        return;
-      }
-
       // Security: Disallow null bytes
       if (reqPath.includes('\0') || req.url.includes('\0')) {
         res.writeHead(400, { 'Content-Type': 'text/plain' });
@@ -73,7 +50,10 @@ export function createPlaygroundServer() {
 
       // Normalize and construct absolute file path
       const normalizedReqPath = path.normalize(reqPath);
-      let filePath = path.resolve(rootDir, '.' + normalizedReqPath);
+      // The built docs site answers first; /dist, /examples and /assets come from the repo.
+      const siteDir = path.resolve(rootDir, 'apps/docs/dist');
+      const sitePath = path.resolve(siteDir, '.' + normalizedReqPath);
+      let filePath = sitePath.startsWith(siteDir) && fs.existsSync(sitePath) ? sitePath : path.resolve(rootDir, '.' + normalizedReqPath);
 
       // Security: Strict confinement to repository root
       if (!filePath.startsWith(rootDir)) {
@@ -82,20 +62,19 @@ export function createPlaygroundServer() {
         return;
       }
 
-      // Security: Restrict serving to intended public directories (/playground/, /dist/, /examples/, and /assets/)
-      const allowedPlaygroundDir = path.resolve(rootDir, 'playground');
+      // Security: Restrict serving to the built site, /dist/, /examples/, and /assets/
       const allowedDistDir = path.resolve(rootDir, 'dist');
       const allowedExamplesDir = path.resolve(rootDir, 'examples');
       const allowedAssetsDir = path.resolve(rootDir, 'assets');
       const isAllowedArea =
-        filePath.startsWith(allowedPlaygroundDir) ||
+        filePath.startsWith(siteDir) ||
         filePath.startsWith(allowedDistDir) ||
         filePath.startsWith(allowedExamplesDir) ||
         filePath.startsWith(allowedAssetsDir);
 
       if (!isAllowedArea) {
         res.writeHead(403, { 'Content-Type': 'text/plain' });
-        res.end('Forbidden: Access is restricted to /, /playground/, /dist/, /examples/, and /assets/');
+        res.end('Forbidden: Access is restricted to the docs site, /dist/, /examples/, and /assets/');
         return;
       }
 
@@ -147,10 +126,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const server = createPlaygroundServer();
   server.listen(PORT, HOST, () => {
     console.log('========================================================================================');
-    console.log('                 ASTER DESIGN SYSTEM — LOCAL DOCUMENTATION & PLAYGROUND                 ');
+    console.log('                 ASTER DESIGN SYSTEM — BUILT DOCS SITE (TEST SERVER)                    ');
     console.log('========================================================================================');
     console.log(`✓ Local server running at: http://${HOST}:${PORT}/`);
-    console.log(`✓ Playground route available at: http://${HOST}:${PORT}/#/playground`);
+    console.log(`✓ Playground route available at: http://${HOST}:${PORT}/playground`);
     console.log(`✓ Serving files strictly from: ${rootDir}`);
     console.log(`✓ Bound strictly to ${HOST} (local-only, zero public exposure).`);
     console.log('Press Ctrl+C to terminate the server.\n');

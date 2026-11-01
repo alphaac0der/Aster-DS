@@ -196,10 +196,6 @@
   box-shadow: none;
 }
 
-[data-theme="dark"] .as-badge {
-  background-color: color-mix(in srgb, var(--_c, var(--as-semantic-color-text-muted)) 16%, var(--as-semantic-color-surface-card));
-}
-
 .as-badge--active { --_c: var(--as-semantic-color-status-success-text); }
 .as-badge--pending { --_c: var(--as-semantic-color-status-warning-text); }
 .as-badge--error { --_c: var(--as-semantic-color-status-critical-text); }

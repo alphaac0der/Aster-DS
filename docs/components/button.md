@@ -169,8 +169,8 @@ All color, structural, and elevation properties must bind strictly to compiled C
 | | Hover | Background | `var(--as-semantic-color-surface-subtle)` | `#eeeeee` / `#333333` |
 | | Active | Background | `var(--as-semantic-color-surface-muted)` | `#eeeeee` / `#333333` |
 | **Destructive**| Default | Background | `var(--as-semantic-color-surface-card)` | `#f5f5f5` / `#1e1e1e` |
-| | | Text / Icon | `var(--as-semantic-color-status-critical-text)` | `#c5221f` / `#ff5f56` |
-| | | Border | `var(--as-elevation-border-hairline) solid var(--as-semantic-color-status-critical-text)` | `1px solid #c5221f` / `1px solid #ff5f56` |
+| | | Text / Icon | `var(--as-semantic-color-status-critical-text)` | `#b91f1c` / `#ff5f56` |
+| | | Border | `var(--as-elevation-border-hairline) solid var(--as-semantic-color-status-critical-text)` | `1px solid #b91f1c` / `1px solid #ff5f56` |
 | | Hover | Background | `var(--as-semantic-color-surface-subtle)` | `#eeeeee` / `#333333` |
 | **Ghost** | Default | Background | `transparent` | `transparent` |
 | | | Text / Icon | `var(--as-semantic-color-text-default)` | `#121212` / `#e0e0e0` |

@@ -1,8 +1,8 @@
 /**
  * Aster Design System — Playground Stage
  *
- * One full-bleed stage, one component at a time. Shared by the Astro docs site
- * (apps/docs/src/pages/playground.astro) and the static portal (#/playground).
+ * One full-bleed stage, one component at a time. Mounted by
+ * apps/docs/src/pages/playground.astro.
  * Consumes dist/ only: every stage component is canonical Aster markup, and the
  * markup shown in the Code tab is exactly what is rendered.
  */

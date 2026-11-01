@@ -68,15 +68,15 @@ npm install
 
 ### Available Build Commands
 ```bash
-# Full compilation pipeline (tokens, components, playground, figma)
+# Full compilation pipeline (tokens, components, figma)
 npm run build
 
 # Individual build steps
 npm run build:tokens       # Compiles tokens/ to dist/css/tokens.css
 npm run build:components   # Compiles components/ to dist/css/ and dist/js/
-npm run build:playground   # Compiles index.html and playground/index.html
+npm run build:docs         # Full build plus the Astro docs site
 npm run export:figma       # Compiles dist/figma/*.json variable payloads
-npm run playground         # Starts local documentation portal on http://127.0.0.1:3000/
+npm run playground         # Starts the docs site in dev mode (Astro)
 ```
 
 ---
@@ -95,7 +95,7 @@ Before submitting a pull request or proposing changes, all quality verification 
 | `npm run test:exports` | Validates `package.json` entry points, export map targets, and live consumer imports. |
 | `npm run test:pack` | Validates package whitelist via `npm pack --dry-run` (43 files). |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox strictly without `scratch/`. |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit executing 143 real DOM interaction assertions. |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit executing 145 real DOM interaction assertions. |
 
 ---
 

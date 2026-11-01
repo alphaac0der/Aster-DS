@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 import http from 'http';
 import fs from 'fs';
@@ -937,7 +938,7 @@ async function runBrowserAudit() {
     assert('Dialog close control is Shade-DS 12x12 red circular dot',
       dialogOpenState.closeW === '12px' &&
       dialogOpenState.closeH === '12px' &&
-      (dialogOpenState.closeBg === 'rgb(197, 34, 31)' || dialogOpenState.closeBg === 'rgb(255, 69, 58)') &&
+      (dialogOpenState.closeBg === 'rgb(185, 31, 28)' || dialogOpenState.closeBg === 'rgb(255, 69, 58)') &&
       parseInt(dialogOpenState.closeRadius) >= 6,
       `${dialogOpenState.closeW}x${dialogOpenState.closeH}, bg=${dialogOpenState.closeBg}`
     );
@@ -976,7 +977,7 @@ async function runBrowserAudit() {
     `);
     assert('Slide-over drawer unhides on trigger click', drawerOpenState.hidden === false);
     assert('Drawer declares role="dialog" and aria-modal="true"', drawerOpenState.role === 'dialog' && drawerOpenState.ariaModal === 'true');
-    assert('Drawer close control is Shade-DS 12x12 red circular dot', drawerOpenState.closeW === '12px' && (drawerOpenState.closeBg === 'rgb(197, 34, 31)' || drawerOpenState.closeBg === 'rgb(255, 69, 58)'));
+    assert('Drawer close control is Shade-DS 12x12 red circular dot', drawerOpenState.closeW === '12px' && (drawerOpenState.closeBg === 'rgb(185, 31, 28)' || drawerOpenState.closeBg === 'rgb(255, 69, 58)'));
 
     // Close Drawer via close button
     await cdp.eval(`document.querySelector('#btn-close-drawer').click()`);
@@ -1039,7 +1040,7 @@ async function runBrowserAudit() {
       })()
     `);
     assert('Popover unhides on trigger click', popOpenState.hidden === false && popOpenState.ariaExpanded === 'true');
-    assert('Popover close control is Shade-DS 12x12 red circular dot', popOpenState.closeW === '12px' && (popOpenState.closeBg === 'rgb(197, 34, 31)' || popOpenState.closeBg === 'rgb(255, 69, 58)'));
+    assert('Popover close control is Shade-DS 12x12 red circular dot', popOpenState.closeW === '12px' && (popOpenState.closeBg === 'rgb(185, 31, 28)' || popOpenState.closeBg === 'rgb(255, 69, 58)'));
 
     // Click Popover close button to dismiss
     await cdp.eval(`document.querySelector('#pop-card-filter .as-popover__close').click()`);
@@ -1172,10 +1173,15 @@ async function runBrowserAudit() {
     // ----------------------------------------------------------------------------------
     console.log('\n--- Suite 9: Phase 15 Website Architecture, 4 Tabs & Interactive Playground Audit ---');
 
-    // 9A: Root Landing Page Served Directly at '/'
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/' });
-    await wait(800);
+    // 9A: Landing page
+    const goto = async (route, ms = 1000) => {
+      await cdp.send('Page.navigate', { url: `http://127.0.0.1:3000${route}` });
+      await wait(ms);
+    };
+    await cdp.send('Browser.grantPermissions', { permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'], origin: 'http://127.0.0.1:3000' }).catch(() => {});
+    await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }).catch(() => {});
 
+    await goto('/');
     const rootLandingCheck = await cdp.eval(`
       (() => {
         const homeView = document.querySelector('#view-overview');
@@ -1192,86 +1198,64 @@ async function runBrowserAudit() {
         };
       })()
     `);
-    assert('Root URL "/" serves the Aster Landing Page directly without redirecting to /playground/',
+    assert('Root URL "/" serves the Aster Landing Page directly',
       rootLandingCheck.pathname === '/' && rootLandingCheck.homeActive && rootLandingCheck.bodyKind === 'landing',
       `pathname=${rootLandingCheck.pathname}, kind=${rootLandingCheck.bodyKind}`
     );
     assert('Global header navigation includes Home, Docs, Components, Playground',
-      rootLandingCheck.globalNavLinks.includes('Home') &&
-      rootLandingCheck.globalNavLinks.includes('Docs') &&
-      rootLandingCheck.globalNavLinks.includes('Playground') &&
-      rootLandingCheck.globalNavLinks.includes('Components'),
+      ['Home', 'Docs', 'Components', 'Playground'].every((n) => rootLandingCheck.globalNavLinks.includes(n)),
       rootLandingCheck.globalNavLinks.join(', ')
     );
-    assert('Four-role typography tokens (--as-typography-font-family-display Bebas Neue & --as-typography-font-family-serif Merriweather) active on root',
-      rootLandingCheck.hasBebasNeue && rootLandingCheck.hasMerriweather
-    );
+    assert('Four-role typography tokens are active on the landing page', rootLandingCheck.hasBebasNeue && rootLandingCheck.hasMerriweather);
 
-    // 9B: Verify all 21 component routes exist and every component has all 4 Primary Tabs (Preview, Code, Prompt, Anatomy)
+    // 9B: Every component page: sidebar link, active state, all 4 tabs, measured anatomy
     const COMPONENT_ROUTES = [
       'button', 'input', 'textarea', 'select', 'checkbox', 'radio', 'switch', 'slider',
       'table', 'badge', 'progress', 'skeleton',
       'alert', 'tooltip', 'toast', 'dialog', 'drawer', 'popover', 'dropdown',
       'tabs', 'accordion'
     ];
+    const missingViews = [];
+    const missingLinks = [];
+    const incompleteTabs = [];
+    const anatomyProblems = [];
+    let anatomyPins = 0;
+    for (const slug of COMPONENT_ROUTES) {
+      await goto(`/components/${slug}`, 500);
+      const page = await cdp.eval(`
+        (async () => {
+          const view = document.querySelector('#view-${slug}');
+          const link = document.querySelector('a.nav-link[href="/components/${slug}"]');
+          const card = view && view.querySelector('.preview-card');
+          const parts = card ? ['.preview-tab[data-tab="preview"]', '.preview-tab[data-tab="code"]', '.preview-tab[data-tab="prompt"]', '.preview-tab[data-tab="anatomy"]', '.preview-canvas', '.preview-code', '.preview-prompt', '.preview-anatomy'].every((s) => card.querySelector(s)) : false;
+          if (!parts) return { view: Boolean(view), linkCurrent: link && link.getAttribute('aria-current'), parts };
+          card.querySelector('.preview-tab[data-tab="anatomy"]').click();
+          await new Promise((r) => setTimeout(r, 250));
+          const host = view.querySelector('[data-anatomy]');
+          return {
+            view: true,
+            linkCurrent: link && link.getAttribute('aria-current'),
+            parts,
+            pins: host.querySelectorAll('.pa-pin').length,
+            rows: host.querySelectorAll('.pa-spec__rows > div').length,
+            missing: host.dataset.missing || '',
+            scale: Number(host.querySelector('.pa-sample')?.dataset.scale) || 0
+          };
+        })()
+      `);
+      if (!page.view) missingViews.push(slug);
+      if (page.linkCurrent !== 'page') missingLinks.push(slug);
+      if (!page.parts) incompleteTabs.push(slug);
+      anatomyPins += page.pins || 0;
+      if (!page.pins || !page.rows || page.missing || !page.scale) anatomyProblems.push(`${slug}: ${JSON.stringify(page)}`);
+    }
+    assert('All 21 component pages exist', missingViews.length === 0, `Missing: ${missingViews.join(', ') || 'none'}`);
+    assert('All 21 component sidebar links exist and mark the current page', missingLinks.length === 0, `Missing: ${missingLinks.join(', ') || 'none'}`);
+    assert('All 21 component pages have all 4 primary tabs and panels', incompleteTabs.length === 0, `Incomplete: ${incompleteTabs.join(', ') || 'none'}`);
+    assert('Anatomy tab renders every part of all 21 components with measured specs', anatomyProblems.length === 0, anatomyProblems.join(' | ') || `${anatomyPins} parts`);
 
-    const fourTabsAudit = await cdp.eval(`
-      (() => {
-        const routes = ${JSON.stringify(COMPONENT_ROUTES)};
-        const missingViews = [];
-        const missingLinks = [];
-        const incompleteTabs = [];
-        routes.forEach(r => {
-          const view = document.querySelector('#view-' + r);
-          if (!view) {
-            missingViews.push(r);
-            return;
-          }
-          if (!document.querySelector('a.nav-link[data-route="' + r + '"]')) missingLinks.push(r);
-          const card = view.querySelector('.preview-card');
-          if (!card) {
-            incompleteTabs.push(r + ':no-card');
-            return;
-          }
-          const tPreview = card.querySelector('.preview-tab[data-tab="preview"]');
-          const tCode = card.querySelector('.preview-tab[data-tab="code"]');
-          const tPrompt = card.querySelector('.preview-tab[data-tab="prompt"]');
-          const tAnatomy = card.querySelector('.preview-tab[data-tab="anatomy"]');
-          const pCanvas = card.querySelector('.preview-canvas');
-          const pCode = card.querySelector('.preview-code');
-          const pPrompt = card.querySelector('.preview-prompt');
-          const pAnatomy = card.querySelector('.preview-anatomy');
-          if (!tPreview || !tCode || !tPrompt || !tAnatomy || !pCanvas || !pCode || !pPrompt || !pAnatomy) {
-            incompleteTabs.push(r);
-          }
-        });
-        return { total: routes.length, missingViews, missingLinks, incompleteTabs };
-      })()
-    `);
-    assert('All 21 component documentation views exist in DOM', fourTabsAudit.missingViews.length === 0, `Missing: ${fourTabsAudit.missingViews.join(', ') || 'none'}`);
-    assert('All 21 component sidebar navigation links exist in DOM', fourTabsAudit.missingLinks.length === 0, `Missing: ${fourTabsAudit.missingLinks.join(', ') || 'none'}`);
-    assert('All 21 component pages have all 4 primary tabs (Preview, Code, Prompt, Anatomy) and panels',
-      fourTabsAudit.incompleteTabs.length === 0,
-      `Incomplete: ${fourTabsAudit.incompleteTabs.join(', ') || 'none'}`
-    );
-
-    // 9C: Navigate to #/button and test all 4 Tabs (Preview -> Code -> Prompt -> Anatomy)
-    await cdp.eval(`location.hash = '#/button'`);
-    await wait(300);
-    const buttonViewActive = await cdp.eval(`
-      (() => {
-        const v = document.querySelector('#view-button');
-        const l = document.querySelector('a.nav-link[data-route="button"]');
-        return {
-          isActive: v && v.hasAttribute('data-active'),
-          currentAttr: l && l.getAttribute('aria-current')
-        };
-      })()
-    `);
-    assert('Navigating to #/button activates button view', buttonViewActive.isActive);
-    assert('Button nav-link receives aria-current="page"', buttonViewActive.currentAttr === 'page');
-
-    // Switch to Tab 2: Code & verify colorful multi-category syntax highlighting
+    // 9C: Button page tabs
+    await goto('/components/button');
     const codeTabAudit = await cdp.eval(`
       (async () => {
         const card = document.querySelector('#view-button .preview-card');
@@ -1279,42 +1263,41 @@ async function runBrowserAudit() {
         codeTab.click();
         const canvas = card.querySelector('.preview-canvas');
         const codePanel = card.querySelector('.preview-code');
-        const hasTags = codePanel.querySelectorAll('.tok-tag').length > 0;
-        const hasAttrs = codePanel.querySelectorAll('.tok-attr').length > 0;
-        const hasStrings = codePanel.querySelectorAll('.tok-str').length > 0;
-        const hasComments = codePanel.querySelectorAll('.tok-com').length > 0;
-        const hasGutter = codePanel.querySelectorAll('.code-gutter').length > 0;
         const tagColor = getComputedStyle(codePanel.querySelector('.tok-tag')).color;
         const attrColor = getComputedStyle(codePanel.querySelector('.tok-attr')).color;
         const strColor = getComputedStyle(codePanel.querySelector('.tok-str')).color;
-        const copyBtn = card.querySelector('.copy-btn');
-        copyBtn.click();
-        await new Promise(r => setTimeout(r, 60));
         return {
           tabSelected: codeTab.getAttribute('aria-selected'),
           canvasHidden: canvas.hidden,
           codeHidden: codePanel.hidden,
-          hasTags,
-          hasAttrs,
-          hasStrings,
-          hasComments,
-          hasGutter,
+          hasTags: codePanel.querySelectorAll('.tok-tag').length > 0,
+          hasAttrs: codePanel.querySelectorAll('.tok-attr').length > 0,
+          hasStrings: codePanel.querySelectorAll('.tok-str').length > 0,
+          hasComments: codePanel.querySelectorAll('.tok-com').length > 0,
+          hasGutter: codePanel.querySelectorAll('.code-gutter').length > 0,
           distinctColors: tagColor !== attrColor && attrColor !== strColor,
-          colors: { tagColor, attrColor, strColor },
-          copyBtnText: copyBtn.textContent.trim()
+          colors: { tagColor, attrColor, strColor }
         };
       })()
     `);
     assert('Clicking Code tab reveals code panel with line-number gutter',
       codeTabAudit.tabSelected === 'true' && codeTabAudit.canvasHidden && !codeTabAudit.codeHidden && codeTabAudit.hasGutter
     );
-    assert('Code block renders colorful multi-category syntax highlighting (.tok-tag, .tok-attr, .tok-str, .tok-com)',
+    assert('Code block renders colorful multi-category syntax highlighting',
       codeTabAudit.hasTags && codeTabAudit.hasAttrs && codeTabAudit.hasStrings && codeTabAudit.hasComments && codeTabAudit.distinctColors,
       JSON.stringify(codeTabAudit.colors)
     );
-    assert('Clicking Copy Code button provides "Copied!" feedback', codeTabAudit.copyBtnText.includes('Copied'));
+    const realClick = async (selector) => {
+      const box = await cdp.eval(`(() => { const el = document.querySelector('${selector}'); el.scrollIntoView({ block: 'center' }); const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; })()`);
+      for (const type of ['mousePressed', 'mouseReleased']) {
+        await cdp.send('Input.dispatchMouseEvent', { type, x: box.x, y: box.y, button: 'left', clickCount: 1 });
+      }
+      await wait(150);
+      return cdp.eval(`document.querySelector('${selector}').textContent.trim()`);
+    };
+    const copyCodeText = await realClick('#view-button .preview-code .copy-btn');
+    assert('Clicking Copy Code button provides "Copied!" feedback', copyCodeText.includes('Copied'), copyCodeText);
 
-    // Switch to Tab 3: Prompt & verify AI Agent prompt + Copy Prompt button
     const promptTabAudit = await cdp.eval(`
       (async () => {
         const card = document.querySelector('#view-button .preview-card');
@@ -1322,14 +1305,10 @@ async function runBrowserAudit() {
         promptTab.click();
         const promptPanel = card.querySelector('.preview-prompt');
         const promptPre = promptPanel.querySelector('.prompt-panel__pre');
-        const copyPromptBtn = promptPanel.querySelector('.copy-prompt-btn');
-        copyPromptBtn.click();
-        await new Promise(r => setTimeout(r, 60));
         return {
           tabSelected: promptTab.getAttribute('aria-selected'),
           promptHidden: promptPanel.hidden,
-          promptText: promptPre ? promptPre.textContent : '',
-          copyBtnText: copyPromptBtn ? copyPromptBtn.textContent.trim() : ''
+          promptText: promptPre ? promptPre.textContent : ''
         };
       })()
     `);
@@ -1339,38 +1318,11 @@ async function runBrowserAudit() {
       promptTabAudit.promptText.includes('components/button/button.css') &&
       promptTabAudit.promptText.includes('24px')
     );
-    assert('Clicking Copy Prompt button copies AI prompt and shows "Copied Prompt!"', promptTabAudit.copyBtnText.includes('Copied Prompt'));
+    const copyPromptText = await realClick('#view-button .preview-prompt .copy-prompt-btn');
+    assert('Clicking Copy Prompt button copies AI prompt and shows "Copied Prompt!"', copyPromptText.includes('Copied Prompt'), copyPromptText);
 
-    // Switch to Tab 4: Anatomy & verify Visual Blueprint Diagram + Measurement Specification Table
-    const anatomySlugs = ['button', 'input', 'textarea', 'select', 'checkbox', 'radio', 'switch', 'slider', 'table', 'badge', 'progress', 'skeleton', 'alert', 'tooltip', 'toast', 'dialog', 'drawer', 'popover', 'dropdown', 'tabs', 'accordion'];
-    const anatomyProblems = [];
-    let anatomyPins = 0;
-    for (const slug of anatomySlugs) {
-      await cdp.eval(`location.hash = '#/${slug}'`);
-      await wait(120);
-      await cdp.eval(`document.querySelector('#view-${slug} .preview-tab[data-tab="anatomy"]').click()`);
-      await wait(220);
-      const a = await cdp.eval(`
-        (() => {
-          const host = document.querySelector('#view-${slug} [data-anatomy]');
-          return {
-            pins: host.querySelectorAll('.pa-pin').length,
-            rows: host.querySelectorAll('.pa-spec__rows > div').length,
-            missing: host.dataset.missing || '',
-            scale: Number(host.querySelector('.pa-sample')?.dataset.scale) || 0
-          };
-        })()
-      `);
-      anatomyPins += a.pins;
-      if (!a.pins || !a.rows || a.missing || !a.scale) anatomyProblems.push(`${slug}: ${JSON.stringify(a)}`);
-      await cdp.eval(`document.querySelector('#view-${slug} .preview-tab[data-tab="preview"]').click()`);
-    }
-    assert('Anatomy tab renders every part of all 21 components with measured specs', anatomyProblems.length === 0, anatomyProblems.join(' | ') || `${anatomyPins} parts`);
-
-    await cdp.eval(`location.hash = '#/button'`);
-    await wait(120);
     await cdp.eval(`document.querySelector('#view-button .preview-tab[data-tab="anatomy"]').click()`);
-    await wait(220);
+    await wait(300);
     const anatomyButton = await cdp.eval(`
       (() => {
         const host = document.querySelector('#view-button [data-anatomy]');
@@ -1387,47 +1339,36 @@ async function runBrowserAudit() {
       anatomyButton.expected
     );
 
-    // Switch back to Preview tab
-    await cdp.eval(`document.querySelector('#view-button .preview-card .preview-tab[data-tab="preview"]').click()`);
-
-    // 9D: Separate Interactive Playground Page (#/playground)
-    await cdp.eval(`location.hash = '#/playground'`);
-    await wait(300);
+    // 9D: Playground
+    await goto('/playground');
     const playgroundPageAudit = await cdp.eval(`
       (() => {
         const v = document.querySelector('#view-playground');
         const bodyKind = document.body.dataset.kind;
-        const compBtn = document.querySelector('.pg-dock__btn[data-pg-comp="alert"]');
-        if (compBtn) compBtn.click();
+        document.querySelector('.pg-dock__btn[data-pg-comp="alert"]')?.click();
         const stageHtmlAfterAlert = document.querySelector('#pg-stage-mount')?.innerHTML || '';
-        const btnComp = document.querySelector('.pg-dock__btn[data-pg-comp="button"]');
-        if (btnComp) btnComp.click();
+        document.querySelector('.pg-dock__btn[data-pg-comp="button"]')?.click();
         const labelInput = document.querySelector('#pg-ctrl-label');
         if (labelInput) {
           labelInput.value = 'Custom Ship Action';
           labelInput.dispatchEvent(new Event('input', { bubbles: true }));
         }
-        const stageText = document.querySelector('#pg-stage-mount')?.textContent || '';
-        const liveCodeTokens = document.querySelectorAll('#pg-live-code-el .tok-tag').length;
         return {
           isActive: Boolean(v && v.hasAttribute('data-active')),
           bodyKind,
           hasAlertCloseInStage: stageHtmlAfterAlert.includes('as-alert__close'),
-          updatedStageText: stageText.includes('Custom Ship Action'),
-          liveCodeTokens
+          updatedStageText: (document.querySelector('#pg-stage-mount')?.textContent || '').includes('Custom Ship Action'),
+          liveCodeTokens: document.querySelectorAll('#pg-live-code-el .tok-tag').length
         };
       })()
     `);
-    assert('Navigating to #/playground activates dedicated full-bleed Interactive Playground view',
-      playgroundPageAudit.isActive && playgroundPageAudit.bodyKind === 'playground'
-    );
-    assert('Interactive Playground switches component stage and updates live syntax-highlighted code dynamically',
+    assert('Playground page uses the full-bleed stage view', playgroundPageAudit.isActive && playgroundPageAudit.bodyKind === 'playground');
+    assert('Playground switches component and updates live highlighted code',
       playgroundPageAudit.hasAlertCloseInStage && playgroundPageAudit.updatedStageText && playgroundPageAudit.liveCodeTokens > 0
     );
 
     // 9D-2: Focus ring and select popup under the documentation stylesheet
-    await cdp.eval(`location.hash = '#/input'`);
-    await wait(300);
+    await goto('/components/input');
     const inputFocusAudit = await cdp.eval(`
       (() => {
         const input = document.querySelector('#in-ws');
@@ -1436,8 +1377,7 @@ async function runBrowserAudit() {
       })()
     `);
     assert('Inner input draws no second focus ring under docs global :focus-visible', inputFocusAudit === 'none', inputFocusAudit);
-    await cdp.eval(`location.hash = '#/select'`);
-    await wait(300);
+    await goto('/components/select');
     const selectPopupAudit = await cdp.eval(`
       (() => ({
         supported: CSS.supports('appearance', 'base-select'),
@@ -1446,9 +1386,8 @@ async function runBrowserAudit() {
     `);
     assert('Select uses the customizable popup where the browser supports it', !selectPopupAudit.supported || selectPopupAudit.appearance === 'base-select', JSON.stringify(selectPopupAudit));
 
-    // 9E: Live Slider Dynamic Synchronization in Showcase
-    await cdp.eval(`location.hash = '#/slider'`);
-    await wait(300);
+    // 9E: Live slider value in the showcase
+    await goto('/components/slider');
     const sliderSync = await cdp.eval(`
       (() => {
         const sliderView = document.querySelector('#view-slider');
@@ -1456,126 +1395,96 @@ async function runBrowserAudit() {
         slider.value = 85;
         slider.dispatchEvent(new Event('input', { bubbles: true }));
         const display = sliderView.querySelector('.as-slider-field__value');
-        return {
-          sliderValue: slider.value,
-          displayText: display ? display.textContent.trim() : null
-        };
+        return { sliderValue: slider.value, displayText: display ? display.textContent.trim() : null };
       })()
     `);
-    assert('Showcase slider updates dynamic value indicator', sliderSync.displayText === '85%');
+    assert('Showcase slider updates dynamic value indicator', sliderSync.displayText === '85%', String(sliderSync.displayText));
 
-    // 9F: Search Command Palette Interaction
+    // 9F: Search palette
     const searchPalette = await cdp.eval(`
       (() => {
-        const trigger = document.querySelector('#search-trigger');
-        trigger.click();
+        document.querySelector('#search-trigger').click();
         const dlg = document.querySelector('#palette');
         const input = document.querySelector('#palette-input');
         input.value = 'playground';
         input.dispatchEvent(new Event('input', { bubbles: true }));
         const results = Array.from(document.querySelectorAll('#palette-list li[role="option"]')).map(li => li.textContent);
-        const isOpen = dlg && !dlg.hasAttribute('hidden') && dlg.open;
-        return {
-          isOpen: Boolean(isOpen),
-          count: results.length,
-          firstResult: results[0] || null
-        };
+        return { isOpen: Boolean(dlg && dlg.open), count: results.length, firstResult: results[0] || '' };
       })()
     `);
     assert('Search command palette opens on trigger click', searchPalette.isOpen);
     assert('Search palette queries and returns matching items', searchPalette.count > 0 && searchPalette.firstResult.toLowerCase().includes('playground'), searchPalette.firstResult);
-
-    // Close palette
     await cdp.eval(`document.querySelector('#palette').close()`);
 
-    // 9G: Responsive Mobile Navigation Drawer
-    await cdp.send('Emulation.setDeviceMetricsOverride', {
-      width: 375,
-      height: 812,
-      deviceScaleFactor: 2,
-      mobile: true
-    });
+    // 9G: Mobile navigation
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 2, mobile: true });
     await wait(200);
-
     const mobileMenuOpen = await cdp.eval(`
       (() => {
         const menuBtn = document.querySelector('#menu-btn');
         menuBtn.click();
-        return {
-          navOpen: document.body.hasAttribute('data-nav-open'),
-          btnExpanded: menuBtn.getAttribute('aria-expanded')
-        };
+        return { navOpen: document.body.hasAttribute('data-nav-open'), btnExpanded: menuBtn.getAttribute('aria-expanded') };
       })()
     `);
     assert('Clicking menu button in mobile viewport opens navigation drawer', mobileMenuOpen.navOpen && mobileMenuOpen.btnExpanded === 'true');
-
-    // Click link inside mobile drawer to navigate and verify auto-close
+    await cdp.eval(`document.querySelector('a.nav-link[href="/components/tabs"]').click()`);
+    await wait(1000);
     const mobileNavClick = await cdp.eval(`
-      (async () => {
-        const link = document.querySelector('a.nav-link[data-route="tabs"]');
-        link.click();
-        await new Promise(r => setTimeout(r, 150));
-        return {
-          navOpen: document.body.hasAttribute('data-nav-open'),
-          tabsActive: document.querySelector('#view-tabs').hasAttribute('data-active')
-        };
-      })()
+      (() => ({
+        navOpen: document.body.hasAttribute('data-nav-open'),
+        tabsActive: location.pathname === '/components/tabs' && Boolean(document.querySelector('#view-tabs'))
+      }))()
     `);
     assert('Selecting item in mobile drawer navigates and closes drawer', !mobileNavClick.navOpen && mobileNavClick.tabsActive);
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
 
-    // Reset viewport to desktop standard
-    await cdp.send('Emulation.setDeviceMetricsOverride', {
-      width: 1440,
-      height: 900,
-      deviceScaleFactor: 1,
-      mobile: false
-    });
-
-    // 9H: Installation & Audience Separation Hubs
-    await cdp.eval(`location.hash = '#/installation'`);
-    await wait(200);
-    const installCheck = await cdp.eval(`
-      (() => {
-        const v = document.querySelector('#view-installation');
-        return Boolean(v && v.hasAttribute('data-active') && v.textContent.includes('aster.css'));
-      })()
-    `);
-    assert('Navigating to #/installation activates installation view', installCheck);
-
-    await cdp.eval(`location.hash = '#/designers'`);
-    await wait(200);
-    const designersCheck = await cdp.eval(`
-      (() => {
-        const v = document.querySelector('#view-designers');
-        return Boolean(v && v.hasAttribute('data-active') && v.textContent.includes('Figma Variable Collections'));
-      })()
-    `);
-    assert('Navigating to #/designers activates Designer hub', designersCheck);
-
-    await cdp.eval(`location.hash = '#/developers'`);
-    await wait(200);
-    const developersCheck = await cdp.eval(`
-      (() => {
-        const v = document.querySelector('#view-developers');
-        return Boolean(v && v.hasAttribute('data-active') && v.textContent.includes('Package Exports Map'));
-      })()
-    `);
-    assert('Navigating to #/developers activates Developer hub', developersCheck);
-
-    await cdp.eval(`location.hash = '#/agents'`);
-    await wait(200);
-    const agentsCheck = await cdp.eval(`
-      (() => {
-        const v = document.querySelector('#view-agents');
-        return Boolean(v && v.hasAttribute('data-active') && v.textContent.includes('Canonical Source of Truth Map'));
-      })()
-    `);
-    assert('Navigating to #/agents activates AI Agent hub', agentsCheck);
+    // 9H: Guide pages
+    await goto('/docs/installation');
+    assert('Installation page documents the stylesheet import', await cdp.eval(`document.querySelector('#view-installation')?.textContent.includes('aster.css') === true`));
+    for (const [route, title] of [['/docs', 'Introduction'], ['/docs/tokens', 'Design Tokens'], ['/docs/principles', 'Core Principles'], ['/docs/frameworks', 'Frameworks'], ['/components', 'Components index']]) {
+      await goto(route, 500);
+      assert(`${title} page renders a heading`, await cdp.eval(`Boolean(document.querySelector('h1')?.textContent.trim())`), route);
+    }
 
     // ----------------------------------------------------------------------------------
-    // Suite 10: Visual Artifact Evidence Capture (Phase 15)
+    // Suite 9I: Automated accessibility scan (axe-core). Catches only part of WCAG:
+    // it does not replace keyboard or screen reader testing.
     // ----------------------------------------------------------------------------------
-    console.log('\n--- Suite 10: Visual Evidence Capture (Phase 15) ---');
+    console.log('\n--- Suite 9I: Automated Accessibility Scan (axe-core) ---');
+    const axeSource = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'node_modules/axe-core/axe.min.js'), 'utf8');
+    const axeRun = (scope) => `
+      axe.run(${scope}, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] } })
+        .then((r) => r.violations.map((v) => ({ id: v.id, impact: v.impact, count: v.nodes.length, target: v.nodes[0].target.join(' '), detail: v.nodes[0].any[0]?.data?.contrastRatio ? [v.nodes[0].any[0].data.contrastRatio + ':1', v.nodes[0].any[0].data.fgColor, 'on', v.nodes[0].any[0].data.bgColor, 'needs', v.nodes[0].any[0].data.expectedContrastRatio].join(' ') : '' })))
+    `;
+    const formatAxe = (rows) => rows.map((r) => `${r.where} [${r.theme}] ${r.id} (${r.impact}, ${r.count}x) ${r.target} ${r.detail}`).join(' | ');
+    const axeReport = { site: [], stage: [] };
+    const sitePages = ['/', '/docs', '/docs/installation', '/docs/tokens', '/docs/principles', '/docs/frameworks', '/components', '/playground', ...COMPONENT_ROUTES.map((s) => `/components/${s}`)];
+    for (const theme of ['light', 'dark']) {
+      for (const route of sitePages) {
+        await goto(route, 600);
+        await cdp.eval(`document.documentElement.setAttribute('data-theme', '${theme}')`);
+        await wait(120);
+        await cdp.eval(axeSource);
+        const rows = await cdp.eval(axeRun('document'));
+        rows.forEach((r) => axeReport.site.push({ ...r, where: route, theme }));
+      }
+      await goto('/playground', 600);
+      await cdp.eval(`document.documentElement.setAttribute('data-theme', '${theme}')`);
+      await cdp.eval(axeSource);
+      for (const slug of COMPONENT_ROUTES) {
+        await cdp.eval(`document.querySelector('.pg-dock__btn[data-pg-comp="${slug}"]').click()`);
+        await wait(620);
+        const rows = await cdp.eval(axeRun(`document.querySelector('#pg-stage-mount')`));
+        rows.forEach((r) => axeReport.stage.push({ ...r, where: slug, theme }));
+      }
+    }
+    assert(`axe finds no WCAG A/AA violations on ${sitePages.length} docs pages in both themes`, axeReport.site.length === 0, formatAxe(axeReport.site) || 'clean');
+    assert('axe finds no WCAG A/AA violations in the 21 rendered components in both themes', axeReport.stage.length === 0, formatAxe(axeReport.stage) || 'clean');
+
+    // ----------------------------------------------------------------------------------
+    // Suite 10: Visual evidence capture
+    // ----------------------------------------------------------------------------------
+    console.log('\n--- Suite 10: Visual Evidence Capture ---');
     async function saveScreenshot(filename, fullPage = false) {
       if (!fs.existsSync(ARTIFACT_DIR)) fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
       const shot = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: fullPage });
@@ -1584,142 +1493,59 @@ async function runBrowserAudit() {
       fs.writeFileSync(outPath, buf);
       console.log(`  ✓ Saved screenshot artifact: ${filename} (${buf.length} bytes)`);
     }
+    const setTheme = async (theme) => {
+      await cdp.eval(`document.documentElement.setAttribute('data-theme', '${theme}')`);
+      await wait(250);
+    };
 
-    // 1. Home Landing Page at Root '/' (Light & Dark)
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/' });
-    await wait(600);
-    await cdp.eval(`(() => {
-      const toggle = document.getElementById('theme-toggle-btn');
-      const lightBtn = document.getElementById('btn-theme-light');
-      if (lightBtn) lightBtn.click();
-      else if (toggle && document.documentElement.getAttribute('data-theme') === 'dark') toggle.click();
-      else document.documentElement.setAttribute('data-theme', 'light');
-    })()`);
-    await wait(250);
-    await saveScreenshot('phase15-home-light.png');
+    await goto('/');
+    await setTheme('light');
+    await saveScreenshot('home-light.png');
+    await setTheme('dark');
+    await saveScreenshot('home-dark.png');
 
-    await cdp.eval(`(() => {
-      const toggle = document.getElementById('theme-toggle-btn');
-      const darkBtn = document.getElementById('btn-theme-dark');
-      if (darkBtn) darkBtn.click();
-      else if (toggle && document.documentElement.getAttribute('data-theme') !== 'dark') toggle.click();
-      else document.documentElement.setAttribute('data-theme', 'dark');
-    })()`);
+    await goto('/playground');
+    await setTheme('light');
+    await saveScreenshot('playground-light.png');
+
+    await goto('/components/button');
+    await setTheme('light');
+    await saveScreenshot('button-preview.png');
+    await setTheme('dark');
+    await saveScreenshot('button-dark.png');
+    await setTheme('light');
+    for (const tab of ['code', 'prompt', 'anatomy']) {
+      await cdp.eval(`document.querySelector('#view-button .preview-card .preview-tab[data-tab="${tab}"]').click()`);
+      await wait(300);
+      await saveScreenshot(`button-${tab}.png`);
+    }
+
+    await goto('/components/dialog');
+    await setTheme('dark');
+    await cdp.eval(`document.querySelector('#view-dialog [data-dialog-open]')?.click()`);
     await wait(300);
-    await saveScreenshot('phase15-home-dark.png');
+    await saveScreenshot('dialog-dark.png');
 
-    // Switch back to Light Mode
-    await cdp.eval(`(() => {
-      const toggle = document.getElementById('theme-toggle-btn');
-      const lightBtn = document.getElementById('btn-theme-light');
-      if (lightBtn) lightBtn.click();
-      else if (toggle && document.documentElement.getAttribute('data-theme') === 'dark') toggle.click();
-      else document.documentElement.setAttribute('data-theme', 'light');
-    })()`);
-    await wait(200);
+    await goto('/components/input');
+    await setTheme('dark');
+    await saveScreenshot('input-dark.png');
 
-    // 2. Separate Interactive Playground Page (#/playground)
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/playground' });
-    await wait(600);
-    await saveScreenshot('phase15-playground-light.png');
+    await goto('/components/alert');
+    await setTheme('dark');
+    await saveScreenshot('alert-dark.png');
 
-    // 3. Button Component — All 4 Tabs (Preview, Code, Prompt, Anatomy)
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/button' });
-    await wait(600);
-    await saveScreenshot('phase15-button-preview.png');
-
-    await cdp.eval(`(() => {
-      const toggle = document.getElementById('theme-toggle-btn');
-      const darkBtn = document.getElementById('btn-theme-dark');
-      if (darkBtn) darkBtn.click();
-      else if (toggle && document.documentElement.getAttribute('data-theme') !== 'dark') toggle.click();
-      else document.documentElement.setAttribute('data-theme', 'dark');
-    })()`);
-    await wait(250);
-    await saveScreenshot('phase15-button-dark.png');
-    await cdp.eval(`(() => {
-      const toggle = document.getElementById('theme-toggle-btn');
-      const lightBtn = document.getElementById('btn-theme-light');
-      if (lightBtn) lightBtn.click();
-      else if (toggle && document.documentElement.getAttribute('data-theme') === 'dark') toggle.click();
-      else document.documentElement.setAttribute('data-theme', 'light');
-    })()`);
-    await wait(250);
-
-    await cdp.eval(`document.querySelector('#view-button .preview-card .preview-tab[data-tab="code"]').click()`);
-    await wait(250);
-    await saveScreenshot('phase15-button-code.png');
-
-    await cdp.eval(`document.querySelector('#view-button .preview-card .preview-tab[data-tab="prompt"]').click()`);
-    await wait(250);
-    await saveScreenshot('phase15-button-prompt.png');
-
-    await cdp.eval(`
-      (() => {
-        const card = document.querySelector('#view-button .preview-card');
-        card.querySelector('.preview-tab[data-tab="anatomy"]').click();
-        card.scrollIntoView({ behavior: 'auto', block: 'start' });
-      })()
-    `);
-    await wait(250);
-    await saveScreenshot('phase15-button-anatomy.png');
-
-    // 4. Dialog Component with macOS Red Circular Close Control (Dark Theme matching Shade-DS reference)
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/dialog' });
-    await wait(600);
-    await cdp.eval(`document.documentElement.setAttribute('data-theme', 'dark')`);
-    await wait(200);
-    await cdp.eval(`document.querySelector('#view-dialog [data-dialog-open="pg-showcase-dlg"]')?.click()`);
-    await wait(300);
-    await saveScreenshot('phase15-dialog-macos-close.png');
-    await cdp.eval(`document.querySelector('#pg-showcase-dlg')?.close()`);
-    await cdp.eval(`document.documentElement.removeAttribute('data-theme')`);
-
-    // 4B. Input Component with Shade-DS Canvas Background & 1px Glass Glow
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/input' });
-    await wait(600);
-    await cdp.eval(`document.documentElement.setAttribute('data-theme', 'dark')`);
-    await wait(200);
-    await saveScreenshot('phase15-input-dark.png');
-    await cdp.eval(`document.documentElement.removeAttribute('data-theme')`);
-
-    // 4C. Alert Component with Status Surfaces & Zero Outlines
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/alert' });
-    await wait(600);
-    await cdp.eval(`document.documentElement.setAttribute('data-theme', 'dark')`);
-    await wait(200);
-    await saveScreenshot('phase15-alert-dark.png');
-    await cdp.eval(`document.documentElement.removeAttribute('data-theme')`);
-
-    // 5. Clean Consumer Example (Light & Dark Standard)
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/examples/clean-consumer/index.html' });
-    await wait(500);
-    await saveScreenshot('phase15-consumer-light.png');
-
+    await goto('/examples/clean-consumer/index.html', 500);
+    await saveScreenshot('consumer-light.png');
     await cdp.eval(`document.getElementById('btn-toggle-theme').click()`);
     await wait(250);
-    await saveScreenshot('phase15-consumer-dark.png');
+    await saveScreenshot('consumer-dark.png');
 
-    // 6. Mobile Navigation Drawer
-    await cdp.send('Emulation.setDeviceMetricsOverride', {
-      width: 375,
-      height: 812,
-      deviceScaleFactor: 2,
-      mobile: true
-    });
-    await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/button' });
-    await wait(500);
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 2, mobile: true });
+    await goto('/components/button');
     await cdp.eval(`document.querySelector('#menu-btn').click()`);
     await wait(300);
-    await saveScreenshot('phase15-mobile-drawer.png');
-
-    // Reset device metrics
-    await cdp.send('Emulation.setDeviceMetricsOverride', {
-      width: 1440,
-      height: 900,
-      deviceScaleFactor: 1,
-      mobile: false
-    });
+    await saveScreenshot('mobile-drawer.png');
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
     await wait(100);
 
     // ----------------------------------------------------------------------------------

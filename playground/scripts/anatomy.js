@@ -2,8 +2,8 @@
  * Aster Design System — Live Component Anatomy
  *
  * Renders the real component (inert) and reads every number from it, so the
- * diagram cannot drift from the CSS. Shared by the Astro docs site and the static
- * portal. Only the part names and descriptions below are authored by hand.
+ * diagram cannot drift from the CSS. Only the part names and descriptions below
+ * are authored by hand.
  */
 import { syncSliderProgress } from '../../dist/js/aster.js';
 import { RECIPES } from './stage.js';

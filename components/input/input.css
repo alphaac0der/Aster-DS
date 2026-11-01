@@ -29,7 +29,6 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--as-semantic-color-text-muted);
-  opacity: 0.8;
   line-height: 16px;
   margin-bottom: 2px;
 }

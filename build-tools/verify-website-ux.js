@@ -1,44 +1,35 @@
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { DOC_PAGES } from './build-playground.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
+const siteDir = join(rootDir, 'apps/docs/dist');
+
+if (!existsSync(join(siteDir, 'index.html'))) {
+  console.error('ERROR: Docs site build is missing. Run "npm run build:docs" first.');
+  process.exit(1);
+}
+
+const page = (route) => readFileSync(join(siteDir, route, 'index.html'), 'utf8');
 
 function parseHex(hex) {
   const c = hex.replace('#', '').trim();
-  if (c.length === 3) {
-    return [
-      parseInt(c[0] + c[0], 16),
-      parseInt(c[1] + c[1], 16),
-      parseInt(c[2] + c[2], 16)
-    ];
-  }
-  return [
-    parseInt(c.slice(0, 2), 16),
-    parseInt(c.slice(2, 4), 16),
-    parseInt(c.slice(4, 6), 16)
-  ];
+  return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)];
 }
-
 function srgbToLinear(val) {
   const v = val / 255;
   return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
 }
-
 function getLuminance(hex) {
   const [r, g, b] = parseHex(hex);
   return 0.2126 * srgbToLinear(r) + 0.7152 * srgbToLinear(g) + 0.0722 * srgbToLinear(b);
 }
-
 function getContrastRatio(hex1, hex2) {
   const l1 = getLuminance(hex1);
   const l2 = getLuminance(hex2);
-  const brighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
-  return (brighter + 0.05) / (darker + 0.05);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
 }
 
 console.log('========================================================================================');
@@ -60,266 +51,81 @@ function assert(condition, message) {
   }
 }
 
-// 1. Inspect index.html and playground/index.html
-console.log('1. Checking compiled HTML files (index.html & playground/index.html):');
-const indexHtml = readFileSync(join(rootDir, 'index.html'), 'utf8');
-const playgroundHtml = readFileSync(join(rootDir, 'playground/index.html'), 'utf8');
+// 1. Shared site shell, checked on the built pages
+console.log('1. Checking the built site shell:');
+const indexHtml = page('.');
+const shellPages = { home: indexHtml, docs: page('docs'), component: page('components/button'), playground: page('playground') };
 
-// Theme-aware favicons (embedded SVG Data URIs for 100% resilience against network & path failures)
+for (const [name, html] of Object.entries(shellPages)) {
+  assert(html.includes('rel="icon"'), `${name} page declares a favicon`);
+  assert(html.includes("localStorage.getItem('aster-theme')") && html.includes("setAttribute('data-theme'"), `${name} page sets the saved theme before first paint`);
+  assert(html.includes('class="skip-link"'), `${name} page has a skip link`);
+  assert(html.includes('id="main-content"'), `${name} page has the skip link target`);
+}
+
 assert(
-  indexHtml.includes('rel="icon"') &&
-  indexHtml.includes('id="favicon-link"') &&
-  indexHtml.includes('data:image/svg+xml'),
-  'index.html declares resilient theme-aware SVG Data URI favicons with media="(prefers-color-scheme: ...)"'
+  indexHtml.includes('brand__logo') && indexHtml.includes('brand__logo-sparkle') && indexHtml.includes('brand__logo-arc') && indexHtml.includes('viewBox="0 0 376 382"'),
+  'Header includes the inline SVG Aster logo'
 );
-
+assert(/id="menu-btn"/.test(indexHtml) && indexHtml.includes('as-button--icon'), 'Navigation menu button is an Aster icon button');
+assert(/id="theme-toggle-btn"/.test(indexHtml) && indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle is a labelled Aster icon button');
 assert(
-  playgroundHtml.includes('rel="icon"') &&
-  playgroundHtml.includes('data:image/svg+xml'),
-  'playground/index.html declares resilient SVG Data URI favicons'
-);
-
-// FOUC prevention script in head
-assert(
-  indexHtml.includes('localStorage.getItem(\'aster-theme\')') &&
-  indexHtml.includes('documentElement.setAttribute(\'data-theme\''),
-  'index.html includes inline head script for instant FOUC prevention'
-);
-
-// Theme-reactive Header Logo (Inline SVG to guarantee zero broken image links)
-assert(
-  indexHtml.includes('class="brand__logo"') &&
-  indexHtml.includes('class="brand__logo-sparkle"') &&
-  indexHtml.includes('class="brand__logo-arc"') &&
-  indexHtml.includes('viewBox="0 0 376 382"'),
-  'Header includes zero-dependency inline SVG Aster brand logo (.brand__logo, .brand__logo-sparkle, .brand__logo-arc)'
-);
-
-// Navigation Menu Button as Aster-DS button
-assert(
-  indexHtml.includes('id="menu-btn"') &&
-  indexHtml.includes('as-button') &&
-  indexHtml.includes('as-button--ghost') &&
-  indexHtml.includes('as-button--icon'),
-  'Navigation menu button (#menu-btn) is an Aster-DS button (.as-button.as-button--ghost.as-button--icon)'
-);
-
-// Single-click Theme Toggle Button as Aster-DS button
-assert(
-  indexHtml.includes('id="theme-toggle-btn"') &&
-  indexHtml.includes('as-button') &&
-  indexHtml.includes('as-button--ghost') &&
-  indexHtml.includes('as-button--icon') &&
-  indexHtml.includes('aria-label="Toggle color theme"'),
-  'Header theme toggle button (#theme-toggle-btn) is an Aster-DS button (.as-button.as-button--ghost.as-button--icon)'
-);
-
-// GitHub Repository Button as Aster-DS button with user-provided sharp SVG
-assert(
-  indexHtml.includes('id="header-github-btn"') &&
-  indexHtml.includes('as-button') &&
-  indexHtml.includes('as-button--ghost') &&
-  indexHtml.includes('as-button--icon') &&
+  /id="header-github-btn"/.test(indexHtml) &&
   indexHtml.includes('https://github.com/alphaac0der/Aster-DS') &&
-  indexHtml.includes('target="_blank"') &&
-  indexHtml.includes('rel="noopener noreferrer"'),
-  'Header GitHub button (#header-github-btn) is an Aster-DS button (.as-button.as-button--ghost.as-button--icon)'
-);
-
-// Crisp GitHub icon check
-assert(
-  indexHtml.includes('viewBox="0 0 24 24"') &&
+  indexHtml.includes('rel="noopener noreferrer"') &&
   indexHtml.includes('M12 .5C5.37.5 0 5.78 0 12.292'),
-  'GitHub symbol uses the requested crisp 24x24 vector path'
+  'GitHub button links to the repository safely with the crisp icon'
 );
 
-// 2. Sidebar Navigation Architecture
-console.log('\n2. Checking Sidebar Navigation Architecture:');
-const sidebarStart = indexHtml.indexOf('<nav class="sidebar" id="sidebar"');
-const sidebarEnd = indexHtml.indexOf('</nav>', sidebarStart);
-const sidebarSection = sidebarStart !== -1 && sidebarEnd !== -1 ? indexHtml.slice(sidebarStart, sidebarEnd) : '';
+// 2. Sidebar
+console.log('\n2. Checking Sidebar Navigation:');
+const docsHtml = shellPages.docs;
+const sidebarStart = docsHtml.indexOf('id="sidebar"');
+const sidebarEnd = docsHtml.indexOf('</nav>', sidebarStart);
+const sidebar = sidebarStart !== -1 && sidebarEnd !== -1 ? docsHtml.slice(sidebarStart, sidebarEnd) : '';
+assert(sidebar.length > 0, 'Sidebar exists on documentation pages');
+assert(sidebar.includes('Getting Started'), 'Sidebar contains "Getting Started" group');
+const introIdx = sidebar.indexOf('href="/docs"');
+const installIdx = sidebar.indexOf('href="/docs/installation"');
+assert(introIdx !== -1 && installIdx !== -1 && introIdx < installIdx, 'Introduction precedes Installation in the sidebar');
+assert(!sidebar.includes('href="/"') && !sidebar.includes('href="/playground"'), 'Home and Playground stay in the header, not the sidebar');
 
-assert(sidebarSection.length > 0, 'Extracted <nav class="sidebar" id="sidebar"> element');
-
-assert(
-  sidebarSection.includes('Getting Started'),
-  'Sidebar contains "Getting Started" group'
-);
-assert(
-  sidebarSection.includes('href="#/introduction"') && sidebarSection.includes('Introduction'),
-  'Sidebar contains Introduction link'
-);
-assert(
-  sidebarSection.includes('href="#/installation"') && sidebarSection.includes('Installation'),
-  'Sidebar contains Installation link'
-);
-
-// Introduction should precede Installation
-const introIdx = sidebarSection.indexOf('href="#/introduction"');
-const installIdx = sidebarSection.indexOf('href="#/installation"');
-assert(
-  introIdx !== -1 && installIdx !== -1 && introIdx < installIdx,
-  'Introduction precedes Installation in sidebar hierarchy'
-);
-
-// "Home" and "Interactive Playground" should NOT be in the sidebar nav
-assert(
-  !sidebarSection.includes('href="#/home"') && !sidebarSection.includes('href="#home"') && !sidebarSection.includes('data-route="home"'),
-  'Redundant "Home" link removed from sidebar navigation'
-);
-assert(
-  !sidebarSection.includes('href="#/playground"') && !sidebarSection.includes('href="#playground"') && !sidebarSection.includes('data-route="playground"'),
-  'Redundant "Interactive Playground" link removed from sidebar navigation'
-);
-
-// Helper to extract article doc view
-function extractDocView(html, route) {
-  const marker = `id="view-${route}"`;
-  const startIdx = html.indexOf(marker);
-  if (startIdx === -1) return '';
-  const articleStart = html.lastIndexOf('<article', startIdx);
-  const articleEnd = html.indexOf('</article>', startIdx);
-  if (articleStart === -1 || articleEnd === -1) return '';
-  return html.slice(articleStart, articleEnd + 10);
+// 3. Guide content
+console.log('\n3. Checking Guide Content:');
+const install = page('docs/installation');
+for (const text of ['npm install aster-ds', 'pnpm add aster-ds', 'yarn add aster-ds']) {
+  assert(install.includes(text), `Installation documents "${text}"`);
+}
+for (const text of ['aster-ds/aster.css', 'aster-ds/tokens.css', 'aster-ds/components.css']) {
+  assert(install.includes(text), `Installation documents the "${text}" import`);
+}
+assert(install.includes('initAsterComponents'), 'Installation documents initAsterComponents()');
+for (const route of ['docs/tokens', 'docs/principles', 'docs/frameworks', 'components']) {
+  assert(/<h1[\s>]/.test(page(route)), `/${route} renders a page heading`);
 }
 
-// 3. Introduction View Content
-console.log('\n3. Checking Introduction View Content:');
-const introView = extractDocView(indexHtml, 'introduction');
-assert(introView.length > 0, 'View #view-introduction exists in DOM and extracted');
+// 4. Component page order and pagination
+console.log('\n4. Checking Pagination Across All 21 Component Pages:');
+const slugSource = readFileSync(join(rootDir, 'apps/docs/src/pages/components/[slug].astro'), 'utf8');
+const order = [...slugSource.slice(slugSource.indexOf('canonicalOrder = ['), slugSource.indexOf('];')).matchAll(/'([a-z]+)'/g)].map((m) => m[1]);
+assert(order.length === 21, `Component order lists 21 pages (actual: ${order.length})`);
+order.forEach((slug, i) => {
+  const html = page(`components/${slug}`);
+  const nav = html.slice(html.indexOf('class="doc-pagination"'));
+  const prev = order[i - 1];
+  const next = order[i + 1];
+  assert(prev ? nav.includes(`href="/components/${prev}"`) && nav.includes('doc-pagination__link--prev') : !nav.includes('doc-pagination__link--prev'), `${slug}: previous link is ${prev || 'absent on the first page'}`);
+  assert(next ? nav.includes(`href="/components/${next}"`) && nav.includes('doc-pagination__link--next') : !nav.includes('doc-pagination__link--next'), `${slug}: next link is ${next || 'absent on the last page'}`);
+  assert(html.includes(`data-anatomy="${slug}"`), `${slug}: Anatomy tab mount exists`);
+});
 
-// All 7 required introduction topics
-assert(
-  introView.includes('What is Aster DS?') || introView.includes('What Is Aster DS?'),
-  'Introduction covers topic 1: What is Aster DS'
-);
-assert(
-  introView.includes('The Problems We Solve') || introView.includes('Problems Aster Solves') || introView.includes('Problems Solved'),
-  'Introduction covers topic 2: Problems Aster solves'
-);
-assert(
-  introView.includes('Design Philosophy &amp; Token Architecture') || introView.includes('Design Philosophy'),
-  'Introduction covers topic 3: Design philosophy & token-first architecture'
-);
-assert(
-  introView.includes('Major Capabilities &amp; Component Suite') || introView.includes('Core Capabilities'),
-  'Introduction covers topic 4: Core capabilities (tokens, 21 components, standard density)'
-);
-assert(
-  introView.includes('Dual Interfaces: How Teams Use Aster') || introView.includes('Dual-Interface Architecture'),
-  'Introduction covers topic 5: Dual interfaces (human vs agent)'
-);
-assert(
-  introView.includes('Zero-Dependency Browser Approach') || introView.includes('Zero-Dependency Vanilla Engineering'),
-  'Introduction covers topic 6: Zero-dependency vanilla engineering'
-);
-assert(
-  introView.includes('Where to Go Next') || introView.includes('Next Steps'),
-  'Introduction covers topic 7: Next steps and reading paths'
-);
-
-// 4. Installation View Content
-console.log('\n4. Checking Installation View Content:');
-const installView = extractDocView(indexHtml, 'installation');
-assert(installView.length > 0, 'View #view-installation exists in DOM and extracted');
-
-// All 7 required installation sections
-assert(
-  installView.includes('Prerequisites') && installView.includes('Node.js'),
-  'Installation covers section 1: Prerequisites (Node.js >= 18)'
-);
-assert(
-  installView.includes('npm install aster-ds') &&
-  installView.includes('pnpm add aster-ds') &&
-  installView.includes('yarn add aster-ds'),
-  'Installation covers section 2: Package manager commands (npm, pnpm, yarn)'
-);
-assert(
-  installView.includes('aster-ds/aster.css') &&
-  installView.includes('aster-ds/tokens.css') &&
-  installView.includes('aster-ds/components.css'),
-  'Installation covers section 3: Stylesheet imports (all-in-one & modular)'
-);
-assert(
-  installView.includes('initAsterComponents') &&
-  installView.includes('import { initAsterComponents } from \'aster-ds\''),
-  'Installation covers section 4: Interactive JS imports and initAsterComponents()'
-);
-assert(
-  installView.includes('First Component Example') &&
-  installView.includes('as-button') &&
-  installView.includes('as-input'),
-  'Installation covers section 5: First component example (HTML markup)'
-);
-assert(
-  installView.includes('Browser / CDN') || installView.includes('Direct Browser / Static'),
-  'Installation covers section 6: Direct browser / static CDN installation'
-);
-assert(
-  installView.includes('Verification &amp; Troubleshooting') || installView.includes('Verification & Troubleshooting'),
-  'Installation covers section 7: Verification and troubleshooting'
-);
-
-// 5. Pagination Chain Across All 32 Documentation Pages
-console.log('\n5. Checking Bidirectional Pagination Chain Across All 32 Documentation Pages:');
-assert(DOC_PAGES.length === 32, `Canonical DOC_PAGES contains exactly 32 documentation pages (actual: ${DOC_PAGES.length})`);
-
-for (let i = 0; i < DOC_PAGES.length; i++) {
-  const current = DOC_PAGES[i];
-  const prev = i > 0 ? DOC_PAGES[i - 1] : null;
-  const next = i < DOC_PAGES.length - 1 ? DOC_PAGES[i + 1] : null;
-
-  const viewHtml = extractDocView(indexHtml, current.route);
-  const hasPagination = viewHtml.includes('class="doc-pagination"');
-  if (!hasPagination) {
-    assert(false, `Page "${current.title}" (${current.route}) contains .doc-pagination container`);
-    continue;
-  }
-
-  if (prev) {
-    const hasPrev = viewHtml.includes(`href="#/${prev.route}"`) && viewHtml.includes('doc-pagination__link--prev');
-    assert(hasPrev, `Page "${current.title}" (${current.route}) links backward to "${prev.title}" (#/${prev.route})`);
-  } else {
-    const hasNoPrev = !viewHtml.includes('doc-pagination__link--prev');
-    assert(hasNoPrev, `Page "${current.title}" (${current.route}) is first page and has no previous link`);
-  }
-
-  if (next) {
-    const hasNext = viewHtml.includes(`href="#/${next.route}"`) && viewHtml.includes('doc-pagination__link--next');
-    assert(hasNext, `Page "${current.title}" (${current.route}) links forward to "${next.title}" (#/${next.route})`);
-  } else {
-    const hasNoNext = !viewHtml.includes('doc-pagination__link--next');
-    assert(hasNoNext, `Page "${current.title}" (${current.route}) is last page and has no next link`);
-  }
-}
-
-// 6. CSS Tokens, Syntax Highlighting & Contrast Audit
-console.log('\n6. Checking CSS Stylesheet & Syntax Highlighting Contrast:');
+// 5. Shared stylesheet and syntax colors
+console.log('\n5. Checking Stylesheet & Syntax Highlighting Contrast:');
 const cssContent = readFileSync(join(rootDir, 'playground/styles/playground.css'), 'utf8');
+assert(cssContent.includes('.brand__logo') && cssContent.includes('.brand__logo-sparkle') && cssContent.includes('.brand__logo-arc'), 'Stylesheet defines the brand logo styles');
+assert(cssContent.includes('.as-button--icon'), 'Stylesheet defines .as-button--icon');
+assert(cssContent.includes('.theme-toggle-btn') && cssContent.includes('.as-icon--sun') && cssContent.includes('.as-icon--moon'), 'Stylesheet defines the theme toggle states');
 
-// Brand logo styles
-assert(
-  cssContent.includes('.brand__logo') &&
-  cssContent.includes('.brand__logo-sparkle') &&
-  cssContent.includes('.brand__logo-arc'),
-  'playground.css defines .brand__logo, .brand__logo-sparkle, and .brand__logo-arc styles'
-);
-
-// Aster-DS Icon Button modifier styles
-assert(
-  cssContent.includes('.as-button--icon'),
-  'playground.css defines .as-button--icon modifier for circular Aster buttons'
-);
-
-// Theme toggle styles
-assert(
-  cssContent.includes('.theme-toggle-btn') &&
-  cssContent.includes('.as-icon--sun') &&
-  cssContent.includes('.as-icon--moon'),
-  'playground.css defines .theme-toggle-btn and stateful icon styles (.as-icon--sun / .as-icon--moon)'
-);
-
-// Check syntax token definitions
 const lightCardBg = '#F5F5F5';
 const syntaxTokens = [
   { name: '--syntax-com', hex: '#57606a', role: 'Comments' },
@@ -329,59 +135,26 @@ const syntaxTokens = [
   { name: '--syntax-kw', hex: '#8250df', role: 'Keywords' },
   { name: '--syntax-fn', hex: '#953800', role: 'Functions / Properties' }
 ];
-
 for (const tok of syntaxTokens) {
-  assert(cssContent.includes(tok.name), `playground.css defines ${tok.name} token`);
+  assert(cssContent.includes(tok.name), `Stylesheet defines ${tok.name}`);
   const ratio = getContrastRatio(tok.hex, lightCardBg);
-  assert(
-    ratio >= 4.5,
-    `Syntax token ${tok.name} (${tok.hex}, ${tok.role}) has WCAG AA contrast ratio of ${ratio.toFixed(2)}:1 against light card ${lightCardBg} (>= 4.5:1)`
-  );
+  assert(ratio >= 4.5, `${tok.name} (${tok.hex}, ${tok.role}) has a contrast ratio of ${ratio.toFixed(2)}:1 on ${lightCardBg} (>= 4.5:1)`);
 }
 
-// 7. Client-side JS Logic in playground.js
-console.log('\n7. Checking Client-side Routing and Interaction Logic in playground.js:');
-const jsContent = readFileSync(join(rootDir, 'playground/scripts/playground.js'), 'utf8');
+// 6. Client behavior source
+console.log('\n6. Checking Client Behavior:');
+const layout = readFileSync(join(rootDir, 'apps/docs/src/layouts/BaseLayout.astro'), 'utf8');
+assert(layout.includes('theme-toggle-btn') && layout.includes("localStorage.setItem('aster-theme'"), 'Theme toggle persists the choice');
+assert(layout.includes("window.location.replace('/playground')"), 'Old #/ links redirect to clean URLs');
 
-assert(
-  jsContent.includes('\'introduction\'') &&
-  jsContent.includes('\'installation\''),
-  'playground.js ROUTES array includes \'introduction\' before \'installation\''
-);
-
-assert(
-  jsContent.includes('h === \'docs\'') &&
-  jsContent.includes('h === \'intro\'') &&
-  jsContent.includes('h === \'about\'') &&
-  jsContent.includes('h === \'getting-started\'') &&
-  jsContent.includes('return \'introduction\';'),
-  'playground.js parseHash() normalizes \'docs\', \'intro\', \'about\', \'getting-started\' to \'introduction\''
-);
-
-assert(
-  jsContent.includes('theme-toggle-btn') &&
-  jsContent.includes('addEventListener(\'click\''),
-  'playground.js attaches click listener to #theme-toggle-btn for single-click toggle'
-);
-
-assert(
-  jsContent.includes('aster-theme') &&
-  jsContent.includes('localStorage'),
-  'playground.js persists theme preference in localStorage'
-);
-
-// Summary
 console.log('\n========================================================================================');
 console.log(`RESULTS: ${passedChecks}/${totalChecks} checks passed.`);
 if (errors.length === 0) {
   console.log('✓ ALL WEBSITE & DOCUMENTATION UX CHECKS PASSED.');
   console.log('========================================================================================\n');
   process.exit(0);
-} else {
-  console.error(`✗ ${errors.length} CHECKS FAILED:`);
-  for (const err of errors) {
-    console.error(`  - ${err}`);
-  }
-  console.log('========================================================================================\n');
-  process.exit(1);
 }
+console.error(`✗ ${errors.length} CHECKS FAILED:`);
+for (const err of errors) console.error(`  - ${err}`);
+console.log('========================================================================================\n');
+process.exit(1);

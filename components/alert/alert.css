@@ -77,7 +77,6 @@
 .as-alert__description {
   font-size: var(--as-typography-font-size-sm, 13px);
   color: currentColor;
-  opacity: 0.85;
   line-height: 1.45;
 }
 

@@ -70,9 +70,9 @@ Aster faithfully reproduces all status surface tints and accessible content ink 
 
 | Status Role | Dark Surface | Dark Content | Light Surface | Light Content | Application |
 |---|---|---|---|---|---|
-| **Success** | `--as-color-primitive-status-success-surface-dark` (`#032a1d`) | `--as-color-primitive-status-success-subtle` (`#6dd78c`) | `--as-color-primitive-status-success-surface-light` (`#e6f4ea`) | `--as-color-primitive-status-success-default` (`#188038`) | Positive feedback, healthy states, resolved toasts |
+| **Success** | `--as-color-primitive-status-success-surface-dark` (`#032a1d`) | `--as-color-primitive-status-success-subtle` (`#6dd78c`) | `--as-color-primitive-status-success-surface-light` (`#e6f4ea`) | `--as-color-primitive-status-success-default` (`#167a35`) | Positive feedback, healthy states, resolved toasts |
 | **Warning** | `--as-color-primitive-status-warning-surface-dark` (`#2c1f04`) | `--as-color-primitive-status-warning-subtle` (`#ff9800`) | `--as-color-primitive-status-warning-surface-light` (`#fff8e1`) | `--as-color-primitive-status-warning-default` (`#b05a00`) | Maintenance notices, caution alerts, drain status |
-| **Critical / Error** | `--as-color-primitive-status-critical-surface-dark` (`#281718`) | `--as-color-primitive-status-critical-subtle` (`#ff453a`) | `--as-color-primitive-status-critical-surface-light` (`#fbeaeb`) | `--as-color-primitive-status-critical-default` (`#c5221f`) | Blocking errors, destructive actions & 12px Red Dot dismiss |
+| **Critical / Error** | `--as-color-primitive-status-critical-surface-dark` (`#281718`) | `--as-color-primitive-status-critical-subtle` (`#ff453a`) | `--as-color-primitive-status-critical-surface-light` (`#fbeaeb`) | `--as-color-primitive-status-critical-default` (`#b91f1c`) | Blocking errors, destructive actions & 12px Red Dot dismiss |
 | **Focus / Info** | `--as-color-primitive-status-info-surface-dark` (`#0d1b2a`) | `--as-color-primitive-status-info-subtle` (`#64b5f6`) | `--as-color-primitive-status-info-surface-light` (`#e3f2fd`) | `--as-color-primitive-status-info-default` (`#1565c0`) | Keyboard focus rings, informational notices |
 | **Active Layout** | `--as-color-primitive-status-active-surface-dark` (`#1c062e`) | `--as-color-primitive-status-active-subtle` (`#d9a7f7`) | `--as-color-primitive-status-active-surface-light` (`#f3e5f5`) | `--as-color-primitive-status-active-default` (`#6a1b9a`) | Active layout highlights, blueprint hatched callouts |
 
@@ -192,9 +192,9 @@ Components must **always** bind to semantic tokens, never primitives.
 | `--as-semantic-color-surface-critical` | `#fbeaeb` | `#281718` | Shade-DS Error Surface 1 | Status background |
 | `--as-semantic-color-surface-focus` | `#e3f2fd` | `#0d1b2a` | Shade-DS Focus Surface 1 | Status background |
 | `--as-semantic-color-surface-active` | `#f3e5f5` | `#1c062e` | Shade-DS Active Surface 1 | Layout background |
-| `--as-semantic-color-status-success-text` | `#188038` | `#6dd78c` | Positive feedback message text | 5.02:1 (Light) / 10.48:1 (Dark) AA/AAA |
+| `--as-semantic-color-status-success-text` | `#167a35` | `#6dd78c` | Positive feedback message text | 5.02:1 (Light) / 10.48:1 (Dark) AA/AAA |
 | `--as-semantic-color-status-warning-text` | `#b05a00` | `#ff9800` | Warning feedback message text | 4.87:1 (Light) / 8.69:1 (Dark) AA/AAA |
-| `--as-semantic-color-status-critical-text` | `#c5221f` | `#ff453a` | Error feedback text & 12px Red Dot dismiss control | 5.80:1 (Light) / 7.25:1 (Dark) AA/AAA |
+| `--as-semantic-color-status-critical-text` | `#b91f1c` | `#ff453a` | Error feedback text & 12px Red Dot dismiss control | 5.80:1 (Light) / 7.25:1 (Dark) AA/AAA |
 | `--as-semantic-color-status-focus-text` | `#1565c0` | `#64b5f6` | Info / focus state message text | 5.75:1 (Light) / 8.46:1 (Dark) AA/AAA |
 | `--as-semantic-color-status-active-text` | `#6a1b9a` | `#d9a7f7` | Active accent status message text | 6.78:1 (Light) / 9.82:1 (Dark) AA/AAA |
 
@@ -214,7 +214,7 @@ This ensures boundaries remain optically sharp on Retina/HiDPI screens without c
 
 All dismissible surfaces (Dialog, Drawer, Alert, Toast, Popover) use Shade-DS's **12px solid circular red dot**:
 - Dimensions: `12px × 12px` circle (`border-radius: 50%`)
-- Fill: `--as-semantic-color-status-critical-text` (`#ff453a` in dark mode, `#c5221f` in light mode)
+- Fill: `--as-semantic-color-status-critical-text` (`#ff453a` in dark mode, `#b91f1c` in light mode)
 - Internal glyph: Pure solid dot (no interior SVG cross/glyphs)
 - Interaction: Scale `1.2` on `:hover`, scale `0.9` on `:active` with smooth cubic-bezier easing
 - Accessibility: Focus ring with `2px` offset and explicit `aria-label`

@@ -46,11 +46,11 @@ npm run build
 
 | Command | Action |
 |---|---|
-| `npm run build` | Full compilation (`build:tokens`, `build:components`, `build:playground`, `export:figma`) |
+| `npm run build` | Full compilation (`build:tokens`, `build:components`, `export:figma`) |
 | `npm run build:tokens` | Compiles `tokens/**/*.json` into `dist/css/tokens.css` |
 | `npm run build:components` | Compiles modular `components/` into `dist/css/components.css`, `dist/css/aster.css`, and `dist/js/aster.js` |
-| `npm run build:playground` | Compiles the self-contained portal at `index.html` and `playground/index.html` across all 32 documentation routes |
-| `npm run playground` | Launches the local documentation portal on `http://127.0.0.1:3000/` |
+| `npm run build:docs` | Full compilation plus the Astro docs site in `apps/docs/dist/` |
+| `npm run playground` | Launches the local docs site in dev mode (Astro) |
 | `npm run test:contrast` | Mathematical verification of all required WCAG 2.2 AA contrast pairs (26/26) |
 | `npm run test:docs` | Verifies consistency between documentation and compiled CSS custom properties (196/196) |
 | `npm run export:figma` | Generates W3C DTCG variable token payloads for Figma in `dist/figma/` |
@@ -59,7 +59,7 @@ npm run build
 | `npm run test:exports` | Validates package entry points, export map targets, and live consumer imports (18/18) |
 | `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification (43 files) |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox without `scratch/` |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (143/143) |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (145/145) |
 | `npm test` | Runs the aggregate quality suite (`figma`, `contrast`, `components`, `docs`, `exports`, `pack`, `isolated-build`) |
 
 ---
@@ -138,7 +138,7 @@ Aster-DS/
 ├── skills/              # Agent-facing instruction skills (AI coding standards)
 │   ├── using-aster-tokens/
 │   └── using-aster-components/
-├── playground/          # Production documentation portal and component showcase
+├── playground/          # Shared docs styles, playground stage, and live anatomy
 ├── examples/            # Minimal consumer integration examples
 ├── build-tools/         # Compilers, validators, and browser CDP audit tools
 └── tools/               # Local Figma library setup plugin (code.js, manifest.json)
