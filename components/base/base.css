@@ -7,29 +7,6 @@
  * primitives (.as-sr-only, .as-icon, .as-spinner, .as-badge, .as-checkbox).
  */
 
-:root {
-  --as-motion-duration-press: 80ms;
-  --as-motion-duration-base: 200ms;
-  --as-motion-duration-slow: 300ms;
-  --as-motion-duration-reveal: 500ms;
-  --as-motion-time-1x: 100ms;
-  --as-motion-time-2x: 200ms;
-  --as-motion-time-3x: 300ms;
-  --as-motion-time-4x: 400ms;
-  --as-motion-time-subtle-1: 150ms;
-  --as-motion-time-subtle-2: 250ms;
-  --as-motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --as-motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --as-motion-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --as-motion-ease-pop: cubic-bezier(0.23, 1, 0.32, 1);
-  --as-motion-spring-snappy: cubic-bezier(0.22, 1.15, 0.36, 1);
-  --as-motion-spring-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --as-motion-lift: -1.5px;
-  --as-motion-lift-scale: 1.02;
-  --as-motion-press-y: 1px;
-  --as-motion-press-scale: 0.95;
-}
-
 @media (prefers-reduced-motion: reduce) {
   :root {
     --as-motion-duration-press: 0.01ms;
@@ -52,7 +29,7 @@
 /* Shade-DS RippleLayer expanding circular burst ring on click */
 .as-ripple-ring {
   position: absolute;
-  border-radius: 50%;
+  border-radius: var(--as-radius-full);
   transform: translate(-50%, -50%);
   pointer-events: none;
   box-sizing: border-box;
@@ -114,8 +91,8 @@
   border: none;
   outline: none;
   border-radius: var(--as-radius-full, 9999px);
-  background-color: var(--as-semantic-color-status-critical-text, #ff453a);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--as-semantic-color-status-critical-text);
+  box-shadow: var(--as-elevation-shadow-drop-1);
   cursor: pointer;
   flex: none;
   position: relative;
@@ -136,7 +113,7 @@
   transform: translate(-50%, -50%);
   width: 28px;
   height: 28px;
-  border-radius: 9999px;
+  border-radius: var(--as-radius-full);
   pointer-events: auto;
 }
 
@@ -204,7 +181,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  border-radius: 50%;
+  border-radius: var(--as-radius-full);
   border: 2px solid currentColor;
   border-right-color: transparent;
   animation: as-spin 650ms linear infinite;
@@ -330,7 +307,7 @@ svg.as-icon {
 
 .as-card:hover {
   transform: translateY(var(--as-motion-lift, -1.5px)) scale(var(--as-motion-lift-scale, 1.01));
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 1px 0px var(--as-semantic-color-border-strong), inset 0 0 1px 0px var(--as-semantic-color-border-strong);
+  box-shadow: var(--as-elevation-shadow-drop-2), 0 0 1px 0px var(--as-semantic-color-border-strong), inset 0 0 1px 0px var(--as-semantic-color-border-strong);
 }
 
 .as-token-badge {

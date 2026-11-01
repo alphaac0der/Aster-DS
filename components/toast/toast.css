@@ -32,10 +32,7 @@
   outline: none;
   color: var(--as-semantic-color-text-default);
   font-family: var(--as-typography-font-family-sans);
-  box-shadow:
-    0 0 1px 0px rgba(0, 0, 0, 0.12),
-    inset 0 0 1px 0px rgba(0, 0, 0, 0.12),
-    0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--as-semantic-elevation-shadow-modal);
   transform: translateY(12px) scale(0.96);
   opacity: 0;
   transition:
@@ -46,13 +43,6 @@
 .as-toast.is-open {
   transform: translateY(0) scale(1);
   opacity: 1;
-}
-
-[data-theme="dark"] .as-toast {
-  box-shadow:
-    0 0 1px 0px rgba(255, 255, 255, 0.14),
-    inset 0 0 1px 0px rgba(255, 255, 255, 0.14),
-    0 12px 32px rgba(0, 0, 0, 0.65);
 }
 
 /* Status variants with subtle indicator glows */

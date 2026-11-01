@@ -1,0 +1,32 @@
+{
+  "motion": {
+    "duration": {
+      "press": { "$value": "80ms", "$type": "duration", "$description": "Instant press feedback" },
+      "base": { "$value": "200ms", "$type": "duration", "$description": "Hover and color changes" },
+      "slow": { "$value": "300ms", "$type": "duration", "$description": "Panels and larger changes" },
+      "reveal": { "$value": "500ms", "$type": "duration", "$description": "Content entering the page" }
+    },
+    "time": {
+      "1x": { "$value": "100ms", "$type": "duration", "$description": "Base time step" },
+      "2x": { "$value": "200ms", "$type": "duration", "$description": "Two time steps" },
+      "3x": { "$value": "300ms", "$type": "duration", "$description": "Three time steps" },
+      "4x": { "$value": "400ms", "$type": "duration", "$description": "Four time steps" },
+      "subtle-1": { "$value": "150ms", "$type": "duration", "$description": "Short subtle transition" },
+      "subtle-2": { "$value": "250ms", "$type": "duration", "$description": "Longer subtle transition" }
+    },
+    "ease": {
+      "out": { "$value": "cubic-bezier(0.22, 1, 0.36, 1)", "$type": "string", "$description": "Things arriving: fast, then settling" },
+      "standard": { "$value": "cubic-bezier(0.4, 0, 0.2, 1)", "$type": "string", "$description": "General movement" },
+      "expo": { "$value": "cubic-bezier(0.16, 1, 0.3, 1)", "$type": "string", "$description": "Large surfaces sliding in" },
+      "pop": { "$value": "cubic-bezier(0.23, 1, 0.32, 1)", "$type": "string", "$description": "Menus and small overlays" }
+    },
+    "spring": {
+      "snappy": { "$value": "cubic-bezier(0.22, 1.15, 0.36, 1)", "$type": "string", "$description": "Slight overshoot" },
+      "bouncy": { "$value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "$type": "string", "$description": "Playful overshoot" }
+    },
+    "lift": { "$value": "-1.5px", "$type": "string", "$description": "Hover lift distance" },
+    "lift-scale": { "$value": "1.02", "$type": "string", "$description": "Hover lift scale" },
+    "press-y": { "$value": "1px", "$type": "string", "$description": "Press travel distance" },
+    "press-scale": { "$value": "0.95", "$type": "string", "$description": "Press scale" }
+  }
+}

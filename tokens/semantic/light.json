@@ -131,6 +131,38 @@
           "$description": "Shade-DS purple active layout and blueprint callout ink (#6A1B9A)"
         }
       }
+    },
+    "elevation": {
+      "shadow-card": {
+        "$value": "0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06)",
+        "$type": "string",
+        "$description": "Soft glow and lift for containers on the page"
+      },
+      "shadow-menu": {
+        "$value": "0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.15)",
+        "$type": "string",
+        "$description": "Menus and the Select popup"
+      },
+      "shadow-modal": {
+        "$value": "0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.15)",
+        "$type": "string",
+        "$description": "Dialogs, drawers, popovers, and toasts"
+      },
+      "shadow-tooltip": {
+        "$value": "0 2px 8px rgba(0, 0, 0, 0.18)",
+        "$type": "string",
+        "$description": "Tooltip bubbles"
+      },
+      "scrim": {
+        "$value": "rgba(18, 18, 18, 0.5)",
+        "$type": "string",
+        "$description": "Dimmed page behind modal layers"
+      },
+      "scrollbar": {
+        "$value": "rgba(0, 0, 0, 0.2)",
+        "$type": "string",
+        "$description": "Scrollbar thumb color"
+      }
     }
   }
 }

@@ -7,6 +7,13 @@ const shadows = [
   ['--as-elevation-shadow-overlay', 'Overlay', 'Floating layers, such as menus and dialogs.']
 ];
 
+const composed = [
+  ['--as-semantic-elevation-shadow-card', 'Card', 'Containers such as the data table.'],
+  ['--as-semantic-elevation-shadow-menu', 'Menu', 'Dropdown menus and the Select popup.'],
+  ['--as-semantic-elevation-shadow-modal', 'Modal', 'Dialogs, drawers, popovers, and toasts.'],
+  ['--as-semantic-elevation-shadow-tooltip', 'Tooltip', 'Tooltip bubbles.']
+];
+
 const lines = [
   ['--as-elevation-border-hairline', 'Hairline', 'Dividers and outlines.'],
   ['--as-elevation-border-focus', 'Focus ring', 'Keyboard focus outlines.']
@@ -24,6 +31,20 @@ const lines = [
     <h2>Shadows</h2>
     <div class="fd-swatches fd-swatches--elevation">
       {shadows.map(([token, name, use]) => (
+        <div class="fd-elevation" style={`box-shadow: var(${token})`}>
+          <strong>{name}</strong>
+          <span>{use}</span>
+          <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Theme-aware shadows</h2>
+    <p>These combine a soft glow with a drop shadow and change with the theme. Use them for floating layers.</p>
+    <div class="fd-swatches fd-swatches--elevation">
+      {composed.map(([token, name, use]) => (
         <div class="fd-elevation" style={`box-shadow: var(${token})`}>
           <strong>{name}</strong>
           <span>{use}</span>
@@ -59,6 +80,5 @@ const lines = [
         </tbody>
       </table>
     </div>
-    <p class="fd-note">Some components, including Input, Select and Dialog, currently use their own soft glow shadows rather than these tokens.</p>
   </section>
 </FoundationPage>

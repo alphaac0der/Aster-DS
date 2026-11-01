@@ -32,15 +32,11 @@
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--as-semantic-elevation-shadow-tooltip);
   transition:
     opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
     transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
     visibility 200ms;
-}
-
-[data-theme="dark"] .as-tooltip {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
 /* Arrow indicator */

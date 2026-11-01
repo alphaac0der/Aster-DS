@@ -59,7 +59,7 @@ npm run build
 | `npm run test:exports` | Validates package entry points, export map targets, and live consumer imports (18/18) |
 | `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification (43 files) |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox without `scratch/` |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (151/151) |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (155/155) |
 | `npm test` | Runs the aggregate quality suite (`figma`, `contrast`, `components`, `docs`, `exports`, `pack`, `isolated-build`) |
 
 ---

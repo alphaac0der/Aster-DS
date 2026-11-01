@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { assembleComponentCss, assembleComponentJs } from './build-components.js';
@@ -336,6 +336,25 @@ export function verifyComponentContracts(options = {}) {
     });
   } else {
     log('  • Radius Policy: Confirmed minimum component radius is 4px and default radius is 8px (zero 2px radii).');
+  }
+
+  // 4B-2: Component CSS binds to tokens, not raw values
+  const cssDir = join(rootDir, 'components');
+  const rawValues = [];
+  for (const name of readdirSync(cssDir)) {
+    const file = join(cssDir, name, `${name}.css`);
+    if (!existsSync(file)) continue;
+    const code = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    code.split('\n').forEach((line, i) => {
+      if (/:[^;{]*(#[0-9a-fA-F]{3,8}\b|rgba?\()/.test(line) || /font-size:\s*[\d.]/.test(line) || /border-radius:\s*[\d.]+(px|%)/.test(line)) {
+        rawValues.push(`components/${name}/${name}.css:${i + 1} ${line.trim()}`);
+      }
+    });
+  }
+  if (rawValues.length) {
+    errors.push({ type: 'RAW_VALUE_IN_COMPONENT', file: 'components/', message: `Use tokens instead of raw values:\n${rawValues.join('\n')}` });
+  } else {
+    log('  • Token Discipline: Confirmed no raw colors, font sizes, or radii in component CSS.');
   }
 
   // 4C: Token Bindings Table Parity

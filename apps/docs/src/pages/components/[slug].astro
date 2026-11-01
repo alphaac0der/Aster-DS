@@ -59,8 +59,8 @@ const { component, prevComponent, nextComponent } = Astro.props;
       
       <div class="component-meta">
         <span class="meta-tag meta-tag--success" title="Checked automatically with axe-core in light and dark themes on every CI run. Automated scans cover only part of WCAG.">Automated a11y scan passing</span>
-        <span class="meta-tag meta-tag--accent">{component.spec?.height?.split(' (')[0] || 'Standard Height'}</span>
-        <span class="meta-tag">Radius: {component.spec?.radius?.split(' (')[0] || '4px'}</span>
+        <span class="meta-tag meta-tag--accent" data-measured="height" hidden></span>
+        <span class="meta-tag" data-measured="radius"></span>
         <span class="meta-tag">Element: {component.element}</span>
       </div>
     </header>
@@ -114,7 +114,7 @@ const { component, prevComponent, nextComponent } = Astro.props;
                 </div>
                 <button type="button" class="copy-prompt-btn">Copy Prompt</button>
               </div>
-              <pre class="prompt-panel__pre">{component.promptSnippet}</pre>
+              <pre class="prompt-panel__pre" data-measured="prompt">{component.promptSnippet}</pre>
             </div>
           </div>
 
@@ -167,8 +167,13 @@ const { component, prevComponent, nextComponent } = Astro.props;
   </article>
 
   <script>
-    import { initAnatomy } from '../../../../../playground/scripts/anatomy.js';
+    import { initAnatomy, applyMeasurements } from '../../../../../playground/scripts/anatomy.js';
 
     initAnatomy();
+    const slug = document.querySelector('[data-anatomy]')?.getAttribute('data-anatomy');
+    const measure = () => { if (slug) applyMeasurements(slug); };
+    measure();
+    document.fonts?.ready.then(measure);
+    new MutationObserver(measure).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   </script>
 </DocsLayout>

@@ -567,6 +567,50 @@ function mount(host) {
   layout();
 }
 
+/** Reads every part of a component from an off-screen render. */
+export function measureComponent(slug) {
+  const cfg = ANATOMY[slug];
+  const recipe = RECIPES.find((r) => r.slug === slug);
+  if (!cfg || !recipe) return null;
+  const host = document.createElement('div');
+  host.style.cssText = 'position:fixed;left:-9999px;top:0;visibility:hidden;';
+  host.setAttribute('aria-hidden', 'true');
+  const sample = buildSample(slug, cfg, recipe);
+  host.appendChild(sample);
+  document.body.appendChild(host);
+  const parts = cfg.parts.map((p) => ({ ...p, el: sample.querySelector(p.selector) })).filter((p) => p.el);
+  const main = parts.find((p) => p.main) || parts[0];
+  const mainStyle = getComputedStyle(main.el);
+  const result = {
+    height: /height fixed/.test(cfg.resize || '') ? main.el.offsetHeight : null,
+    radius: Math.round(parseFloat(mainStyle.borderTopLeftRadius) || 0),
+    parts: parts.map((p) => ({ name: p.name, rows: specRows(p.el, p === main ? cfg.resize : '') }))
+  };
+  host.remove();
+  return result;
+}
+
+/** Fills header chips and the Prompt tab's geometry from real measurements. */
+export function applyMeasurements(slug, root = document) {
+  const data = measureComponent(slug);
+  if (!data) return;
+  const height = root.querySelector('[data-measured="height"]');
+  if (height) {
+    height.textContent = data.height ? `Height: ${data.height}px` : '';
+    height.hidden = !data.height;
+  }
+  const radius = root.querySelector('[data-measured="radius"]');
+  if (radius) radius.textContent = `Radius: ${data.radius >= 999 ? 'Full' : `${data.radius}px`}`;
+  const prompt = root.querySelector('[data-measured="prompt"]');
+  if (prompt) {
+    const lines = data.parts.flatMap((p) => [`- **${p.name}**`, ...p.rows.map((r) => `  - ${r.label}: ${r.value}${r.token ? ` (${r.token})` : ''}`)]);
+    prompt.textContent = prompt.textContent.replace(
+      /## 4\.[^\n]*\n[\s\S]*?(?=\n## 5\.)/,
+      `## 4. Measured Geometry (pixels, read from the rendered component in the current theme)\n${lines.join('\n')}\n`
+    );
+  }
+}
+
 /** Mounts each [data-anatomy] host the first time it becomes visible. */
 export function initAnatomy(root = document) {
   const hosts = [...root.querySelectorAll('[data-anatomy]')];

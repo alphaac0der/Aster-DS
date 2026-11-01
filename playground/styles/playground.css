@@ -1108,7 +1108,7 @@ body[data-kind="playground"] .docs-main { padding: 0; }
   margin: auto; max-width: 100%;
   display: flex; align-items: center; justify-content: center;
 }
-.pg-stage__mount > * { margin-bottom: 0; }
+.pg-stage__mount > :not(dialog) { margin-bottom: 0; }
 .pg-stage__mount[data-width="sm"] { width: 380px; }
 .pg-stage__mount[data-width="md"] { width: 540px; }
 .pg-stage__mount[data-width="lg"] { width: 720px; }

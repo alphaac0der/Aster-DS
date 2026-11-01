@@ -41,7 +41,7 @@
   background-color: transparent;
   color: var(--as-semantic-color-text-default);
   font-family: var(--as-typography-font-family-sans);
-  font-size: 14px;
+  font-size: var(--as-typography-font-size-base);
   cursor: pointer;
 }
 
@@ -51,7 +51,7 @@
   color: var(--as-semantic-color-text-default);
   padding: 8px 12px;
   font-family: var(--as-typography-font-family-sans);
-  font-size: 14px;
+  font-size: var(--as-typography-font-size-base);
 }
 
 .as-select option:checked {
@@ -97,15 +97,11 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     color: var(--as-semantic-color-text-default);
-    box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--as-semantic-elevation-shadow-menu);
     animation: as-select-in 200ms cubic-bezier(0.23, 1, 0.32, 1) both;
   }
 
-  [data-theme="dark"] .as-select::picker(select) {
-    box-shadow: 0 0 1px 0px rgba(255, 255, 255, 0.14), inset 0 0 1px 0px rgba(255, 255, 255, 0.14), 0 8px 24px rgba(0, 0, 0, 0.5);
-  }
-
-  .as-select option {
+    .as-select option {
     display: flex;
     align-items: center;
     gap: var(--as-space-2);

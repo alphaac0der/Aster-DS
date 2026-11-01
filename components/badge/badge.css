@@ -16,7 +16,7 @@
   box-sizing: border-box;
   border-radius: var(--as-radius-full);
   font-family: var(--as-typography-font-family-mono, monospace);
-  font-size: 11px;
+  font-size: var(--as-typography-font-size-2xs);
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;

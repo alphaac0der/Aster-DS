@@ -73,7 +73,7 @@
   border-radius: var(--as-radius-full);
   background-color: var(--as-semantic-color-surface-card);
   border: 2px solid var(--as-semantic-color-interactive-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--as-elevation-shadow-thumb);
   cursor: pointer;
   transition:
     transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -83,12 +83,12 @@
 
 .as-slider:hover:not(:disabled)::-webkit-slider-thumb {
   transform: scale(1.12);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+  box-shadow: var(--as-elevation-shadow-thumb-hover);
 }
 
 .as-slider:active:not(:disabled)::-webkit-slider-thumb {
   transform: scale(1.25);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+  box-shadow: var(--as-elevation-shadow-thumb-active);
 }
 
 /* Thumb (Firefox) */
@@ -98,7 +98,7 @@
   border-radius: var(--as-radius-full);
   background-color: var(--as-semantic-color-surface-card);
   border: 2px solid var(--as-semantic-color-interactive-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--as-elevation-shadow-thumb);
   cursor: pointer;
   transition:
     transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -108,12 +108,12 @@
 
 .as-slider:hover:not(:disabled)::-moz-range-thumb {
   transform: scale(1.12);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+  box-shadow: var(--as-elevation-shadow-thumb-hover);
 }
 
 .as-slider:active:not(:disabled)::-moz-range-thumb {
   transform: scale(1.25);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+  box-shadow: var(--as-elevation-shadow-thumb-active);
 }
 
 /* Mozilla Track & Progress Styling */

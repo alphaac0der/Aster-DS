@@ -14,25 +14,15 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--as-semantic-color-text-default);
-  box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.08), inset 0 0 1px 0px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--as-semantic-elevation-shadow-modal);
   max-width: min(92vw, 400px);
   width: 100%;
   margin: auto;
   overflow: hidden;
 }
 
-[data-theme="dark"] .as-dialog {
-  box-shadow: 0 0 1px 0px rgba(255, 255, 255, 0.14), inset 0 0 1px 0px rgba(255, 255, 255, 0.14), 0 12px 32px rgba(0, 0, 0, 0.65);
-}
-
 .as-dialog::backdrop {
-  background-color: rgba(18, 18, 18, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-[data-theme="dark"] .as-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: var(--as-semantic-elevation-scrim);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -78,7 +68,7 @@
 .as-dialog__title {
   margin: 0;
   font-family: var(--as-typography-font-family-sans);
-  font-size: 11.5px;
+  font-size: var(--as-typography-font-size-xs);
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -125,7 +115,7 @@
 .as-dialog__hero-title {
   margin: 0 0 8px !important;
   font-family: 'Bebas Neue', var(--as-typography-font-family-display, sans-serif) !important;
-  font-size: 44px !important;
+  font-size: var(--as-typography-font-size-display-m) !important;
   line-height: 1 !important;
   letter-spacing: -0.01em !important;
   color: var(--as-semantic-color-text-default) !important;
@@ -135,7 +125,7 @@
 .as-dialog__hero-subtitle {
   margin: 0 auto;
   font-family: var(--as-typography-font-family-sans);
-  font-size: 13.5px;
+  font-size: var(--as-typography-font-size-base);
   font-weight: var(--as-typography-font-weight-regular);
   line-height: 1.45;
   color: var(--as-semantic-color-text-muted);
@@ -153,11 +143,7 @@
   min-height: 0;
   max-height: 280px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-}
-
-[data-theme="light"] .as-dialog__body {
-  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  scrollbar-color: var(--as-semantic-elevation-scrollbar) transparent;
 }
 
 .as-dialog__body::-webkit-scrollbar {
@@ -165,12 +151,8 @@
 }
 
 .as-dialog__body::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--as-semantic-elevation-scrollbar);
   border-radius: var(--as-radius-full);
-}
-
-[data-theme="light"] .as-dialog__body::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .as-dialog__section {
@@ -186,7 +168,7 @@
   gap: 8px;
   margin: 0 !important;
   font-family: 'Bebas Neue', var(--as-typography-font-family-display, sans-serif) !important;
-  font-size: 20px !important;
+  font-size: var(--as-typography-font-size-lg) !important;
   letter-spacing: 0.05em !important;
   color: var(--as-semantic-color-text-default) !important;
 }
@@ -204,7 +186,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 13.5px;
+  font-size: var(--as-typography-font-size-base);
   line-height: 1.5;
   color: var(--as-semantic-color-text-muted);
 }

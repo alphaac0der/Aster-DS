@@ -1317,7 +1317,8 @@ async function runBrowserAudit() {
       promptTabAudit.tabSelected === 'true' &&
       !promptTabAudit.promptHidden &&
       promptTabAudit.promptText.includes('components/button/button.css') &&
-      promptTabAudit.promptText.includes('24px')
+      promptTabAudit.promptText.includes('× 48') &&
+      promptTabAudit.promptText.includes('--as-space-6')
     );
     const copyPromptText = await realClick('#view-button .preview-prompt .copy-prompt-btn');
     assert('Clicking Copy Prompt button copies AI prompt and shows "Copied Prompt!"', copyPromptText.includes('Copied Prompt'), copyPromptText);
@@ -1339,6 +1340,13 @@ async function runBrowserAudit() {
       !anatomyButton.hidden && anatomyButton.text.includes(anatomyButton.expected) && anatomyButton.expected.endsWith('× 48') && anatomyButton.text.includes('16 top and bottom, 24 left and right'),
       anatomyButton.expected
     );
+
+    // 9C-2: Header chips come from measurements, not typed-in values
+    for (const [slug, chip] of [['button', 'Height: 48px'], ['input', 'Height: 44px'], ['select', 'Height: 44px']]) {
+      await goto(`/components/${slug}`, 700);
+      const text = await cdp.eval(`document.querySelector('[data-measured="height"]').textContent`);
+      assert(`${slug} header chip shows its measured height`, text === chip, text);
+    }
 
     // 9D: Playground
     await goto('/playground');
@@ -1367,6 +1375,22 @@ async function runBrowserAudit() {
     assert('Playground switches component and updates live highlighted code',
       playgroundPageAudit.hasAlertCloseInStage && playgroundPageAudit.updatedStageText && playgroundPageAudit.liveCodeTokens > 0
     );
+
+    // 9D-1: Overlays keep their positioning inside the stage
+    await cdp.eval(`document.querySelector('.pg-dock__btn[data-pg-comp="dialog"]').click()`);
+    await wait(700);
+    const stageDialog = await cdp.eval(`
+      (async () => {
+        document.querySelector('#pg-stage-mount [data-dialog-open]').click();
+        await new Promise((r) => setTimeout(r, 450));
+        const d = document.querySelector('#pg-stage-mount dialog');
+        const r = d.getBoundingClientRect();
+        const offset = Math.abs((r.top + r.bottom) / 2 - innerHeight / 2);
+        d.close();
+        return { offset: Math.round(offset), inView: r.top >= 0 && r.bottom <= innerHeight };
+      })()
+    `);
+    assert('Playground dialog opens centered and fully on screen', stageDialog.offset <= 2 && stageDialog.inView, JSON.stringify(stageDialog));
 
     // 9D-2: Focus ring and select popup under the documentation stylesheet
     await goto('/components/input');

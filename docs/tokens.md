@@ -168,6 +168,26 @@ Aster enforces a minimum component radius of **4px** and a default component rad
 
 ---
 
+### Shadow Tokens
+
+| Token | Used for |
+|---|---|
+| `--as-elevation-shadow-drop-1`, `-drop-2`, `-drop-3` | Pressed, resting, and hovered raised controls |
+| `--as-elevation-shadow-thumb`, `-thumb-hover`, `-thumb-active` | Slider and switch thumbs |
+| `--as-elevation-shadow-inset` | Recessed tracks |
+| `--as-semantic-elevation-shadow-card` | Containers on the page (theme-aware) |
+| `--as-semantic-elevation-shadow-menu` | Menus and the Select popup (theme-aware) |
+| `--as-semantic-elevation-shadow-modal` | Dialogs, drawers, popovers, and toasts (theme-aware) |
+| `--as-semantic-elevation-shadow-tooltip` | Tooltip bubbles (theme-aware) |
+| `--as-semantic-elevation-scrim` | Dimmed page behind modal layers (theme-aware) |
+| `--as-semantic-elevation-scrollbar` | Scrollbar thumbs (theme-aware) |
+
+### Motion Tokens
+
+Durations (`--as-motion-duration-press`, `-base`, `-slow`, `-reveal`), easing (`--as-motion-ease-out`, `-standard`, `-expo`, `-pop`), springs (`--as-motion-spring-snappy`, `-bouncy`), and movement (`--as-motion-lift`, `-lift-scale`, `-press-y`, `-press-scale`) are defined in `tokens/primitive/motion.json`. `components/base/base.css` collapses them under `prefers-reduced-motion`.
+
+---
+
 ## 5. Semantic Color Roles
 
 Components must **always** bind to semantic tokens, never primitives.

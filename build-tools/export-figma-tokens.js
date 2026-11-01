@@ -400,8 +400,9 @@ export function exportFigmaTokens() {
   }
 
   const typographyCount = countLeaves(typographyDoc);
-  const shadowCount = countLeaves(elevationDoc.elevation.shadow);
-  const totalDeferredCount = typographyCount + shadowCount;
+  const shadowCount = countLeaves(elevationDoc.elevation.shadow) + countLeaves(semanticLightDoc.semantic.elevation);
+  const motionCount = countLeaves(JSON.parse(readFileSync(resolve(rootDir, 'tokens/primitive/motion.json'), 'utf8')));
+  const totalDeferredCount = typographyCount + shadowCount + motionCount;
 
   const totalCanonicalTokens = totalColorCount + totalDensityCount + totalDimensionsCount + totalDeferredCount;
 
@@ -426,7 +427,7 @@ export function exportFigmaTokens() {
   console.log(`  - Exported to 'Aster Colors':      ${totalColorCount} (${primitiveColorCount} primitive, ${semanticColorCount} semantic)`);
   console.log(`  - Exported to 'Aster Density':      ${totalDensityCount} (standard density dimensions)`);
   console.log(`  - Exported to 'Aster Dimensions':   ${totalDimensionsCount} (primitive spacing, radius, border widths)`);
-  console.log(`  - Explicitly deferred:             ${totalDeferredCount} (${typographyCount} typography, ${shadowCount} elevation shadows)`);
+  console.log(`  - Explicitly deferred:             ${totalDeferredCount} (${typographyCount} typography, ${shadowCount} elevation shadows, ${motionCount} motion)`);
   console.log(`  - Unexpected / unmapped:            0`);
   console.log('================================================================\n');
 

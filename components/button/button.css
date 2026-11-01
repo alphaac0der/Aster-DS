@@ -67,7 +67,7 @@
   top: var(--_y, 50%);
   width: 0px;
   height: 0px;
-  border-radius: 50%;
+  border-radius: var(--as-radius-full);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: -1;
@@ -81,7 +81,7 @@
 /* Shade-DS Hover: translateY(-4px) scale(1.05) + Drop.3 shadow (0 8px 16px rgba(0,0,0,0.15)) */
 .as-button:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--as-elevation-shadow-drop-3);
 }
 
 .as-button:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"])::before {
@@ -96,7 +96,7 @@
 /* Shade-DS Press / Tap: translateY(2px) scale(0.95) tactile compression + Drop.1 shadow (0 2px 4px rgba(0,0,0,0.1)) */
 .as-button:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
   transform: translateY(2px) scale(0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--as-elevation-shadow-drop-1);
   transition-duration: var(--as-motion-duration-press, 80ms);
 }
 
@@ -119,7 +119,7 @@
   --_fg: var(--as-semantic-color-interactive-primary-text);
   --_hover-bg: color-mix(in srgb, var(--as-semantic-color-interactive-primary-text) 16%, var(--as-semantic-color-interactive-primary));
   --_active-bg: var(--as-semantic-color-interactive-primary-hover);
-  --_shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --_shadow: var(--as-elevation-shadow-drop-2);
 }
 
 [data-theme="dark"] .as-button--primary {
@@ -128,11 +128,11 @@
 }
 
 .as-button--primary:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --_shadow: var(--as-elevation-shadow-drop-3);
 }
 
 .as-button--primary:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --_shadow: var(--as-elevation-shadow-drop-1);
 }
 
 /* Secondary: Base.Surface.2 background with Base.Content.1 text */
@@ -150,11 +150,11 @@
 }
 
 .as-button--secondary:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --_shadow: var(--as-elevation-shadow-drop-3);
 }
 
 .as-button--secondary:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --_shadow: var(--as-elevation-shadow-drop-1);
 }
 
 /* Destructive: Error.Surface.1 background with Error.Content.1 text & glow */
@@ -164,7 +164,7 @@
   /* Tints are capped so the label keeps 4.5:1 at full hover and press. */
   --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 8%, var(--as-semantic-color-surface-critical));
   --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 12%, var(--as-semantic-color-surface-critical));
-  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 4px 8px rgba(0, 0, 0, 0.12);
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), var(--as-elevation-shadow-drop-2);
 }
 
 [data-theme="dark"] .as-button--destructive {
@@ -173,11 +173,11 @@
 }
 
 .as-button--destructive:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 8px 16px rgba(0, 0, 0, 0.15);
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), var(--as-elevation-shadow-drop-3);
 }
 
 .as-button--destructive:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 2px 4px rgba(0, 0, 0, 0.1);
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), var(--as-elevation-shadow-drop-1);
 }
 
 /* Ghost & Tertiary: transparent at rest; hover color fills as a circle from the mouse pointer into the full pill */
@@ -204,11 +204,11 @@
 }
 
 .as-button--outline:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), 0 8px 16px rgba(0, 0, 0, 0.15);
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), var(--as-elevation-shadow-drop-3);
 }
 
 .as-button--outline:is(:active, .is-pressed):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-  --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), 0 2px 4px rgba(0, 0, 0, 0.1);
+  --_shadow: 0 0 1px 0px var(--as-semantic-color-text-default), inset 0 0 1px 0px var(--as-semantic-color-text-default), var(--as-elevation-shadow-drop-1);
 }
 
 /* Shade-DS Size Modifiers: S (32px), M (48px default), L (56px full pill) */
@@ -221,14 +221,14 @@
 .as-button--lg {
   height: 56px;
   padding: 0 var(--as-space-6, 24px);
-  font-size: 16px;
+  font-size: var(--as-typography-font-size-md);
   border-radius: var(--as-radius-full);
 }
 
 /* Shade-DS Success State: emerald glow & kinetic halo */
 .as-button[data-success="true"],
 .as-button.is-success {
-  box-shadow: 0 0 24px var(--as-semantic-color-status-success-surface, rgba(30, 142, 62, 0.2)), 0 0 6px var(--as-semantic-color-status-success-text) !important;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--as-semantic-color-status-success-text) 20%, transparent), 0 0 6px var(--as-semantic-color-status-success-text) !important;
 }
 
 /* Disabled (native + focus-retaining): strictly lock transform and suppress hover/active effects */

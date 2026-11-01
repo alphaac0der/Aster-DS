@@ -37,11 +37,11 @@
   background-color: transparent;
   color: var(--as-semantic-color-text-default);
   font-family: var(--as-typography-font-family-sans);
-  font-size: 14px;
+  font-size: var(--as-typography-font-size-base);
   line-height: 1.5;
   resize: vertical;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: var(--as-semantic-elevation-scrollbar) transparent;
 }
 
 .as-textarea::placeholder {
@@ -74,7 +74,7 @@
   justify-content: flex-end;
   padding: 4px 12px 8px;
   font-family: var(--as-typography-font-family-mono);
-  font-size: 11px;
+  font-size: var(--as-typography-font-size-2xs);
   color: var(--as-semantic-color-text-muted);
   user-select: none;
 }
