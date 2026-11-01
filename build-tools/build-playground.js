@@ -1474,7 +1474,7 @@ initAsterComponents(document);</code></pre>
         <p class="lead">How to install, import, and configure Aster DS in modern web applications using npm or direct browser distributions.</p>
         <div class="component-meta">
           <span class="meta-tag meta-tag--success">Package: aster-ds</span>
-          <span class="meta-tag meta-tag--accent">Version 0.0.1</span>
+          <span class="meta-tag meta-tag--accent">Version 0.1.0</span>
           <span class="meta-tag">Zero Dependencies</span>
           <span class="meta-tag">ESM + CSS</span>
         </div>
@@ -3518,7 +3518,7 @@ ${spriteHtml}
         <path class="brand__logo-arc" d="M65 110H137.564C171.147 110.1 265 129.81 265 216.852V315" stroke-width="40" stroke-linecap="round"/>
       </svg>
       <span>Aster</span>
-      <span class="brand__ver">v0.0.1</span>
+      <span class="brand__ver">v0.1.0</span>
     </a>
     <nav class="top-nav" aria-label="Primary">
       <a href="#/overview" data-nav-section="overview">Home</a>

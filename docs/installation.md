@@ -65,7 +65,7 @@ Aster defines an explicit `exports` map:
 ```json
 {
   "name": "aster-ds",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "main": "./dist/js/aster.js",
   "module": "./dist/js/aster.js",
@@ -129,7 +129,7 @@ In your application, install or reference `aster-ds`:
 ```json
 {
   "dependencies": {
-    "aster-ds": "^0.0.1"
+    "aster-ds": "^0.1.0"
   }
 }
 ```
