@@ -161,14 +161,15 @@
 .as-button--destructive {
   --_fg: var(--as-semantic-color-status-critical-text);
   --_bg: var(--as-semantic-color-surface-critical);
-  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 16%, var(--as-semantic-color-surface-critical));
-  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 24%, var(--as-semantic-color-surface-critical));
+  /* Tints are capped so the label keeps 4.5:1 at full hover and press. */
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 8%, var(--as-semantic-color-surface-critical));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 12%, var(--as-semantic-color-surface-critical));
   --_shadow: 0 0 1px 0px var(--as-semantic-color-status-critical-text), 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 
 [data-theme="dark"] .as-button--destructive {
-  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 20%, var(--as-semantic-color-surface-critical));
-  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 28%, var(--as-semantic-color-surface-critical));
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 6%, var(--as-semantic-color-surface-critical));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 8%, var(--as-semantic-color-surface-critical));
 }
 
 .as-button--destructive:is(:hover, .is-hover):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {

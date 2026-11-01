@@ -296,14 +296,14 @@ When a button triggers an asynchronous workflow (e.g. API request, payment proce
 .as-button--destructive {
   --_fg: var(--as-semantic-color-status-critical-text);
   --_bg: var(--as-semantic-color-surface-card);
-  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 11%, var(--as-semantic-color-surface-card));
-  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 16%, var(--as-semantic-color-surface-card));
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 8%, var(--as-semantic-color-surface-card));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 12%, var(--as-semantic-color-surface-card));
   --_shadow: inset 0 0 0 var(--as-elevation-border-hairline) color-mix(in srgb, var(--as-semantic-color-status-critical-text) 36%, transparent);
 }
 
 [data-theme="dark"] .as-button--destructive {
-  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 15%, var(--as-semantic-color-surface-card));
-  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 21%, var(--as-semantic-color-surface-card));
+  --_hover-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 6%, var(--as-semantic-color-surface-card));
+  --_active-bg: color-mix(in srgb, var(--as-semantic-color-status-critical-text) 8%, var(--as-semantic-color-surface-card));
 }
 
 /* Ghost Variant */

@@ -1464,12 +1464,16 @@ async function runBrowserAudit() {
         await goto(route, 600);
         await cdp.eval(`document.documentElement.setAttribute('data-theme', '${theme}')`);
         await wait(120);
+        // Measure final states, not whichever frame of a transition the scan lands on.
+        await cdp.eval(`document.head.insertAdjacentHTML('beforeend', '<style>*,*::before,*::after{transition:none!important;animation:none!important}</style>')`);
+        await wait(60);
         await cdp.eval(axeSource);
         const rows = await cdp.eval(axeRun('document'));
         rows.forEach((r) => axeReport.site.push({ ...r, where: route, theme }));
       }
       await goto('/playground', 600);
       await cdp.eval(`document.documentElement.setAttribute('data-theme', '${theme}')`);
+      await cdp.eval(`document.head.insertAdjacentHTML('beforeend', '<style>*,*::before,*::after{transition:none!important;animation:none!important}</style>')`);
       await cdp.eval(axeSource);
       for (const slug of COMPONENT_ROUTES) {
         await cdp.eval(`document.querySelector('.pg-dock__btn[data-pg-comp="${slug}"]').click()`);
