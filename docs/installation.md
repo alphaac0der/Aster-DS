@@ -170,7 +170,7 @@ npm run test:docs
 npm run export:figma
 npm run test:figma
 
-# Verify all 21 component contracts and AI agent skill parity
+# Verify all 24 component contracts and AI agent skill parity
 npm run test:components
 
 # Verify package exports resolution

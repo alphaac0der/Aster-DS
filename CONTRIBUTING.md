@@ -89,7 +89,7 @@ Before submitting a pull request or proposing changes, all quality verification 
 |---|---|
 | `npm test` | Runs aggregate quality suite: Figma schemas, WCAG contrast, component contracts, docs consistency, package exports, packaging whitelist, and isolated build reproducibility. |
 | `npm run test:contrast` | Mathematically verifies 26/26 light & dark semantic color contrast pairings against WCAG 2.2 AA. |
-| `npm run test:components` | Verifies concrete token bindings, section schemas, and single-density rules across all 21 components (646 assertions). |
+| `npm run test:components` | Verifies concrete token bindings, section schemas, and single-density rules across all 24 components (646 assertions). |
 | `npm run test:docs` | Verifies all 196 documented CSS variable references match production CSS variables. |
 | `npm run test:figma` | Validates DTCG variable payloads across all 3 collections (82 variables). |
 | `npm run test:exports` | Validates `package.json` entry points, export map targets, and live consumer imports. |

@@ -5,10 +5,12 @@ All notable changes to the `aster-ds` npm package. Versions follow [semantic ver
 ## Unreleased
 
 ### Added
+- **New components:** Card, Link, and Avatar.
 - **Motion tokens** now live in `tokens.css`, so importing tokens alone gives you `--as-motion-*`.
 - **Shadow tokens:** `--as-elevation-shadow-drop-*`, `-thumb*`, `-inset`, and theme-aware `--as-semantic-elevation-*` for shadows, the scrim, and scrollbars.
 
 ### Changed
+- **`.as-card`** no longer lifts on hover unless you add `.as-card--interactive`, because movement suggests it can be clicked.
 - **Small visual changes from using tokens:**
   - Toasts use the modal shadow. In light mode it is slightly larger.
   - Off-scale font sizes moved to the scale: 10px to 11px, 11.5px to 12px, 13px and 13.5px to 14px, and in the dialog 20px to 22px and 44px to 40px.

@@ -121,6 +121,25 @@ const ANATOMY = {
       part('.as-skeleton--text', 'Text placeholder', 'Stands in for one line of text.')
     ]
   },
+  card: {
+    parts: [
+      part('.as-card', 'Container', 'The raised surface.', true),
+      part('.as-card__header', 'Header', 'Holds the title and description.'),
+      part('.as-card__title', 'Title', 'Names the content. Use a real heading.'),
+      part('.as-card__description', 'Description', 'Optional supporting text.'),
+      part('.as-card__body', 'Body', 'The main content.'),
+      part('.as-card__footer', 'Footer', 'Optional actions.')
+    ]
+  },
+  link: {
+    parts: [part('.as-link', 'Link', 'Underlined text that takes you somewhere.', true)]
+  },
+  avatar: {
+    parts: [
+      part('.as-avatar', 'Container', 'The circle, showing initials or a picture.', true),
+      part('.as-avatar__status', 'Status dot', 'Optional. Also include the status in the label.')
+    ]
+  },
   alert: {
     parts: [
       part('.as-alert', 'Container', 'The banner. Its color shows the status.', true),

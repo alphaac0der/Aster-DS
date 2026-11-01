@@ -1,0 +1,92 @@
+/**
+ * Aster Design System — Card Component Styles
+ * Canonical Source: components/card/card.css
+ *
+ * A raised container for related content. Plain cards stay still; only
+ * .as-card--interactive reacts to hover, because movement signals "clickable".
+ */
+
+.as-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-4);
+  box-sizing: border-box;
+  padding: var(--as-space-6);
+  border-radius: var(--as-radius-lg);
+  background-color: var(--as-semantic-color-surface-card);
+  color: var(--as-semantic-color-text-default);
+  box-shadow: var(--as-semantic-elevation-shadow-card);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  line-height: var(--as-typography-line-height-normal);
+}
+
+.as-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-1);
+}
+
+.as-card__title {
+  margin: 0;
+  font-size: var(--as-typography-font-size-md);
+  font-weight: var(--as-typography-font-weight-semibold);
+  line-height: var(--as-typography-line-height-tight);
+}
+
+.as-card__description {
+  margin: 0;
+  color: var(--as-semantic-color-text-muted);
+}
+
+.as-card__body {
+  margin: 0;
+}
+
+.as-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--as-space-2);
+}
+
+/* Secondary buttons share the card surface, so they need a step up to stay visible. */
+.as-card .as-button--secondary {
+  --_bg: var(--as-semantic-color-surface-subtle);
+}
+
+.as-card.as-card--interactive,
+.as-card.as-card--interactive:hover {
+  color: var(--as-semantic-color-text-default);
+  text-decoration: none;
+}
+
+.as-card--interactive {
+  cursor: pointer;
+  transition:
+    transform var(--as-motion-duration-base) var(--as-motion-spring-snappy),
+    box-shadow var(--as-motion-duration-base) var(--as-motion-ease-standard);
+}
+
+.as-card--interactive:hover {
+  transform: translateY(var(--as-motion-lift));
+  box-shadow: var(--as-semantic-elevation-shadow-menu);
+}
+
+.as-card--interactive:active {
+  transform: translateY(var(--as-motion-press-y));
+}
+
+.as-card--interactive:focus-visible {
+  outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-card--interactive,
+  .as-card--interactive:hover,
+  .as-card--interactive:active {
+    transform: none;
+    transition: none;
+  }
+}

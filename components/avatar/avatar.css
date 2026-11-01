@@ -1,0 +1,69 @@
+/**
+ * Aster Design System — Avatar Component Styles
+ * Canonical Source: components/avatar/avatar.css
+ *
+ * A circular picture or initials representing a person or team.
+ */
+
+.as-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--as-space-10);
+  height: var(--as-space-10);
+  border-radius: var(--as-radius-full);
+  background-color: var(--as-semantic-color-surface-subtle);
+  color: var(--as-semantic-color-text-default);
+  font-family: var(--as-typography-font-family-sans);
+  font-size: var(--as-typography-font-size-base);
+  font-weight: var(--as-typography-font-weight-semibold);
+  line-height: 1;
+  user-select: none;
+}
+
+.as-avatar--sm {
+  width: var(--as-space-8);
+  height: var(--as-space-8);
+  font-size: var(--as-typography-font-size-xs);
+}
+
+.as-avatar--lg {
+  width: var(--as-space-12);
+  height: var(--as-space-12);
+  font-size: var(--as-typography-font-size-md);
+}
+
+.as-avatar__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.as-avatar__status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: var(--as-space-3);
+  height: var(--as-space-3);
+  border: 2px solid var(--as-semantic-color-surface-canvas);
+  border-radius: var(--as-radius-full);
+  background-color: var(--as-semantic-color-status-success-text);
+}
+
+.as-avatar__status--away {
+  background-color: var(--as-semantic-color-status-warning-text);
+}
+
+.as-avatar__status--busy {
+  background-color: var(--as-semantic-color-status-critical-text);
+}
+
+.as-avatar__status--offline {
+  background-color: var(--as-semantic-color-text-muted);
+}

@@ -253,6 +253,44 @@ ${lines}
     }
   },
   {
+    slug: 'card', name: 'Card', group: 'Data Display', element: '<article>', target: '.as-card', width: 'sm',
+    controls: [
+      txt('title', 'Title', 'Production Cluster'),
+      txt('description', 'Description', 'Three nodes in eu-west-1.'),
+      txt('body', 'Body', 'All workloads are healthy and scheduled.'),
+      tog('footer', 'Footer actions', true)
+    ],
+    render(v) {
+      return `<article class="as-card">
+  <header class="as-card__header">
+    <h3 class="as-card__title">${esc(v.title)}</h3>
+    <p class="as-card__description">${esc(v.description)}</p>
+  </header>
+  <p class="as-card__body">${esc(v.body)}</p>${v.footer ? `
+  <footer class="as-card__footer">
+    <button type="button" class="as-button as-button--secondary"><span class="as-button__label">View Details</span></button>
+  </footer>` : ''}
+</article>`;
+    }
+  },
+  {
+    slug: 'avatar', name: 'Avatar', group: 'Data Display', element: '<span role="img">', target: '.as-avatar',
+    controls: [
+      opt('size', 'Size', ['sm', 'md', 'lg'], 'lg'),
+      opt('content', 'Content', ['initials', 'image'], 'initials'),
+      txt('name', 'Name', 'Maya Chen'),
+      opt('status', 'Status', ['none', 'online', 'away', 'busy', 'offline'], 'online')
+    ],
+    render(v) {
+      const size = v.size === 'md' ? '' : ` as-avatar--${v.size}`;
+      const label = v.status === 'none' ? v.name : `${v.name}, ${v.status}`;
+      const initials = v.name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
+      const inner = v.content === 'image' ? `<img class="as-avatar__image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23777777'/%3E%3Ccircle cx='40' cy='30' r='14' fill='%23e0e0e0'/%3E%3Cellipse cx='40' cy='72' rx='26' ry='22' fill='%23e0e0e0'/%3E%3C/svg%3E" alt="">` : esc(initials);
+      const status = v.status === 'none' ? '' : `\n  <span class="as-avatar__status${v.status === 'online' ? '' : ` as-avatar__status--${v.status}`}"></span>`;
+      return `<span class="as-avatar${size}" role="img" aria-label="${esc(label)}">\n  ${inner}${status}\n</span>`;
+    }
+  },
+  {
     slug: 'alert', name: 'Alert', group: 'Feedback', element: '<div role="region">', target: '.as-alert', width: 'md',
     controls: [
       opt('variant', 'Variant', ['warning', 'critical', 'success', 'info'], 'warning'),
@@ -377,6 +415,18 @@ ${lines}
     <button type="button" class="as-dropdown__item as-dropdown__item--destructive" role="menuitem">Drain Node Pool</button>` : ''}
   </div>
 </div>`;
+    }
+  },
+  {
+    slug: 'link', name: 'Link', group: 'Navigation', element: '<a>', target: '.as-link',
+    controls: [
+      txt('label', 'Text', 'Read the installation guide'),
+      opt('variant', 'Variant', ['default', 'muted'], 'default'),
+      tog('external', 'Opens another site')
+    ],
+    render(v) {
+      const icon = v.external ? '<svg class="as-link__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"></path></svg>' : '';
+      return `<a class="as-link${v.variant === 'muted' ? ' as-link--muted' : ''}" href="/docs/installation">${esc(v.label)}${icon}</a>`;
     }
   },
   {

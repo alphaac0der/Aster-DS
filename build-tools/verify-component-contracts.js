@@ -9,7 +9,7 @@ const rootDir = join(__dirname, '..');
 
 /**
  * Aster Design System — Component Contract Verification Tool
- * Validates all 21 component human documentation specs, agent-facing skill,
+ * Validates all 24 component human documentation specs, agent-facing skill,
  * and canonical component build output (freshness, strict token bindings,
  * radius floor >= 4px, compact density removal, and zero drift).
  */
@@ -43,7 +43,10 @@ export function verifyComponentContracts(options = {}) {
     { name: 'Popover', path: join(rootDir, 'docs/components/popover.md') },
     { name: 'Tabs', path: join(rootDir, 'docs/components/tabs.md') },
     { name: 'Accordion', path: join(rootDir, 'docs/components/accordion.md') },
-    { name: 'Drawer', path: join(rootDir, 'docs/components/drawer.md') }
+    { name: 'Drawer', path: join(rootDir, 'docs/components/drawer.md') },
+    { name: 'Card', path: join(rootDir, 'docs/components/card.md') },
+    { name: 'Link', path: join(rootDir, 'docs/components/link.md') },
+    { name: 'Avatar', path: join(rootDir, 'docs/components/avatar.md') }
   ];
   const skillDoc = options.skillDoc ?? {
     name: 'Agent Skill',
@@ -272,7 +275,10 @@ export function verifyComponentContracts(options = {}) {
     { name: 'Popover', header: /###+\s+.*Popover.*Checklist/i },
     { name: 'Tabs', header: /###+\s+.*Tabs.*Checklist/i },
     { name: 'Accordion', header: /###+\s+.*Accordion.*Checklist/i },
-    { name: 'Drawer', header: /###+\s+.*Drawer.*Checklist/i }
+    { name: 'Drawer', header: /###+\s+.*Drawer.*Checklist/i },
+    { name: 'Card', header: /###+\s+.*Card.*Checklist/i },
+    { name: 'Link', header: /###+\s+.*Link.*Checklist/i },
+    { name: 'Avatar', header: /###+\s+.*Avatar.*Checklist/i }
   ];
 
   for (const cl of checklists) {

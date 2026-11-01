@@ -8,6 +8,9 @@ const rootDir = join(__dirname, '..');
 
 export const COMPONENT_CSS_SOURCES = [
   'components/base/base.css',
+  'components/card/card.css',
+  'components/link/link.css',
+  'components/avatar/avatar.css',
   'components/button/button.css',
   'components/input/input.css',
   'components/table/table.css',

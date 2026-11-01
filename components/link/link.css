@@ -1,0 +1,51 @@
+/**
+ * Aster Design System — Link Component Styles
+ * Canonical Source: components/link/link.css
+ *
+ * A native anchor for moving to another place. Underlined at rest, so links
+ * inside text are identifiable without relying on color.
+ */
+
+.as-link {
+  display: inline;
+  color: var(--as-semantic-color-interactive-link);
+  font-family: inherit;
+  font-weight: var(--as-typography-font-weight-medium);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  border-radius: var(--as-radius-sm);
+  cursor: pointer;
+  transition: text-decoration-thickness var(--as-motion-duration-base) var(--as-motion-ease-out);
+}
+
+.as-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.as-link:focus-visible {
+  outline: var(--as-elevation-border-focus) solid var(--as-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+.as-link--muted {
+  color: var(--as-semantic-color-text-muted);
+}
+
+.as-link--muted:hover {
+  color: var(--as-semantic-color-text-default);
+}
+
+.as-link__icon {
+  display: inline-block;
+  width: 0.875em;
+  height: 0.875em;
+  margin-left: var(--as-space-1);
+  vertical-align: -0.05em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-link {
+    transition: none;
+  }
+}

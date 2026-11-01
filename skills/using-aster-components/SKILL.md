@@ -1197,3 +1197,27 @@ When generating or reviewing drawer side-sheet code, verify each item:
 - [ ] **Focus Restoration:** Restores focus cleanly to the activating trigger when closed.
 - [ ] **Escape Dismissal:** Pressing `Escape` or clicking the backdrop dismisses the drawer.
 
+### 5.22 Card Component Checklist
+
+When generating or reviewing card code, verify each item:
+
+- [ ] **Heading:** The title uses a real heading element at the right page level.
+- [ ] **Static by Default:** Plain `.as-card` has no hover effect. Use `.as-card--interactive` only on a clickable card.
+- [ ] **No Nested Controls:** A fully clickable `<a class="as-card as-card--interactive">` contains no other links or buttons.
+
+### 5.23 Link Component Checklist
+
+When generating or reviewing link code, verify each item:
+
+- [ ] **Native Anchor:** Uses `<a href>` for navigation, and Button for actions.
+- [ ] **Descriptive Text:** Link text makes sense on its own, not "click here".
+- [ ] **Underline Kept:** The underline stays, so links aren't identified by color alone.
+
+### 5.24 Avatar Component Checklist
+
+When generating or reviewing avatar code, verify each item:
+
+- [ ] **Text Alternative:** Images have `alt`, and initials use `role="img"` with `aria-label`.
+- [ ] **Status as Text:** Any status dot is also in the accessible name.
+- [ ] **Sizes:** Uses `.as-avatar--sm`, the default, or `.as-avatar--lg`, with no custom sizes.
+

@@ -102,7 +102,7 @@ Before proposing or finalizing changes to tokens, components, or documentation, 
 | `npm run export:figma` | Generates W3C DTCG variable token payloads for Figma in `dist/figma/`. |
 | `npm run test:figma` | Validates DTCG variable payloads in `dist/figma/` against official schema. |
 | `npm run test:contrast` | Verifies mathematical WCAG 2.2 AA contrast ratios for semantic color pairings. |
-| `npm run test:components` | Verifies concrete token bindings, section schemas, and single-density rules across all 21 components. |
+| `npm run test:components` | Verifies concrete token bindings, section schemas, and single-density rules across all 24 components. |
 | `npm run test:docs` | Verifies documentation references in `docs/` and `skills/` match production CSS variables. |
 | `npm run test:exports` | Validates `package.json` entry points, export map targets, and ESM self-imports. |
 | `npm run test:pack` | Executes dry-run package bundling check (`npm pack --dry-run`). |

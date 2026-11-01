@@ -111,10 +111,10 @@ for (const route of ['docs/color', 'docs/typography', 'docs/spacing', 'docs/elev
 }
 
 // 4. Component page order and pagination
-console.log('\n4. Checking Pagination Across All 21 Component Pages:');
+console.log('\n4. Checking Pagination Across All 24 Component Pages:');
 const slugSource = readFileSync(join(rootDir, 'apps/docs/src/pages/components/[slug].astro'), 'utf8');
 const order = [...slugSource.slice(slugSource.indexOf('canonicalOrder = ['), slugSource.indexOf('];')).matchAll(/'([a-z]+)'/g)].map((m) => m[1]);
-assert(order.length === 21, `Component order lists 21 pages (actual: ${order.length})`);
+assert(order.length === 24, `Component order lists 24 pages (actual: ${order.length})`);
 order.forEach((slug, i) => {
   const html = page(`components/${slug}`);
   const nav = html.slice(html.indexOf('class="doc-pagination"'));

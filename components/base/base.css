@@ -294,22 +294,6 @@ svg.as-icon {
   outline-offset: -2px;
 }
 
-.as-card {
-  box-sizing: border-box;
-  background-color: var(--as-semantic-color-surface-card);
-  color: var(--as-semantic-color-text-default);
-  border-radius: var(--as-radius-lg, 12px);
-  padding: var(--as-space-6, 24px);
-  box-shadow: 0 0 1px 0px var(--as-semantic-color-border-subtle), inset 0 0 1px 0px var(--as-semantic-color-border-subtle);
-  transition: transform var(--as-motion-time-2x, 200ms) var(--as-motion-spring-snappy, cubic-bezier(0.22, 1.15, 0.36, 1)),
-              box-shadow var(--as-motion-time-2x, 200ms) var(--as-motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1));
-}
-
-.as-card:hover {
-  transform: translateY(var(--as-motion-lift, -1.5px)) scale(var(--as-motion-lift-scale, 1.01));
-  box-shadow: var(--as-elevation-shadow-drop-2), 0 0 1px 0px var(--as-semantic-color-border-strong), inset 0 0 1px 0px var(--as-semantic-color-border-strong);
-}
-
 .as-token-badge {
   display: inline-flex;
   align-items: center;

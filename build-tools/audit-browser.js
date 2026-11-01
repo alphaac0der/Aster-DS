@@ -1214,7 +1214,7 @@ async function runBrowserAudit() {
       'button', 'input', 'textarea', 'select', 'checkbox', 'radio', 'switch', 'slider',
       'table', 'badge', 'progress', 'skeleton',
       'alert', 'tooltip', 'toast', 'dialog', 'drawer', 'popover', 'dropdown',
-      'tabs', 'accordion'
+      'tabs', 'accordion', 'card', 'link', 'avatar'
     ];
     const missingViews = [];
     const missingLinks = [];
@@ -1250,10 +1250,10 @@ async function runBrowserAudit() {
       anatomyPins += page.pins || 0;
       if (!page.pins || !page.rows || page.missing || !page.scale) anatomyProblems.push(`${slug}: ${JSON.stringify(page)}`);
     }
-    assert('All 21 component pages exist', missingViews.length === 0, `Missing: ${missingViews.join(', ') || 'none'}`);
-    assert('All 21 component sidebar links exist and mark the current page', missingLinks.length === 0, `Missing: ${missingLinks.join(', ') || 'none'}`);
-    assert('All 21 component pages have all 4 primary tabs and panels', incompleteTabs.length === 0, `Incomplete: ${incompleteTabs.join(', ') || 'none'}`);
-    assert('Anatomy tab renders every part of all 21 components with measured specs', anatomyProblems.length === 0, anatomyProblems.join(' | ') || `${anatomyPins} parts`);
+    assert('All 24 component pages exist', missingViews.length === 0, `Missing: ${missingViews.join(', ') || 'none'}`);
+    assert('All 24 component sidebar links exist and mark the current page', missingLinks.length === 0, `Missing: ${missingLinks.join(', ') || 'none'}`);
+    assert('All 24 component pages have all 4 primary tabs and panels', incompleteTabs.length === 0, `Incomplete: ${incompleteTabs.join(', ') || 'none'}`);
+    assert('Anatomy tab renders every part of all 24 components with measured specs', anatomyProblems.length === 0, anatomyProblems.join(' | ') || `${anatomyPins} parts`);
 
     // 9C: Button page tabs
     await goto('/components/button');
@@ -1530,7 +1530,7 @@ async function runBrowserAudit() {
       }
     }
     assert(`axe finds no WCAG A/AA violations on ${sitePages.length} docs pages in both themes`, axeReport.site.length === 0, formatAxe(axeReport.site) || 'clean');
-    assert('axe finds no WCAG A/AA violations in the 21 rendered components in both themes', axeReport.stage.length === 0, formatAxe(axeReport.stage) || 'clean');
+    assert('axe finds no WCAG A/AA violations in the 24 rendered components in both themes', axeReport.stage.length === 0, formatAxe(axeReport.stage) || 'clean');
 
     // ----------------------------------------------------------------------------------
     // Suite 10: Visual evidence capture

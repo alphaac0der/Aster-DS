@@ -52,7 +52,7 @@ Aster behaviors (such as pointer-origin hover tracking on buttons, floating erro
   <script type="module">
     import { initAsterComponents, setButtonLoading } from '/dist/js/aster.js';
 
-    // Initialize all 21 Aster component behaviors on document
+    // Initialize all 24 Aster component behaviors on document
     initAsterComponents(document);
 
     // Using programmatic helpers

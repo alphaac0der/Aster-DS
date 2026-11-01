@@ -5,7 +5,7 @@ Aster is a zero-dependency, token-first design system engineered with dual inter
 - **Human-Facing Documentation & Components:** Production-grade CSS custom properties and browser-native ES modules for developers and designers.
 - **Agent-Facing Instructions:** Comprehensive coding standards and boundaries in [`AGENTS.md`](AGENTS.md) and specialized workflow skills (`skills/`).
 
-Aster features 109 canonical design tokens (W3C DTCG format) and 21 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
+Aster features 142 canonical design tokens (W3C DTCG format) and 24 production components spanning Form Essentials, Data Display, Feedback & Utilities, Overlays, and Navigation.
 
 Built and maintained by Labib, with support from [Dreabuild](https://dreabuild.com).
 
@@ -55,7 +55,7 @@ npm run build
 | `npm run test:docs` | Verifies consistency between documentation and compiled CSS custom properties (196/196) |
 | `npm run export:figma` | Generates W3C DTCG variable token payloads for Figma in `dist/figma/` |
 | `npm run test:figma` | Validates Figma token payload schemas and alias bindings across 3 collections (82 variables) |
-| `npm run test:components` | Validates concrete token references and structural contracts across all 21 components (646/646) |
+| `npm run test:components` | Validates concrete token references and structural contracts across all 24 components (646/646) |
 | `npm run test:exports` | Validates package entry points, export map targets, and live consumer imports (18/18) |
 | `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification (43 files) |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox without `scratch/` |
@@ -129,7 +129,7 @@ Aster-DS/
 │   ├── js/              # aster.js (ES module), aster.d.ts (TypeScript declarations)
 │   └── figma/           # aster-colors.json, aster-dimensions.json, aster-density.json
 ├── docs/                # Human-facing documentation
-│   ├── components/      # 21 individual component specifications
+│   ├── components/      # 24 individual component specifications
 │   ├── principles.md    # Core design principles and philosophy
 │   ├── tokens.md        # Foundation tokens guide
 │   ├── installation.md  # Setup, packaging, and prerequisites
