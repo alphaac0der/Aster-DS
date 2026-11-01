@@ -153,15 +153,16 @@ async function runBrowserAudit() {
   }
 
   try {
-    // Wait for Chrome to be ready
+    // Wait for Chrome to be ready. Cold starts on CI machines can take many seconds.
     let targets = null;
-    for (let attempt = 0; attempt < 20; attempt++) {
+    for (let attempt = 0; attempt < 150; attempt++) {
       try {
         targets = await fetchJson(`http://127.0.0.1:${DEBUG_PORT}/json/list`);
         if (targets && targets.length) break;
       } catch {
-        await wait(200);
+        // Not listening yet.
       }
+      await wait(200);
     }
 
     if (!targets || !targets.length) {
