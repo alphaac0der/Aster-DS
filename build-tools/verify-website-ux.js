@@ -88,6 +88,9 @@ assert(sidebar.includes('Getting Started'), 'Sidebar contains "Getting Started" 
 const introIdx = sidebar.indexOf('href="/docs"');
 const installIdx = sidebar.indexOf('href="/docs/installation"');
 assert(introIdx !== -1 && installIdx !== -1 && introIdx < installIdx, 'Introduction precedes Installation in the sidebar');
+for (const route of ['color', 'typography', 'spacing', 'elevation', 'motion']) {
+  assert(sidebar.includes(`href="/docs/${route}"`), `Sidebar links to ${route}`);
+}
 assert(!sidebar.includes('href="/"') && !sidebar.includes('href="/playground"'), 'Home and Playground stay in the header, not the sidebar');
 
 // 3. Guide content
@@ -100,7 +103,10 @@ for (const text of ['aster-ds/aster.css', 'aster-ds/tokens.css', 'aster-ds/compo
   assert(install.includes(text), `Installation documents the "${text}" import`);
 }
 assert(install.includes('initAsterComponents'), 'Installation documents initAsterComponents()');
-for (const route of ['docs/tokens', 'docs/principles', 'docs/frameworks', 'components']) {
+for (const text of ['Before you start', 'unpkg.com/aster-ds@', 'Check it works']) {
+  assert(install.includes(text), `Installation includes "${text}"`);
+}
+for (const route of ['docs/color', 'docs/typography', 'docs/spacing', 'docs/elevation', 'docs/motion', 'docs/tokens', 'docs/principles', 'docs/frameworks', 'components']) {
   assert(/<h1[\s>]/.test(page(route)), `/${route} renders a page heading`);
 }
 
@@ -117,6 +123,14 @@ order.forEach((slug, i) => {
   assert(prev ? nav.includes(`href="/components/${prev}"`) && nav.includes('doc-pagination__link--prev') : !nav.includes('doc-pagination__link--prev'), `${slug}: previous link is ${prev || 'absent on the first page'}`);
   assert(next ? nav.includes(`href="/components/${next}"`) && nav.includes('doc-pagination__link--next') : !nav.includes('doc-pagination__link--next'), `${slug}: next link is ${next || 'absent on the last page'}`);
   assert(html.includes(`data-anatomy="${slug}"`), `${slug}: Anatomy tab mount exists`);
+});
+
+// 4b. Guide page order
+console.log('\n4b. Checking Guide Page Order:');
+const guideOrder = ['docs', 'docs/installation', 'docs/color', 'docs/typography', 'docs/spacing', 'docs/elevation', 'docs/motion', 'docs/tokens', 'docs/principles', 'docs/frameworks'];
+guideOrder.slice(0, -1).forEach((route, i) => {
+  const nav = page(route).slice(page(route).indexOf('class="doc-pagination"'));
+  assert(nav.includes(`href="/${guideOrder[i + 1]}"`), `/${route} links forward to /${guideOrder[i + 1]}`);
 });
 
 // 5. Shared stylesheet and syntax colors

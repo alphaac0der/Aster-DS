@@ -17,7 +17,7 @@ Built and maintained by Labib, with support from [Dreabuild](https://dreabuild.c
 - **Introduction Guide:** [https://aster-ds.vercel.app/#/introduction](https://aster-ds.vercel.app/#/introduction)
 - **Installation Guide:** [https://aster-ds.vercel.app/#/installation](https://aster-ds.vercel.app/#/installation)
 - **GitHub Repository:** [https://github.com/alphaac0der/Aster-DS](https://github.com/alphaac0der/Aster-DS)
-- **npm Registry:** [`aster-ds@0.1.0`](https://www.npmjs.com/package/aster-ds)
+- **npm Registry:** [`aster-ds`](https://www.npmjs.com/package/aster-ds)
 - **Creator Support:** [https://www.bhokto.com.bd/pay/alphac0der](https://www.bhokto.com.bd/pay/alphac0der)
 
 ---
@@ -59,7 +59,7 @@ npm run build
 | `npm run test:exports` | Validates package entry points, export map targets, and live consumer imports (18/18) |
 | `npm run test:pack` | Executes an `npm pack --dry-run` packaging whitelist verification (43 files) |
 | `npm run test:isolated-build` | Verifies full build pipeline reproducibility in an isolated sandbox without `scratch/` |
-| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (145/145) |
+| `npm run test:browser` | Headless Chrome CDP behavioral audit testing real DOM interactions (151/151) |
 | `npm test` | Runs the aggregate quality suite (`figma`, `contrast`, `components`, `docs`, `exports`, `pack`, `isolated-build`) |
 
 ---
@@ -181,6 +181,6 @@ Aster's visual foundation, kinetics, and core component architecture faithfully 
 
 ## Distribution & Licensing
 
-- **Package Registry:** Published on npm as [`aster-ds`](https://www.npmjs.com/package/aster-ds) (`v0.1.0`).
+- **Package Registry:** Published on npm as [`aster-ds`](https://www.npmjs.com/package/aster-ds). See the [changelog](CHANGELOG.md) for each release.
 - **Repository:** Hosted on GitHub at [`alphaac0der/Aster-DS`](https://github.com/alphaac0der/Aster-DS).
 - **License:** Original Aster DS work is licensed under the MIT License (see [`LICENSE`](LICENSE)). Third-party components, designs, icons, fonts, and dependencies remain subject to their respective authors' permissions and applicable licenses as documented in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).

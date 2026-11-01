@@ -1,0 +1,71 @@
+---
+import FoundationPage from '../../components/FoundationPage.astro';
+
+const durations = [
+  ['--as-motion-duration-press', 'Press', 'Instant feedback when pressing.'],
+  ['--as-motion-duration-base', 'Base', 'Hover and color changes.'],
+  ['--as-motion-duration-slow', 'Slow', 'Panels and larger changes.'],
+  ['--as-motion-duration-reveal', 'Reveal', 'Content entering the page.']
+];
+
+const easings = [
+  ['--as-motion-ease-standard', 'Standard', 'General movement.'],
+  ['--as-motion-ease-out', 'Ease out', 'Things arriving: fast, then settling.'],
+  ['--as-motion-ease-expo', 'Expo', 'Large surfaces sliding in.'],
+  ['--as-motion-ease-pop', 'Pop', 'Menus and small overlays.'],
+  ['--as-motion-spring-snappy', 'Spring, snappy', 'Dialogs. Slight overshoot.'],
+  ['--as-motion-spring-bouncy', 'Spring, bouncy', 'Playful details, such as chevrons.']
+];
+---
+
+<FoundationPage
+  id="motion"
+  title="Motion"
+  lead="Motion explains what changed. It should be quick and never get in the way, and it collapses when someone asks for reduced motion."
+  prev={{ href: '/docs/elevation', title: 'Elevation' }}
+  next={{ href: '/docs/tokens', title: 'Design Tokens' }}
+>
+  <section class="doc-section">
+    <div class="fd-motion-head">
+      <h2>Durations</h2>
+      <button type="button" class="as-button as-button--secondary" data-motion-play><span class="as-button__label">Play all</span></button>
+    </div>
+    <p role="status" class="fd-note" data-motion-status></p>
+    <div class="fd-rows">
+      {durations.map(([token, name, use]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <strong>{name}</strong>
+            <span>{use}</span>
+            <span class="fd-value" data-resolve={token}></span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <div class="fd-track"><i data-motion-dot data-duration={token}></i></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Easing</h2>
+    <p>All easing demos run for the same time, so you can compare only the feel.</p>
+    <div class="fd-rows">
+      {easings.map(([token, name, use]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <strong>{name}</strong>
+            <span>{use}</span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <div class="fd-track"><i data-motion-dot data-easing={token}></i></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Reduced motion</h2>
+    <p>When someone turns on reduced motion in their system settings, Aster's durations collapse to almost nothing and lift and press movement turn off. Custom animations must respect <code>prefers-reduced-motion</code> too.</p>
+    <p class="fd-note">These values are defined in the component stylesheet and aren't yet part of the token files or the Figma export.</p>
+  </section>
+</FoundationPage>

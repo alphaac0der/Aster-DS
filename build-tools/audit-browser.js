@@ -1439,6 +1439,28 @@ async function runBrowserAudit() {
     assert('Selecting item in mobile drawer navigates and closes drawer', !mobileNavClick.navOpen && mobileNavClick.tabsActive);
     await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
 
+    // 9H-2: Foundations pages show values resolved from the tokens
+    await goto('/docs/color');
+    const colorPage = await cdp.eval(`
+      (() => {
+        const hexes = [...document.querySelectorAll('[data-resolve][data-kind="color"]')].map((el) => el.textContent);
+        const rows = [...document.querySelectorAll('[data-contrast-fg]')];
+        return {
+          count: hexes.length,
+          allHex: hexes.every((h) => /^#[0-9A-F]{6}$/.test(h)),
+          ratios: rows.every((r) => /:1$/.test(r.querySelector('[data-ratio]').textContent)),
+          failing: rows.filter((r) => r.querySelector('[data-result]').textContent.startsWith('Below')).map((r) => r.cells[0].textContent)
+        };
+      })()
+    `);
+    assert('Color page resolves every token to a real value', colorPage.count >= 24 && colorPage.allHex && colorPage.ratios, String(colorPage.count));
+    assert('Color page shows every listed pairing meeting its contrast target', colorPage.failing.length === 0, colorPage.failing.join(', ') || 'all pass');
+    for (const route of ['/docs/typography', '/docs/spacing', '/docs/elevation', '/docs/motion']) {
+      await goto(route, 500);
+      const empty = await cdp.eval(`[...document.querySelectorAll('[data-resolve]')].filter((el) => !el.textContent.trim()).map((el) => el.dataset.resolve)`);
+      assert(`${route} resolves all its tokens`, empty.length === 0, empty.join(', ') || 'all resolved');
+    }
+
     // 9H: Guide pages
     await goto('/docs/installation');
     assert('Installation page documents the stylesheet import', await cdp.eval(`document.querySelector('#view-installation')?.textContent.includes('aster.css') === true`));
@@ -1459,7 +1481,7 @@ async function runBrowserAudit() {
     `;
     const formatAxe = (rows) => rows.map((r) => `${r.where} [${r.theme}] ${r.id} (${r.impact}, ${r.count}x) ${r.target} ${r.detail}`).join(' | ');
     const axeReport = { site: [], stage: [] };
-    const sitePages = ['/', '/docs', '/docs/installation', '/docs/tokens', '/docs/principles', '/docs/frameworks', '/components', '/playground', ...COMPONENT_ROUTES.map((s) => `/components/${s}`)];
+    const sitePages = ['/', '/docs', '/docs/installation', '/docs/color', '/docs/typography', '/docs/spacing', '/docs/elevation', '/docs/motion', '/docs/tokens', '/docs/principles', '/docs/frameworks', '/components', '/playground', ...COMPONENT_ROUTES.map((s) => `/components/${s}`)];
     for (const theme of ['light', 'dark']) {
       for (const route of sitePages) {
         await goto(route, 600);

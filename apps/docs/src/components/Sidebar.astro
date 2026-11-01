@@ -46,6 +46,11 @@ function isCurrent(path: string) {
 
   <div class="nav-group">
     <h2>Foundations</h2>
+    <a class={`nav-link ${isCurrent('/docs/color') ? 'nav-link--active' : ''}`} href="/docs/color" aria-current={isCurrent('/docs/color') ? 'page' : undefined}>Color</a>
+    <a class={`nav-link ${isCurrent('/docs/typography') ? 'nav-link--active' : ''}`} href="/docs/typography" aria-current={isCurrent('/docs/typography') ? 'page' : undefined}>Typography</a>
+    <a class={`nav-link ${isCurrent('/docs/spacing') ? 'nav-link--active' : ''}`} href="/docs/spacing" aria-current={isCurrent('/docs/spacing') ? 'page' : undefined}>Spacing &amp; Radius</a>
+    <a class={`nav-link ${isCurrent('/docs/elevation') ? 'nav-link--active' : ''}`} href="/docs/elevation" aria-current={isCurrent('/docs/elevation') ? 'page' : undefined}>Elevation</a>
+    <a class={`nav-link ${isCurrent('/docs/motion') ? 'nav-link--active' : ''}`} href="/docs/motion" aria-current={isCurrent('/docs/motion') ? 'page' : undefined}>Motion</a>
     <a class={`nav-link ${isCurrent('/docs/tokens') ? 'nav-link--active' : ''}`} href="/docs/tokens" aria-current={isCurrent('/docs/tokens') ? 'page' : undefined}>Design Tokens</a>
     <a class={`nav-link ${isCurrent('/docs/principles') ? 'nav-link--active' : ''}`} href="/docs/principles" aria-current={isCurrent('/docs/principles') ? 'page' : undefined}>Core Principles</a>
     <a class={`nav-link ${isCurrent('/docs/frameworks') ? 'nav-link--active' : ''}`} href="/docs/frameworks" aria-current={isCurrent('/docs/frameworks') ? 'page' : undefined}>Frameworks</a>

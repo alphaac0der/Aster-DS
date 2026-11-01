@@ -1,4 +1,11 @@
 ---
+import { version } from '../../../../../package.json';
+
+const cdnSnippet = `<link rel="stylesheet" href="https://unpkg.com/aster-ds@${version}/dist/css/aster.css">
+<script type="module">
+  import { initAsterComponents } from 'https://unpkg.com/aster-ds@${version}/dist/js/aster.js';
+  initAsterComponents();
+</script>`;
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const npmInstallSnippet = `npm install aster-ds`;
@@ -38,6 +45,11 @@ const fontSnippet = `<link rel="preconnect" href="https://fonts.googleapis.com">
     </header>
 
     <div class="doc-body">
+      <section class="doc-section">
+        <h2>Before you start</h2>
+        <p>Aster is plain HTML, CSS, and browser JavaScript, so no framework is required. You need npm, pnpm, or yarn for a package install, or nothing at all for the CDN option below. It targets current browsers because it relies on modern CSS, such as <code>color-mix()</code> and <code>:has()</code>.</p>
+      </section>
+
       <!-- 1. Package Installation -->
       <section class="doc-section">
         <h2>1. Install using npm</h2>
@@ -108,15 +120,44 @@ const fontSnippet = `<link rel="preconnect" href="https://fonts.googleapis.com">
         </div>
       </section>
 
-      <!-- Navigation footer -->
+<section class="doc-section">
+        <h2>5. Use a CDN instead</h2>
+        <p>For a quick prototype with no build step, load Aster directly. Pin the version so updates can't change your page unexpectedly.</p>
+        <div class="code-block" style="margin-bottom: 16px;">
+          <div class="code-block__bar">
+            <div class="code-block__meta"><span>HTML</span></div>
+            <button type="button" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code>{cdnSnippet}</code></pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>6. Check it works</h2>
+        <p>Add a button. If it looks like a dark or white pill and reacts when hovered, the stylesheet is loading.</p>
+        <div class="spec-wrap" tabindex="0" role="region" aria-label="Troubleshooting">
+          <table class="spec-table">
+            <thead><tr><th scope="col">Problem</th><th scope="col">Likely cause</th></tr></thead>
+            <tbody>
+              <tr><td>Components have no styling</td><td>The stylesheet isn't imported, or only <code>components.css</code> is loaded without <code>tokens.css</code>.</td></tr>
+              <tr><td>Fonts look wrong</td><td>The web fonts in step 3 aren't loaded.</td></tr>
+              <tr><td>Dialogs, tabs, or menus don't respond</td><td><code>initAsterComponents()</code> wasn't called.</td></tr>
+              <tr><td>Dark mode doesn't apply</td><td>Set <code>data-theme="dark"</code> on the <code>html</code> element.</td></tr>
+              <tr><td>The Select menu looks plain</td><td>That browser doesn't support <code>appearance: base-select</code>, so it shows its native menu. It still works.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+            <!-- Navigation footer -->
       <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
         <a href="/docs" class="doc-pagination__link doc-pagination__link--prev" rel="prev">
           <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
           <span class="doc-pagination__title">&larr; Introduction</span>
         </a>
-        <a href="/docs/principles" class="doc-pagination__link doc-pagination__link--next" rel="next">
+        <a href="/docs/color" class="doc-pagination__link doc-pagination__link--next" rel="next">
           <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-          <span class="doc-pagination__title">Core Principles &rarr;</span>
+          <span class="doc-pagination__title">Color &rarr;</span>
         </a>
       </nav>
     </div>

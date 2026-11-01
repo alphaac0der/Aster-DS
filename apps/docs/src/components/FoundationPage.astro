@@ -1,0 +1,45 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+interface Link { href: string; title: string; }
+interface Props {
+  id: string;
+  title: string;
+  lead: string;
+  prev: Link;
+  next: Link;
+}
+
+const { id, title, lead, prev, next } = Astro.props;
+---
+
+<DocsLayout title={`${title} — Aster Design System`} description={lead} currentPath={`/docs/${id}`}>
+  <article class="doc-view" id={`view-${id}`} data-active data-title={title} data-section="docs" aria-labelledby={`t-${id}`}>
+    <header class="page-head">
+      <div class="eyebrow">Foundations</div>
+      <h1 id={`t-${id}`} tabindex="-1">{title}</h1>
+      <p class="lead">{lead}</p>
+    </header>
+
+    <div class="doc-body">
+      <slot />
+
+      <nav class="doc-pagination" aria-label="Documentation Pagination" style="margin-top: 48px;">
+        <a href={prev.href} class="doc-pagination__link doc-pagination__link--prev" rel="prev">
+          <span class="doc-pagination__dir"><svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow-left"/></svg> Previous</span>
+          <span class="doc-pagination__title">{prev.title}</span>
+        </a>
+        <a href={next.href} class="doc-pagination__link doc-pagination__link--next" rel="next">
+          <span class="doc-pagination__dir">Next <svg class="as-icon" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="doc-pagination__title">{next.title}</span>
+        </a>
+      </nav>
+    </div>
+  </article>
+
+  <script>
+    import { initFoundations } from '../../../../playground/scripts/foundations.js';
+
+    initFoundations();
+  </script>
+</DocsLayout>

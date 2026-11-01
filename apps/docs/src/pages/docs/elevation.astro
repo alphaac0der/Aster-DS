@@ -1,0 +1,64 @@
+---
+import FoundationPage from '../../components/FoundationPage.astro';
+
+const shadows = [
+  ['--as-elevation-shadow-none', 'None', 'Flat surfaces that sit on the page.'],
+  ['--as-elevation-shadow-raised', 'Raised', 'Slight lift, for cards that need separating.'],
+  ['--as-elevation-shadow-overlay', 'Overlay', 'Floating layers, such as menus and dialogs.']
+];
+
+const lines = [
+  ['--as-elevation-border-hairline', 'Hairline', 'Dividers and outlines.'],
+  ['--as-elevation-border-focus', 'Focus ring', 'Keyboard focus outlines.']
+];
+---
+
+<FoundationPage
+  id="elevation"
+  title="Elevation"
+  lead="Elevation shows what sits above what. Use surface color first, and add shadow only when something floats over other content."
+  prev={{ href: '/docs/spacing', title: 'Spacing & Radius' }}
+  next={{ href: '/docs/motion', title: 'Motion' }}
+>
+  <section class="doc-section">
+    <h2>Shadows</h2>
+    <div class="fd-swatches fd-swatches--elevation">
+      {shadows.map(([token, name, use]) => (
+        <div class="fd-elevation" style={`box-shadow: var(${token})`}>
+          <strong>{name}</strong>
+          <span>{use}</span>
+          <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Layering with surfaces</h2>
+    <p>Each step up is one surface token. In dark mode this matters more than shadow, because shadows are hard to see on dark backgrounds.</p>
+    <div class="fd-layers">
+      <div style="background: var(--as-semantic-color-surface-canvas)">
+        <span>Canvas: the page</span>
+        <div style="background: var(--as-semantic-color-surface-card)">
+          <span>Card: a raised container</span>
+          <div style="background: var(--as-semantic-color-surface-subtle)"><span>Subtle: a group inside it</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Lines</h2>
+    <div class="spec-wrap" tabindex="0" role="region" aria-label="Line tokens">
+      <table class="spec-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Width</th><th scope="col">Used for</th><th scope="col">Token</th></tr></thead>
+        <tbody>
+          {lines.map(([token, name, use]) => (
+            <tr><td>{name}</td><td data-resolve={token}></td><td>{use}</td><td><code>{token}</code></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="fd-note">Some components, including Input, Select and Dialog, currently use their own soft glow shadows rather than these tokens.</p>
+  </section>
+</FoundationPage>

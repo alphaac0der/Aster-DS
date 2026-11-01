@@ -1,0 +1,108 @@
+---
+import FoundationPage from '../../components/FoundationPage.astro';
+
+const spaces = [
+  ['--as-space-1', 'Tight gaps inside a control'],
+  ['--as-space-2', 'Icon to label, compact padding'],
+  ['--as-space-3', 'Between related items'],
+  ['--as-space-4', 'Default padding and gaps'],
+  ['--as-space-5', 'Between groups inside a container'],
+  ['--as-space-6', 'Card padding, button side padding'],
+  ['--as-space-8', 'Between major sections'],
+  ['--as-space-10', 'Large layout bands'],
+  ['--as-space-12', 'Macro layout, button height'],
+  ['--as-space-16', 'Page margins']
+];
+
+const radii = [
+  ['--as-radius-none', 'None', 'Full-bleed edges and flush dividers'],
+  ['--as-radius-sm', 'Small', 'Fields, checkboxes, menu items, tooltips'],
+  ['--as-radius-md', 'Medium', 'Alerts, toasts, menus'],
+  ['--as-radius-lg', 'Large', 'Cards, dialogs, popovers'],
+  ['--as-radius-full', 'Full', 'Buttons, badges, switches']
+];
+
+const density = [
+  ['--as-density-control-height', 'Control height', 'Table headers and icon buttons'],
+  ['--as-density-control-padding-x', 'Control side padding', 'Padding inside controls'],
+  ['--as-density-control-padding-y', 'Control vertical padding', 'Padding inside controls'],
+  ['--as-density-table-row-height', 'Table row height', 'Data table rows'],
+  ['--as-density-table-cell-padding-x', 'Table cell side padding', 'Data table cells'],
+  ['--as-density-table-cell-padding-y', 'Table cell vertical padding', 'Data table cells']
+];
+---
+
+<FoundationPage
+  id="spacing"
+  title="Spacing & Radius"
+  lead="Spacing follows a 4px base, so layouts line up. Use the scale instead of one-off values."
+  prev={{ href: '/docs/typography', title: 'Typography' }}
+  next={{ href: '/docs/elevation', title: 'Elevation' }}
+>
+  <section class="doc-section">
+    <h2>Spacing scale</h2>
+    <p>Keep related things closer together than unrelated things. That does most of the work of showing what belongs together.</p>
+    <div class="fd-rows">
+      {spaces.map(([token, use]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <span class="fd-value" data-resolve={token}></span>
+            <span>{use}</span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <div class="fd-bar" style={`width: var(${token})`}></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Corner radius</h2>
+    <p>Larger containers get larger corners. 4px is the smallest radius used on components.</p>
+    <div class="fd-swatches">
+      {radii.map(([token, name, use]) => (
+        <div class="fd-swatch">
+          <div class="fd-radius"><div style={`border-radius: var(${token})`}></div></div>
+          <div class="fd-swatch__meta">
+            <strong>{name}</strong>
+            <span>{use}</span>
+            <span class="fd-value" data-resolve={token}></span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Density tokens</h2>
+    <p>Aster has one standard density, with no compact mode.</p>
+    <div class="spec-wrap" tabindex="0" role="region" aria-label="Density tokens">
+      <table class="spec-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Value</th><th scope="col">Used for</th><th scope="col">Token</th></tr></thead>
+        <tbody>
+          {density.map(([token, name, use]) => (
+            <tr><td>{name}</td><td data-resolve={token}></td><td>{use}</td><td><code>{token}</code></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Component heights</h2>
+    <p>Buttons and fields have different heights, so a button beside an input in the same row is 4px taller. Align them to the center of the row.</p>
+    <div class="spec-wrap" tabindex="0" role="region" aria-label="Component heights">
+      <table class="spec-table">
+        <thead><tr><th scope="col">Component</th><th scope="col">Height</th></tr></thead>
+        <tbody>
+          <tr><td>Button (default)</td><td>48px</td></tr>
+          <tr><td>Button (small / large)</td><td>32px / 56px</td></tr>
+          <tr><td>Icon button</td><td>40px</td></tr>
+          <tr><td>Input and Select</td><td>44px</td></tr>
+          <tr><td>Table row</td><td>48px</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</FoundationPage>

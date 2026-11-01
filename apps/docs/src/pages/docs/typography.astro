@@ -1,0 +1,123 @@
+---
+import FoundationPage from '../../components/FoundationPage.astro';
+
+const roles = [
+  ['--as-typography-font-family-display', 'Bebas Neue', 'Display', 'Big headlines only. It has no lowercase, so keep it short.', 'One source of truth'],
+  ['--as-typography-font-family-sans', 'Manrope', 'Interface', 'Body text, labels, and buttons. Your default.', 'Save changes to your workspace'],
+  ['--as-typography-font-family-mono', 'Space Mono', 'Data', 'Code, tokens, and measurements.', '--as-space-4: 16px'],
+  ['--as-typography-font-family-serif', 'Merriweather', 'Editorial', 'Quotes and long-form callouts.', 'Good systems stay out of the way.']
+];
+
+const sizes = [
+  ['--as-typography-font-size-2xs', '2xs', 'Micro labels'],
+  ['--as-typography-font-size-xs', 'xs', 'Helper text, captions, data'],
+  ['--as-typography-font-size-sm', 'sm', 'Secondary interface text'],
+  ['--as-typography-font-size-base', 'base', 'Default for controls and body'],
+  ['--as-typography-font-size-md', 'md', 'Large body text'],
+  ['--as-typography-font-size-lg', 'lg', 'Section headings'],
+  ['--as-typography-font-size-xl', 'xl', 'Small headlines, quotes'],
+  ['--as-typography-font-size-2xl', '2xl', 'Headlines'],
+  ['--as-typography-font-size-3xl', '3xl', 'Large headlines'],
+  ['--as-typography-font-size-display-s', 'display-s', 'Small display'],
+  ['--as-typography-font-size-display-m', 'display-m', 'Medium display'],
+  ['--as-typography-font-size-display-l', 'display-l', 'Large display']
+];
+
+const weights = [
+  ['--as-typography-font-weight-regular', 'Regular', 'Body text'],
+  ['--as-typography-font-weight-medium', 'Medium', 'Labels and buttons'],
+  ['--as-typography-font-weight-semibold', 'Semibold', 'Subheadings'],
+  ['--as-typography-font-weight-bold', 'Bold', 'Strong emphasis']
+];
+
+const lineHeights = [
+  ['--as-typography-line-height-display', 'Display', 'Display headlines'],
+  ['--as-typography-line-height-tight', 'Tight', 'Short headings'],
+  ['--as-typography-line-height-normal', 'Normal', 'Interface text'],
+  ['--as-typography-line-height-relaxed', 'Relaxed', 'Long reading text']
+];
+---
+
+<FoundationPage
+  id="typography"
+  title="Typography"
+  lead="Four typefaces, each with one job. Pick the typeface by what the text is for, then choose a size from the scale."
+  prev={{ href: '/docs/color', title: 'Color' }}
+  next={{ href: '/docs/spacing', title: 'Spacing & Radius' }}
+>
+  <section class="doc-section">
+    <h2>Typefaces</h2>
+    <div class="fd-rows">
+      {roles.map(([token, font, role, use, sample]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <strong>{role}: {font}</strong>
+            <span>{use}</span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <p class="fd-sample" style={`font-family: var(${token}); font-size: var(--as-typography-font-size-xl);`}>{sample}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Size scale</h2>
+    <p>The sizes <code>sm</code> and <code>base</code> are both 14px today. Use <code>base</code> for controls and body text.</p>
+    <div class="fd-rows">
+      {sizes.map(([token, name, use]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <strong>{name}</strong>
+            <span>{use}</span>
+            <span class="fd-value" data-resolve={token}></span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <p class="fd-sample" style={`font-size: var(${token}); line-height: 1.2;`}>Aster</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Weight</h2>
+    <div class="fd-rows">
+      {weights.map(([token, name, use]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <strong>{name}</strong>
+            <span>{use}</span>
+            <span class="fd-value" data-resolve={token}></span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <p class="fd-sample" style={`font-weight: var(${token}); font-size: var(--as-typography-font-size-lg);`}>Clear hierarchy</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Line height</h2>
+    <div class="fd-rows">
+      {lineHeights.map(([token, name, use]) => (
+        <div class="fd-row">
+          <div class="fd-row__meta">
+            <strong>{name}</strong>
+            <span>{use}</span>
+            <span class="fd-value" data-resolve={token}></span>
+            <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+          </div>
+          <p class="fd-sample fd-sample--para" style={`line-height: var(${token}); font-size: var(--as-typography-font-size-base);`}>Line height sets the space between lines. Tighter suits short headings, and looser makes long passages easier to read.</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Using type</h2>
+    <div class="spec-grid">
+      <div class="spec-card"><h4>Do</h4><p>Keep text at 12px or larger wherever people need to read it, and load the fonts as shown in <a href="/docs/installation">Installation</a>.</p></div>
+      <div class="spec-card"><h4>Don't</h4><p>Set paragraphs in Bebas Neue or add typefaces outside these four.</p></div>
+    </div>
+  </section>
+</FoundationPage>

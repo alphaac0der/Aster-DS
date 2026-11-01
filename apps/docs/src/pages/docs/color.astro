@@ -1,0 +1,109 @@
+---
+import FoundationPage from '../../components/FoundationPage.astro';
+
+const groups = [
+  { title: 'Surfaces', intro: 'Backgrounds, from the page up through raised containers.', tokens: [
+    ['--as-semantic-color-surface-canvas', 'Canvas', 'The page background.'],
+    ['--as-semantic-color-surface-card', 'Card', 'Raised containers: cards, dialogs, menus.'],
+    ['--as-semantic-color-surface-subtle', 'Subtle', 'Grouped areas, such as table headers.'],
+    ['--as-semantic-color-surface-muted', 'Muted', 'Hovered rows, inactive tracks.']
+  ]},
+  { title: 'Text', intro: 'Use the highest contrast that fits the content\'s importance.', tokens: [
+    ['--as-semantic-color-text-default', 'Default', 'Headings and body text.'],
+    ['--as-semantic-color-text-muted', 'Muted', 'Captions, helper text, metadata.'],
+    ['--as-semantic-color-text-on-fill', 'On fill', 'Text on strongly colored fills.']
+  ]},
+  { title: 'Borders', intro: 'Dividers can be quiet. Control edges need to stay visible.', tokens: [
+    ['--as-semantic-color-border-subtle', 'Subtle', 'Dividers and soft outlines.'],
+    ['--as-semantic-color-border-strong', 'Strong', 'Edges that identify a control.'],
+    ['--as-semantic-color-border-focus', 'Focus', 'Keyboard focus rings only.']
+  ]},
+  { title: 'Interactive', intro: 'Aster\'s primary action is monochrome, so status colors keep their meaning.', tokens: [
+    ['--as-semantic-color-interactive-primary', 'Primary', 'The main action on a screen.'],
+    ['--as-semantic-color-interactive-primary-hover', 'Primary hover', 'Primary action while hovered.'],
+    ['--as-semantic-color-interactive-primary-text', 'Primary text', 'Label on the primary fill.'],
+    ['--as-semantic-color-interactive-link', 'Link', 'Inline text links.']
+  ]},
+  { title: 'Status', intro: 'Each status pairs a surface with its text color. Always add a word or icon, because color alone isn\'t enough.', tokens: [
+    ['--as-semantic-color-surface-success', 'Success surface', 'Background for positive messages.'],
+    ['--as-semantic-color-status-success-text', 'Success text', 'Text and icons for positive messages.'],
+    ['--as-semantic-color-surface-warning', 'Warning surface', 'Background for cautions.'],
+    ['--as-semantic-color-status-warning-text', 'Warning text', 'Text and icons for cautions.'],
+    ['--as-semantic-color-surface-critical', 'Critical surface', 'Background for errors.'],
+    ['--as-semantic-color-status-critical-text', 'Critical text', 'Errors and destructive actions.'],
+    ['--as-semantic-color-surface-focus', 'Info surface', 'Background for neutral notices.'],
+    ['--as-semantic-color-status-focus-text', 'Info text', 'Text and icons for neutral notices.'],
+    ['--as-semantic-color-surface-active', 'Active surface', 'Background for active items.'],
+    ['--as-semantic-color-status-active-text', 'Active text', 'Text for active items.']
+  ]}
+];
+
+const pairs = [
+  ['Default text on canvas', '--as-semantic-color-text-default', '--as-semantic-color-surface-canvas', 4.5],
+  ['Muted text on canvas', '--as-semantic-color-text-muted', '--as-semantic-color-surface-canvas', 4.5],
+  ['Muted text on card', '--as-semantic-color-text-muted', '--as-semantic-color-surface-card', 4.5],
+  ['Primary label on primary fill', '--as-semantic-color-interactive-primary-text', '--as-semantic-color-interactive-primary', 4.5],
+  ['Success text on its surface', '--as-semantic-color-status-success-text', '--as-semantic-color-surface-success', 4.5],
+  ['Warning text on its surface', '--as-semantic-color-status-warning-text', '--as-semantic-color-surface-warning', 4.5],
+  ['Critical text on its surface', '--as-semantic-color-status-critical-text', '--as-semantic-color-surface-critical', 4.5],
+  ['Info text on its surface', '--as-semantic-color-status-focus-text', '--as-semantic-color-surface-focus', 4.5],
+  ['Active text on its surface', '--as-semantic-color-status-active-text', '--as-semantic-color-surface-active', 4.5],
+  ['Focus ring on canvas', '--as-semantic-color-border-focus', '--as-semantic-color-surface-canvas', 3],
+  ['Control edge on card', '--as-semantic-color-border-strong', '--as-semantic-color-surface-card', 3]
+];
+---
+
+<FoundationPage
+  id="color"
+  title="Color"
+  lead="Color tokens are named for their job, not their hue. Use them and light and dark themes work without extra code. Switch the theme in the header to see every value on this page update."
+  prev={{ href: '/docs/installation', title: 'Installation' }}
+  next={{ href: '/docs/typography', title: 'Typography' }}
+>
+  {groups.map((g) => (
+    <section class="doc-section">
+      <h2>{g.title}</h2>
+      <p>{g.intro}</p>
+      <div class="fd-swatches">
+        {g.tokens.map(([token, name, use]) => (
+          <div class="fd-swatch">
+            <div class="fd-swatch__chip" style={`background: var(${token})`}></div>
+            <div class="fd-swatch__meta">
+              <strong>{name}</strong>
+              <span>{use}</span>
+              <span class="fd-value" data-resolve={token} data-kind="color"></span>
+              <button type="button" class="fd-token" data-copy-token={token} title="Copy token name">{token}</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="doc-section">
+    <h2>Contrast</h2>
+    <p>Calculated live from the current theme. Text needs 4.5:1, and controls and focus rings need 3:1.</p>
+    <div class="spec-wrap" tabindex="0" role="region" aria-label="Contrast ratios">
+      <table class="spec-table">
+        <thead><tr><th scope="col">Pairing</th><th scope="col">Ratio</th><th scope="col">Result</th></tr></thead>
+        <tbody>
+          {pairs.map(([label, fg, bg, need]) => (
+            <tr data-contrast-fg={fg} data-contrast-bg={bg} data-contrast-need={need}>
+              <td>{label}</td>
+              <td data-ratio></td>
+              <td data-result></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Using color</h2>
+    <div class="spec-grid">
+      <div class="spec-card"><h4>Do</h4><p>Use semantic tokens such as <code>--as-semantic-color-text-default</code> in all component and page styles.</p></div>
+      <div class="spec-card"><h4>Don't</h4><p>Use primitive tokens or hex values. They won't follow the theme.</p></div>
+    </div>
+  </section>
+</FoundationPage>
