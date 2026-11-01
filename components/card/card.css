@@ -27,7 +27,7 @@
   gap: var(--as-space-1);
 }
 
-.as-card__title {
+.as-card .as-card__title {
   margin: 0;
   font-size: var(--as-typography-font-size-md);
   font-weight: var(--as-typography-font-weight-semibold);

@@ -833,7 +833,7 @@ body[data-kind="playground"] .toc {
 .fd-pattern > * { flex: 1; }
 .fd-pattern .as-form-field { margin-bottom: 0; }
 .fd-rule { padding: var(--as-space-4); border-radius: var(--as-radius-md); background: var(--as-semantic-color-surface-card); }
-.fd-rule h3 { margin-bottom: var(--as-space-2); font-size: var(--as-typography-font-size-base); font-weight: var(--as-typography-font-weight-semibold); letter-spacing: 0; }
+.fd-rule h3 { margin: 0 0 var(--as-space-2); font-size: var(--as-typography-font-size-base); font-weight: var(--as-typography-font-weight-semibold); letter-spacing: 0; }
 .fd-rule ul { margin: 0; padding-left: var(--as-space-5); font-size: var(--as-typography-font-size-base); line-height: 1.5; }
 .fd-rule li + li { margin-top: var(--as-space-1); }
 .fd-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--as-space-3); margin-top: var(--as-space-3); }

@@ -1352,6 +1352,10 @@ async function runBrowserAudit() {
     const blankChips = await cdp.eval(`[...document.querySelectorAll('.component-meta .meta-tag')].filter((el) => el.offsetWidth && !el.textContent.trim()).length`);
     assert('Components without a fixed height show no blank header chip', blankChips === 0, String(blankChips));
 
+    await goto('/components/table', 500);
+    const tableRows = await cdp.eval(`document.querySelectorAll('#view-table .preview-canvas tbody tr').length`);
+    assert('Table preview shows real rows', tableRows > 0, String(tableRows));
+
     // 9C-3: Variants, states, guidance, and live token values
     const galleryProblems = [];
     for (const slug of COMPONENT_ROUTES) {
