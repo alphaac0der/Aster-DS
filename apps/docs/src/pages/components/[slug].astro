@@ -118,9 +118,9 @@ const { component, prevComponent, nextComponent } = Astro.props;
             </div>
           </div>
 
-          <!-- TAB 4: ANATOMY (Technical Blueprint Box, Rulers, Callouts, Designer Explanation, Spec Table) -->
+          <!-- TAB 4: ANATOMY (real component, measured live) -->
           <div class="preview-anatomy" role="tabpanel" aria-label={`${component.name} visual anatomy and measurements`} hidden>
-            <Fragment set:html={component.anatomyHtml} />
+            <div data-anatomy={component.slug}></div>
           </div>
         </div>
       </section>
@@ -165,4 +165,10 @@ const { component, prevComponent, nextComponent } = Astro.props;
       </nav>
     </div>
   </article>
+
+  <script>
+    import { initAnatomy } from '../../../../../playground/scripts/anatomy.js';
+
+    initAnatomy();
+  </script>
 </DocsLayout>

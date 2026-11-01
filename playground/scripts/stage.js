@@ -31,7 +31,7 @@ const rng = (key, label, min, max, value, unit = '') => ({ key, label, type: 'ra
 /* --------------------------------------------------------------------------
    Component recipes: controls + canonical markup for all 21 components
    -------------------------------------------------------------------------- */
-const RECIPES = [
+export const RECIPES = [
   {
     slug: 'button', name: 'Button', group: 'Form Controls', element: '<button>', target: '.as-button',
     controls: [

@@ -1342,29 +1342,49 @@ async function runBrowserAudit() {
     assert('Clicking Copy Prompt button copies AI prompt and shows "Copied Prompt!"', promptTabAudit.copyBtnText.includes('Copied Prompt'));
 
     // Switch to Tab 4: Anatomy & verify Visual Blueprint Diagram + Measurement Specification Table
-    const anatomyTabAudit = await cdp.eval(`
+    const anatomySlugs = ['button', 'input', 'textarea', 'select', 'checkbox', 'radio', 'switch', 'slider', 'table', 'badge', 'progress', 'skeleton', 'alert', 'tooltip', 'toast', 'dialog', 'drawer', 'popover', 'dropdown', 'tabs', 'accordion'];
+    const anatomyProblems = [];
+    let anatomyPins = 0;
+    for (const slug of anatomySlugs) {
+      await cdp.eval(`location.hash = '#/${slug}'`);
+      await wait(120);
+      await cdp.eval(`document.querySelector('#view-${slug} .preview-tab[data-tab="anatomy"]').click()`);
+      await wait(220);
+      const a = await cdp.eval(`
+        (() => {
+          const host = document.querySelector('#view-${slug} [data-anatomy]');
+          return {
+            pins: host.querySelectorAll('.pa-pin').length,
+            rows: host.querySelectorAll('.pa-spec__rows > div').length,
+            missing: host.dataset.missing || '',
+            scale: Number(host.querySelector('.pa-sample')?.dataset.scale) || 0
+          };
+        })()
+      `);
+      anatomyPins += a.pins;
+      if (!a.pins || !a.rows || a.missing || !a.scale) anatomyProblems.push(`${slug}: ${JSON.stringify(a)}`);
+      await cdp.eval(`document.querySelector('#view-${slug} .preview-tab[data-tab="preview"]').click()`);
+    }
+    assert('Anatomy tab renders every part of all 21 components with measured specs', anatomyProblems.length === 0, anatomyProblems.join(' | ') || `${anatomyPins} parts`);
+
+    await cdp.eval(`location.hash = '#/button'`);
+    await wait(120);
+    await cdp.eval(`document.querySelector('#view-button .preview-tab[data-tab="anatomy"]').click()`);
+    await wait(220);
+    const anatomyButton = await cdp.eval(`
       (() => {
-        const card = document.querySelector('#view-button .preview-card');
-        const anatomyTab = card.querySelector('.preview-tab[data-tab="anatomy"]');
-        anatomyTab.click();
-        const anatomyPanel = card.querySelector('.preview-anatomy');
-        const pins = anatomyPanel.querySelectorAll('.anatomy-badge__pin').length;
-        const tableText = anatomyPanel.querySelector('.anatomy-table')?.textContent || '';
+        const host = document.querySelector('#view-button [data-anatomy]');
+        const real = host.querySelector('.pa-sample .as-button');
         return {
-          tabSelected: anatomyTab.getAttribute('aria-selected'),
-          anatomyHidden: anatomyPanel.hidden,
-          pins,
-          has24pxSpec: tableText.includes('24px / 24px'),
-          hasFixedVsDynamic: tableText.includes('Fixed') && tableText.includes('Content-Dependent')
+          text: host.querySelector('.pa-spec__rows').textContent,
+          expected: real.offsetWidth + ' × ' + real.offsetHeight,
+          hidden: host.closest('.preview-anatomy').hidden
         };
       })()
     `);
-    assert('Clicking Anatomy tab reveals annotated blueprint diagram with callout pins and Fixed vs Content-Dependent measurement table',
-      anatomyTabAudit.tabSelected === 'true' &&
-      !anatomyTabAudit.anatomyHidden &&
-      anatomyTabAudit.pins >= 4 &&
-      anatomyTabAudit.has24pxSpec &&
-      anatomyTabAudit.hasFixedVsDynamic
+    assert('Button anatomy reports the size and padding read from the rendered element',
+      !anatomyButton.hidden && anatomyButton.text.includes(anatomyButton.expected) && anatomyButton.expected.endsWith('× 48') && anatomyButton.text.includes('16 top and bottom, 24 left and right'),
+      anatomyButton.expected
     );
 
     // Switch back to Preview tab
@@ -1643,10 +1663,6 @@ async function runBrowserAudit() {
     `);
     await wait(250);
     await saveScreenshot('phase15-button-anatomy.png');
-
-    await cdp.eval(`document.querySelector('#view-button .anatomy-designer-explanation')?.scrollIntoView({ behavior: 'auto', block: 'start' })`);
-    await wait(250);
-    await saveScreenshot('phase15-button-designer-explanation.png');
 
     // 4. Dialog Component with macOS Red Circular Close Control (Dark Theme matching Shade-DS reference)
     await cdp.send('Page.navigate', { url: 'http://127.0.0.1:3000/#/dialog' });

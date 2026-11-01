@@ -19,6 +19,7 @@ import {
   showToast
 } from '../../dist/js/aster.js';
 import { mountStage } from './stage.js';
+import { initAnatomy } from './anatomy.js';
 
 (() => {
   'use strict';
@@ -793,6 +794,7 @@ import { mountStage } from './stage.js';
   /* ------------------------------------------------------------------------
      12. Playground Stage (`#/playground`) — shared engine in ./stage.js
      ------------------------------------------------------------------------ */
+  initAnatomy();
   const playgroundStage = mountStage($('#pg-root'), { docsHref: (slug) => `#/${slug}` });
 
   /* ------------------------------------------------------------------------
